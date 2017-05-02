@@ -1,0 +1,5 @@
+we_crea:
+    resource: "@WeCreaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

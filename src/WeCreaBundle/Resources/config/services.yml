@@ -1,0 +1,4 @@
+services:
+#    we_crea.example:
+#        class: WeCreaBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
