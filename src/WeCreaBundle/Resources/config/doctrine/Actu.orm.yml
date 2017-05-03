@@ -1,0 +1,23 @@
+WeCreaBundle\Entity\Actu:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\ActuRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        content:
+            type: text
+        date:
+            type: datetime
+
+    manyToMany:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']

@@ -1,0 +1,40 @@
+WeCreaBundle\Entity\Work:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\WorkRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        technic:
+            type: string
+            length: 255
+        dimensions:
+            type: string
+            length: 255
+        weight:
+            type: string
+            length: 255
+        quantity:
+            type: integer
+        timelimit:
+            type: string
+            length: 255
+
+    manyToOne:
+        artist:
+            targetEntity: WeCreaBundle\Entity\Artist
+            inversedBy: works
+        nature:
+            targetEntity: WeCreaBundle\Entity\Nature
+
+    manyToMany:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']

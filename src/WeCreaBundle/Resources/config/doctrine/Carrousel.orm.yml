@@ -1,0 +1,24 @@
+WeCreaBundle\Entity\Carrousel:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\CarrouselRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:
+            type: text
+        title:
+            type: string
+            length: 255
+        rout:
+            type: string
+            length: 255
+
+    oneToOne:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']
