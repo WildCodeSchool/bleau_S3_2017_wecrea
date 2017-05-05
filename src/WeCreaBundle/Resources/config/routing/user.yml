@@ -1,0 +1,3 @@
+we_crea_homepage:
+    path:    /
+    defaults: {_controller: "WeCreaBundle:Default:index"}

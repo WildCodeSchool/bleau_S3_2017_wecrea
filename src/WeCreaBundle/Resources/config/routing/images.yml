@@ -1,0 +1,24 @@
+images_index:
+    path:     /
+    defaults: { _controller: "WeCreaBundle:Images:index" }
+    methods:  GET
+
+images_show:
+    path:     /{id}/show
+    defaults: { _controller: "WeCreaBundle:Images:show" }
+    methods:  GET
+
+images_new:
+    path:     /new
+    defaults: { _controller: "WeCreaBundle:Images:new" }
+    methods:  [GET, POST]
+
+images_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WeCreaBundle:Images:edit" }
+    methods:  [GET, POST]
+
+images_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WeCreaBundle:Images:delete" }
+    methods:  DELETE

@@ -1,0 +1,23 @@
+we_crea_admin_homepage:
+    path: /
+    defaults:
+
+we_crea_admin_artist_work_creation:
+    path: /artist/creation
+    defaults: {_controller: "WeCreaBundle:Admin:newArtistWork"}
+
+we_crea_admin_artist_image_creation_ajax:
+    path: /artistImage
+    defaults: {_controller: "WeCreaBundle:Admin:newArtistImageAjax"}
+
+we_crea_admin_artist_profil_creation_ajax:
+    path: /artistProfil
+    defaults: {_controller: "WeCreaBundle:Admin:newArtistProfilAjax"}
+
+we_crea_admin_delete_artist_image_ajax:
+    path: /deleteArtistImage
+    defaults: {_controller: "WeCreaBundle:Admin:deleteArtistImageAjax"}
+
+we_crea_admin_artist_work_edition:
+    path: /artist/edition
+    defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
