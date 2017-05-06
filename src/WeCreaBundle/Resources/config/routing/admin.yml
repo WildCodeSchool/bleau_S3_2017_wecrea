@@ -18,6 +18,18 @@ we_crea_admin_delete_artist_image_ajax:
     path: /deleteArtistImage
     defaults: {_controller: "WeCreaBundle:Admin:deleteArtistImageAjax"}
 
+we_crea_admin_work_image_creation_ajax:
+    path: /workImage
+    defaults: {_controller: "WeCreaBundle:Admin:newWorkImageAjax"}
+
+we_crea_admin_work_caracteristics_creation_ajax:
+    path: /workCaracteristics
+    defaults: {_controller: "WeCreaBundle:Admin:newWorkCaracteristicsAjax"}
+
+we_crea_admin_delete_work_image_ajax:
+    path: /deleteWorkImage
+    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkImageAjax"}
+
 we_crea_admin_artist_work_edition:
     path: /artist/edition
     defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}

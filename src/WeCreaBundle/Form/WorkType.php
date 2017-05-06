@@ -2,16 +2,13 @@
 
 namespace WeCreaBundle\Form;
 
-use Doctrine\Common\Collections\Collection;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use WeCreaBundle\Entity\Artist;
-use WeCreaBundle\Entity\Images;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use WeCreaBundle\Form\NatureType;
 
-class ArtistType extends AbstractType
+class WorkType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,10 +16,13 @@ class ArtistType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstname')
-            ->add('localization')
-            ->add('expertise');
+            ->add('title')
+            ->add('technic')
+            ->add('dimensions')
+            ->add('weight')
+            ->add('quantity')
+            ->add('timelimit')
+            ->add('nature', NatureType::class);
     }
     
     /**
@@ -31,7 +31,7 @@ class ArtistType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Artist::class,
+            'data_class' => 'WeCreaBundle\Entity\Work'
         ));
     }
 
@@ -40,7 +40,7 @@ class ArtistType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'wecreabundle_artist';
+        return 'wecreabundle_work';
     }
 
 

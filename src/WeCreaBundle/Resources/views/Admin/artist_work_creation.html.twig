@@ -5,70 +5,143 @@
     <div class="container">
         <div class="row">
             <h4>Création d'un nouveau profil</h4>
-            {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                        {{ form_label(form.name, 'Nom Artiste') }}
-                        {{ form_widget(form.name) }}
-                        {{ form_errors(form.name) }}
-                    </div>
-                    <div class="input-field col s12 m6">
-                        {{ form_label(form.firstname, 'Prénom Artiste') }}
-                        {{ form_widget(form.firstname) }}
-                        {{ form_errors(form.firstname) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                        {{ form_label(form.localization, 'Localisation Artiste') }}
-                        {{ form_widget(form.localization) }}
-                        {{ form_errors(form.localization) }}
-                    </div>
-                    <div class="input-field col s12 m6">
-                        {{ form_label(form.expertise, 'Expertise Artiste') }}
-                        {{ form_widget(form.expertise) }}
-                        {{ form_errors(form.expertise) }}
-                    </div>
-                </div>
 
-            <button class="btn waves-effect waves-light right" type="submit" name="action">
-                Créer le profil
-                <i class="material-icons left">send</i>
-            </button>
-            {{ form_end(form) }}
+                {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            {{ form_label(form.name, 'Nom Artiste') }}
+                            {{ form_widget(form.name) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        <div class="input-field col s12 m6">
+                            {{ form_label(form.firstname, 'Prénom Artiste') }}
+                            {{ form_widget(form.firstname) }}
+                            {{ form_errors(form.firstname) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            {{ form_label(form.localization, 'Localisation Artiste') }}
+                            {{ form_widget(form.localization) }}
+                            {{ form_errors(form.localization) }}
+                        </div>
+                        <div class="input-field col s12 m6">
+                            {{ form_label(form.expertise, 'Expertise Artiste') }}
+                            {{ form_widget(form.expertise) }}
+                            {{ form_errors(form.expertise) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn waves-effect waves-light left" type="submit" name="action">
+                            Créer le profil
+                            <i class="material-icons left">send</i>
+                        </button>
+                    </div>
+                {{ form_end(form) }}
 
-            {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
-            <div class="row">
-                <div class="col s6">
-                    {{ form_label(formImage.url, "Photo de l'artiste") }}
-                    {{ form_widget(formImage.url) }}
-                    {{ form_errors(formImage.url) }}
-                </div>
+                {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
                 <div class="row">
-                    <div class="col s6" id="images-artist-check">
+                    <div class="col s6">
+                        {{ form_label(formImage.url, "Photo de l'artiste") }}
+                        {{ form_widget(formImage.url) }}
+                        {{ form_errors(formImage.url) }}
+                    </div>
+                    <div class="row">
+                        <div class="col s6" id="images-artist-check">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form_label(formImage.alt, "Description de la photo") }}
-                    {{ form_widget(formImage.alt) }}
-                    {{ form_errors(formImage.alt) }}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(formImage.alt, "Description de la photo") }}
+                        {{ form_widget(formImage.alt) }}
+                        {{ form_errors(formImage.alt) }}
+                    </div>
                 </div>
-            </div>
-            <button class="btn waves-effect waves-light right" type="submit" name="action">
-                Ajouter l'image
-                <i class="material-icons left">done</i>
-            </button>
-            <div class="row">
-                <h4>Images de l'artiste validées</h4>
-                <div class="col s12" id="images-artist-confirmed">
+                <div class="row">
+                <button class="btn waves-effect waves-light left" type="submit" name="action">
+                    Ajouter l'image
+                    <i class="material-icons left">done</i>
+                </button>
                 </div>
-                <div id="alertDeleteImage">
+                <div class="row">
+                    <h4>Images de l'artiste validées</h4>
+                    <div class="col s12" id="images-artist-confirmed">
+                    </div>
                 </div>
-            </div>
-            {{ form_end(formImage) }}
-            </div>
+                {{ form_end(formImage) }}
+
+                {{ form_start(formWork, {'attr' : {'id' : 'work-caracteristics' }} ) }}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.title, 'Titre') }}
+                        {{ form_widget(formWork.title) }}
+                        {{ form_errors(formWork.title) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.technic, 'Technique utilisée') }}
+                        {{ form_widget(formWork.technic) }}
+                        {{ form_errors(formWork.technic) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.dimensions, 'Dimensions') }}
+                        {{ form_widget(formWork.dimensions) }}
+                        {{ form_errors(formWork.dimensions) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.weight, 'Poids') }}
+                        {{ form_widget(formWork.weight) }}
+                        {{ form_errors(formWork.weight) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.quantity, 'Quantité(s)') }}
+                        {{ form_widget(formWork.quantity) }}
+                        {{ form_errors(formWork.quantity) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.timelimit, 'Délai de livraison') }}
+                        {{ form_widget(formWork.timelimit) }}
+                        {{ form_errors(formWork.timelimit) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {% for workNature in formWork.nature %}
+                            {{ form_row(workNature) }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {{ form_end(formWork) }}
+
+                {{ form_start(formWorkImage, {'attr' : {'id' : 'work-picture'}} ) }}
+                <div class="row">
+                    <div class="col s6">
+                        {{ form_label(formWorkImage.url, "Photo de l'oeuvre") }}
+                        {{ form_widget(formWorkImage.url) }}
+                        {{ form_errors(formWorkImage.url) }}
+                    </div>
+                    <div class="row">
+                        <div class="col s6" id="images-work-check">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(formWorkImage.alt, "Description de la photo") }}
+                        {{ form_widget(formWorkImage.alt) }}
+                        {{ form_errors(formWorkImage.alt) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light left" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">done</i>
+                    </button>
+                </div>
+                <div class="row">
+                    <h4>Images de l'oeuvre validées</h4>
+                    <div class="col s12" id="images-work-confirmed">
+                    </div>
+                </div>
+                {{ form_end(formWorkImage) }}
         </div>
     </div>
 {% endblock %}
@@ -78,8 +151,10 @@
         /* We stock the artist id when created */
         var $idArt;
 
+        /******** ABOUT THE ARTIST ********/
+
         /* We add a preview image instantly */
-        $("#wecreabundle_images_url").change(function(){
+        $("#artist-picture input[id='wecreabundle_images_url']").change(function(){
             var $file = $(this)[0].files[0];
             var $img = $(document.createElement('img'));
             $img.attr('src', window.URL.createObjectURL($file));
@@ -87,14 +162,14 @@
         });
 
         /* If the image form is submitted */
-        $('form[name="wecreabundle_images"]').submit(function(e){
+        $('form[id="artist-picture"]').submit(function(e){
             e.preventDefault();
             var data = new FormData($(this)[0]);
 
             /* We remove the preview image and reset the
             * form to enable the submission of new pictures
             */
-            $img = $("#images-artist-check").find('img');
+            var $img = $("#images-artist-check").find('img');
             $img.remove();
             $(this).trigger('reset');
 
@@ -113,16 +188,14 @@
                 success: function(response){
                     var $id = response.id;
 
-                    /* We stock all the images' id into an array */
-                    // $idImg.push("" + $id + "");
-
-                    $img = $(document.createElement('img'));
+                    /* Creation of the image with the data returned */
+                    var $img = $(document.createElement('img'));
                     $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of a button to delete the image */
-                    $cancel = $('<button></button>');
-                    $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image');
+                    var $cancel = $('<button></button>');
+                    $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-artist');
                     $cancel.text("Supprimer");
 
                     $("#images-artist-confirmed").append($img);
@@ -132,20 +205,18 @@
                     $cancel.hide().fadeIn(2000);
 
                     var $formLastChild = $('#wecreabundle_artist__token');
-                    $inputElt = $(document.createElement('input'));
+                    var $inputElt = $(document.createElement('input'));
                     $inputElt.attr("value", "" + $id + "");
                     $inputElt.attr("type", "hidden");
                     $inputElt.attr("name", "idImg[]");
                     $inputElt.insertBefore($formLastChild);
 
-                    $('.delete-image').click(function(e){
+                    $('.delete-image-artist').click(function(e){
                         e.preventDefault();
-                        $idImgToDelete = $(this).prev().attr('id');
+                        $idImgToDelete = [$(this).prev().attr('id')];
                         var $data = {'idImg' : $idImgToDelete};
-                        /* if the profile has been created, we send
-                        *  its id to the controller to get it
-                        *  in order to remove the image it is linked with
-                        */
+
+                        console.log($data);
 
                         /* Let's remove the delete button & the image deleted */
                         $(this).prev().remove();
@@ -177,7 +248,7 @@
             });
         });
 
-        $('form[name="wecreabundle_artist"]').submit(function(e){
+        $('form[id="artist-profil"]').submit(function(e){
             e.preventDefault();
 
             if(confirm("Vous allez créer le profil de l'artiste.")) {
@@ -191,26 +262,144 @@
                     success: function (response) {
                         $idArt = response.id;
 
-                        var $formLastChild = $('#wecreabundle_images__token');
+                        var $formImgArtLastChild = $('form[id="artist-picture"] input[id="wecreabundle_images__token"]');
                         $inputElt = $(document.createElement('input'));
                         $inputElt.attr("value", "" + $idArt + "");
                         $inputElt.attr("type", "hidden");
                         $inputElt.attr("name", "idArt");
-                        $inputElt.insertBefore($formLastChild);
+                        $inputElt.insertBefore($formImgArtLastChild);
+
+                        var $formImgWorkLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
+                        $inputElt2 = $(document.createElement('input'));
+                        $inputElt2.attr("value", "" + $idArt + "");
+                        $inputElt2.attr("type", "hidden");
+                        $inputElt2.attr("name", "idArt");
+                        $inputElt2.insertBefore($formImgWorkLastChild);
                     }
                 });
             }
         });
 
+        /********* ABOUT THE WORK *********/
+
+        /* We add a preview image instantly */
+        $("#work-picture input[id='wecreabundle_images_url']").change(function(){
+            var $file = $(this)[0].files[0];
+            var $img = $(document.createElement('img'));
+            $img.attr('src', window.URL.createObjectURL($file));
+            $("#images-work-check").append($img);
+        });
+
+        /* if submission of the work picture */
+        $('form[id="work-picture"]').submit(function(e){
+            e.preventDefault();
+            var $data = new FormData($(this)[0]);
+
+            /* We remove the preview image and reset the
+             * form to enable the submission of new pictures
+             */
+
+            var $img = $("#images-work-check").find('img');
+            $img.remove();
+            $(this).trigger('reset');
+
+            /* We store the image into the database then we send it back to the client
+             * We now have its id, that will be useful if the client
+             * changes its mind and wants to delete it.
+             * Moreover, it will serve to associate the images to the artist
+             * as they are created separately
+             */
+
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_admin_work_image_creation_ajax') }}',
+                data: $data,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    var $id = response.id;
+
+                    /* Creation of the image with the data returned */
+                    var $img = $(document.createElement('img'));
+                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr('id', ''+ $id +'');
+
+                    /* Creation of a button to delete the image */
+                    var $cancel = $('<button></button>');
+                    $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                    $cancel.text("Supprimer");
+
+                    $("#images-work-confirmed").append($img);
+                    $img.hide().fadeIn(2000);
+
+                    $("#images-work-confirmed").append($cancel);
+                    $cancel.hide().fadeIn(2000);
+
+                    var $formLastChild = $('#wecreabundle_artist__token');
+                    var $inputElt = $(document.createElement('input'));
+                    $inputElt.attr("value", "" + $id + "");
+                    $inputElt.attr("type", "hidden");
+                    $inputElt.attr("name", "idImg[]");
+                    $inputElt.insertBefore($formLastChild);
+
+                    $('.delete-image-work').click(function(e){
+                        e.preventDefault();
+                        $idImgToDelete = [$(this).prev().attr('id')];
+                        var $data = {'idImg' : $idImgToDelete};
+
+                        /* Let's remove the delete button & the image deleted */
+                        $(this).prev().remove();
+                        $(this).remove();
+
+                        /* Let's remove the hidden input added to the profile form
+                         * that contains the image's id
+                         */
+                        $("input[name='idImg[]'][value="+ $idImgToDelete +"]").remove();
+
+                        /* If artist profile exists, it has an id, that we send to the
+                         * controller to remove the deleted image from the artist entity
+                         */
+
+                        if(typeof($idArt) !== undefined){
+                            $data.idArt = $idArt;
+                        }
+
+                        $.ajax({
+                            method: 'post',
+                            url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
+                            data : $data,
+                            success: function (response){
+                                alert(response);
+                            }
+                        })
+                    });
+                }
+            });
+        });
+
+        /* if all elements are created "but not the profile" before unloading
+        *  the current page, let's clear all the new data from the database
+        */
         $(window).bind("beforeunload", function(){
             var $imgIds = [];
+            /* We track all the images of the artist & work
+            *  added and still present on the page up to now
+            */
             $("#images-artist-confirmed img").each(function(){
                 $imgIds.push($(this).attr('id'));
             });
 
-            if($('input[name="idArt"]').length ==0) {
+            /* We track all the images of the work added and
+             * still present on the page up to now
+             */
+            $("#images-work-confirmed img").each(function(){
+                $imgIds.push($(this).attr('id'));
+            });
 
+            /* If no profile created, no hidden input with the id of the artist, so length = 0 */
+            if($('input[name="idArt"]').length == 0) {
                 $.ajax({
+                    async: false,
                     url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
                     method: "post",
                     data: {idImg: $imgIds}

@@ -10,6 +10,9 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Artist;
 use WeCreaBundle\Entity\Images;
+use WeCreaBundle\Entity\Work;
+use WeCreaBundle\Entity\Nature;
+use WeCreaBundle\Repository\NatureRepository;
 
 class AdminController extends Controller
 {
@@ -17,11 +20,12 @@ class AdminController extends Controller
     {
         $artist = new Artist();
         $image = new Images();
+        $work = new Work();
 
         $formArtist = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
         $formImageArtist = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
-
-        $formArtist->handleRequest($request);
+        $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $formWork = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         if ($formArtist->isSubmitted() && $formArtist->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -33,6 +37,8 @@ class AdminController extends Controller
             'artist' => $artist,
             'form' => $formArtist->createView(),
             'formImage' => $formImageArtist->createView(),
+            'formWorkImage' => $formWorkImage->createView(),
+            'formWork' => $formWork->createView(),
         ));
     }
 
@@ -132,7 +138,7 @@ class AdminController extends Controller
             $em->persist($artist);
             $em->flush();
 
-            /* We send back the data regarding the profil */
+            /* We send back the data regarding the profile */
             $artist = $em->getRepository('WeCreaBundle:Artist')->findOneBy(array(
                 'name'=> $name,
                 'firstname' => $firstName
@@ -157,8 +163,9 @@ class AdminController extends Controller
         *  created from the beginning if the client decides to stop the
         *  creation of the artist profile (closes window, goes back to previous page...)
         */
+
         $em = $this->getDoctrine()->getManager();
-        
+
         /* If the artist profile has been created */
         if(!empty($request->request->get('idArt'))){
             $idArt = $request->request->get('idArt');
@@ -194,4 +201,51 @@ class AdminController extends Controller
 
         return new Response("L'image a bien été supprimée");
     }
+
+    public function newWorkImageAjaxAction(Request $request)
+    {
+        $image = new Images();
+        dump($request);
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $alt = $request->request->get('wecreabundle_images')['alt'];
+            $file = $request->files->get('wecreabundle_images')['url'];
+
+            $fileName = uniqId() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('image_directory'), $fileName);
+
+            $image->setUrl($fileName);
+            $image->setAlt($alt);
+
+            /* if the artist profile has been created
+            *  before the submission of the new image,
+            *  we can make the association
+            */
+            if(!empty($request->request->get('idArt'))){
+                $idArt = $request->request->get('idArt');
+                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+                $artist->addImage($image);
+            }
+
+            $em->persist($image);
+            $em->flush();
+
+            /* We send back the data regarding the freshly
+            *  created image to enable modifications
+            */
+            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
+
+            $encoders = array(new JsonEncoder());
+            $normalizer = array(new ObjectNormalizer());
+            $serializer = new Serializer($normalizer, $encoders);
+
+            $jsonImage = $serializer->serialize($image, "json");
+
+            $response = new Response($jsonImage);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+    }
+
 }

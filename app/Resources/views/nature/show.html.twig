@@ -1,31 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Image</h1>
+    <h1>Nature</h1>
 
     <table>
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ image.id }}</td>
+                <td>{{ nature.id }}</td>
             </tr>
             <tr>
-                <th>Url</th>
-                <td>{{ image.url }}</td>
-            </tr>
-            <tr>
-                <th>Alt</th>
-                <td>{{ image.alt }}</td>
+                <th>Name</th>
+                <td>{{ nature.name }}</td>
             </tr>
         </tbody>
     </table>
 
     <ul>
         <li>
-            <a href="{{ path('images_index') }}">Back to the list</a>
+            <a href="{{ path('nature_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('images_edit', { 'id': image.id }) }}">Edit</a>
+            <a href="{{ path('nature_edit', { 'id': nature.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
