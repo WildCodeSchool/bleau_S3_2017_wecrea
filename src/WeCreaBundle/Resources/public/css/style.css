@@ -1,9 +1,23 @@
 /* ADMIN */
 
-#images-artist-confirmed img{
+#images-artist-confirmed img,
+#images-work-confirmed img{
     width: 50%;
 }
 
-#images-artist-check img{
+#images-artist-check img,
+#images-work-check img{
     width: 30%;
+}
+
+/* First three -> forms */
+#artist-picture,
+#work-caracteristics,
+#work-picture,
+#images-artist-confirmed,
+#work-confirmed,
+#images-work-confirmed,
+.add-work,
+.end-work-creation{
+    display: none;
 }
