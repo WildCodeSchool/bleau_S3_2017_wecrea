@@ -1,6 +1,7 @@
 <?php
 
 namespace WeCreaBundle\Repository;
+use Doctrine\ORM\Query;
 
 /**
  * WorkRepository
@@ -10,4 +11,17 @@ namespace WeCreaBundle\Repository;
  */
 class WorkRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*
+    public function myFindBy($title, $technic, $dimensions, $weight){
+        $query = $this->createQueryBuilder('w');
+        $query->select('w.id, w.title, w.technic, w.dimensions, w.weight, w.timelimit, w.quantity')
+
+        ->where('w.title = :title')->setParameter('title', $title)
+        ->Andwhere('w.technic = :technic')->setParameter('technic', $technic)
+        ->AndWhere('w.dimensions = :dimensions')->setParameter('dimensions', $dimensions)
+        ->AndWhere('w.weight = :weight')->setParameter('weight', $weight);
+        return $query->getQuery()->getResult();
+
+    }
+    */
 }

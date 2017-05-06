@@ -64,12 +64,18 @@
                     <i class="material-icons left">done</i>
                 </button>
                 </div>
+                {{ form_end(formImage) }}
                 <div class="row">
                     <h4>Images de l'artiste validées</h4>
                     <div class="col s12" id="images-artist-confirmed">
                     </div>
                 </div>
-                {{ form_end(formImage) }}
+
+                <div class="row">
+                    <h4>Oeuvres validées</h4>
+                    <div class="col s12" id="work-confirmed">
+                    </div>
+                </div>
 
                 {{ form_start(formWork, {'attr' : {'id' : 'work-caracteristics' }} ) }}
                 <div class="row">
@@ -108,6 +114,12 @@
                             {{ form_row(workNature) }}
                         {% endfor %}
                     </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light left" type="submit" name="action">
+                        Créer l'oeuvre
+                        <i class="material-icons left">send</i>
+                    </button>
                 </div>
                 {{ form_end(formWork) }}
 
@@ -262,6 +274,7 @@
                     success: function (response) {
                         $idArt = response.id;
 
+                        /* Add the artist id into the image form (for profile) */
                         var $formImgArtLastChild = $('form[id="artist-picture"] input[id="wecreabundle_images__token"]');
                         $inputElt = $(document.createElement('input'));
                         $inputElt.attr("value", "" + $idArt + "");
@@ -269,7 +282,8 @@
                         $inputElt.attr("name", "idArt");
                         $inputElt.insertBefore($formImgArtLastChild);
 
-                        var $formImgWorkLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
+                        /* Add the artist id into the work form (to link to work to the artist */
+                        var $formImgWorkLastChild = $('form[id="work-caracteristics"] input[id="wecreabundle_work__token"]');
                         $inputElt2 = $(document.createElement('input'));
                         $inputElt2.attr("value", "" + $idArt + "");
                         $inputElt2.attr("type", "hidden");
@@ -294,7 +308,7 @@
         $('form[id="work-picture"]').submit(function(e){
             e.preventDefault();
             var $data = new FormData($(this)[0]);
-
+            console.log($(this)[0]);
             /* We remove the preview image and reset the
              * form to enable the submission of new pictures
              */
@@ -335,7 +349,8 @@
                     $("#images-work-confirmed").append($cancel);
                     $cancel.hide().fadeIn(2000);
 
-                    var $formLastChild = $('#wecreabundle_artist__token');
+                    /* Add the image id into the work form */
+                    var $formLastChild = $('#wecreabundle_work__token');
                     var $inputElt = $(document.createElement('input'));
                     $inputElt.attr("value", "" + $id + "");
                     $inputElt.attr("type", "hidden");
@@ -360,9 +375,11 @@
                          * controller to remove the deleted image from the artist entity
                          */
 
-                        if(typeof($idArt) !== undefined){
-                            $data.idArt = $idArt;
+                        /////////////////////////////////
+                        if(typeof($idWork) !== undefined){
+                            $data.idWork = $idWork;
                         }
+                        ////////////à déplacer dans image-work-confirmed///////////////////
 
                         $.ajax({
                             method: 'post',
@@ -375,6 +392,39 @@
                     });
                 }
             });
+        });
+
+        $('form[id="work-caracteristics"]').submit(function(e){
+            e.preventDefault();
+
+            if(confirm("Vous allez créer une nouvelle oeuvre.")){
+                // $(this).find('button').hide();
+                var $data = $(this).serialize();
+
+                $.ajax({
+                    method: "post",
+                    url: "{{ path('we_crea_admin_work_caracteristics_creation_ajax') }}",
+                    data: $data,
+                    success: function(response){
+                        console.log(response);
+                        var $idWork = response.id;
+
+                        var $formArtLastChild = $('form[id="artist-profil"] input[id="wecreabundle_artist__token"]');
+                        $inputElt = $(document.createElement('input'));
+                        $inputElt.attr("value", "" + $idWork + "");
+                        $inputElt.attr("type", "hidden");
+                        $inputElt.attr("name", "idWork[]");
+                        $inputElt.insertBefore($formArtLastChild);
+
+                        var $formImgWorkLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
+                        $inputElt2 = $(document.createElement('input'));
+                        $inputElt2.attr("value", "" + $idWork + "");
+                        $inputElt2.attr("type", "hidden");
+                        $inputElt2.attr("name", "idWork");
+                        $inputElt2.insertBefore($formImgWorkLastChild);
+                    }
+                });
+            }
         });
 
         /* if all elements are created "but not the profile" before unloading
