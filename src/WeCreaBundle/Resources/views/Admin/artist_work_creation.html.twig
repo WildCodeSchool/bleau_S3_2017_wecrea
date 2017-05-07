@@ -110,6 +110,11 @@
                     {{ form_errors(formWork.timelimit) }}
                 </div>
                 <div class="input-field col s12">
+                    {{ form_label(formWork.price, 'Prix') }}
+                    {{ form_widget(formWork.price) }}
+                    {{ form_errors(formWork.price) }}
+                </div>
+                <div class="input-field col s12">
                     {% for workNature in formWork.nature %}
                         {{ form_row(workNature) }}
                     {% endfor %}
