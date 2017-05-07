@@ -153,9 +153,6 @@
                 <div class="col s12" id="work-confirmed">
                     <h4>Oeuvres validées</h4>
                 </div>
-                <div class="col s12" id="images-work-confirmed">
-                    <h4>Images de l'oeuvre validées</h4>
-                </div>
             </div>
             <div class="row">
                 <button class="btn waves-effect waves-light left end-work-creation" type="submit" name="action">
@@ -342,8 +339,36 @@
                         console.log(response);
                         $idWork = response.id;
 
+                        var $newWork = $(document.createElement('div'));
+                        $newWork.attr('class', 'new-work');
+
+                        var $input = $(document.createElement('input'));
+                        $input.attr("value", "" + $idWork + "");
+                        $input.attr("type", "hidden");
+                        $input.attr("name", "idWork");
+
+                        var $pTitle = $("<p> Titre : " + response.title + " </p>");
+                        var $pTechnic = $("<p> Technique utilisée : " + response.technic + " </p>");
+                        var $pDimensions = $("<p> Dimensions : " + response.dimensions + " </p>");
+                        var $pWeight = $("<p> Poids " + response.weight + " </p>");
+                        var $pQuantity = $("<p> Quantité(s) " + response.quantity + " </p>");
+                        var $pTimelimit = $("<p> Délai de livraison " + response.timelimit + " </p>");
+                        var $pPrice = $("<p> Prix : " + response.price + " € </p>");
+
+                        $newWork.append($input);
+                        $newWork.append($pTitle);
+                        $newWork.append($pTechnic);
+                        $newWork.append($pDimensions);
+                        $newWork.append($pWeight);
+                        $newWork.append($pQuantity);
+                        $newWork.append($pTimelimit);
+                        $newWork.append($pPrice);
+
+                        $("#work-confirmed").append($newWork);
+                        $("#work-confirmed").hide();
+
                         var $formImgWorkLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
-                        $inputElt = $(document.createElement('input'));
+                        var $inputElt = $(document.createElement('input'));
                         $inputElt.attr("value", "" + $idWork + "");
                         $inputElt.attr("type", "hidden");
                         $inputElt.attr("name", "idWork");
@@ -405,6 +430,9 @@
                 success: function(response){
                     var $id = response.id;
 
+                    var $newWorkImg = $(document.createElement('div'));
+                    $newWorkImg.attr('class', 'new-work-image');
+
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
                     $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
@@ -420,16 +448,20 @@
                     $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
                     $cancel.text("Supprimer");
 
-                    $("#images-work-confirmed").show();
-
-                    $("#images-work-confirmed").append($img);
+                    $($newWorkImg).append($img);
                     $img.hide().fadeIn(2000);
 
-                    $("#images-work-confirmed").append($input);
+                    $($newWorkImg).append($input);
                     $input.hide().fadeIn(2000);
 
-                    $("#images-work-confirmed").append($cancel);
+                    $($newWorkImg).append($cancel);
                     $cancel.hide().fadeIn(2000);
+
+                    var $newWork = $("#work-confirmed").find('.new-work:last-child');
+                    $newWork.append($newWorkImg);
+
+                    $($newWork).show();
+                    $("#work-confirmed").show();
 
                     $('.delete-image-work').click(function(e){
                         e.preventDefault();
@@ -438,12 +470,11 @@
                         var $data = {'idImg' : $idImgToDelete, 'idWork' : $idWork};
 
                         /* Let's remove the delete button & the image deleted */
-                        $(this).prev().remove();
-                        $(this).remove();
+                        $(this).parent().remove();
 
                         /* If work exists, it has an id, that we send to the
                          * controller to remove the deleted image from the
-                         * artist entity
+                         * work entity
                          */
 
                         $.ajax({
@@ -461,6 +492,7 @@
 
         $('.end-work-creation').click(function(){
             $(this).hide();
+            $("#work-picture").hide();
             $('.add-work').prop('disabled', false);
             $('.create-work').prop('disabled', false);
             alert('Vous pouvez désormais créer une autre oeuvre ou quitter cette page');
@@ -468,6 +500,27 @@
             $('form[id="work-caracteristics"]').hide();
             $('form[id="work-caracteristics"]').find('input').prop('disabled', false);
             $('form[id="work-picture"]').find('input[name="idWork"]').remove();
+
+            var $deleteWork = $(document.createElement('button'));
+            $deleteWork.text("Supprimer l'oeuvre et ses images");
+
+            $("#work-confirmed").append($deleteWork);
+
+            $deleteWork.click(function(){
+                var $data = $(this).prev().find('input[type="hidden"]').attr('value');
+                console.log($data);
+                $(this).prev().remove();
+                $(this).remove();
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_delete_work_ajax') }}",
+                    data: {'idWork' : $data},
+                    success: function(response){
+                        alert(response);
+                    }
+                })
+            })
         });
     });
     </script>

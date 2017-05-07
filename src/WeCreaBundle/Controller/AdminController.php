@@ -295,6 +295,7 @@ class AdminController extends Controller
             $quantity = $request->request->get('wecreabundle_work')['quantity'];
             $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
             $type = $request->request->get('wecreabundle_work')['nature']['name'];
+            $price = $request->request->get('wecreabundle_work')['price'];
 
             /* let's check if new nature or not. If 0, yes... */
             $nature = $em->getRepository('WeCreaBundle:Nature')->findOneByName($type);
@@ -319,6 +320,7 @@ class AdminController extends Controller
             $work->setWeight($weight);
             $work->setQuantity($quantity);
             $work->setTimelimit($timelimit);
+            $work->setPrice($price);
 
             $em->persist($work);
             $em->persist($nature);
@@ -343,6 +345,34 @@ class AdminController extends Controller
 
             return $response;
         }
+    }
+
+    public function deleteWorkAjaxAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $idWork = $request->request->get('idWork');
+
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
+        $images = $work->getImages();
+
+        if(isset($images) && !empty($images)){
+            for($i=0; $i<count($images); ++$i) {
+                $idImg = $images[$i]->getId();
+                $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
+                $url = $image->getUrl();
+
+                $path = $this->getParameter('image_directory')."/".$url;
+
+                if(file_exists($path)){
+                    unlink($path);
+                }
+                $em->remove($image);
+            }
+        }
+
+        $em->remove($work);
+        $em->flush();
+
+        return new Response("L'oeuvre et ses images ont bien été supprimée");
     }
 
 }

@@ -22,6 +22,7 @@ class WorkType extends AbstractType
             ->add('weight')
             ->add('quantity')
             ->add('timelimit')
+            ->add('price')
             ->add('nature', NatureType::class);
     }
     

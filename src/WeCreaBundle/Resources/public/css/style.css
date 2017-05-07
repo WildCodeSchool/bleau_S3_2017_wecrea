@@ -21,3 +21,11 @@
 .end-work-creation{
     display: none;
 }
+
+.new-work{
+    border: 1px solid #c8c8c8;
+}
+
+.new-work-image img{
+    width: 50%;
+}
