@@ -1,3 +1,50 @@
+/* ADMIN */
+
+#images-artist-confirmed img,
+#images-work-confirmed img{
+    width: 50%;
+}
+
+#images-artist-check img,
+#images-work-check img{
+    margin-top: 10px;
+    width: 30%;
+    display: block;
+    margin: 0 auto;
+}
+
+#images-artist-check button{
+    display: block;
+    margin: 0 auto;
+}
+
+/* First three -> forms */
+#artist-picture,
+#work-caracteristics,
+#work-picture,
+#images-artist-confirmed,
+#work-confirmed,
+#images-work-confirmed,
+.add-work,
+.end-work-creation{
+    display: none;
+}
+
+.new-artist-image,
+.new-work{
+    border: 1px solid #c8c8c8;
+}
+
+.new-work-image img{
+    width: 50%;
+}
+
+.row-custom-edit-artist-image img,
+.row-custom-edit-work-image img {
+    width: 50%;
+}
+
+/* partie fabien */
 .nav_custom {
     background-color: transparent;
 }
