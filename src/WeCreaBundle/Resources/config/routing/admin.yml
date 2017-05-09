@@ -34,6 +34,14 @@ we_crea_admin_delete_work_ajax:
     path: /deleteWork
     defaults: {_controller: "WeCreaBundle:Admin:deleteWorkAjax"}
 
+we_crea_admin_edit_profile_ajax:
+    path: /editProfile
+    defaults: {_controller: "WeCreaBundle:Admin:editProfileAjax"}
+
+we_crea_admin_edit_work_ajax:
+    path: /editWork
+    defaults: {_controller: "WeCreaBundle:Admin:editWorkAjax"}
+
 we_crea_admin_artist_work_edition:
     path: /artist/edition/{id}
     defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}

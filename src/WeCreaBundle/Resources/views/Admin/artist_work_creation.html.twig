@@ -34,7 +34,7 @@
                     </button>
                 </div>
             </div>
-            {{ form_end(form) }}
+            {{ form_end(form, {'render_rest': false}) }}
 
             {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
             <div class="row">
@@ -117,11 +117,13 @@
                     {{ form_widget(formWork.price) }}
                     {{ form_errors(formWork.price) }}
                 </div>
+
                 <div class="input-field col s12">
-                    {% for workNature in formWork.nature %}
-                        {{ form_row(workNature) }}
-                    {% endfor %}
+                    {{ form_widget(formWork.nature) }}
+                    {{ form_errors(formWork.nature) }}
+                    {{ form_label(formWork.nature, "Nature de l'oeuvre") }}
                 </div>
+
             </div>
             <div class="row">
                 <button class="btn waves-effect waves-light left create-work" type="submit" name="action">
@@ -129,7 +131,7 @@
                     <i class="material-icons left">send</i>
                 </button>
             </div>
-            {{ form_end(formWork) }}
+            {{ form_end(formWork, {'render_rest' : false }) }}
 
             {{ form_start(formWorkImage, {'attr' : {'id' : 'work-picture'}} ) }}
             <div class="row">
@@ -172,6 +174,7 @@
 {% block javascripts %}
     <script>
     $(document).ready(function(){
+        $('select').material_select();
         /* We stock the artist & work id <sand work id when created */
         var $idArt;
         var $idWork;
@@ -180,7 +183,7 @@
 
         $('form[id="artist-profil"]').submit(function(e){
             e.preventDefault();
-
+            console.log($(this).serialize());
             if(confirm("Vous allez créer le profil de l'artiste.")) {
                 $(this).find('button').hide();
                 var $form = $(this).serialize();
@@ -241,7 +244,6 @@
         $('form[id="artist-picture"]').submit(function(e){
             e.preventDefault();
             var data = new FormData($(this)[0]);
-
             /* We remove the preview image and reset the
             * form to enable the submission of new pictures
             */

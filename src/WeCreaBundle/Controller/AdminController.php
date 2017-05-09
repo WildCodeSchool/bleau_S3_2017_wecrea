@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AdminController extends Controller
 {
+    /* Render the page for the creation a new artist & some or all of his/her works */
     public function newArtistWorkAction(Request $request)
     {
         $artist = new Artist();
@@ -45,80 +46,9 @@ class AdminController extends Controller
         ));
     }
 
-    public function editArtistWorkAction($id)
-    {
-        $image = new Images();
-        $work = new Work();
-
-        $em = $this->getDoctrine()->getManager();
-        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
-        $works = $em->getRepository('WeCreaBundle:Work')->findByArtist(array(
-            'artist' => $artist
-        ));
-
-        foreach($works as $key){
-            $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
-        }
-
-        $editArtistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
-        $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
-        $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
-        $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
-
-        return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
-            'artist' => $artist,
-            'works' => $works,
-            'editArtistForm' => $editArtistForm->createView(),
-            'artistImageForm' => $artistImageForm->createView(),
-            'workForm' => $workForm->createView(),
-            'editWorkForms' => $editWorkForms,
-            'workImageForm' => $workImageForm->createView(),
-        ));
-    }
-
-    public function newArtistImageAjaxAction(Request $request)
-    {
-        $image = new Images();
-
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $alt = $request->request->get('wecreabundle_images')['alt'];
-            $file = $request->files->get('wecreabundle_images')['url'];
-
-            $fileName = uniqId() . '.' . $file->guessExtension();
-            $file->move($this->getParameter('image_directory'), $fileName);
-            dump($request);
-            $image->setUrl($fileName);
-            $image->setAlt($alt);
-
-            /* As the artist profile has been created
-            *  before the submission of the new image,
-            *  we can make the association
-            */
-            $idArt = $request->request->get('idArt');
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-            $artist->addImage($image);
-
-            $em->persist($image);
-            $em->flush();
-
-            /* We send back the data regarding the freshly
-            *  created image to enable deletion
-            */
-            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
-
-            $encoders = array(new JsonEncoder());
-            $normalizer = array(new ObjectNormalizer());
-            $serializer = new Serializer($normalizer, $encoders);
-
-            $jsonImage = $serializer->serialize($image, "json");
-
-            $response = new Response($jsonImage);
-            $response->headers->set('Content-Type', 'application/json');
-
-            return $response;
-        }
-    }
+    /*
+     * Method for creation a new artist profile(without images)
+     */
 
     public function newArtistProfilAjaxAction(Request $request){
 
@@ -158,8 +88,59 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteArtistImageAjaxAction(Request $request){
+    /*
+     * Method for managing the artist pictures
+     */
 
+    public function newArtistImageAjaxAction(Request $request)
+    {
+        $image = new Images();
+
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $alt = $request->request->get('wecreabundle_images')['alt'];
+            $file = $request->files->get('wecreabundle_images')['url'];
+
+            $fileName = uniqId() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('image_directory'), $fileName);
+            $image->setUrl($fileName);
+            $image->setAlt($alt);
+
+            /* As the artist profile has been created
+            *  before the submission of the new image,
+            *  we can make the association
+            */
+            $idArt = $request->request->get('idArt');
+            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+            $artist->addImage($image);
+
+            $em->persist($image);
+            $em->flush();
+
+            /* We send back the data regarding the freshly
+            *  created image to enable deletion
+            */
+            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
+
+            $encoders = array(new JsonEncoder());
+            $normalizer = array(new ObjectNormalizer());
+            $serializer = new Serializer($normalizer, $encoders);
+
+            $jsonImage = $serializer->serialize($image, "json");
+
+            $response = new Response($jsonImage);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+    }
+
+    /*
+    * Method for deleting an image from the artist profile
+    */
+
+    public function deleteArtistImageAjaxAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
 
         /* If the artist profile has been created */
@@ -171,46 +152,17 @@ class AdminController extends Controller
             $artist = false;
         }
 
-        /* Array of images = 1 or all images (if window closed for example) */
         $idImg = $request->request->get('idImg');
 
-        for($i=0; $i<count($idImg); ++$i){
-            $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg[$i]);
-            $url = $image->getUrl();
-
-            /* If the artist profile exists, let's remove the images it
-            * is linked with
-            */
-            if($artist !== false){
-                $artist->removeImage($image);
-            }
-
-            $path = $this->getParameter('image_directory')."/".$url;
-
-            if(file_exists($path)){
-                unlink($path);
-            }
-            $em->remove($image);
-        }
-
-        $em->flush();
-
-        return new Response("L'image a bien été supprimée");
-    }
-
-    public function deleteWorkImageAjaxAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $idWork = $request->request->get('idWork');
-        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
-
-        $idImg = $request->request->get('idImg');
-
-        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg[$i]);
         $url = $image->getUrl();
 
-        /* Let's remove the images the work is linked with */
-
-        $work->removeImage($image);
+        /* If the artist profile exists, let's remove the images it
+        * is linked with
+        */
+        if($artist !== false){
+            $artist->removeImage($image);
+        }
 
         $path = $this->getParameter('image_directory')."/".$url;
 
@@ -223,6 +175,79 @@ class AdminController extends Controller
 
         return new Response("L'image a bien été supprimée");
     }
+
+    /*
+     * Method for creating a new work (without images)
+     */
+
+    public function newWorkCaracteristicsAjaxAction(Request $request){
+
+        $work = new Work();
+
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getManager();
+
+            $title = $request->request->get('wecreabundle_work')['title'];
+            $technic = $request->request->get('wecreabundle_work')['technic'];
+            $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
+            $weight = $request->request->get('wecreabundle_work')['weight'];
+            $quantity = $request->request->get('wecreabundle_work')['quantity'];
+            $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+            $price = $request->request->get('wecreabundle_work')['price'];
+
+            /* let's check if new nature or not. If 0, yes... */
+            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+            /* Remove commentary if clients desires to add new work natures
+            if(count($nature) == 0){
+                $nature = new Nature();
+                $nature->setName($type);
+                $work->setNature($nature);
+            }
+            */
+
+            $work->setNature($nature);
+
+            $idArt = $request->request->get('idArt');
+            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+            $work->setArtist($artist);
+            }
+
+            $work->setTitle($title);
+            $work->setTechnic($technic);
+            $work->setDimensions($dimensions);
+            $work->setWeight($weight);
+            $work->setQuantity($quantity);
+            $work->setTimelimit($timelimit);
+            $work->setPrice($price);
+
+            $em->persist($work);
+            $em->persist($nature);
+            $em->flush();
+
+            /* We send back the data regarding the profile */
+            $work = $em->getRepository('WeCreaBundle:Work')->findAll();
+            dump($work);
+            /* Let's get the last work created */
+            $work = $work[count($work)-1];
+
+
+            $encoders = new JsonEncoder();
+            $normalizer = new ObjectNormalizer();
+            $normalizer->setIgnoredAttributes(array("artist", "nature"));
+            $serializer = new Serializer(array($normalizer), array($encoders));
+
+            $jsonWork = $serializer->serialize($work, "json");
+
+            $response = new Response($jsonWork);
+            $response->headers->set('Content-Type','application/json');
+
+            return $response;
+    }
+
+    /*
+     * Method for managing the images linked to work
+     */
 
     public function newWorkImageAjaxAction(Request $request)
     {
@@ -266,71 +291,42 @@ class AdminController extends Controller
         }
     }
 
-    public function newWorkCaracteristicsAjaxAction(Request $request){
+    /*
+     * Method for deleting a specific image linked to a specific work
+     */
 
-        $work = new Work();
+    public function deleteWorkImageAjaxAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
 
-        if($request->isXmlHttpRequest()){
-            $em = $this->getDoctrine()->getManager();
-
-            $title = $request->request->get('wecreabundle_work')['title'];
-            $technic = $request->request->get('wecreabundle_work')['technic'];
-            $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
-            $weight = $request->request->get('wecreabundle_work')['weight'];
-            $quantity = $request->request->get('wecreabundle_work')['quantity'];
-            $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
-            $type = $request->request->get('wecreabundle_work')['nature']['name'];
-            $price = $request->request->get('wecreabundle_work')['price'];
-
-            /* let's check if new nature or not. If 0, yes... */
-            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneByName($type);
-            if(count($nature) == 0){
-                $nature = new Nature();
-                $nature->setName($type);
-                $work->setNature($nature);
-            }
-            else{
-                $work->setNature($nature);
-            }
-
-            if(!empty($request->request->get('idArt'))){
-                $idArt = $request->request->get('idArt');
-                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-                $work->setArtist($artist);
-            }
-
-            $work->setTitle($title);
-            $work->setTechnic($technic);
-            $work->setDimensions($dimensions);
-            $work->setWeight($weight);
-            $work->setQuantity($quantity);
-            $work->setTimelimit($timelimit);
-            $work->setPrice($price);
-
-            $em->persist($work);
-            $em->persist($nature);
-            $em->flush();
-
-            /* We send back the data regarding the profile */
-            $work = $em->getRepository('WeCreaBundle:Work')->findAll();
-            dump($work);
-            /* Let's get the last work created */
-            $work = $work[count($work)-1];
-
-
-            $encoders = new JsonEncoder();
-            $normalizer = new ObjectNormalizer();
-            $normalizer->setIgnoredAttributes(array("artist", "nature"));
-            $serializer = new Serializer(array($normalizer), array($encoders));
-
-            $jsonWork = $serializer->serialize($work, "json");
-
-            $response = new Response($jsonWork);
-            $response->headers->set('Content-Type','application/json');
-
-            return $response;
+        /* Stores the work id */
+        $idWork = $request->request->get('idWork');
+        /* Looks for the work corresponding to the id */
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
+        /* Stores the image id */
+        $idImg = $request->request->get('idImg');
+        /* Looks for the image corresponding to the id */
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
+        /* Gets the url of the image */
+        $url = $image->getUrl();
+        /* Let's remove the images the work is linked with */
+        $work->removeImage($image);
+        /* Check if the image exists within the images folder */
+        $path = $this->getParameter('image_directory')."/".$url;
+        /* If yes, unlink the image */
+        if(file_exists($path)){
+            unlink($path);
         }
+        /* Remove this image */
+        $em->remove($image);
+        /* Update the database */
+        $em->flush();
+        /* Confirm the image has been deleted successfully */
+        return new Response("L'image a bien été supprimée");
     }
+
+    /*
+     * Method for deleting the work & all its images
+     */
 
     public function deleteWorkAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
@@ -359,5 +355,81 @@ class AdminController extends Controller
 
         return new Response("L'oeuvre et ses images ont bien été supprimées");
     }
+
+    /*
+     * Access to the page for editing a specific artist profile & his/her works
+     */
+
+    public function editArtistWorkAction($id)
+    {
+        $image = new Images();
+        $work = new Work();
+
+        $em = $this->getDoctrine()->getManager();
+        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+        $works = $em->getRepository('WeCreaBundle:Work')->findByArtist(array(
+            'artist' => $artist
+        ));
+
+        foreach($works as $key){
+            $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
+        }
+
+        $editArtistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
+        $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+
+        return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
+            'artist' => $artist,
+            'works' => $works,
+            'editArtistForm' => $editArtistForm->createView(),
+            'artistImageForm' => $artistImageForm->createView(),
+            'formWork' => $workForm->createView(),
+            'editWorkForms' => $editWorkForms,
+            'workImageForm' => $workImageForm->createView(),
+        ));
+    }
+
+    /*
+     * Method for editing the works of the artist
+     */
+
+    public function editWorkAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getManager();
+
+            $id = $request->request->get('wecreabundle_work')['id'];
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+
+            $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+
+            $title = $request->request->get('wecreabundle_work')['title'];
+            $technic = $request->request->get('wecreabundle_work')['technic'];
+            $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
+            $weight = $request->request->get('wecreabundle_work')['weight'];
+            $quantity = $request->request->get('wecreabundle_work')['quantity'];
+            $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
+            $price = $request->request->get('wecreabundle_work')['price'];
+
+            $work->setTitle($title);
+            $work->setTechnic($technic);
+            $work->setDimensions($dimensions);
+            $work->setWeight($weight);
+            $work->setQuantity($quantity);
+            $work->setTimelimit($timelimit);
+            $work->setNature($nature);
+            $work->setPrice($price);
+
+            $em->persist($work);
+            $em->flush();
+        }
+    }
+
+    /*
+     * Method for deleting the works & all its images
+     */
 
 }

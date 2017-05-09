@@ -14,9 +14,7 @@ class NatureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
-            'label' => "Nature de l'oeuvre"
-        ));
+        $builder->add('name', TextType::class);
     }
     
     /**

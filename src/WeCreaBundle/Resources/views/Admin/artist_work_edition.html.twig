@@ -5,7 +5,9 @@
         <h4>Edition du profil de l'artiste et de ses oeuvres</h4>
         <div class="row row-edit-artist">
             {{ form_start(editArtistForm) }}
-            <div class="row">
+                <div class="input-field col s12 idProfile">
+                    {{ form_row(editArtistForm.id) }}
+                </div>
                 <div class="input-field col s12">
                     {{ form_label(editArtistForm.name, 'Nom Artiste') }}
                     {{ form_errors(editArtistForm.name) }}
@@ -26,27 +28,28 @@
                     {{ form_errors(editArtistForm.expertise) }}
                     {{ form_widget(editArtistForm.expertise) }}
                 </div>
-                <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light right"  type="submit" name="action">
-                        Éditer le profil
-                    </button>
-                </div>
-            </div>
-            {{ form_end(editArtistForm) }}
 
-            {% for images in artist.images %}
-                <div class="row row-custom-artist-image">
-                    <h5>Images de l'artiste</h5>
+                <button class="btn waves-effect waves-light right edit-profil"  type="submit" name="action">
+                    Éditer le profil
+                    <i class="material-icons left">mode_edit</i>
+                </button>
+            {{ form_end(editArtistForm) }}
+        </div>
+
+        <div class="row">
+            <h5>Images de l'artiste</h5>
+                {% for images in artist.images %}
                     <div class="col s12">
                         <img src="{{ asset('bundles/wecrea/images/'~images.url) }}"/>
                     </div>
                     <div class="col s12">
                         <button class="btn waves-effect waves-light red delete-artist-images">
                             Supprimer
+                            <i class="material-icons left">delete</i>
                         </button>
                     </div>
-                </div>
             {% endfor %}
+        </div>
 
             {{ form_start(artistImageForm, {'attr' : {'id' : 'edit-artist-picture'}} ) }}
             <div class="row">
@@ -65,18 +68,20 @@
                 </div>
 
                 <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light right" type="submit" name="action">
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
                         Ajouter l'image
-                        <i class="material-icons left">done</i>
+                        <i class="material-icons left">add</i>
                     </button>
                 </div>
             </div>
             {{ form_end(artistImageForm) }}
 
-
             {% for form in editWorkForms %}
                 <div class="row row-edit-work">
                     {{ form_start(form) }}
+                    <div class="input-field col s12 idWork">
+                        {{ form_row(form.id) }}
+                    </div>
                     <div class="input-field col s12">
                         {{ form_label(form.title, "Titre") }}
                         {{ form_errors(form.title) }}
@@ -113,20 +118,17 @@
                         {{ form_widget(form.price) }}
                     </div>
                     <div class="input-field col s12">
-                        {% for nature in form.nature %}
-                            {{ form_row(nature) }}
-                        {% endfor %}
+                        {{ form_widget(form.nature) }}
+                        {{ form_errors(form.nature) }}
+                        {{ form_label(form.nature, "Nature de l'oeuvre") }}
                     </div>
-                    <div class="input-field col s12">
-                        {% for nature in form.nature %}
-                            {{ form_row(nature) }}
-                        {% endfor %}
-                    </div>
-                    <button class="btn waves-effect waves-light left red delete-work" type="submit" name="action">
-                        Supprimer l'oeuvre
-                    </button>
                     <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
-                      Éditer l'oeuvre
+                        Éditer l'oeuvre
+                        <i class="material-icons left">mode_edit</i>
+                    </button>
+                    <button class="btn waves-effect waves-light left delete-work red" type="submit" name="action">
+                        Supprimer l'oeuvre
+                        <i class="material-icons left">delete</i>
                     </button>
                     {{ form_end(form) }}
                 </div>
@@ -149,8 +151,65 @@
                 </div>
             {% endfor%}
 
+            <hr>
 
+            <div class="row">
+                <button class="btn waves-effect waves-light left edit-add-work" type="submit" name="action">
+                    Ajouter une oeuvre
+                    <i class="material-icons left">add</i>
+                </button>
+            </div>
 
+            {{ form_start(formWork, {'attr' : {'id' : 'edit-work-caracteristics' }} ) }}
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form_label(formWork.title, 'Titre') }}
+                    {{ form_widget(formWork.title) }}
+                    {{ form_errors(formWork.title) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.technic, 'Technique utilisée') }}
+                    {{ form_widget(formWork.technic) }}
+                    {{ form_errors(formWork.technic) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.dimensions, 'Dimensions') }}
+                    {{ form_widget(formWork.dimensions) }}
+                    {{ form_errors(formWork.dimensions) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.weight, 'Poids') }}
+                    {{ form_widget(formWork.weight) }}
+                    {{ form_errors(formWork.weight) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.quantity, 'Quantité(s)') }}
+                    {{ form_widget(formWork.quantity) }}
+                    {{ form_errors(formWork.quantity) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.timelimit, 'Délai de livraison') }}
+                    {{ form_widget(formWork.timelimit) }}
+                    {{ form_errors(formWork.timelimit) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.price, 'Prix') }}
+                    {{ form_widget(formWork.price) }}
+                    {{ form_errors(formWork.price) }}
+                </div>
+                <div class="input-field col s12">
+                    {% for workNature in formWork.nature %}
+                        {{ form_row(workNature) }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light left create-work" type="submit" name="action">
+                    Créer l'oeuvre
+                    <i class="material-icons left">send</i>
+                </button>
+            </div>
+            {{ form_end(formWork) }}
 
             {{ form_start(workImageForm, {'attr' : {'id' : 'edit-work-picture'}} ) }}
             <div class="row">
@@ -176,7 +235,6 @@
                 </button>
             </div>
             {{ form_end(workImageForm) }}
-
             </div>
         </div>
     </div>
@@ -184,9 +242,59 @@
 {% block javascripts %}
 <script>
     $(document).ready(function(){
-        $('form').submit(function(e){
+        /* Enables the select input in materialize */
+        $('select').material_select();
+
+        /******** ABOUT THE ARTIST ********/
+
+        $('form[name="wecreabundle_artist"] .edit-profil').click(function(e){
             e.preventDefault();
-            console.log($(this).serialize());
+            var $data = $(this).parent().serialize();
+
+            $.ajax({
+                method: "post",
+                url: "{{ path('we_crea_admin_edit_profile_ajax') }}",
+                data: $data,
+                success: function(response){
+                    alert(response);
+                }
+            });
+        });
+
+        /******** ABOUT THE WORK ********/
+
+        $('form[name="wecreabundle_work"] .update-work').click(function(e){
+            e.preventDefault();
+            var $data = $(this).parent().serialize();
+
+            $.ajax({
+                method: "post",
+                url: "{{ path('we_crea_admin_edit_work_ajax') }}",
+                data: $data,
+                success: function(response){
+                    alert(response);
+                }
+            });
+        });
+
+        $('form[name="wecreabundle_work"] .delete-work').click(function(e){
+            e.preventDefault();
+
+            /* Let's store the work id */
+            var $id = $(this).parent()[0][0].getAttribute('value');
+            var $data = {idWork : $id};
+
+            /* Let's remove this edit form */
+            $(this).parent().remove();
+
+            $.ajax({
+                method: "post",
+                url: "{{ path('we_crea_admin_delete_work_ajax') }}",
+                data: $data,
+                success: function(response){
+                    alert(response);
+                }
+            });
         });
     });
 </script>

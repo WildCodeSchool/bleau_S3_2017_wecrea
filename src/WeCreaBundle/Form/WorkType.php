@@ -2,11 +2,15 @@
 
 namespace WeCreaBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use WeCreaBundle\Form\NatureType;
+use WeCreaBundle\Entity\Nature;
+
 
 class WorkType extends AbstractType
 {
@@ -16,6 +20,7 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id')
             ->add('title')
             ->add('technic')
             ->add('dimensions')
@@ -23,7 +28,13 @@ class WorkType extends AbstractType
             ->add('quantity')
             ->add('timelimit')
             ->add('price')
-            ->add('nature', NatureType::class);
+            ->add('nature', EntityType::class, array(
+            'class' => Nature::class,
+            'choice_label' => 'name',
+            'multiple' => false
+
+
+        ));
     }
     
     /**
