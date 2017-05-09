@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <header>
+        <nav class="nav_custom">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo"><img class="logo" src="{{ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo"></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">Gestion Artistes</a></li>
+                    <li><a href="#">Administration Carousel</a></li>
+                    <li><a href="#">Actualités</a></li>
+                    <li><a href="#">Édition Newsletter</a></li>
+                </ul>
+
+                <ul id="mobile-demo" class="side-nav">
+                    <li><a href="#">Gestion Artistes</a></li>
+                    <li><a href="#">Administration Carousel</a></li>
+                    <li><a href="#">Actualités</a></li>
+                    <li><a href="#">Édition Newsletter</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+{% endblock %}
