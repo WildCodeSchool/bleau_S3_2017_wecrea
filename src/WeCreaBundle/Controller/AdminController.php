@@ -12,7 +12,10 @@ use WeCreaBundle\Entity\Artist;
 use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\Nature;
+use WeCreaBundle\Form\WorkType;
 use WeCreaBundle\Repository\NatureRepository;
+use WeCreaBundle\WeCreaBundle;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AdminController extends Controller
 {
@@ -42,21 +45,34 @@ class AdminController extends Controller
         ));
     }
 
-    public function editArtistWorkAction(Request $request, Artist $artist)
+    public function editArtistWorkAction($id)
     {
-        $deleteForm = $this->createDeleteForm($artist);
-        $editForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
-        $editForm->handleRequest($request);
+        $image = new Images();
+        $work = new Work();
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $em = $this->getDoctrine()->getManager();
+        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+        $works = $em->getRepository('WeCreaBundle:Work')->findByArtist(array(
+            'artist' => $artist
+        ));
 
+        foreach($works as $key){
+            $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
         }
+
+        $editArtistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
+        $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
             'artist' => $artist,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'works' => $works,
+            'editArtistForm' => $editArtistForm->createView(),
+            'artistImageForm' => $artistImageForm->createView(),
+            'workForm' => $workForm->createView(),
+            'editWorkForms' => $editWorkForms,
+            'workImageForm' => $workImageForm->createView(),
         ));
     }
 
@@ -75,21 +91,19 @@ class AdminController extends Controller
             $image->setUrl($fileName);
             $image->setAlt($alt);
 
-            /* if the artist profile has been created
+            /* As the artist profile has been created
             *  before the submission of the new image,
             *  we can make the association
             */
-            if(!empty($request->request->get('idArt'))){
-                $idArt = $request->request->get('idArt');
-                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-                $artist->addImage($image);
-            }
+            $idArt = $request->request->get('idArt');
+            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+            $artist->addImage($image);
 
             $em->persist($image);
             $em->flush();
 
             /* We send back the data regarding the freshly
-            *  created image to enable modifications
+            *  created image to enable deletion
             */
             $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
 
@@ -118,26 +132,6 @@ class AdminController extends Controller
             $localization = $request->request->get('wecreabundle_artist')['localization'];
             $expertise = $request->request->get('wecreabundle_artist')['expertise'];
 
-            /* If images have been created before the submission
-            *  we just associate them to the profile
-            */
-
-            if(!empty($request->request->get('idImg'))){
-                $idImg = $request->request->get('idImg');
-                for($i=0; $i<count($idImg); ++$i){
-                    $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg[$i]);
-                    $artist->addImage($image);
-                }
-            }
-
-            if(!empty($request->request->get('idWork'))){
-                $idWork = $request->request->get('idWork');
-                for($i=0; $i<count($idWork); ++$i){
-                    $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork[$i]);
-                    $work->setArtist($artist);
-                }
-            }
-
             $artist->setName($name);
             $artist->setFirstname($firstName);
             $artist->setLocalization($localization);
@@ -148,7 +142,7 @@ class AdminController extends Controller
 
             /* We send back the data regarding the profile */
             $artist = $em->getRepository('WeCreaBundle:Artist')->findAll();
-            /* Let's return the latest profil created */
+            /* Let's return the latest profile created */
             $artist = $artist[count($artist)-1];
 
             $encoders = array(new JsonEncoder());
@@ -165,11 +159,6 @@ class AdminController extends Controller
     }
 
     public function deleteArtistImageAjaxAction(Request $request){
-        /* This method takes in charge the deletion of a single image
-        *  (user action with delete image button) as well as all the images
-        *  created from the beginning if the client decides to stop the
-        *  creation of the artist profile (closes window, goes back to previous page...)
-        */
 
         $em = $this->getDoctrine()->getManager();
 
@@ -211,18 +200,15 @@ class AdminController extends Controller
 
     public function deleteWorkImageAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        dump($request);
         $idWork = $request->request->get('idWork');
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
 
         $idImg = $request->request->get('idImg');
 
-
         $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
         $url = $image->getUrl();
 
-        /* Let's remove the images the work is linked with
-        */
+        /* Let's remove the images the work is linked with */
 
         $work->removeImage($image);
 
@@ -284,7 +270,6 @@ class AdminController extends Controller
 
         $work = new Work();
 
-        dump($request);
         if($request->isXmlHttpRequest()){
             $em = $this->getDoctrine()->getManager();
 
@@ -372,7 +357,7 @@ class AdminController extends Controller
         $em->remove($work);
         $em->flush();
 
-        return new Response("L'oeuvre et ses images ont bien été supprimée");
+        return new Response("L'oeuvre et ses images ont bien été supprimées");
     }
 
 }

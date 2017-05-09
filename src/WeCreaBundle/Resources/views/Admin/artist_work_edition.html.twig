@@ -1,21 +1,193 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Artist edit</h1>
+    <div class="container">
+        <h4>Edition du profil de l'artiste et de ses oeuvres</h4>
+        <div class="row row-edit-artist">
+            {{ form_start(editArtistForm) }}
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form_label(editArtistForm.name, 'Nom Artiste') }}
+                    {{ form_errors(editArtistForm.name) }}
+                    {{ form_widget(editArtistForm.name) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(editArtistForm.firstname, 'Prénom Artiste') }}
+                    {{ form_errors(editArtistForm.firstname) }}
+                    {{ form_widget(editArtistForm.firstname) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(editArtistForm.localization, 'Localisation Artiste') }}
+                    {{ form_errors(editArtistForm.localization) }}
+                    {{ form_widget(editArtistForm.localization) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(editArtistForm.expertise, 'Expertise Artiste') }}
+                    {{ form_errors(editArtistForm.expertise) }}
+                    {{ form_widget(editArtistForm.expertise) }}
+                </div>
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light right"  type="submit" name="action">
+                        Éditer le profil
+                    </button>
+                </div>
+            </div>
+            {{ form_end(editArtistForm) }}
 
-    {{ form_start(edit_form) }}
-    {{ form_widget(edit_form) }}
-    <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+            {% for images in artist.images %}
+                <div class="row row-custom-artist-image">
+                    <h5>Images de l'artiste</h5>
+                    <div class="col s12">
+                        <img src="{{ asset('bundles/wecrea/images/'~images.url) }}"/>
+                    </div>
+                    <div class="col s12">
+                        <button class="btn waves-effect waves-light red delete-artist-images">
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
 
-    <ul>
-        <li>
-            <a href="{{ path('artist_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-            <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            {{ form_start(artistImageForm, {'attr' : {'id' : 'edit-artist-picture'}} ) }}
+            <div class="row">
+                <div class="col s12">
+                    {{ form_label(artistImageForm.url, "Photo de l'artiste") }}
+                    {{ form_widget(artistImageForm.url) }}
+                    {{ form_errors(artistImageForm.url) }}
+                </div>
+                <div class="col s12" id="images-artist-check">
+                </div>
+
+                <div class="input-field col s12">
+                    {{ form_label(artistImageForm.alt, "Description de la photo") }}
+                    {{ form_widget(artistImageForm.alt) }}
+                    {{ form_errors(artistImageForm.alt) }}
+                </div>
+
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">done</i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(artistImageForm) }}
+
+
+            {% for form in editWorkForms %}
+                <div class="row row-edit-work">
+                    {{ form_start(form) }}
+                    <div class="input-field col s12">
+                        {{ form_label(form.title, "Titre") }}
+                        {{ form_errors(form.title) }}
+                        {{ form_widget(form.title) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.technic, "Technique") }}
+                        {{ form_errors(form.technic) }}
+                        {{ form_widget(form.technic) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.dimensions, "Dimensions") }}
+                        {{ form_errors(form.dimensions) }}
+                        {{ form_widget(form.dimensions) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.weight, "Poids") }}
+                        {{ form_errors(form.weight) }}
+                        {{ form_widget(form.weight) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.quantity, "Quantités") }}
+                        {{ form_errors(form.quantity) }}
+                        {{ form_widget(form.quantity) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.timelimit, "Date de livraison") }}
+                        {{ form_errors(form.timelimit) }}
+                        {{ form_widget(form.timelimit) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.price, "Prix") }}
+                        {{ form_errors(form.price) }}
+                        {{ form_widget(form.price) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {% for nature in form.nature %}
+                            {{ form_row(nature) }}
+                        {% endfor %}
+                    </div>
+                    <div class="input-field col s12">
+                        {% for nature in form.nature %}
+                            {{ form_row(nature) }}
+                        {% endfor %}
+                    </div>
+                    <button class="btn waves-effect waves-light left red delete-work" type="submit" name="action">
+                        Supprimer l'oeuvre
+                    </button>
+                    <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
+                      Éditer l'oeuvre
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+            {% endfor %}
+
+            {% for work in works %}
+                <div class="row row-custom-edit-work-image">
+                    <h5>Image de l'oeuvre {{ work.title }}</h5>
+                    {% for image in work.images %}
+                        <div class="input-field col s12">
+                            <img src="{{ asset('bundles/wecrea/images/'~image.url) }}"/>
+                            <input type="hidden" value="{{ image.id }}"/>
+                        </div>
+                        <div class="col s12">
+                            <button class="btn waves-effect waves-light red delete-work-image" type="submit" name="action">
+                                Supprimer l'image
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor%}
+
+
+
+
+            {{ form_start(workImageForm, {'attr' : {'id' : 'edit-work-picture'}} ) }}
+            <div class="row">
+                <div class="col s12">
+                    {{ form_label(workImageForm.url, "Photo de l'oeuvre") }}
+                    {{ form_widget(workImageForm.url) }}
+                    {{ form_errors(workImageForm.url) }}
+                </div>
+                <div class="col s12" id="images-work-check">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form_label(workImageForm.alt, "Description de la photo de l'oeuvre") }}
+                    {{ form_widget(workImageForm.alt) }}
+                    {{ form_errors(workImageForm.alt) }}
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light left" type="submit" name="action">
+                    Valider la photo de l'oeuvre
+                    <i class="material-icons left">done</i>
+                </button>
+            </div>
+            {{ form_end(workImageForm) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            e.preventDefault();
+            console.log($(this).serialize());
+        });
+    });
+</script>
 {% endblock %}

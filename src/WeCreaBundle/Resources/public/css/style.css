@@ -7,7 +7,15 @@
 
 #images-artist-check img,
 #images-work-check img{
+    margin-top: 10px;
     width: 30%;
+    display: block;
+    margin: 0 auto;
+}
+
+#images-artist-check button{
+    display: block;
+    margin: 0 auto;
 }
 
 /* First three -> forms */
@@ -22,10 +30,16 @@
     display: none;
 }
 
+.new-artist-image,
 .new-work{
     border: 1px solid #c8c8c8;
 }
 
 .new-work-image img{
+    width: 50%;
+}
+
+.row-custom-edit-artist-image img,
+.row-custom-edit-work-image img{
     width: 50%;
 }

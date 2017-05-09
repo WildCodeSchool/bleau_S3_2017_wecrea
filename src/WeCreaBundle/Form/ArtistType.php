@@ -2,7 +2,7 @@
 
 namespace WeCreaBundle\Form;
 
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

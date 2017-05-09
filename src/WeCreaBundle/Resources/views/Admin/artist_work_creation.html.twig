@@ -4,66 +4,69 @@
 
     <div class="container">
         <div class="row">
-            <h4>Création d'un nouveau profil</h4>
+            <h4>Création d'un nouvel artiste</h4>
             {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
             <div class="row">
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12">
                     {{ form_label(form.name, 'Nom Artiste') }}
                     {{ form_widget(form.name) }}
                     {{ form_errors(form.name) }}
                 </div>
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12">
                     {{ form_label(form.firstname, 'Prénom Artiste') }}
                     {{ form_widget(form.firstname) }}
                     {{ form_errors(form.firstname) }}
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12">
                     {{ form_label(form.localization, 'Localisation Artiste') }}
                     {{ form_widget(form.localization) }}
                     {{ form_errors(form.localization) }}
                 </div>
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12">
                     {{ form_label(form.expertise, 'Expertise Artiste') }}
                     {{ form_widget(form.expertise) }}
                     {{ form_errors(form.expertise) }}
                 </div>
-            </div>
-            <div class="row">
-                <button class="btn waves-effect waves-light left" type="submit" name="action">
-                    Créer le profil
-                    <i class="material-icons left">send</i>
-                </button>
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light left" type="submit" name="action">
+                        Créer le profil
+                        <i class="material-icons left">send</i>
+                    </button>
+                </div>
             </div>
             {{ form_end(form) }}
 
             {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
             <div class="row">
-                <div class="col s6">
-                    {{ form_label(formImage.url, "Photo de l'artiste") }}
-                    {{ form_widget(formImage.url) }}
-                    {{ form_errors(formImage.url) }}
-                </div>
-                <div class="row">
-                    <div class="col s6" id="images-artist-check">
+                <div class="file-field input-field col s12">
+                    <div class="btn">
+                        <span>Choisissez un fichier</span>
+                        <input type="file">
                     </div>
+                    <div class="file-path-wrapper">
+                        {{ form_widget(formImage.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                    </div>
+                        {{ form_errors(formImage.url) }}
                 </div>
-            </div>
-            <div class="row">
+
+                <div class="col s12" id="images-artist-check">
+                </div>
+
                 <div class="input-field col s12">
                     {{ form_label(formImage.alt, "Description de la photo") }}
                     {{ form_widget(formImage.alt) }}
                     {{ form_errors(formImage.alt) }}
                 </div>
-            </div>
-            <div class="row">
-            <button class="btn waves-effect waves-light left" type="submit" name="action">
-                Ajouter l'image
-                <i class="material-icons left">done</i>
-            </button>
+
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
             </div>
             {{ form_end(formImage) }}
+
             <div class="row">
                 <div class="col s12" id="images-artist-confirmed">
                     <h4>Images de l'artiste validées</h4>
@@ -130,40 +133,38 @@
 
             {{ form_start(formWorkImage, {'attr' : {'id' : 'work-picture'}} ) }}
             <div class="row">
-                <div class="col s6">
+                <div class="col s12">
                     {{ form_label(formWorkImage.url, "Photo de l'oeuvre") }}
                     {{ form_widget(formWorkImage.url) }}
                     {{ form_errors(formWorkImage.url) }}
                 </div>
-                <div class="row">
-                    <div class="col s6" id="images-work-check">
-                    </div>
+                <div class="col s12" id="images-work-check">
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    {{ form_label(formWorkImage.alt, "Description de la photo") }}
+                    {{ form_label(formWorkImage.alt, "Description de la photo de l'oeuvre") }}
                     {{ form_widget(formWorkImage.alt) }}
                     {{ form_errors(formWorkImage.alt) }}
                 </div>
             </div>
             <div class="row">
                 <button class="btn waves-effect waves-light left" type="submit" name="action">
-                    Ajouter l'image
+                    Valider la photo de l'oeuvre
                     <i class="material-icons left">done</i>
                 </button>
             </div>
             {{ form_end(formWorkImage) }}
             <div class="row">
+                <button class="btn waves-effect waves-light right green end-work-creation" type="submit" name="action">
+                    Terminer la création
+                    <i class="material-icons right">done</i>
+                </button>
+            </div>
+            <div class="row">
                 <div class="col s12" id="work-confirmed">
                     <h4>Oeuvres validées</h4>
                 </div>
-            </div>
-            <div class="row">
-                <button class="btn waves-effect waves-light left end-work-creation" type="submit" name="action">
-                    Terminer
-                    <i class="material-icons left">done</i>
-                </button>
             </div>
         </div>
     </div>
@@ -171,7 +172,7 @@
 {% block javascripts %}
     <script>
     $(document).ready(function(){
-        /* We stock the artist id when created */
+        /* We stock the artist & work id <sand work id when created */
         var $idArt;
         var $idWork;
 
@@ -223,6 +224,7 @@
             $img.attr('src', window.URL.createObjectURL($file));
 
             var $button = $(document.createElement('button'));
+            $button.attr('class', 'btn waves-effect waves-light red');
             $button.text('Supprimer');
 
             $("#images-artist-check").append($img);
@@ -235,7 +237,7 @@
             });
         });
 
-        /* If the image form is submitted */
+        /* If the artist image form is submitted */
         $('form[id="artist-picture"]').submit(function(e){
             e.preventDefault();
             var data = new FormData($(this)[0]);
@@ -262,49 +264,34 @@
                 success: function(response){
                     var $id = response.id;
 
+                    var $newArtImg = $(document.createElement('div'));
+                    $newArtImg.attr('class', 'new-artist-image');
+
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
                     $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of a button to delete the image */
-                    var $cancel = $('<button></button>');
+                    var $cancel = $(document.createElement('button'));
                     $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-artist');
                     $cancel.text("Supprimer");
 
-                    $("#images-artist-confirmed").show();
+                    $newArtImg.append($img);
+                    $newArtImg.append($cancel);
 
-                    $("#images-artist-confirmed").append($img);
-                    $img.hide().fadeIn(2000);
+                    $("#images-artist-confirmed").append($newArtImg);
 
-                    $("#images-artist-confirmed").append($cancel);
-                    $cancel.hide().fadeIn(2000);
-
-                    var $formLastChild = $('#wecreabundle_artist__token');
-                    var $inputElt = $(document.createElement('input'));
-                    $inputElt.attr("value", "" + $id + "");
-                    $inputElt.attr("type", "hidden");
-                    $inputElt.attr("name", "idImg[]");
-                    $inputElt.insertBefore($formLastChild);
+                    $("#images-artist-confirmed").fadeIn(2000);
 
                     $('.delete-image-artist').click(function(e){
                         e.preventDefault();
                         $idImgToDelete = [$(this).prev().attr('id')];
                         var $data = {'idImg' : $idImgToDelete};
 
-                        console.log($data);
-
                         /* Let's remove the delete button & the image deleted */
                         $(this).prev().remove();
                         $(this).remove();
-
-                        /* We send the id of the artist to the controller
-                        *  to remove the deleted image from the artist entity
-                        */
-
-                        if(typeof($idArt) !== undefined){
-                            $data.idArt = $idArt;
-                        }
 
                         $.ajax({
                             method: 'post',
@@ -352,12 +339,12 @@
                         $input.attr("type", "hidden");
                         $input.attr("name", "idWork");
 
-                        var $pTitle = $("<p> Titre : " + response.title + " </p>");
+                        var $pTitle = $("<h4> Titre : " + response.title + " </h4>");
                         var $pTechnic = $("<p> Technique utilisée : " + response.technic + " </p>");
                         var $pDimensions = $("<p> Dimensions : " + response.dimensions + " </p>");
-                        var $pWeight = $("<p> Poids " + response.weight + " </p>");
-                        var $pQuantity = $("<p> Quantité(s) " + response.quantity + " </p>");
-                        var $pTimelimit = $("<p> Délai de livraison " + response.timelimit + " </p>");
+                        var $pWeight = $("<p> Poids : " + response.weight + " </p>");
+                        var $pQuantity = $("<p> Quantité(s) : " + response.quantity + " </p>");
+                        var $pTimelimit = $("<p> Délai de livraison : " + response.timelimit + " </p>");
                         var $pPrice = $("<p> Prix : " + response.price + " € </p>");
 
                         $newWork.append($input);
@@ -370,7 +357,6 @@
                         $newWork.append($pPrice);
 
                         $("#work-confirmed").append($newWork);
-                        $("#work-confirmed").hide();
 
                         var $formImgWorkLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
                         var $inputElt = $(document.createElement('input'));
@@ -390,6 +376,7 @@
             $img.attr('src', window.URL.createObjectURL($file));
 
             var $button = $(document.createElement('button'));
+            $button.attr('class', 'btn waves-effect waves-light left red');
             $button.text('Supprimer');
 
             $("#images-work-check").append($img);
@@ -489,7 +476,7 @@
                             success: function (response){
                                 alert(response);
                             }
-                        })
+                        });
                     });
                 }
             });
@@ -507,13 +494,13 @@
             $('form[id="work-picture"]').find('input[name="idWork"]').remove();
 
             var $deleteWork = $(document.createElement('button'));
+            $deleteWork.attr('class', 'btn waves-effect waves-light left red');
             $deleteWork.text("Supprimer l'oeuvre et ses images");
 
             $("#work-confirmed").append($deleteWork);
 
             $deleteWork.click(function(){
                 var $data = $(this).prev().find('input[type="hidden"]').attr('value');
-                console.log($data);
                 $(this).prev().remove();
                 $(this).remove();
 
@@ -524,8 +511,8 @@
                     success: function(response){
                         alert(response);
                     }
-                })
-            })
+                });
+            });
         });
     });
     </script>
