@@ -1,0 +1,18 @@
+.nav_custom {
+    background-color: transparent;
+}
+
+nav a {
+    color: #333333!important;
+
+}
+
+.brand-logo img {
+    height: 64px !important;
+}
+
+@media screen and (max-width: 600px) {
+    .brand-logo img {
+        height: 56px !important;
+    }
+}
