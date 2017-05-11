@@ -39,7 +39,7 @@
             {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
             <div class="row">
                 <div class="file-field input-field col s12">
-                    <div class="btn">
+                    <div class="btn btn-file">
                         <span>Choisissez un fichier</span>
                         <input type="file">
                     </div>
@@ -82,6 +82,9 @@
 
             {{ form_start(formWork, {'attr' : {'id' : 'work-caracteristics' }} ) }}
             <div class="row">
+                <div class="input-field col s12 idWork">
+                    {{ form_row(formWork.id) }}
+                </div>
                 <div class="input-field col s12">
                     {{ form_label(formWork.title, 'Titre') }}
                     {{ form_widget(formWork.title) }}
@@ -131,7 +134,7 @@
                     <i class="material-icons left">send</i>
                 </button>
             </div>
-            {{ form_end(formWork, {'render_rest' : false }) }}
+            {{ form_end(formWork) }}
 
             {{ form_start(formWorkImage, {'attr' : {'id' : 'work-picture'}} ) }}
             <div class="row">
@@ -257,6 +260,7 @@
             * We now have its id, that will be useful if the client changes its mind and
             * wants to delete it.
             */
+
             $.ajax({
                 url: "{{ path('we_crea_admin_artist_image_creation_ajax') }}",
                 method: "post",
@@ -288,8 +292,9 @@
 
                     $('.delete-image-artist').click(function(e){
                         e.preventDefault();
-                        $idImgToDelete = [$(this).prev().attr('id')];
-                        var $data = {'idImg' : $idImgToDelete};
+                        $idImgToDelete = $(this).prev().attr('id');
+                        $idArt = $idArt;
+                        var $data = {'idImg' : $idImgToDelete, 'idArt' : $idArt};
 
                         /* Let's remove the delete button & the image deleted */
                         $(this).prev().remove();
@@ -406,8 +411,6 @@
             $button.remove();
             $(this).trigger('reset');
 
-            $('.end-work-creation').show();
-
             /* We store the image into the database then we send it back to the client
              * We now have its id, that will be useful if the client
              * changes its mind and wants to delete it.
@@ -456,6 +459,8 @@
 
                     $($newWork).show();
                     $("#work-confirmed").show();
+
+                    $('.end-work-creation').show();
 
                     $('.delete-image-work').click(function(e){
                         e.preventDefault();

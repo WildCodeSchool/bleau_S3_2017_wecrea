@@ -142,27 +142,19 @@ class AdminController extends Controller
     public function deleteArtistImageAjaxAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         /* If the artist profile has been created */
-        if(!empty($request->request->get('idArt'))){
-            $idArt = $request->request->get('idArt');
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-        }
-        else{
-            $artist = false;
-        }
+        $idArt = $request->request->get('idArt');
+        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
 
         $idImg = $request->request->get('idImg');
 
-        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg[$i]);
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
         $url = $image->getUrl();
 
-        /* If the artist profile exists, let's remove the images it
-        * is linked with
+        /*
+        * Let's remove the image linked with the artist
         */
-        if($artist !== false){
-            $artist->removeImage($image);
-        }
+        $artist->removeImage($image);
 
         $path = $this->getParameter('image_directory')."/".$url;
 
@@ -384,11 +376,37 @@ class AdminController extends Controller
             'artist' => $artist,
             'works' => $works,
             'editArtistForm' => $editArtistForm->createView(),
-            'artistImageForm' => $artistImageForm->createView(),
+            'formImage' => $artistImageForm->createView(),
             'formWork' => $workForm->createView(),
             'editWorkForms' => $editWorkForms,
             'workImageForm' => $workImageForm->createView(),
         ));
+    }
+
+    /*
+     * Method for editing the profile of the artist
+     */
+
+    public function editProfileAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $id = $request->request->get('wecreabundle_artist')['id'];
+            $name = $request->request->get('wecreabundle_artist')['name'];
+            $firstname = $request->request->get('wecreabundle_artist')['firstname'];
+            $localization = $request->request->get('wecreabundle_artist')['localization'];
+            $expertise = $request->request->get('wecreabundle_artist')['expertise'];
+
+            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+            $artist->setName($name);
+            $artist->setFirstname($firstname);
+            $artist->setLocalization($localization);
+            $artist->setExpertise($expertise);
+
+            $em->flush();
+
+            return new Response("Le profil a bien été mis à jour");
+        }
     }
 
     /*
@@ -423,8 +441,9 @@ class AdminController extends Controller
             $work->setNature($nature);
             $work->setPrice($price);
 
-            $em->persist($work);
             $em->flush();
+
+            return new Response("L'oeuvre a bien été mise à jour");
         }
     }
 

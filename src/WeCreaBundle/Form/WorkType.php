@@ -20,7 +20,9 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id')
+            ->add('id', IntegerType::class, array(
+                'required' => false
+            ))
             ->add('title')
             ->add('technic')
             ->add('dimensions')
