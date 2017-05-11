@@ -63,3 +63,14 @@ nav a {
         height: 56px !important;
     }
 }
+
+/* ADMIN CARROUSEL*/
+
+#formCarr {
+    display: none;
+}
+
+.card {
+    width:100%;
+    height: 400px;
+}
