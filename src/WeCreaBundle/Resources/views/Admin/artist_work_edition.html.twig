@@ -153,8 +153,8 @@
                     {% for image in work.images %}
                         <div class="input-field col s12">
                             <img src="{{ asset('bundles/wecrea/images/'~image.url) }}"/>
-                            <input type="hidden" id="idImg" value="{{ image.id }}"/>
-                            <input type="hidden" id="idWork" value="{{ work.id }}"/>
+                            <input type="hidden" class="idImg" value="{{ image.id }}"/>
+                            <input type="hidden" class="idWork" value="{{ work.id }}"/>
                         </div>
                         <div class="col s12">
                             <button class="btn waves-effect waves-light red delete-work-image" type="submit" name="action">
@@ -163,8 +163,45 @@
                             </button>
                         </div>
                     {% endfor %}
+                    <button class="btn waves-effect waves-light black right add-work-image" type="submit" name="action">
+                        Ajouter une image
+                        <i class="material-icons left">add</i>
+                    </button>
                 </div>
             {% endfor%}
+
+        {{ form_start(lastWorksImageForm, {'attr' : {'id' : 'add-image-form'}} ) }}
+        <div class="row">
+            <div class="file-field file-field-custom input-field col s12">
+                <div class="btn">
+                    <span>Choisissez un fichier</span>
+                    <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    {{ form_widget(lastWorksImageForm.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                </div>
+                {{ form_errors(lastWorksImageForm.url) }}
+            </div>
+
+
+            <div class="col s12" id="add-image-work-check">
+            </div>
+
+            <div class="input-field col s12">
+                {{ form_label(lastWorksImageForm.alt, "Description de la photo") }}
+                {{ form_widget(lastWorksImageForm.alt) }}
+                {{ form_errors(lastWorksImageForm.alt) }}
+            </div>
+
+            <div class="input-field col s12">
+                <button class="btn waves-effect waves-light right green" type="submit" name="action">
+                    Ajouter l'image
+                    <i class="material-icons left">done</i>
+                </button>
+            </div>
+        </div>
+        {{ form_end(lastWorksImageForm) }}
+
 
             <hr>
 
@@ -448,9 +485,11 @@
             /* Let's store the work id */
             var $id = $(this).parent()[0][0].getAttribute('value');
             var $data = {idWork : $id};
-
+            console.log($id);
             /* Let's remove this edit form */
             $(this).parent().remove();
+            var $divToRemove = $('.row-custom-edit-work-image').find('input[class="idWork"][value='+$id+']')
+            $divToRemove.parent().parent().remove();
 
             $.ajax({
                 method: "post",
@@ -463,8 +502,8 @@
         });
 
         $('.delete-work-image').click(function(){
-           var $idImg = $(this).parent().prev().find('input[id="idImg"]').attr('value');
-           var $idWork = $(this).parent().prev().find('input[id="idWork"]').attr('value');
+           var $idImg = $(this).parent().prev().find('input[class="idImg"]').attr('value');
+           var $idWork = $(this).parent().prev().find('input[class="idWork"]').attr('value');
 
            var $data = {idImg : $idImg, idWork : $idWork};
 
@@ -571,6 +610,164 @@
             });
         });
 
+        /* if the user wants to add new pictures to an already existing work */
+        $('.add-work-image').click(function(){
+
+            /* Is there any hidden input within the image form ?
+            * If so, we remove the input before adding the new one.
+            * Indeed, the user can click many times on different buttons...
+            * Each new click would add new hidden inputs to the form. That
+            * would disable the backend treatment of the request
+            */
+            if($('form[id="add-image-form"]').find('input[name="idWork"]').length !==0){
+                $('form[id="add-image-form"]').find('input[name="idWork"]').remove();
+            }
+
+            /* We put the id of the work that has to be completed with new images
+            * if the user clicks on the button linked to the work (add-work-image)
+            */
+            var $idWork = $(this).parent().find('input[class="idWork"]').attr('value');
+            var $lastAddImageFormChild = $('form[id="add-image-form"] #wecreabundle_images__token');
+            console.log($idWork);
+            $inputElt = $(document.createElement('input'));
+            $inputElt.attr({
+                'type' : 'hidden',
+                'name' : 'idWork',
+                'value' : '' + $idWork + ''
+            });
+            /* Let's insert the input before the token input of the Image form
+            * that is to be sent
+            */
+            $inputElt.insertBefore($lastAddImageFormChild);
+
+            /* Let's show the form */
+            $('#add-image-form').fadeIn(2000);
+        });
+
+        $("#add-image-form input[id='wecreabundle_images_url']").change(function(){
+            var $file = $(this)[0].files[0];
+            var $img = $(document.createElement('img'));
+            $img.attr('src', window.URL.createObjectURL($file));
+
+            var $button = $(document.createElement('button'));
+            $button.attr('class', 'btn waves-effect waves-light red');
+            $button.text('Supprimer');
+
+            $("#add-image-work-check").append($img, $button);
+
+            $button.click(function(){
+                $('form[id="artist-picture"]').trigger('reset');
+                $img.remove();
+                $(this).remove();
+            });
+        });
+
+        /************************************************************
+         ************************************************************
+         **************************************************************
+         */
+
+        $('form[id="add-image-form"]').submit(function(e){
+            console.log('yes');
+            e.preventDefault();
+            var $data = new FormData($(this)[0]);
+
+            /* We remove the preview image and reset the
+             * form to enable the submission of new pictures
+             */
+
+            var $img = $("#add-image-work-check").find('img');
+            var $button = $("#add-image-work-check").find('button');
+            $img.remove();
+            $button.remove();
+            $(this).trigger('reset');
+
+            /* We store the image into the database then we send it back to the client
+             * We now have its id, that will be useful if the client
+             * changes its mind and wants to delete it.
+             * Moreover, it will serve to associate the images to the artist
+             * as they are created separately
+             */
+            {#
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_admin_work_image_creation_ajax') }}',
+                data: $data,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    var $id = response.id;
+
+                    var $newWorkImg = $(document.createElement('div'));
+                    $newWorkImg.attr('class', 'new-work-image');
+
+                    /* Creation of the image with the data returned */
+                    var $img = $(document.createElement('img'));
+                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr('id', ''+ $id +'');
+
+                    /* Creation of an hidden input containing the work id */
+                    var $input = $(document.createElement('input'));
+                    $input.attr('value' , ''+ $idWork + '');
+                    $input.attr("type", "hidden");
+
+                    /* Creation of a button to delete the image */
+                    var $cancel = $(document.createElement('button'));
+                    $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                    $cancel.text("Supprimer");
+
+                    $($newWorkImg).append($img);
+                    $img.hide().fadeIn(2000);
+
+                    $($newWorkImg).append($input);
+                    $input.hide().fadeIn(2000);
+
+                    $($newWorkImg).append($cancel);
+                    $cancel.hide().fadeIn(2000);
+
+                    var $newWork = $("#work-confirmed").find('.new-work:last-child');
+                    $newWork.append($newWorkImg);
+
+                    $($newWork).show();
+                    $("#work-confirmed").show();
+
+                    $('.end-work-creation').show();
+
+                    $('.delete-image-work').click(function(e){
+                        e.preventDefault();
+                        $idWork = $(this).prev().attr('value');
+                        var $idImgToDelete = $(this).prev().prev().attr('id');
+                        var $data = {'idImg' : $idImgToDelete, 'idWork' : $idWork};
+
+                        /* Let's remove the delete button & the image deleted */
+                        $(this).parent().remove();
+
+                        /* If work exists, it has an id, that we send to the
+                         * controller to remove the deleted image from the
+                         * work entity
+                         */
+
+                        $.ajax({
+                            method: 'post',
+                            url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
+                            data : $data,
+                            success: function (response){
+                                alert(response);
+                            }
+                        });
+                    });
+                }
+            });
+            #}
+        });
+
+
+
+
+
+
+
+
         /* if submission of the work picture */
         $('form[id="edit-work-picture"]').submit(function(e){
             e.preventDefault();
@@ -667,7 +864,7 @@
         $('.end-work-creation').click(function(){
             $(this).hide();
             $("#work-picture").hide();
-            $('.add-work').prop('disabled', false);
+            $('.edit-add-work').prop('disabled', false);
             $('.create-work').prop('disabled', false);
             alert('Vous pouvez désormais créer une autre oeuvre ou quitter cette page');
             $('form[id="edit-work-caracteristics"]').trigger('reset');// check idArt tjs présent

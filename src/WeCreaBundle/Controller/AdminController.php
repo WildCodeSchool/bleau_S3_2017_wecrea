@@ -371,15 +371,25 @@ class AdminController extends Controller
         $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+        $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
 
         return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
+            /* The artist */
             'artist' => $artist,
+            /* The works */
             'works' => $works,
+            /* Completed artist form */
             'editArtistForm' => $editArtistForm->createView(),
+            /* New image form for the artist profile */
             'formImage' => $artistImageForm->createView(),
-            'formWork' => $workForm->createView(),
+            /* Completed work forms */
             'editWorkForms' => $editWorkForms,
+            /* new work form */
+            'formWork' => $workForm->createView(),
+            /* new image form for a new work */
             'workImageForm' => $workImageForm->createView(),
+            /* New image form for existed works */
+            'lastWorksImageForm' => $lastWorksImageForm->createView()
         ));
     }
 
