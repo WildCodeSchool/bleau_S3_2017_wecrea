@@ -19,6 +19,38 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AdminController extends Controller
 {
+    /* Render the page for listing all the artists */
+    public function artistListAction(){
+        $em = $this->getDoctrine()->getManager();
+        $artists = $em->getRepository('WeCreaBundle:Artist')->findAll();
+
+        return $this->render('@WeCrea/Admin/artist_list.html.twig', array(
+            'artists' => $artists
+        ));
+    }
+
+    /* Method for deleting the artist */
+    public function deleteArtistAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+
+        $works = $em->getRepository('WeCreaBundle:Work')->findByArtist(array(
+            'artist' => $artist
+        ));
+
+        foreach($works as $work){
+            $images = $work->getImages();
+            foreach($images as $image){
+                $img = $image->getUrl();
+            }
+        }
+
+        /*
+        $em->remove($artist);
+        $em->flush();
+        */
+    }
+
     /* Render the page for the creation a new artist & some or all of his/her works */
     public function newArtistWorkAction(Request $request)
     {
@@ -56,7 +88,6 @@ class AdminController extends Controller
 
         if($request->isXmlHttpRequest()){
             $em = $this->getDoctrine()->getManager();
-            dump($request);
             $name = $request->request->get('wecreabundle_artist')['name'];
             $firstName = $request->request->get('wecreabundle_artist')['firstname'];
             $localization = $request->request->get('wecreabundle_artist')['localization'];

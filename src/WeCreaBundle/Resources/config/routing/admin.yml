@@ -2,6 +2,10 @@ we_crea_admin_homepage:
     path: /
     defaults:
 
+we_crea_admin_artist_list:
+    path: /artists/
+    defaults: {_controller: "WeCreaBundle:Admin:artistList"}
+
 we_crea_admin_artist_work_creation:
     path: /artist/creation
     defaults: {_controller: "WeCreaBundle:Admin:newArtistWork"}
@@ -13,6 +17,10 @@ we_crea_admin_artist_profil_creation_ajax:
 we_crea_admin_artist_image_creation_ajax:
     path: /artistImage
     defaults: {_controller: "WeCreaBundle:Admin:newArtistImageAjax"}
+
+we_crea_admin_delete_artist:
+    path: /artist/delete/{id}
+    defaults: {_controller: "WeCreaBundle:Admin:deleteArtist"}
 
 we_crea_admin_delete_artist_image_ajax:
     path: /deleteArtistImage

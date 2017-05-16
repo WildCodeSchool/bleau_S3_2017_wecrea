@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+    {% for artist in artists %}
+    <div class="row">
+        <div class="col s12 col-custom-artist">
+            {% if artist.images is not empty %}
+                <img src="{{ asset('bundles/wecrea/images/'~artist.images|first.url) }}" />
+            {% endif %}
+            <h4>{{ artist.name }} {{ artist.firstname }}</h4>
+            <a href="{{ path('we_crea_admin_delete_artist', {id : artist.id }) }}"><button class="btn waves-effect waves-light red btn-custom-artist">
+                Supprimer
+                <i class="material-icons left">delete</i>
+            </button></a>
+            <a href="{{ path('we_crea_admin_artist_work_edition', {id : artist.id}) }}"><button class="btn waves-effect waves-light right btn-custom-artist">
+                Éditer
+                <i class="material-icons left">mode_edit</i>
+            </button></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
