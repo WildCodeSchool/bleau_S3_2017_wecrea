@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use WeCreaBundle\Entity\Actu;
 use WeCreaBundle\Entity\Artist;
+use WeCreaBundle\Entity\Carrousel;
 use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\Nature;
@@ -63,12 +65,6 @@ class AdminController extends Controller
         $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $formWork = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
-        if ($formArtist->isSubmitted() && $formArtist->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($artist);
-            $em->flush();
-        }
-
         return $this->render('@WeCrea/Admin/artist_work_creation.html.twig', array(
             'artist' => $artist,
             'form' => $formArtist->createView(),
@@ -88,6 +84,7 @@ class AdminController extends Controller
 
         if($request->isXmlHttpRequest()){
             $em = $this->getDoctrine()->getManager();
+
             $name = $request->request->get('wecreabundle_artist')['name'];
             $firstName = $request->request->get('wecreabundle_artist')['firstname'];
             $localization = $request->request->get('wecreabundle_artist')['localization'];
@@ -488,8 +485,219 @@ class AdminController extends Controller
         }
     }
 
-    /*
-     * Method for deleting the works & all its images
-     */
+    //--------Admin Carrousel--------//
+    public function editCarrouselAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
 
+        $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
+
+        $carrousel = new Carrousel();
+        $image = new Images();
+        $formCarrousel = $this->createForm('WeCreaBundle\Form\CarrouselType', $carrousel);
+        $formImages = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+
+        return $this->render('@WeCrea/Admin/carrousel_edition.html.twig', array(
+            'formCarrousel' => $formCarrousel->createView(),
+            'formImages' => $formImages->createView(),
+            'carrousels' => $carrousels,
+            'image' => $image,
+        ));
+    }
+
+    public function addImageCarrouselAction(Request $request) {
+        $image = new Images();
+
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+
+            //crea
+            $file = $request->files->get('wecreabundle_images')['url'];
+            $alt = $request->request->get('wecreabundle_images')['alt'];
+
+            $fileName = uniqId() . '.' . $file->guessExtension();
+
+            $file->move($this->getParameter('image_directory'), $fileName);
+
+            $image->setUrl($fileName);
+            $image->setAlt($alt);
+
+            $em->persist($image);
+            $em->flush();
+
+            //recup
+            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
+
+            $encoders = array(new JsonEncoder()) ;
+            $normalizer = array(new ObjectNormalizer()) ;
+            $serializer = new Serializer($normalizer, $encoders);
+
+            $jsonImage = $serializer->serialize($image, 'json');
+
+            $response = new response($jsonImage);
+
+            $response->headers->set('Content-Type', 'application/json');
+
+
+            return $response;
+        }
+    }
+
+    public function addCarrouselAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $carrousel = new Carrousel();
+
+        if($request->isXmlHttpRequest()) {
+            $content = $request->request->get('wecreabundle_carrousel')['content'];
+            $title = $request->request->get('wecreabundle_carrousel')['title'];
+            $rout = $request->request->get('wecreabundle_carrousel')['rout'];
+            $image = $request->request->get('images_id');
+
+            $image = $em->getRepository('WeCreaBundle:Images')->findOneById($image);
+
+            $carrousel->setContent($content);
+            $carrousel->setTitle($title);
+            $carrousel->setRout($rout);
+            $carrousel->setImages($image);
+
+            $em->persist($carrousel);
+            $em->flush();
+
+            $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
+
+            $carrousel = $carrousels[count($carrousels)-1];
+
+            $encoders = array(new JsonEncoder()) ;
+            $normalizer = array(new ObjectNormalizer()) ;
+            $serializer = new Serializer($normalizer, $encoders);
+
+            $jsonCarrousel = $serializer->serialize($carrousel, 'json');
+
+            $response = new response($jsonCarrousel);
+
+            $response->headers->set('Content-Type', 'application/json');
+
+
+            return $response;
+        }
+    }
+
+    public function deleteCarrouselAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('id');
+
+        $carrousel = $em->getRepository('WeCreaBundle:Carrousel')->findOneById($id);
+
+        $idImage = $carrousel->getImages()->getId();
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImage);
+        $url = $image->getUrl();
+
+        $path = $this->getParameter('image_directory')."/".$url;
+
+        unlink($path);
+
+        $em->remove($carrousel);
+        $em->remove($image);
+
+        $em->flush();
+
+        return new response('La vignette a bien été supprimer');
+    }
+
+    //---------Admin Actu--------//
+    public function actuAction() {
+        $em = $this->getDoctrine()->getManager();
+        $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
+
+        $actu = new Actu();
+        $image = new Images();
+
+        $formImages = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
+
+        return $this->render('@WeCrea/Admin/actu.html.twig', array(
+            'formActu' => $formActu->createView(),
+            'formImages' => $formImages->createView(),
+            'actus' => $actus,
+        ));
+
+    }
+
+    public function addActuAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $actu = new Actu();
+
+        if($request->isXmlHttpRequest()) {
+            $content = $request->request->get('wecreabundle_actu')['content'];
+            $title = $request->request->get('wecreabundle_actu')['title'];
+            $imageId = $request->request->get('images_id');
+
+            $image = $em->getRepository('WeCreaBundle:Images')->findOneById($imageId);
+            $date = new \DateTime();
+
+            $actu->setContent($content);
+            $actu->setTitle($title);
+            $actu->addImage($image);
+            $actu->setDate($date);
+
+            $em->persist($actu);
+            $em->flush();
+
+            $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
+
+            $actu = $actus[count($actus)-1];
+
+            $encoders = array(new JsonEncoder()) ;
+            $normalizer = array(new ObjectNormalizer()) ;
+            $serializer = new Serializer($normalizer, $encoders);
+
+            $jsonActu = $serializer->serialize($actu, 'json');
+
+            $response = new response($jsonActu);
+
+            $response->headers->set('Content-Type', 'application/json');
+
+        }
+
+        return $response;
+    }
+
+    public function deleteActuAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('id');
+
+        $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
+
+        $idImage = $actu->getImages()[0]->getId();
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImage);
+        $url = $image->getUrl();
+
+        $path = $this->getParameter('image_directory')."/".$url;
+
+        unlink($path);
+
+        $em->remove($actu);
+        $em->remove($image);
+
+        $em->flush();
+
+        return new response('L\'actualité a bien été supprimer');
+    }
+
+    public function editActuAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('id');
+
+        $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
+
+        $image = $actu->getImages()[0];
+
+        $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
+        $formImage = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+
+        return $this->render('@WeCrea/Admin/actu.html.twig', array(
+            'formActu' => $formActu->createView(),
+            'formImage' => $formImage->createView(),
+        ));
+
+    }
 }
