@@ -37,3 +37,30 @@ we_crea_admin_delete_work_ajax:
 we_crea_admin_artist_work_edition:
     path: /artist/edition/{id}
     defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
+
+we_crea_admin_carrousel_edition:
+    path: /carrousel/edition
+    defaults: {_controller: "WeCreaBundle:Admin:editCarrousel"}
+
+we_crea_admin_image_carrousel:
+    path: /carrousel/image
+    defaults: {_controller: "WeCreaBundle:Admin:addImageCarrousel"}
+
+we_crea_admin_add_carrousel:
+    path: /carrousel/add
+    defaults: {_controller: "WeCreaBundle:Admin:addCarrousel"}
+
+we_crea_admin_delete_carrousel:
+    path: /carrousel/delete
+    defaults: {_controller: "WeCreaBundle:Admin:deleteCarrousel"}
+
+we_crea_admin_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:Admin:actu"}
+
+we_crea_admin_actu_add:
+    path: /actu/add
+    defaults: {_controller: "WeCreaBundle:Admin:addActu"}
+we_crea_admin_actu_delete:
+    path: /actu/delete
+    defaults: {_controller: "WeCreaBundle:Admin:deleteActu"}
