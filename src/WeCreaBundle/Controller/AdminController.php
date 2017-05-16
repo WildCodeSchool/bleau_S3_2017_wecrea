@@ -275,8 +275,15 @@ class AdminController extends Controller
         dump($request);
         if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
-            $alt = $request->request->get('wecreabundle_images_work')['alt'];
-            $file = $request->files->get('wecreabundle_images_work')['url'];
+            if($request->request->get('wecreabundle_images_work')){
+                $alt = $request->request->get('wecreabundle_images_work')['alt'];
+                $file = $request->files->get('wecreabundle_images_work')['url'];
+            }
+            if($request->request->get('wecreabundle_images_last_work_images')){
+                $alt = $request->request->get('wecreabundle_images_last_work_images')['alt'];
+                $file = $request->files->get('wecreabundle_images_last_work_images')['url'];
+            }
+
 
             $fileName = uniqId() . '.' . $file->guessExtension();
             $file->move($this->getParameter('image_directory'), $fileName);
@@ -399,7 +406,7 @@ class AdminController extends Controller
         $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
-        $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
+        $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\LastImagesWorkType', $image);
 
         return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
             /* The artist */
