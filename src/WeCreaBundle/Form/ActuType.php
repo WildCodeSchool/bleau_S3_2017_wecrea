@@ -3,23 +3,17 @@
 namespace WeCreaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use WeCreaBundle\Entity\Images;
-use WeCreaBundle\WeCreaBundle;
 
-class CarrouselType extends AbstractType
+class ActuType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('content')
-            ->add('title')
-            ->add('rout');
+        $builder->add('title')->add('content');
     }
     
     /**
@@ -28,7 +22,7 @@ class CarrouselType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WeCreaBundle\Entity\Carrousel'
+            'data_class' => 'WeCreaBundle\Entity\Actu'
         ));
     }
 
@@ -37,7 +31,7 @@ class CarrouselType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'wecreabundle_carrousel';
+        return 'wecreabundle_actu';
     }
 
 

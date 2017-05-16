@@ -53,3 +53,14 @@ we_crea_admin_add_carrousel:
 we_crea_admin_delete_carrousel:
     path: /carrousel/delete
     defaults: {_controller: "WeCreaBundle:Admin:deleteCarrousel"}
+
+we_crea_admin_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:Admin:actu"}
+
+we_crea_admin_actu_add:
+    path: /actu/add
+    defaults: {_controller: "WeCreaBundle:Admin:addActu"}
+we_crea_admin_actu_delete:
+    path: /actu/delete
+    defaults: {_controller: "WeCreaBundle:Admin:deleteActu"}

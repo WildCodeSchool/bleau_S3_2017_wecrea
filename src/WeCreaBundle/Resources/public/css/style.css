@@ -46,7 +46,8 @@
 
 /* partie fabien */
 .nav_custom {
-    background-color: transparent;
+    background-color: white;
+    z-index: 100;
 }
 
 nav a {
@@ -73,4 +74,10 @@ nav a {
 .card {
     width:100%;
     height: 400px;
+}
+
+/* ADMIN ACTU */
+
+#formActu {
+    display: none;
 }

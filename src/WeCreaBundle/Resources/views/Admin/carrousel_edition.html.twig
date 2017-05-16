@@ -6,8 +6,12 @@
         <div class="row row_custom">
             <div class="col m10 offset-m1">
                 {{ form_start(formImages) }}
-                <input type="submit" value="submit">
-
+                    {{ form_row(formImages.url) }}
+                    {{ form_row(formImages.alt) }}
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">add</i>
+                    </button>
                 {{ form_end(formImages) }}
             </div>
         </div>
@@ -15,7 +19,13 @@
         <div class="row row_custom">
             <div class="col m10 offset-m1" id="formCarr">
                 {{ form_start(formCarrousel) }}
-
+                    {{ form_row(formCarrousel.title) }}
+                    {{ form_row(formCarrousel.content) }}
+                    {{ form_row(formCarrousel.rout) }}
+                <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                    Ajouter la vignette
+                    <i class="material-icons left">add</i>
+                </button>
                 {{ form_end(formCarrousel) }}
 
             </div>
@@ -27,7 +37,7 @@
                     <div class="card" style="background: url('{{ asset('bundles/wecrea/images/') }}{{ carrousel.images.url }}') center / cover">
                         <h2>{{ carrousel.title }}</h2>
                         <p>{{ carrousel.content }}</p>
-
+                        <a class="waves-effect waves-light btn black delete_btn" id="{{ carrousel.id }}">supprimer</a>
                     </div>
                 {% endfor %}
             </div>
@@ -94,23 +104,16 @@
                        var deleteBtn = $(document.createElement('a'));
                        deleteBtn.attr('class', 'waves-effect waves-light btn black delete_btn');
                        deleteBtn.attr('id', response.id);
-                       deleteBtn.attr('href', "#");
                        deleteBtn.text('supprimer');
-
-                       var editBtn = $(document.createElement('a'));
-                       editBtn.attr('class', 'waves-effect waves-light btn black edit_btn');
-                      // editBtn.attr('href', '');
-                       editBtn.text('éditer');
 
                        card.append(titleCard);
                        card.append(contentCard);
                        card.append(deleteBtn);
-                       card.append(editBtn);
 
                        $('#show_carrousel').prepend(card);
                        card.slideDown(800);
 
-                       $('a').on('click', function (e) {
+                       $('.delete_btn').on('click', function (e) {
                            var id = $(this).attr('id');
                            e.preventDefault();
                            $.ajax({
@@ -131,6 +134,19 @@
                    }
                });
            });
+            $('.delete_btn').on('click', function (e) {
+                var id = $(this).attr('id');
+                e.preventDefault();
+                $.ajax({
+                    method: 'get',
+                    url:  "{{ path('we_crea_admin_delete_carrousel') }}",
+                    data: {'id': id},
+                    success: function (response) {
+                        alert(response);
+                        $('#' + id).parent().slideUp(800);
+                    }
+                });
+            });
         });
     </script>
 
