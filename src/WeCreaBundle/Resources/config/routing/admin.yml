@@ -77,6 +77,7 @@ we_crea_admin_actu:
 we_crea_admin_actu_add:
     path: /actu/add
     defaults: {_controller: "WeCreaBundle:Admin:addActu"}
+
 we_crea_admin_actu_delete:
     path: /actu/delete
     defaults: {_controller: "WeCreaBundle:Admin:deleteActu"}
