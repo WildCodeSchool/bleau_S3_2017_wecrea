@@ -60,7 +60,7 @@ class AdminController extends Controller
 
         $formArtist = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
         $formImageArtist = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
-        $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $formWork = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         if ($formArtist->isSubmitted() && $formArtist->isValid()) {
@@ -278,8 +278,8 @@ class AdminController extends Controller
         dump($request);
         if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
-            $alt = $request->request->get('wecreabundle_images')['alt'];
-            $file = $request->files->get('wecreabundle_images')['url'];
+            $alt = $request->request->get('wecreabundle_images_work')['alt'];
+            $file = $request->files->get('wecreabundle_images_work')['url'];
 
             $fileName = uniqId() . '.' . $file->guessExtension();
             $file->move($this->getParameter('image_directory'), $fileName);
@@ -385,8 +385,8 @@ class AdminController extends Controller
 
     public function editArtistWorkAction($id)
     {
-        $image = new Images();
-        $work = new Work();
+        $image = new Images(); // A retirer??
+        $work = new Work(); // Idem
 
         $em = $this->getDoctrine()->getManager();
         $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
@@ -400,9 +400,9 @@ class AdminController extends Controller
 
         $editArtistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
         $artistImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
-        $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
-        $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
+        $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
 
         return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
             /* The artist */
