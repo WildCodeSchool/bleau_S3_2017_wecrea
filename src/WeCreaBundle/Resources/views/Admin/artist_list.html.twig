@@ -1,8 +1,16 @@
-{% extends "base.html.twig" %}
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
 
 {% block body %}
 
 <div class="container">
+    <div class="row">
+        <div class="col s6 offset-s3 center-align">
+            <a class="btn waves-effect waves-light black btn-custom-artist center-align" href="{{ path('we_crea_admin_artist_work_creation') }}">
+                    créer un nouvel artiste
+                    <i class="material-icons left">add</i>
+               </a>
+        </div>
+    </div>
     {% for artist in artists %}
     <div class="row">
         <div class="col s12 col-custom-artist">
