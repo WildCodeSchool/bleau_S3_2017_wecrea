@@ -189,8 +189,8 @@ class AdminController extends Controller
         if(file_exists($path)){
             unlink($path);
         }
-        $em->remove($image);
 
+        $em->remove($image);
         $em->flush();
 
         return new Response("L'image a bien été supprimée");
@@ -247,10 +247,9 @@ class AdminController extends Controller
 
             /* We send back the data regarding the profile */
             $work = $em->getRepository('WeCreaBundle:Work')->findAll();
-            dump($work);
+
             /* Let's get the last work created */
             $work = $work[count($work)-1];
-
 
             $encoders = new JsonEncoder();
             $normalizer = new ObjectNormalizer();
@@ -266,13 +265,13 @@ class AdminController extends Controller
     }
 
     /*
-     * Method for managing the images linked to work
+     * Method for managing the images linked to a work
      */
 
     public function newWorkImageAjaxAction(Request $request)
     {
         $image = new Images();
-        dump($request);
+
         if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
             if($request->request->get('wecreabundle_images_work')){
@@ -283,7 +282,6 @@ class AdminController extends Controller
                 $alt = $request->request->get('wecreabundle_images_last_work_images')['alt'];
                 $file = $request->files->get('wecreabundle_images_last_work_images')['url'];
             }
-
 
             $fileName = uniqId() . '.' . $file->guessExtension();
             $file->move($this->getParameter('image_directory'), $fileName);
@@ -356,6 +354,7 @@ class AdminController extends Controller
      */
 
     public function deleteWorkAjaxAction(Request $request){
+        dump($request);
         $em = $this->getDoctrine()->getManager();
         $idWork = $request->request->get('idWork');
 
@@ -398,8 +397,10 @@ class AdminController extends Controller
             'artist' => $artist
         ));
 
-        foreach($works as $key){
-            $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
+        if(!empty($work)) {
+            foreach ($works as $key) {
+                $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
+            }
         }
 
         $editArtistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
@@ -408,24 +409,44 @@ class AdminController extends Controller
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
         $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\LastImagesWorkType', $image);
 
-        return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
-            /* The artist */
-            'artist' => $artist,
-            /* The works */
-            'works' => $works,
-            /* Completed artist form */
-            'editArtistForm' => $editArtistForm->createView(),
-            /* New image form for the artist profile */
-            'formImage' => $artistImageForm->createView(),
-            /* Completed work forms */
-            'editWorkForms' => $editWorkForms,
-            /* new work form */
-            'formWork' => $workForm->createView(),
-            /* new image form for a new work */
-            'workImageForm' => $workImageForm->createView(),
-            /* New image form for existed works */
-            'lastWorksImageForm' => $lastWorksImageForm->createView()
-        ));
+        if(!empty($editWorkForms)) {
+            return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
+                /* The artist */
+                'artist' => $artist,
+                /* The works */
+                'works' => $works,
+                /* Completed artist form */
+                'editArtistForm' => $editArtistForm->createView(),
+                /* New image form for the artist profile */
+                'formImage' => $artistImageForm->createView(),
+                /* Completed work forms */
+                'editWorkForms' => $editWorkForms,
+                /* new work form */
+                'formWork' => $workForm->createView(),
+                /* new image form for a new work */
+                'workImageForm' => $workImageForm->createView(),
+                /* New image form for existed works */
+                'lastWorksImageForm' => $lastWorksImageForm->createView()
+            ));
+        }
+        else {
+            return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
+                /* The artist */
+                'artist' => $artist,
+                /* The works */
+                'works' => $works,
+                /* Completed artist form */
+                'editArtistForm' => $editArtistForm->createView(),
+                /* New image form for the artist profile */
+                'formImage' => $artistImageForm->createView(),
+                /* Completed work forms */
+                'formWork' => $workForm->createView(),
+                /* new image form for a new work */
+                'workImageForm' => $workImageForm->createView(),
+                /* New image form for existed works */
+                'lastWorksImageForm' => $lastWorksImageForm->createView()
+            ));
+        }
     }
 
     /*

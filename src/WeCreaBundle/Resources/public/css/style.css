@@ -28,11 +28,14 @@
 /* First three -> forms */
 #artist-picture,
 #work-caracteristics,
+#edit-work-caracteristics,
 #work-picture,
 #images-artist-confirmed,
+#add-image-form,
 #work-confirmed,
 #images-work-confirmed,
 .add-work,
+#edit-work-picture,
 .end-work-creation,
 .idWork,
 .idProfile{
