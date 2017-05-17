@@ -6,7 +6,8 @@
             <div class="slider fullscreen slider_custom">
                 <ul class="slides">
                     {% for carrousel in carrousels %}
-                        <li><a href="{{ carrousel.rout }}" about="_blank">
+                        <li>
+                            <a href="{{ carrousel.rout }}" target="_blank">
                                 <img src="{{ asset("images/") }}{{ carrousel.images.url }}" alt="{{ carrousel.images.alt }}">
                                 <div class="caption left-align caption_custom">
                                     <h2>{{ carrousel.title }}</h2>

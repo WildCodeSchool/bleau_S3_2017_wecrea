@@ -47,8 +47,11 @@
 /* partie fabien */
 .nav_custom {
     background-color: white;
-    z-index: 100;
 }
+
+    .nav_custom ul{
+        top: 57px;
+    }
 
 nav a {
     color: #313131!important;
@@ -61,6 +64,10 @@ nav a:hover {
 
 .brand-logo img {
     height: 64px !important;
+}
+
+#sidenav-overlay {
+    z-index: 996;
 }
 
 @media screen and (max-width: 600px) {
@@ -156,8 +163,26 @@ main {
 
 }
 
+.slider .indicators .indicator-item {
+    width: 11px;
+    height: 11px;
+    margin: 0 9px;
+}
+
+.indicators {
+    bottom: 10px!important;
+}
+
 .caption_custom {
     text-shadow: -1px 0 #080808, 0 1px #080808, 1px 0 #080808, 0 -1px #080808;
+    top: 75% !important;
+    left: 5% !important;
+    width: 40% !important;
+}
 
-    padding: 5px;
+@media (max-width: 600px) {
+    .caption_custom{
+        top: 7% !important;
+        width: 95% !important;
+    }
 }
