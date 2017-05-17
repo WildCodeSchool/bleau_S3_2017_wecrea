@@ -1,5 +1,7 @@
 $(document).ready( function () {
     $(".button-collapse").sideNav();
-    $('.carousel.carousel-slider').carousel({fullWidth: true});
-
+    $('.slider').slider();
+    $('#moreLink').click( function () {
+        $('.container_footer').slideToggle(500);
+    });
 });

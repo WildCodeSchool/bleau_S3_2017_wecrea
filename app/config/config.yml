@@ -70,3 +70,14 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: WeCreaBundle\Entity\User
+    registration:
+        form:
+            type: WeCreaBundle\Form\RegistrationFormType
+    from_email:
+        address: blabla@msn.com
+        sender_name: blabla
