@@ -1,6 +1,6 @@
 we_crea_admin_homepage:
     path: /
-    defaults:
+    defaults: {_controller: "WeCreaBundle:Admin:adminHome"}
 
 we_crea_admin_artist_list:
     path: /artists/
@@ -81,3 +81,4 @@ we_crea_admin_actu_add:
 we_crea_admin_actu_delete:
     path: /actu/delete
     defaults: {_controller: "WeCreaBundle:Admin:deleteActu"}
+

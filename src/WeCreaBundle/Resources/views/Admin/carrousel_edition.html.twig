@@ -34,7 +34,7 @@
         <div class="row row_custom">
             <div id="show_carrousel">
                 {% for carrousel in carrousels %}
-                    <div class="card" style="background: url('{{ asset('bundles/wecrea/images/') }}{{ carrousel.images.url }}') center / cover">
+                    <div class="card" style="background: url('{{ asset('images/') }}{{ carrousel.images.url }}') center / cover">
                         <h2>{{ carrousel.title }}</h2>
                         <p>{{ carrousel.content }}</p>
                         <a class="waves-effect waves-light btn black delete_btn" id="{{ carrousel.id }}">supprimer</a>
@@ -91,7 +91,7 @@
 
                        var card = $(document.createElement('div'));
                        card.attr('class', 'card');
-                       card.css({'background':  'url({{ asset("bundles/wecrea/images/") }}' +response.images.url+') center',
+                       card.css({'background':  'url({{ asset("images/") }}' +response.images.url+') center',
                             'background-size': 'cover',
                             'display': 'none'});
 

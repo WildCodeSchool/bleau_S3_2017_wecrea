@@ -8,6 +8,11 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('WeCreaBundle:User:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
+
+        return $this->render('WeCreaBundle:User:index.html.twig', array(
+            'carrousels' => $carrousels,
+        ));
     }
 }
