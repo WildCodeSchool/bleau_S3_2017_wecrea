@@ -25,6 +25,15 @@ class UserController extends Controller
         ));
     }
 
+    public function workShowOneAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+
+        return $this->render('WeCreaBundle:User:/******/', array(
+            'work' => $work
+        ));
+    }
+
     /* Method for displaying all the artists registered */
     public function artistsShowAction(){
         $em = $this->getDoctrine()->getManager();

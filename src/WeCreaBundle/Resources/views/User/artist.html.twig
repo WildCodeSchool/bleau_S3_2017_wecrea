@@ -2,24 +2,28 @@
 
 {% block body %}
     <div class="container">
+        <h2>{{ artist.name }} {{ artist.firstname }}</h2>
+        {% for image in artist.images %}
         <div class="row">
-            <h2>{{ artist.name }} {{ artist.firstname }}</h2>
-            {% for image in artist.images %}
-                <div class="col s12 artist-img">
-                    <img src="{{ asset('images/'~image.url) }}" class="artist-img"/>
+            <div class="col s12">
+                <div class="artist-img">
+                    <img src="{{ asset('images/'~image.url) }}" alt="{{ image.alt }}"/>
+                    <i>{{ image.alt }}</i>
                 </div>
-            {% endfor %}
-            <div class="col s12">
-                <p>{{ artist.localization }}</p>
             </div>
-            <div class="col s12">
-                <p>Localisation : {{ artist.localization }}</p>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col s12 col-description-artist">
+                <p><b>{{ artist.name }} {{ artist.firstname }} : </b> {{ artist.localization }}</p>
             </div>
-            <div class="col s12">
-                <p>Expertise : {{ artist.localization }}</p>
+
+            <div class="col s12 col-description-artist">
+                <p><b>Expertise : </b> {{ artist.expertise }}</p>
             </div>
-            <div class="col s12">
-                <p>À propos {{ artist.biography }}</p>
+            <div class="col s12 col-description-artist">
+                <p></p><b>À propos </b></p>
+                <p>{{ artist.biography }}</p>
             </div>
         </div>
         <div class="row">
@@ -43,7 +47,7 @@
                         <b>{{ work.title }}</b>
                         <p>{{ work.description[0:50] }}</p>
                         <p></p>
-                        <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> Accéder à l'oeuvre </a>
+                        <a href="#{#{{ path('we_crea_work_########', {'id' : work.id} ) }} #}"> En savoir plus </a>
                     </div>
                 </div>
             {% endfor %}

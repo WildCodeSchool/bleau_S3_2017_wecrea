@@ -303,19 +303,32 @@ main {
 /* Artist list pages */
 
 .container-custom-artists{
-    margin-top: 150px;
+    margin-top: 75px;
 }
 
 /* Artist page */
 
-.col-custom-artist-client{
-
+.artist-img{
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #c8c8c8;
 }
 
-.artist-img{
-    margin: 0 auto;
-    display: block;
-    width: 50%;
-    margin: 10px;
-    border: 1px solid #c8c8c8;
+@media all and (max-width: 992px){
+    .artist-img{
+        width: 100%;
+    }
+}
+
+.artist-img img{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.col-description-artist{
+    background: #fafafa;
+    margin: 10px 0 10px 0;
 }
