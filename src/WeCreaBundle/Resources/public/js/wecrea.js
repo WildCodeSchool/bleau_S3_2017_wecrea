@@ -1,4 +1,19 @@
+function cardResize(ratio) {
+    var card = $('.cardResizer');
+    var width = parseFloat(card.css('width'));
+    var height = width * ratio;
+    card.css('height', height);
+};
+
+cardResize(1);
+
+
 $(document).ready( function () {
+
+    $(window).resize(function () {
+        cardResize(1);
+    });
+
     $(".button-collapse").sideNav();
     $('.slider').slider();
     $('#moreLink').click( function () {
@@ -13,7 +28,6 @@ $(document).ready( function () {
 
 // filter functions
     var filterFns = {};
-
 // bind filter button click
     $('.filters-button-group').on( 'click', 'button', function() {
         var filterValue = $( this ).attr('data-filter');
@@ -33,17 +47,3 @@ $(document).ready( function () {
 
 });
 
-// Resize work's cards
-function cardResize(ratio) {
-        var card = $('.cardResizer');
-        var width = parseFloat(card.css('width'));
-        var height = width * ratio;
-        card.css('height', height);
-};
-
-$(document).ready( function () {
-    cardResize(1);
-    $(window).resize(function () {
-        cardResize(1);
-    });
-});

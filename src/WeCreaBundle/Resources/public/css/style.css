@@ -253,20 +253,25 @@ main {
     padding: 0 0.5%;
 }
 
-.active_button {
+.iso_button {
     background-color: white!important;
     color: #313131!important;
 }
 
+.active_button {
+    background-color: #313131!important;
+    color: white!important;
+}
+
 @media (max-width: 600px) {
     .card_custom {
-        width: 30%;
+        width: 33%;
     }
 }
 
 @media (max-width: 450px) {
     .card_custom {
-        width: 41%;
+        width: 50%;
     }
 }
 
