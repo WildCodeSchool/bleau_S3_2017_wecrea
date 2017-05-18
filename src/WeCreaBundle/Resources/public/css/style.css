@@ -6,6 +6,30 @@
     width: 50%;
     display: block;
     margin: 0 auto;
+    padding: 10px;
+}
+
+/* Artist list page */
+
+.row-artist-work-custom{
+    margin-top: 50px;
+    background: #fdfdfd;
+    padding: 10px;
+}
+
+.col-custom-artist{
+    background: #fcfcfc;
+    border: 1px solid #c8c8c8;
+}
+
+.col-custom-artist button{
+    margin: 10px 0 20px 0;
+}
+
+.list-artists-img{
+    width: 40%;
+    display: block;
+    margin: 0 auto;
 }
 
 #images-artist-check img,
@@ -40,6 +64,12 @@
 .idWork,
 .idProfile{
     display: none;
+}
+
+/* Artist biography & work description textarea fields*/
+.biography,
+.description{
+    height: 200px;
 }
 
 .new-artist-image,
