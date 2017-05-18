@@ -211,21 +211,23 @@ main {
 /* WORK CLIENT */
 .cards {
     width:100%;
+    height: auto;
 }
 
 .card_custom {
-    width: 25%;
+    width: 20%;
+    padding: 0 0.5%;
 }
 
 @media (max-width: 600px) {
     .card_custom {
-        width: 33%;
+        width: 30%;
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .card_custom {
-        width: 50%;
+        width: 41%;
     }
 }
 

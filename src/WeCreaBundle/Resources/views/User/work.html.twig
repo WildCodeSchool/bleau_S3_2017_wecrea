@@ -2,14 +2,17 @@
 
 {% block body %}
     <main>
-        <div class="container container_custom">
-            <div class="row row_custom row_work">
-                <div class="col m2">
 
+                <div class="button-group filters-button-group">
+                    <button class=" is-checked" data-filter="*">Tous</button>
+                    <button data-filter=".Peinture">Peinture</button>
+                    <button data-filter=".Sculpture">Sculpture</button>
+                    <button data-filter=".Bronzes">Bronze</button>
+                    <button data-filter=".Artisanat d'art">Artisanat d'art</button>
                 </div>
-                <div class="col m10 cards grid">
+                <div class="cards">
                     {% for work in works %}
-                        <div class="card card_custom grid-item cardResizer">
+                        <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
                             <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
                             </div>
                             <div class="card-content card-content_custom">
@@ -28,8 +31,7 @@
                         </div>
                     {% endfor %}
                 </div>
-            </div>
 
-        </div>
+
     </main>
 {% endblock %}
