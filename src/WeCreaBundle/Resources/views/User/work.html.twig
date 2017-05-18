@@ -16,15 +16,15 @@
                             <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
                             </div>
                             <div class="card-content card-content_custom">
-                                <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}<i class="material-icons right">more_vert</i></span>
-                                <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
+                                <span class="card-title activator grey-text text-darken-4">{{ work.title }}<i class="material-icons right">more_vert</i></span>
+                                <p><a href="#">{{ work.artist.name }}</a></p>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
                                 <p>{{ work.technic }} {{ work.nature.name }}</p>
                                 <p>Dimensions: {{ work.dimensions }}</p>
                                 <p>Poids: {{ work.weight }}</p>
-                                <p>Prix: {{ work.price }} €</p>
+                                <p>Prix: {{ work.price }}</p>
                                 <p>Quantité: {{ work.quantity }}</p>
                                 <p>Description</p>
                             </div>
