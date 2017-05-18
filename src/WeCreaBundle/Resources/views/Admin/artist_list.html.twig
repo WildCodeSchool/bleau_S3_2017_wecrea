@@ -3,26 +3,28 @@
 {% block body %}
 
 <div class="container">
-    <div class="row">
-        <div class="col s6 offset-s3 center-align">
-            <a class="btn waves-effect waves-light black btn-custom-artist center-align" href="{{ path('we_crea_admin_artist_work_creation') }}">
-                    Créer un nouvel artiste
-                    <i class="material-icons left">add</i>
-               </a>
+    <div class="row row-artist-work-custom">
+        <div class="col s12">
+            <a class="btn waves-effect waves-light black btn-custom-artist" href="{{ path('we_crea_admin_artist_work_creation') }}">
+                Créer un nouvel artiste
+                <i class="material-icons left">add</i>
+            </a>
         </div>
     </div>
     {% for artist in artists %}
     <div class="row">
         <div class="col s12 col-custom-artist">
+            <h4> {{ artist.name }} {{ artist.firstname }}</h4>
             {% if artist.images is not empty %}
-                <img src="{{ asset('images/'~artist.images|first.url) }}" />
+                <img src="{{ asset('images/'~artist.images|first.url) }}" class="list-artists-img"/>
+            {% else %}
+                <p> Cet artiste n'a pas de photo </p>
             {% endif %}
-            <h4>{{ artist.name }} {{ artist.firstname }}</h4>
-            <a href="{{ path('we_crea_admin_delete_artist', {id : artist.id }) }}"><button class="btn waves-effect waves-light red btn-custom-artist">
+            <a href="{{ path('we_crea_admin_delete_artist', {id : artist.id }) }}"><button class="btn waves-effect waves-light red">
                 Supprimer
                 <i class="material-icons left">delete</i>
             </button></a>
-            <a href="{{ path('we_crea_admin_artist_work_edition', {id : artist.id}) }}"><button class="btn waves-effect waves-light right btn-custom-artist">
+            <a href="{{ path('we_crea_admin_artist_work_edition', {id : artist.id}) }}"><button class="btn waves-effect waves-light right">
                 Éditer
                 <i class="material-icons left">mode_edit</i>
             </button></a>

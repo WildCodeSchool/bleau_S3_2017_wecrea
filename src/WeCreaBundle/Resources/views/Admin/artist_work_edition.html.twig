@@ -3,32 +3,38 @@
 {% block body %}
     <div class="container">
         <h4>Edition du profil de l'artiste et de ses oeuvres</h4>
-        <div class="row row-edit-artist">
+        <div class="row row-artist-work-custom">
             {{ form_start(editArtistForm) }}
                 <div class="input-field col s12 idProfile">
                     {{ form_row(editArtistForm.id) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(editArtistForm.name, 'Nom Artiste') }}
+                    {{ form_label(editArtistForm.name, 'Nom de l\'artiste') }}
                     {{ form_errors(editArtistForm.name) }}
                     {{ form_widget(editArtistForm.name) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(editArtistForm.firstname, 'Prénom Artiste') }}
+                    {{ form_label(editArtistForm.firstname, 'Prénom de l\'artiste') }}
                     {{ form_errors(editArtistForm.firstname) }}
                     {{ form_widget(editArtistForm.firstname) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(editArtistForm.localization, 'Localisation Artiste') }}
+                    {{ form_label(editArtistForm.localization, 'Localisation de l\'artiste') }}
                     {{ form_errors(editArtistForm.localization) }}
                     {{ form_widget(editArtistForm.localization) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(editArtistForm.expertise, 'Expertise Artiste') }}
+                    {{ form_label(editArtistForm.expertise, 'Expertise de l\'artiste') }}
                     {{ form_errors(editArtistForm.expertise) }}
                     {{ form_widget(editArtistForm.expertise) }}
                 </div>
-
+                <div class="col s12">
+                    {{ form_label(editArtistForm.biography, 'Biographie de l\'artiste') }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_errors(editArtistForm.biography) }}
+                    {{ form_widget(editArtistForm.biography, {'attr': {'class':'biography'}} ) }}
+                </div>
                 <button class="btn waves-effect waves-light right edit-profil"  type="submit" name="action">
                     Éditer le profil
                     <i class="material-icons left">mode_edit</i>
@@ -64,7 +70,6 @@
                 {{ form_errors(formImage.url) }}
             </div>
 
-
             <div class="col s12" id="images-artist-check">
             </div>
 
@@ -92,33 +97,40 @@
         {% if editWorkForms is defined %}
             <h4> Les oeuvres de l'artiste </h4>
             {% for form in editWorkForms %}
-                <div class="row row-edit-work">
+                <div class="row row-artist-work-custom">
                     {{ form_start(form) }}
                     <div class="input-field col s12 idWork">
                         {{ form_row(form.id) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.title, "Titre") }}
+                        {{ form_label(form.title, "Titre de l'oeuvre") }}
                         {{ form_errors(form.title) }}
                         {{ form_widget(form.title) }}
                     </div>
+                    <div class="col s12">
+                        {{ form_label(form.description, "Description de l'oeuvre") }}
+                    </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.technic, "Technique") }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description, {'attr': {'class':'description'}} ) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.technic, "Technique utilisée") }}
                         {{ form_errors(form.technic) }}
                         {{ form_widget(form.technic) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.dimensions, "Dimensions") }}
+                        {{ form_label(form.dimensions, "Dimensions de l'oeuvre") }}
                         {{ form_errors(form.dimensions) }}
                         {{ form_widget(form.dimensions) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.weight, "Poids") }}
+                        {{ form_label(form.weight, "Poids de l'oeuvre") }}
                         {{ form_errors(form.weight) }}
                         {{ form_widget(form.weight) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.quantity, "Quantités") }}
+                        {{ form_label(form.quantity, "Quantité(s) disponible(s)") }}
                         {{ form_errors(form.quantity) }}
                         {{ form_widget(form.quantity) }}
                     </div>
@@ -128,7 +140,7 @@
                         {{ form_widget(form.timelimit) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.price, "Prix") }}
+                        {{ form_label(form.price, "Prix de l'oeuvre") }}
                         {{ form_errors(form.price) }}
                         {{ form_widget(form.price) }}
                     </div>
@@ -189,7 +201,6 @@
                 {{ form_errors(lastWorksImageForm.url) }}
             </div>
 
-
             <div class="col s12" id="add-image-work-check">
             </div>
 
@@ -216,32 +227,44 @@
             </div>
 
             {{ form_start(formWork, {'attr' : {'id' : 'edit-work-caracteristics' }} ) }}
-            <div class="row">
+            <div class="row row-artist-work-custom">
                 <div class="input-field col s12 idWork">
                     {{ form_row(formWork.id) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.title, 'Titre') }}
+                    {{ form_label(formWork.title, "Titre de l'oeuvre") }}
+                    {{ form_widget(formWork.title) }}
+                    {{ form_errors(formWork.title) }}
+                </div>
+
+                <div class="col s12">
+                    {{ form_label(formWork.description, "Description de l'oeuvre") }}
+                </div>
+                <div class="input-field col s12">
                     {{ form_widget(formWork.title) }}
                     {{ form_errors(formWork.title) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.technic, 'Technique utilisée') }}
+                    {{ form_errors(formWork.description) }}
+                    {{ form_widget(formWork.description, {'attr': {'class':'description'}} ) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(formWork.technic, "Technique utilisée") }}
                     {{ form_widget(formWork.technic) }}
                     {{ form_errors(formWork.technic) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions, 'Dimensions') }}
+                    {{ form_label(formWork.dimensions, "Dimensions de l'oeuvre") }}
                     {{ form_widget(formWork.dimensions) }}
                     {{ form_errors(formWork.dimensions) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.weight, 'Poids') }}
+                    {{ form_label(formWork.weight, "Poids de l'oeuvre") }}
                     {{ form_widget(formWork.weight) }}
                     {{ form_errors(formWork.weight) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.quantity, 'Quantité(s)') }}
+                    {{ form_label(formWork.quantity, "Quantité(s) disponible(s)") }}
                     {{ form_widget(formWork.quantity) }}
                     {{ form_errors(formWork.quantity) }}
                 </div>
@@ -251,7 +274,7 @@
                     {{ form_errors(formWork.timelimit) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.price, 'Prix') }}
+                    {{ form_label(formWork.price, "Prix de l'oeuvre") }}
                     {{ form_widget(formWork.price) }}
                     {{ form_errors(formWork.price) }}
                 </div>
@@ -672,7 +695,7 @@
             e.preventDefault();
             var $idWork = $(this).find('input[name="idWork"]').attr('value');
             var $data = new FormData($(this)[0]);
-
+            $(this).hide();
             /* We remove the preview image and reset the
              * form to enable the submission of new pictures
              */

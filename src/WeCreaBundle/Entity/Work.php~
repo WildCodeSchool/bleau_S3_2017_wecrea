@@ -300,4 +300,33 @@ class Work
     {
         return $this->images;
     }
+    /**
+     * @var integer
+     */
+    private $price;
+
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return Work
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return integer
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 }

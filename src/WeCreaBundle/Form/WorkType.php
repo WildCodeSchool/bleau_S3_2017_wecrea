@@ -24,6 +24,7 @@ class WorkType extends AbstractType
                 'required' => false
             ))
             ->add('title')
+            ->add('description')
             ->add('technic')
             ->add('dimensions')
             ->add('weight')

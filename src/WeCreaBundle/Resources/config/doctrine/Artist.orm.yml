@@ -21,6 +21,8 @@ WeCreaBundle\Entity\Artist:
         expertise:
             type: string
             length: 255
+        biography:
+            type: text
 
     manyToMany:
         images:
