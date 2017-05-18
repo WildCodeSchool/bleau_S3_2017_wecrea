@@ -1,3 +1,7 @@
 we_crea_homepage:
     path:    /
     defaults: {_controller: "WeCreaBundle:User:index"}
+
+we_crea_work:
+    path: /work
+    defaults: {_controller: "WeCreaBundle:User:workShow"}

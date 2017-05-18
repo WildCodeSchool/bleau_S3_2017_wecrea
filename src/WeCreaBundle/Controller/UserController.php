@@ -15,4 +15,13 @@ class UserController extends Controller
             'carrousels' => $carrousels,
         ));
     }
+
+    public function workShowAction() {
+        $em = $this->getDoctrine()->getManager();
+        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('id'=>'desc'));
+
+        return $this->render('WeCreaBundle:User:work.html.twig', array(
+            'works' => $works,
+        ));
+    }
 }
