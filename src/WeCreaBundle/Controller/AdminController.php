@@ -740,4 +740,8 @@ class AdminController extends Controller
         ));
 
     }
+
+    public function adminHomeAction() {
+        return $this->render('@WeCrea/Admin/home_admin.html.twig');
+    }
 }

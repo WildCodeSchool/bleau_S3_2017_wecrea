@@ -43,7 +43,7 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            $('form[name="wecreabundle_images"]').submit( function(e){
+            $('form[name="wecreabundle_images"]').submit(  function(e){
                 e.preventDefault();
 
                 var $form = new FormData($(this)[0]);
