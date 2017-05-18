@@ -2,7 +2,33 @@
 
 {% block body %}
     <main>
-        <div class="container">
+        <div class="container container_custom">
+            <div class="row row_custom row_work">
+                <div class="col m2">
+
+                </div>
+                <div class="col m10 cards grid">
+                    {% for work in works %}
+                        <div class="card card_custom grid-item cardResizer">
+                            <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
+                            </div>
+                            <div class="card-content card-content_custom">
+                                <span class="card-title activator grey-text text-darken-4">{{ work.title }}<i class="material-icons right">more_vert</i></span>
+                                <p><a href="#">{{ work.artist.name }}</a></p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                                <p>{{ work.technic }} {{ work.nature.name }}</p>
+                                <p>Dimensions: {{ work.dimensions }}</p>
+                                <p>Poids: {{ work.weight }}</p>
+                                <p>Prix: {{ work.price }}</p>
+                                <p>Quantité: {{ work.quantity }}</p>
+                                <p>Description</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
 
         </div>
     </main>

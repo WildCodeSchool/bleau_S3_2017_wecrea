@@ -1,3 +1,10 @@
+/* BASE */
+.container_custom {
+    width: 99%;
+    margin: 0;
+    padding: 0;
+}
+
 /* ADMIN */
 
 #images-artist-confirmed img,
@@ -71,7 +78,7 @@ nav a {
     color: #313131!important;
 }
 
-nav a:hover {
+nav ul a:hover {
     background-color: #5a5a5a!important;
     color: #ffffff!important;
 }
@@ -198,5 +205,60 @@ main {
     .caption_custom{
         top: 7% !important;
         width: 95% !important;
+    }
+}
+
+/* WORK CLIENT */
+.cards {
+    width:100%;
+}
+
+.card_custom {
+    width: 25%;
+}
+
+@media (max-width: 600px) {
+    .card_custom {
+        width: 33%;
+    }
+}
+
+@media (max-width: 400px) {
+    .card_custom {
+        width: 50%;
+    }
+}
+
+
+.card-image_custom {
+    height: 70%;
+    margin-top: 2%;
+}
+
+.card-content_custom {
+    padding: 0!important;
+}
+
+@media (max-width: 500px) {
+    .card-content_custom{
+        font-size: 0.7em!important;
+    }
+
+    .card-content_custom .card-title{
+        font-size: 19px!important;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-content_custom .card-title {
+        font-size: 18px!important;
+        line-height: 19px!important;
+    }
+}
+
+@media (max-width: 350px) {
+    .card-content_custom .card-title {
+        font-size: 15px!important;
+        line-height: 17px!important;
     }
 }
