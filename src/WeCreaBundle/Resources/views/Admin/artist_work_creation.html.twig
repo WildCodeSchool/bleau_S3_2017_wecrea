@@ -275,7 +275,7 @@
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
-                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr("src", "{{ asset('images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of a button to delete the image */
@@ -432,7 +432,7 @@
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
-                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr("src", "{{ asset('images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of an hidden input containing the work id */

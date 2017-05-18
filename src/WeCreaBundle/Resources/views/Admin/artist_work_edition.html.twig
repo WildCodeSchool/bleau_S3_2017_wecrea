@@ -40,7 +40,7 @@
             <h5>Images de l'artiste</h5>
                 {% for image in artist.images %}
                     <div class="col s12 existent-images">
-                        <img src="{{ asset('bundles/wecrea/images/'~image.url) }}" id="{{ image.id }}"/>
+                        <img src="{{ asset('images/'~image.url) }}" id="{{ image.id }}"/>
                     </div>
                     <div class="col s12">
                         <button class="btn waves-effect waves-light red delete-artist-images">
@@ -85,91 +85,96 @@
 
         <div class="row">
             <div class="col s12" id="images-artist-confirmed">
-                <h4>Images de l'artiste validées</h4>
+                <h4>Images de l'artiste supplémentaires</h4>
             </div>
         </div>
 
-        <h4> Les oeuvres de l'artiste </h4>
-        {% for form in editWorkForms %}
-            <div class="row row-edit-work">
-                {{ form_start(form) }}
-                <div class="input-field col s12 idWork">
-                    {{ form_row(form.id) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.title, "Titre") }}
-                    {{ form_errors(form.title) }}
-                    {{ form_widget(form.title) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.technic, "Technique") }}
-                    {{ form_errors(form.technic) }}
-                    {{ form_widget(form.technic) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.dimensions, "Dimensions") }}
-                    {{ form_errors(form.dimensions) }}
-                    {{ form_widget(form.dimensions) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.weight, "Poids") }}
-                    {{ form_errors(form.weight) }}
-                    {{ form_widget(form.weight) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.quantity, "Quantités") }}
-                    {{ form_errors(form.quantity) }}
-                    {{ form_widget(form.quantity) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.timelimit, "Date de livraison") }}
-                    {{ form_errors(form.timelimit) }}
-                    {{ form_widget(form.timelimit) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(form.price, "Prix") }}
-                    {{ form_errors(form.price) }}
-                    {{ form_widget(form.price) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_widget(form.nature) }}
-                    {{ form_errors(form.nature) }}
-                    {{ form_label(form.nature, "Nature de l'oeuvre") }}
-                </div>
-                <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
-                    Éditer l'oeuvre
-                    <i class="material-icons left">mode_edit</i>
-                </button>
-                <button class="btn waves-effect waves-light left delete-work red" type="submit" name="action">
-                    Supprimer l'oeuvre
-                    <i class="material-icons left">delete</i>
-                </button>
-                {{ form_end(form) }}
-            </div>
-        {% endfor %}
-
-        {% for work in works %}
-            <div class="row row-custom-edit-work-image">
-                <h5>Image de l'oeuvre {{ work.title }}</h5>
-                {% for image in work.images %}
+        {% if editWorkForms is defined %}
+            <h4> Les oeuvres de l'artiste </h4>
+            {% for form in editWorkForms %}
+                <div class="row row-edit-work">
+                    {{ form_start(form) }}
+                    <div class="input-field col s12 idWork">
+                        {{ form_row(form.id) }}
+                    </div>
                     <div class="input-field col s12">
-                        <img src="{{ asset('bundles/wecrea/images/'~image.url) }}"/>
-                        <input type="hidden" class="idImg" value="{{ image.id }}"/>
-                        <input type="hidden" class="idWork" value="{{ work.id }}"/>
+                        {{ form_label(form.title, "Titre") }}
+                        {{ form_errors(form.title) }}
+                        {{ form_widget(form.title) }}
                     </div>
-                    <div class="col s12">
-                        <button class="btn waves-effect waves-light red delete-work-image" type="submit" name="action">
-                            Supprimer l'image
-                            <i class="material-icons left">delete</i>
-                        </button>
+                    <div class="input-field col s12">
+                        {{ form_label(form.technic, "Technique") }}
+                        {{ form_errors(form.technic) }}
+                        {{ form_widget(form.technic) }}
                     </div>
-                {% endfor %}
-                <button class="btn waves-effect waves-light black right add-work-image" type="submit" name="action">
-                    Ajouter une image
-                    <i class="material-icons left">add</i>
-                </button>
-            </div>
-        {% endfor%}
+                    <div class="input-field col s12">
+                        {{ form_label(form.dimensions, "Dimensions") }}
+                        {{ form_errors(form.dimensions) }}
+                        {{ form_widget(form.dimensions) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.weight, "Poids") }}
+                        {{ form_errors(form.weight) }}
+                        {{ form_widget(form.weight) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.quantity, "Quantités") }}
+                        {{ form_errors(form.quantity) }}
+                        {{ form_widget(form.quantity) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.timelimit, "Date de livraison") }}
+                        {{ form_errors(form.timelimit) }}
+                        {{ form_widget(form.timelimit) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(form.price, "Prix") }}
+                        {{ form_errors(form.price) }}
+                        {{ form_widget(form.price) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_widget(form.nature) }}
+                        {{ form_errors(form.nature) }}
+                        {{ form_label(form.nature, "Nature de l'oeuvre") }}
+                    </div>
+                    <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
+                        Éditer l'oeuvre
+                        <i class="material-icons left">mode_edit</i>
+                    </button>
+                    <button class="btn waves-effect waves-light left delete-work red" type="submit" name="action">
+                        Supprimer l'oeuvre
+                        <i class="material-icons left">delete</i>
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+            {% endfor %}
+
+            {% for work in works %}
+                <div class="row row-custom-edit-work-image" id="work{{ work.id }}">
+                    <input type="hidden" class="idWork" value="{{ work.id }}"/>
+                    <h5>Image de l'oeuvre {{ work.title }}</h5>
+                    {% for image in work.images %}
+                        <div class="input-field col s12">
+                            <img src="{{ asset('images/'~image.url) }}"/>
+                            <input type="hidden" class="idImg" value="{{ image.id }}"/>
+                            <input type="hidden" class="idWork" value="{{ work.id }}"/>
+                        </div>
+                        <div class="col s12">
+                            <button class="btn waves-effect waves-light red delete-work-image" type="submit" name="action">
+                                Supprimer l'image
+                                <i class="material-icons left">delete</i>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <button class="btn waves-effect waves-light black right add-work-image" type="submit" name="action">
+                        Ajouter une image
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
+            {% endfor%}
+        {% else %}
+            <h4> Vous avez supprimé toutes les oeuvres de cet artiste </h4>
+        {% endif %}
 
         {{ form_start(lastWorksImageForm, {'attr' : {'id' : 'add-image-form'}} ) }}
         <div class="row">
@@ -204,7 +209,7 @@
         {{ form_end(lastWorksImageForm) }}
 
             <div class="row">
-                <button class="btn waves-effect waves-light left edit-add-work" type="submit" name="action">
+                <button class="btn waves-effect waves-light left black edit-add-work" type="submit" name="action">
                     Ajouter une oeuvre
                     <i class="material-icons left">add</i>
                 </button>
@@ -266,9 +271,14 @@
 
             {{ form_start(workImageForm, {'attr' : {'id' : 'edit-work-picture'}} ) }}
             <div class="row">
-                <div class="col s12">
-                    {{ form_label(workImageForm.url, "Photo de l'oeuvre") }}
+                <div class="file-field file-field-custom input-field col s12">
+                    <div class="btn">
+                        <span>Choisissez un fichier</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
                     {{ form_widget(workImageForm.url) }}
+                    </div>
                     {{ form_errors(workImageForm.url) }}
                 </div>
                 <div class="col s12" id="images-work-check">
@@ -296,7 +306,7 @@
             </div>
             <div class="row">
                 <div class="col s12" id="work-confirmed">
-                    <h4>Oeuvres validées</h4>
+                    <h4>Oeuvres supplémentaires</h4>
                 </div>
             </div>
         </div>
@@ -421,7 +431,7 @@
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
-                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr("src", "{{ asset('images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of a button to delete the image */
@@ -484,9 +494,7 @@
             console.log($id);
             /* Let's remove this edit form */
             $(this).parent().remove();
-            var $divToRemove = $('.row-custom-edit-work-image').find('input[class="idWork"][value='+$id+']')
-            $divToRemove.parent().parent().remove();
-
+            $('#work'+$id+'').remove();
             $.ajax({
                 method: "post",
                 url: "{{ path('we_crea_admin_delete_work_ajax') }}",
@@ -506,12 +514,6 @@
            /* Let's remove the image that would otherwise still be on the page without refresh */
            $(this).parent().prev().remove();
            $(this).remove();
-
-           /*
-           if($(this).parent().prev().get(0).tagName == "H5"){
-               console.log('yes');
-           }
-           */
 
            $.ajax({
                method: "post",
@@ -546,7 +548,7 @@
                     data: $data,
                     success: function(response){
                         console.log(response);
-                        $idWork = response.id;
+                        var $idWork = response.id;
 
                         var $newWork = $(document.createElement('div'));
                         $newWork.attr('class', 'new-work');
@@ -575,7 +577,7 @@
 
                         $("#work-confirmed").append($newWork);
 
-                        var $formImgWorkLastChild = $('form[id="edit-work-picture"] input[id="wecreabundle_images__token"]');
+                        var $formImgWorkLastChild = $('form[id="edit-work-picture"] input[id="wecreabundle_images_work__token"]');
                         var $inputElt = $(document.createElement('input'));
                         $inputElt.attr("value", "" + $idWork + "");
                         $inputElt.attr("type", "hidden");
@@ -587,13 +589,13 @@
         });
 
         /* We add a preview image instantly */
-        $("#edit-work-picture input[id='wecreabundle_images_url']").change(function(){
+        $("#edit-work-picture input[id='wecreabundle_images_work_url']").change(function(){
             var $file = $(this)[0].files[0];
             var $img = $(document.createElement('img'));
             $img.attr('src', window.URL.createObjectURL($file));
 
             var $button = $(document.createElement('button'));
-            $button.attr('class', 'btn waves-effect waves-light left red');
+            $button.attr('class', 'btn waves-effect waves-light red');
             $button.text('Supprimer');
 
             $("#images-work-check").append($img);
@@ -623,14 +625,15 @@
             * if the user clicks on the button linked to the work (add-work-image)
             */
             var $idWork = $(this).parent().find('input[class="idWork"]').attr('value');
-            var $lastAddImageFormChild = $('form[id="add-image-form"] #wecreabundle_images__token');
-            console.log($idWork);
+            var $lastAddImageFormChild = $('form[id="add-image-form"] #wecreabundle_images_last_work_images__token');
+
             $inputElt = $(document.createElement('input'));
             $inputElt.attr({
                 'type' : 'hidden',
                 'name' : 'idWork',
                 'value' : '' + $idWork + ''
             });
+
             /* Let's insert the input before the token input of the Image form
             * that is to be sent
             */
@@ -639,20 +642,20 @@
             /* Let's show the form */
             $('#add-image-form').fadeIn(2000);
 
+            /* Move downward */
             $('html, body').animate({
-                scrollTop: $('#add-image-form').offset().top
+                scrollTop: $('#add-image-form').offset().top-300
             });
-            // window.scrollTo(0, $('#add-image-form').offset().top);
-
         });
 
-        $("#add-image-form input[id='wecreabundle_images_url']").change(function(){
+        /* Display the image before submitting the last work new image */
+        $("#add-image-form input[id='wecreabundle_images_last_work_images_url']").change(function(){
             var $file = $(this)[0].files[0];
             var $img = $(document.createElement('img'));
             $img.attr('src', window.URL.createObjectURL($file));
 
             var $button = $(document.createElement('button'));
-            $button.attr('class', 'btn waves-effect waves-light red');
+            $button.attr('class', 'btn waves-effect waves-light red F');
             $button.text('Supprimer');
 
             $("#add-image-work-check").append($img, $button);
@@ -664,11 +667,7 @@
             });
         });
 
-        /************************************************************
-         ************************************************************
-         **************************************************************
-         */
-
+        /* Image form linked to already existing works */
         $('form[id="add-image-form"]').submit(function(e){
             e.preventDefault();
             var $idWork = $(this).find('input[name="idWork"]').attr('value');
@@ -698,7 +697,6 @@
                 contentType: false,
                 processData: false,
                 success: function(response){
-                    console.log(response);
                     var $id = response.id;
 
                     var $newWorkImg = $(document.createElement('div'));
@@ -706,7 +704,7 @@
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
-                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr("src", "{{ asset('images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     var $inputHiddenImg = $(document.createElement('input'));
@@ -745,15 +743,15 @@
                     $iElt.text('delete');
 
                     $cancel.append($iElt);
-
                     $newDeleteImgButton.append($cancel);
 
                     /* We append the new image to the div containing all the images
                     * linked to the work
-                    * We need to get the id of the work which is the div
+                    * We need to get the id of the work which is in the div
                     */
-                    var $workPicturesContainer = $(".row-custom-edit-work-image").find("input[value=" + $idWork + "]");
-                    var $place = $workPicturesContainer.parent().parent().find('.add-work-image');
+
+                    var $workPicturesContainer = $("#work"+$idWork+"");
+                    var $place = $workPicturesContainer.find('.add-work-image');
 
                     $newWorkImg.insertBefore($place);
                     $newDeleteImgButton.insertBefore($place);
@@ -763,7 +761,6 @@
                     $('html, body').animate({
                         scrollTop: $place.offset().top-300
                     });
-                    // window.scrollTo(0, $place.offset().top-300);
 
                     $('.delete-work-image').click(function(e){
                         e.preventDefault();
@@ -787,25 +784,17 @@
                     });
                 }
             });
-
         });
-
-
-
-
-
-
-
 
         /* if submission of the work picture */
         $('form[id="edit-work-picture"]').submit(function(e){
             e.preventDefault();
             var $data = new FormData($(this)[0]);
+            var $idWork = $(this).find('input[name="idWork"]').attr('value');
 
             /* We remove the preview image and reset the
              * form to enable the submission of new pictures
              */
-
             var $img = $("#images-work-check").find('img');
             var $button = $("#images-work-check").find('button');
             $img.remove();
@@ -833,7 +822,7 @@
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
-                    $img.attr("src", "{{ asset('bundles/wecrea/images/')}}"+response.url+"");
+                    $img.attr("src", "{{ asset('images/')}}"+response.url+"");
                     $img.attr('id', ''+ $id +'');
 
                     /* Creation of an hidden input containing the work id */

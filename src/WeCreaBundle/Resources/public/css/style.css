@@ -1,19 +1,26 @@
 /* ADMIN */
 
 #images-artist-confirmed img,
-#images-work-confirmed img{
+#images-work-confirmed img,
+.existent-images img{
     width: 50%;
+    display: block;
+    margin: 0 auto;
 }
 
 #images-artist-check img,
-#images-work-check img{
+#images-work-check img,
+#add-image-work-check img{
     margin-top: 10px;
     width: 30%;
     display: block;
     margin: 0 auto;
 }
 
-#images-artist-check button{
+#images-artist-check button,
+#images-work-check button,
+#add-image-work-check button,
+.add-image-work-check-delete{
     display: block;
     margin: 0 auto;
 }
@@ -21,17 +28,24 @@
 /* First three -> forms */
 #artist-picture,
 #work-caracteristics,
+#edit-work-caracteristics,
 #work-picture,
 #images-artist-confirmed,
+#add-image-form,
 #work-confirmed,
 #images-work-confirmed,
 .add-work,
-.end-work-creation{
+#edit-work-picture,
+.end-work-creation,
+.idWork,
+.idProfile{
     display: none;
 }
 
 .new-artist-image,
-.new-work{
+.new-work,
+.row-custom-edit-work-image,
+.existent-images{
     border: 1px solid #c8c8c8;
 }
 
