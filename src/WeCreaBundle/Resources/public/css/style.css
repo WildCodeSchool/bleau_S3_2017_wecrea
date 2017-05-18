@@ -253,6 +253,9 @@ main {
     padding: 0 0.5%;
 }
 
+.card_custom_artists {
+    width: 33.3333333333333%;
+    padding: 0 0.5%;
 .iso_button {
     background-color: white!important;
     color: #313131!important;
@@ -307,4 +310,37 @@ main {
         font-size: 15px!important;
         line-height: 17px!important;
     }
+}
+
+/* Artist list pages */
+
+.container-custom-artists{
+    margin-top: 75px;
+}
+
+/* Artist page */
+
+.artist-img{
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #c8c8c8;
+}
+
+@media all and (max-width: 992px){
+    .artist-img{
+        width: 100%;
+    }
+}
+
+.artist-img img{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.col-description-artist{
+    background: #fafafa;
+    margin: 10px 0 10px 0;
 }
