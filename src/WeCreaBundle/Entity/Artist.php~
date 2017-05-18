@@ -2,6 +2,8 @@
 
 namespace WeCreaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Artist
  */

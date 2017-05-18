@@ -23,7 +23,8 @@ class ArtistType extends AbstractType
             ->add('name')
             ->add('firstname')
             ->add('localization')
-            ->add('expertise');
+            ->add('expertise')
+            ->add('biography');
     }
     
     /**
