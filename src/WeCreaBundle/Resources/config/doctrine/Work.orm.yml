@@ -12,6 +12,8 @@ WeCreaBundle\Entity\Work:
         title:
             type: string
             length: 255
+        description:
+            type: text
         technic:
             type: string
             length: 255

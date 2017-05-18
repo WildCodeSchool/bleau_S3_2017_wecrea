@@ -89,11 +89,13 @@ class AdminController extends Controller
             $firstName = $request->request->get('wecreabundle_artist')['firstname'];
             $localization = $request->request->get('wecreabundle_artist')['localization'];
             $expertise = $request->request->get('wecreabundle_artist')['expertise'];
+            $biography = $request->request->get('wecreabundle_artist')['biography'];
 
             $artist->setName($name);
             $artist->setFirstname($firstName);
             $artist->setLocalization($localization);
             $artist->setExpertise($expertise);
+            $artist->setBiography($biography);
 
             $em->persist($artist);
             $em->flush();
@@ -208,6 +210,7 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $title = $request->request->get('wecreabundle_work')['title'];
+            $description = $request->request->get('wecreabundle_work')['description'];
             $technic = $request->request->get('wecreabundle_work')['technic'];
             $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
             $weight = $request->request->get('wecreabundle_work')['weight'];
@@ -234,6 +237,7 @@ class AdminController extends Controller
             }
 
             $work->setTitle($title);
+            $work->setDescription($description);
             $work->setTechnic($technic);
             $work->setDimensions($dimensions);
             $work->setWeight($weight);
@@ -409,6 +413,10 @@ class AdminController extends Controller
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
         $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\LastImagesWorkType', $image);
 
+        /* If there's at least on completed form
+        * If not, that means that the administrator has previously
+        * removed all the works in the edit form
+        */
         if(!empty($editWorkForms)) {
             return $this->render('@WeCrea/Admin/artist_work_edition.html.twig', array(
                 /* The artist */
@@ -462,12 +470,14 @@ class AdminController extends Controller
             $firstname = $request->request->get('wecreabundle_artist')['firstname'];
             $localization = $request->request->get('wecreabundle_artist')['localization'];
             $expertise = $request->request->get('wecreabundle_artist')['expertise'];
+            $biography = $request->request->get('wecreabundle_artist')['biography'];
 
             $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
             $artist->setName($name);
             $artist->setFirstname($firstname);
             $artist->setLocalization($localization);
             $artist->setExpertise($expertise);
+            $artist->setBiography($biography);
 
             $em->flush();
 
@@ -491,6 +501,7 @@ class AdminController extends Controller
             $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
 
             $title = $request->request->get('wecreabundle_work')['title'];
+            $description = $request->request->get('wecreabundle_work')['description'];
             $technic = $request->request->get('wecreabundle_work')['technic'];
             $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
             $weight = $request->request->get('wecreabundle_work')['weight'];
@@ -499,6 +510,7 @@ class AdminController extends Controller
             $price = $request->request->get('wecreabundle_work')['price'];
 
             $work->setTitle($title);
+            $work->setDescription($description);
             $work->setTechnic($technic);
             $work->setDimensions($dimensions);
             $work->setWeight($weight);
