@@ -249,6 +249,11 @@ main {
     padding: 0 0.5%;
 }
 
+.card_custom_artists {
+    width: 33.3333333333333%;
+    padding: 0 0.5%;
+}
+
 @media (max-width: 600px) {
     .card_custom {
         width: 30%;
@@ -293,4 +298,24 @@ main {
         font-size: 15px!important;
         line-height: 17px!important;
     }
+}
+
+/* Artist list pages */
+
+.container-custom-artists{
+    margin-top: 150px;
+}
+
+/* Artist page */
+
+.col-custom-artist-client{
+
+}
+
+.artist-img{
+    margin: 0 auto;
+    display: block;
+    width: 50%;
+    margin: 10px;
+    border: 1px solid #c8c8c8;
 }

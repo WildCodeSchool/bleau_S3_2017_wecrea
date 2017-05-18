@@ -24,4 +24,26 @@ class UserController extends Controller
             'works' => $works,
         ));
     }
+
+    /* Method for displaying all the artists registered */
+    public function artistsShowAction(){
+        $em = $this->getDoctrine()->getManager();
+        $artists = $em->getRepository('WeCreaBundle:Artist')->findBy(array(),
+            array('name' => 'ASC'
+        ));
+
+        return $this->render('WeCreaBundle:User:artists.html.twig', array(
+           'artists' => $artists
+        ));
+    }
+
+    /* Method for displaying a specific artist */
+    public function artistShowAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+
+        return $this->render('WeCreaBundle:User:artist.html.twig', array(
+            'artist' => $artist
+        ));
+    }
 }
