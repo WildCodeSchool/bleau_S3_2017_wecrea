@@ -5,3 +5,19 @@ we_crea_homepage:
 we_crea_work:
     path: /work
     defaults: {_controller: "WeCreaBundle:User:workShow"}
+
+we_crea_work_########:
+    path: /work/{id}
+    defaults: {_controller: "WeCreaBundle:User:/******/"}
+    requirements:
+        id: \d+
+
+we_crea_artists_list:
+    path: /artists
+    defaults: {_controller: "WeCreaBundle:User:artistsShow"}
+
+we_crea_artist:
+    path: /artist/{id}
+    defaults: {_controller: "WeCreaBundle:User:artistShow"}
+    requirements:
+        id: \d+

@@ -659,7 +659,6 @@ class AdminController extends Controller
             'formImages' => $formImages->createView(),
             'actus' => $actus,
         ));
-
     }
 
     public function addActuAction(Request $request) {
