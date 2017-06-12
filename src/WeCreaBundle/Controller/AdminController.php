@@ -213,45 +213,71 @@ class AdminController extends Controller
     public function newWorkCaracteristicsAjaxAction(Request $request){
 
         $work = new Work();
-
-        if($request->isXmlHttpRequest()){
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        if($request->isXmlHttpRequest()) {
 
             $title = $request->request->get('wecreabundle_work')['title'];
             $description = $request->request->get('wecreabundle_work')['description'];
             $technic = $request->request->get('wecreabundle_work')['technic'];
             $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
+            $dimensions2 = $request->request->get('wecreabundle_work')['dimensions2'];
+            $dimensions3 = $request->request->get('wecreabundle_work')['dimensions3'];
+            $dimensions4 = $request->request->get('wecreabundle_work')['dimensions4'];
+            $dimensions5 = $request->request->get('wecreabundle_work')['dimensions5'];
             $weight = $request->request->get('wecreabundle_work')['weight'];
+            $weight2 = $request->request->get('wecreabundle_work')['weight2'];
+            $weight3 = $request->request->get('wecreabundle_work')['weight3'];
+            $weight4 = $request->request->get('wecreabundle_work')['weight4'];
+            $weight5 = $request->request->get('wecreabundle_work')['weight5'];
             $quantity = $request->request->get('wecreabundle_work')['quantity'];
+            $quantity2 = $request->request->get('wecreabundle_work')['quantity2'];
+            $quantity3 = $request->request->get('wecreabundle_work')['quantity3'];
+            $quantity4 = $request->request->get('wecreabundle_work')['quantity4'];
+            $quantity5 = $request->request->get('wecreabundle_work')['quantity5'];
             $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $price = $request->request->get('wecreabundle_work')['price'];
+            $price2 = $request->request->get('wecreabundle_work')['price2'];
+            $price3 = $request->request->get('wecreabundle_work')['price3'];
+            $price4 = $request->request->get('wecreabundle_work')['price4'];
+            $price5 = $request->request->get('wecreabundle_work')['price5'];
 
-            /* let's check if new nature or not. If 0, yes... */
             $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
-            /* Remove commentary if clients desires to add new work natures
-            if(count($nature) == 0){
-                $nature = new Nature();
-                $nature->setName($type);
-                $work->setNature($nature);
-            }
-            */
 
             $work->setNature($nature);
 
             $idArt = $request->request->get('idArt');
             $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
             $work->setArtist($artist);
-            }
 
             $work->setTitle($title);
             $work->setDescription($description);
             $work->setTechnic($technic);
-            $work->setDimensions($dimensions);
-            $work->setWeight($weight);
-            $work->setQuantity($quantity);
             $work->setTimelimit($timelimit);
+
+            $work->setDimensions($dimensions);
+            $dimensions2 != '' ? $work->setDimensions2($dimensions2) : $work->setDimensions2(NULL);
+            $dimensions3 != '' ? $work->setDimensions3($dimensions3) : $work->setDimensions3(NULL);
+            $dimensions4 != '' ? $work->setDimensions4($dimensions4) : $work->setDimensions4(NULL);
+            $dimensions5 != '' ? $work->setDimensions5($dimensions5) : $work->setDimensions5(NULL);
+
+            $work->setWeight($weight);
+            $weight2 != '' ? $work->setWeight2($weight2) : $work->setWeight2(NULL);
+            $weight3 != '' ? $work->setWeight3($weight3) : $work->setWeight3(NULL);
+            $weight4 != '' ? $work->setWeight4($weight4) : $work->setWeight4(NULL);
+            $weight5 != '' ? $work->setWeight5($weight5) : $work->setWeight5(NULL);
+
+            $work->setQuantity($quantity);
+            $quantity2 != '' ? $work->setQuantity2($quantity2) : $work->setQuantity2(NULL);
+            $quantity3 != '' ? $work->setQuantity3($quantity3) : $work->setQuantity3(NULL);
+            $quantity4 != '' ? $work->setQuantity4($quantity4) : $work->setQuantity4(NULL);
+            $quantity5 != '' ? $work->setQuantity5($quantity5) : $work->setQuantity5(NULL);
+
             $work->setPrice($price);
+            $price2 != '' ? $work->setPrice2($price2) : $work->setPrice2(NULL);
+            $price3 != '' ? $work->setPrice3($price3) : $work->setPrice3(NULL);
+            $price4 != '' ? $work->setPrice4($price4) : $work->setPrice4(NULL);
+            $price5 != '' ? $work->setPrice5($price5) : $work->setPrice5(NULL);
 
             $em->persist($work);
             $em->persist($nature);
@@ -261,7 +287,7 @@ class AdminController extends Controller
             $work = $em->getRepository('WeCreaBundle:Work')->findAll();
 
             /* Let's get the last work created */
-            $work = $work[count($work)-1];
+            $work = $work[count($work) - 1];
 
             $encoders = new JsonEncoder();
             $normalizer = new ObjectNormalizer();
@@ -271,9 +297,10 @@ class AdminController extends Controller
             $jsonWork = $serializer->serialize($work, "json");
 
             $response = new Response($jsonWork);
-            $response->headers->set('Content-Type','application/json');
+            $response->headers->set('Content-Type', 'application/json');
 
             return $response;
+        }
     }
 
     /*
@@ -499,8 +526,9 @@ class AdminController extends Controller
 
     public function editWorkAjaxAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         if($request->isXmlHttpRequest()){
-            $em = $this->getDoctrine()->getManager();
 
             $id = $request->request->get('wecreabundle_work')['id'];
             $natureId = $request->request->get('wecreabundle_work')['nature'];
@@ -512,20 +540,58 @@ class AdminController extends Controller
             $description = $request->request->get('wecreabundle_work')['description'];
             $technic = $request->request->get('wecreabundle_work')['technic'];
             $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
+            $dimensions2 = $request->request->get('wecreabundle_work')['dimensions2'];
+            $dimensions3 = $request->request->get('wecreabundle_work')['dimensions3'];
+            $dimensions4 = $request->request->get('wecreabundle_work')['dimensions4'];
+            $dimensions5 = $request->request->get('wecreabundle_work')['dimensions5'];
             $weight = $request->request->get('wecreabundle_work')['weight'];
+            $weight2 = $request->request->get('wecreabundle_work')['weight2'];
+            $weight3 = $request->request->get('wecreabundle_work')['weight3'];
+            $weight4 = $request->request->get('wecreabundle_work')['weight4'];
+            $weight5 = $request->request->get('wecreabundle_work')['weight5'];
             $quantity = $request->request->get('wecreabundle_work')['quantity'];
+            $quantity2 = $request->request->get('wecreabundle_work')['quantity2'];
+            $quantity3 = $request->request->get('wecreabundle_work')['quantity3'];
+            $quantity4 = $request->request->get('wecreabundle_work')['quantity4'];
+            $quantity5 = $request->request->get('wecreabundle_work')['quantity5'];
             $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
             $price = $request->request->get('wecreabundle_work')['price'];
+            $price2 = $request->request->get('wecreabundle_work')['price2'];
+            $price3 = $request->request->get('wecreabundle_work')['price3'];
+            $price4 = $request->request->get('wecreabundle_work')['price4'];
+            $price5 = $request->request->get('wecreabundle_work')['price5'];
 
             $work->setTitle($title);
             $work->setDescription($description);
             $work->setTechnic($technic);
+
             $work->setDimensions($dimensions);
+            $dimensions2 != '' ? $work->setDimensions2($dimensions2) : $work->setDimensions2(NULL);
+            $dimensions3 != '' ? $work->setDimensions3($dimensions3) : $work->setDimensions3(NULL);
+            $dimensions4 != '' ? $work->setDimensions4($dimensions4) : $work->setDimensions4(NULL);
+            $dimensions5 != '' ? $work->setDimensions5($dimensions5) : $work->setDimensions5(NULL);
+
             $work->setWeight($weight);
+            $weight2 != '' ? $work->setWeight2($weight2) : $work->setWeight2(NULL);
+            $weight3 != '' ? $work->setWeight3($weight3) : $work->setWeight3(NULL);
+            $weight4 != '' ? $work->setWeight4($weight4) : $work->setWeight4(NULL);
+            $weight5 != '' ? $work->setWeight5($weight5) : $work->setWeight5(NULL);
+
             $work->setQuantity($quantity);
+            $quantity2 != '' ? $work->setQuantity2($quantity2) : $work->setQuantity2(NULL);
+            $quantity3 != '' ? $work->setQuantity3($quantity3) : $work->setQuantity3(NULL);
+            $quantity4 != '' ? $work->setQuantity4($quantity4) : $work->setQuantity4(NULL);
+            $quantity5 != '' ? $work->setQuantity5($quantity5) : $work->setQuantity5(NULL);
+
+            $work->setPrice($price);
+            $price2 != '' ? $work->setPrice2($price2) : $work->setPrice2(NULL);
+            $price3 != '' ? $work->setPrice3($price3) : $work->setPrice3(NULL);
+            $price4 != '' ? $work->setPrice4($price4) : $work->setPrice4(NULL);
+            $price5 != '' ? $work->setPrice5($price5) : $work->setPrice5(NULL);
+
+
             $work->setTimelimit($timelimit);
             $work->setNature($nature);
-            $work->setPrice($price);
 
             $em->flush();
 
