@@ -2,13 +2,13 @@ we_crea_homepage:
     path:    /
     defaults: {_controller: "WeCreaBundle:User:index"}
 
-we_crea_work:
-    path: /work
-    defaults: {_controller: "WeCreaBundle:User:workShow"}
+we_crea_works:
+    path: /works
+    defaults: {_controller: "WeCreaBundle:User:worksShow"}
 
-we_crea_work_########:
+we_crea_work:
     path: /work/{id}
-    defaults: {_controller: "WeCreaBundle:User:/******/"}
+    defaults: {_controller: "WeCreaBundle:User:workShow"}
     requirements:
         id: \d+
 
@@ -21,3 +21,8 @@ we_crea_artist:
     defaults: {_controller: "WeCreaBundle:User:artistShow"}
     requirements:
         id: \d+
+
+we_crea_add_basket:
+    path: /work/basket/add
+    defaults: {_controller: "WeCreaBundle:User:addBasket"}
+    methods: 'POST'

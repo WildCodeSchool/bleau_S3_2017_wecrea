@@ -45,5 +45,12 @@ $(document).ready( function () {
         });
     });
 
+    // carousel SLICK
+    $('.images_work').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    });
+
 });
 
