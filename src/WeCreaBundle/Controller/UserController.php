@@ -104,13 +104,13 @@ class UserController extends Controller
         $pBasket = $session->get('basket');
 
         if (isset($pBasket[$idWork])){
-            $quant += $pBasket[$idWork];
+            $pBasket[$idWork] += $quant;
+        }
+        else {
+            $pBasket [$idWork] = $quant;
         }
 
-        $basket[$idWork] = $quant;
-        $session->set('basket', array(
-           $idWork => $quant
-        ));
+        $session->set('basket', $pBasket);
 
         $bCount = $this->container->get('app.basket');
         $bCount = $bCount->countBasket($session);
