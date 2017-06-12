@@ -178,6 +178,10 @@ nav ul a:hover {
     background-color: rgba(90, 90, 90, 0.9)!important;
 }
 
+.logo_container {
+    height: 100%!important;
+}
+
 .bar_footer {
     background-color: #080808!important;
     height: 5vh!important;
@@ -252,17 +256,25 @@ main {
 .card_custom_artists {
     width: 33.3333333333333%;
     padding: 0 0.5%;
+.iso_button {
+    background-color: white!important;
+    color: #313131!important;
+}
+
+.active_button {
+    background-color: #313131!important;
+    color: white!important;
 }
 
 @media (max-width: 600px) {
     .card_custom {
-        width: 30%;
+        width: 33%;
     }
 }
 
 @media (max-width: 450px) {
     .card_custom {
-        width: 41%;
+        width: 50%;
     }
 }
 
