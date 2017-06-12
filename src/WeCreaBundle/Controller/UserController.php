@@ -114,7 +114,7 @@ class UserController extends Controller
 
         $bCount = $this->container->get('app.basket');
         $bCount = $bCount->countBasket($session);
-        
+
         $response = new Response($bCount);
         return $response;
     }
