@@ -163,16 +163,12 @@ nav ul a:hover {
     box-shadow: 0px 0px 4px #313131;
 }
 
-.custom {
-    height: 800px;
-}
-
 /* CLIENT LAYOUT */
 
 .container_footer {
     display: none;
     position: absolute;
-    bottom: 60px;
+    bottom: 50px;
     min-width:100%;
     align-content: center;
     background-color: rgba(90, 90, 90, 0.9)!important;
@@ -184,14 +180,13 @@ nav ul a:hover {
 
 .bar_footer {
     background-color: #080808!important;
-    height: 5vh!important;
     min-height: 50px;
 }
 
 footer {
     z-index:100;
+    padding-top: 0 !important;
     background: #313131!important;
-    padding-top: calc(6vh - 50px) !important;
 }
 
 .row_custom {
@@ -209,9 +204,7 @@ main {
     flex: 1 0 auto;
 }
 
-.slider_custom {
-    height: 94vh!important;
-}
+
 
 .slider .indicators .indicator-item.active {
     background-color: #313131!important;
@@ -242,7 +235,7 @@ main {
     }
 }
 
-/* WORK CLIENT */
+/* WORKS CLIENT */
 .cards {
     width:100%;
     height: auto;
@@ -314,6 +307,14 @@ main {
     }
 }
 
+/* WORK CLIENT */
+.images_content {
+    height: 40%;
+}
+
+.image_work{
+    height: 40vh;
+}
 /* Artist list pages */
 
 .container-custom-artists{
