@@ -24,7 +24,7 @@
                     {{ form_widget(editArtistForm.localization) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(editArtistForm.expertise, 'Expertise de l\'artiste') }}
+                    {{ form_label(editArtistForm.expertise, 'Qualité') }}
                     {{ form_errors(editArtistForm.expertise) }}
                     {{ form_widget(editArtistForm.expertise) }}
                 </div>
@@ -97,57 +97,59 @@
         {% if editWorkForms is defined %}
             <h4> Les oeuvres de l'artiste </h4>
             {% for form in editWorkForms %}
+                {% set id=form.id.vars.value %}
                 <div class="row row-artist-work-custom">
                     {{ form_start(form) }}
+
                     <div class="input-field col s12 idWork">
                         {{ form_row(form.id) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.title, "Titre de l'oeuvre") }}
+                        <label for="title{{form.id.vars.value }}">"Titre de l'oeuvre"</label>
                         {{ form_errors(form.title) }}
-                        {{ form_widget(form.title) }}
+                        {{ form_widget(form.title, {'id' : 'title'~form.id.vars.value } ) }}
                     </div>
                     <div class="col s12">
-                        {{ form_label(form.description, "Description de l'oeuvre") }}
+                        <label for="description{{form.id.vars.value}} " > Description </label>
                     </div>
                     <div class="input-field col s12">
                         {{ form_errors(form.description) }}
-                        {{ form_widget(form.description, {'attr': {'class':'description'}} ) }}
+                        {{ form_widget(form.description, {'id': 'description'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.technic, "Technique utilisée") }}
+                        <label for="technic{{form.id.vars.value}} " > Technique utilisée </label>
                         {{ form_errors(form.technic) }}
-                        {{ form_widget(form.technic) }}
+                        {{ form_widget(form.technic, {'id': 'technic'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.dimensions, "Dimensions de l'oeuvre") }}
+                        <label for="dimensions{{form.id.vars.value}} " > Dimensions </label>
                         {{ form_errors(form.dimensions) }}
-                        {{ form_widget(form.dimensions) }}
+                        {{ form_widget(form.dimensions, {'id': 'dimensions'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.weight, "Poids de l'oeuvre") }}
+                        <label for="weight{{form.id.vars.value}} " > Poids (préciser g ou kg) </label>
                         {{ form_errors(form.weight) }}
-                        {{ form_widget(form.weight) }}
+                        {{ form_widget(form.weight, {'id': 'weight'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.quantity, "Quantité(s) disponible(s)") }}
+                        <label for="quantity{{form.id.vars.value}} " > Quantités disponibles </label>
                         {{ form_errors(form.quantity) }}
-                        {{ form_widget(form.quantity) }}
+                        {{ form_widget(form.quantity, {'id': 'quantity'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.timelimit, "Date de livraison") }}
+                        <label for="timelimit{{form.id.vars.value}} " > Délai de livraison (préciser "jour(s)") </label>
                         {{ form_errors(form.timelimit) }}
-                        {{ form_widget(form.timelimit) }}
+                        {{ form_widget(form.timelimit, {'id': 'timelimit'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_label(form.price, "Prix de l'oeuvre") }}
+                        <label for="price{{form.id.vars.value}} " > Prix (ne pas préciser le sigle) </label>
                         {{ form_errors(form.price) }}
-                        {{ form_widget(form.price) }}
+                        {{ form_widget(form.price, {'id': 'price'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        {{ form_widget(form.nature) }}
+                        <label for="nature{{form.id.vars.value}} " > Nature de l'oeuvre </label>
                         {{ form_errors(form.nature) }}
-                        {{ form_label(form.nature, "Nature de l'oeuvre") }}
+                        {{ form_widget(form.price, {'id': 'nature'~id} ) }}
                     </div>
                     <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
                         Éditer l'oeuvre

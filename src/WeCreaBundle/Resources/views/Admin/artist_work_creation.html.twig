@@ -3,6 +3,7 @@
 {% block body %}
 
     <div class="container">
+
         <div class="row">
             <h4>Création d'un nouvel artiste</h4>
             {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
@@ -23,7 +24,7 @@
                     {{ form_errors(form.localization) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(form.expertise, 'Expertise de l\'artiste') }}
+                    {{ form_label(form.expertise, 'Qualité') }}
                     {{ form_widget(form.expertise) }}
                     {{ form_errors(form.expertise) }}
                 </div>

@@ -22,7 +22,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class AdminController extends Controller
 {
     /* Render the page for listing all the artists */
-    public function artistListAction(){
+    public function artistListAction(Request $request){
+
         $em = $this->getDoctrine()->getManager();
         $artists = $em->getRepository('WeCreaBundle:Artist')->findAll();
 
