@@ -45,13 +45,20 @@ class AdminController extends Controller
             $images = $work->getImages();
             foreach($images as $image){
                 $img = $image->getUrl();
+                $file = $this->getParameter('image_directory')."/".$img;
+
+                if(file_exists($file)){
+                    unlink($file);
+                }
             }
+            $em->remove($work);
         }
 
-        /*
         $em->remove($artist);
         $em->flush();
-        */
+
+        return $this->redirectToRoute('we_crea_admin_artist_list');
+
     }
 
     /* Render the page for the creation a new artist & some or all of his/her works */

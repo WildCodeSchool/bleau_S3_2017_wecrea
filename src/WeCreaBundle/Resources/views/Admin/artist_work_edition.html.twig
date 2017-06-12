@@ -105,7 +105,7 @@
                         {{ form_row(form.id) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="title{{form.id.vars.value }}">"Titre de l'oeuvre"</label>
+                        <label for="title{{form.id.vars.value }}">Titre de l'oeuvre</label>
                         {{ form_errors(form.title) }}
                         {{ form_widget(form.title, {'id' : 'title'~form.id.vars.value } ) }}
                     </div>
@@ -122,12 +122,12 @@
                         {{ form_widget(form.technic, {'id': 'technic'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="dimensions{{form.id.vars.value}} " > Dimensions </label>
+                        <label for="dimensions{{form.id.vars.value}} " > Dimensions (préciser "cm" ou "m") </label>
                         {{ form_errors(form.dimensions) }}
                         {{ form_widget(form.dimensions, {'id': 'dimensions'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="weight{{form.id.vars.value}} " > Poids (préciser g ou kg) </label>
+                        <label for="weight{{form.id.vars.value}} " > Poids (préciser "g" ou "kg") </label>
                         {{ form_errors(form.weight) }}
                         {{ form_widget(form.weight, {'id': 'weight'~id} ) }}
                     </div>
@@ -142,15 +142,16 @@
                         {{ form_widget(form.timelimit, {'id': 'timelimit'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="price{{form.id.vars.value}} " > Prix (ne pas préciser le sigle) </label>
+                        <label for="price{{form.id.vars.value}} " > Prix (aura "€" pour sigle) </label>
                         {{ form_errors(form.price) }}
                         {{ form_widget(form.price, {'id': 'price'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="nature{{form.id.vars.value}} " > Nature de l'oeuvre </label>
                         {{ form_errors(form.nature) }}
-                        {{ form_widget(form.price, {'id': 'nature'~id} ) }}
+                        {{ form_widget(form.nature, {'id': 'nature'~id} ) }}
+                        <label for="nature{{form.id.vars.value}} " > Nature de l'oeuvre </label>
                     </div>
+
                     <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
                         Éditer l'oeuvre
                         <i class="material-icons left">mode_edit</i>
@@ -187,7 +188,7 @@
                 </div>
             {% endfor%}
         {% else %}
-            <h4> Vous avez supprimé toutes les oeuvres de cet artiste </h4>
+            <h4> Aucune oeuvre pour cet artiste </h4>
         {% endif %}
 
         {{ form_start(lastWorksImageForm, {'attr' : {'id' : 'add-image-form'}} ) }}
@@ -256,12 +257,12 @@
                     {{ form_errors(formWork.technic) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions, "Dimensions de l'oeuvre") }}
+                    {{ form_label(formWork.dimensions, "Dimensions de l'oeuvre (préciser \"cm\" ou \"m\")") }}
                     {{ form_widget(formWork.dimensions) }}
                     {{ form_errors(formWork.dimensions) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.weight, "Poids de l'oeuvre") }}
+                    {{ form_label(formWork.weight, "Poids de l'oeuvre (préciser \"g\" ou \"kg\")") }}
                     {{ form_widget(formWork.weight) }}
                     {{ form_errors(formWork.weight) }}
                 </div>
@@ -271,12 +272,12 @@
                     {{ form_errors(formWork.quantity) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.timelimit, 'Délai de livraison') }}
+                    {{ form_label(formWork.timelimit, 'Délai de livraison (préciser \"jour(s)\")') }}
                     {{ form_widget(formWork.timelimit) }}
                     {{ form_errors(formWork.timelimit) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.price, "Prix de l'oeuvre") }}
+                    {{ form_label(formWork.price, "Prix de l'oeuvre (aura \"€\" pour sigle)") }}
                     {{ form_widget(formWork.price) }}
                     {{ form_errors(formWork.price) }}
                 </div>

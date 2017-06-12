@@ -111,12 +111,12 @@
                     {{ form_errors(formWork.technic) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions, 'Dimensions de l\'oeuvre') }}
+                    {{ form_label(formWork.dimensions, 'Dimensions de l\'oeuvre (préciser \'cm\' ou \'m\')') }}
                     {{ form_widget(formWork.dimensions) }}
                     {{ form_errors(formWork.dimensions) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.weight, 'Poids de l\'oeuvre') }}
+                    {{ form_label(formWork.weight, 'Poids de l\'oeuvre (préciser \'g\' ou \'kg\')') }}
                     {{ form_widget(formWork.weight) }}
                     {{ form_errors(formWork.weight) }}
                 </div>
@@ -126,12 +126,12 @@
                     {{ form_errors(formWork.quantity) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.timelimit, 'Délai de livraison de l\'oeuvre') }}
+                    {{ form_label(formWork.timelimit, 'Délai de livraison de l\'oeuvre (préciser jour(s))') }}
                     {{ form_widget(formWork.timelimit) }}
                     {{ form_errors(formWork.timelimit) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.price, 'Prix de l\'oeuvre') }}
+                    {{ form_label(formWork.price, 'Prix de l\'oeuvre (aura \'€\' pour sigle)') }}
                     {{ form_widget(formWork.price) }}
                     {{ form_errors(formWork.price) }}
                 </div>
