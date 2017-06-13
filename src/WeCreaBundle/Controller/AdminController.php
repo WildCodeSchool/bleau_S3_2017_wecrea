@@ -64,6 +64,7 @@ class AdminController extends Controller
     /* Render the page for the creation a new artist & some or all of his/her works */
     public function newArtistWorkAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $artist = new Artist();
         $image = new Images();
         $work = new Work();
@@ -72,6 +73,40 @@ class AdminController extends Controller
         $formImageArtist = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $formWork = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+
+        if($request->isXmlHttpRequest()) {
+            $formWork->handleRequest($request);
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+
+            $work->setNature($nature);
+
+            $idArt = $request->request->get('idArt');
+            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+            $work->setArtist($artist);
+
+            $em->persist($work);
+
+            $em->flush();
+
+            /* We send back the data regarding the profile */
+            $work = $em->getRepository('WeCreaBundle:Work')->findAll();
+
+            /* Let's get the last work created */
+            $work = $work[count($work) - 1];
+
+            $encoders = new JsonEncoder();
+            $normalizer = new ObjectNormalizer();
+            $normalizer->setIgnoredAttributes(array("artist", "nature"));
+            $serializer = new Serializer(array($normalizer), array($encoders));
+
+            $jsonWork = $serializer->serialize($work, "json");
+
+            $response = new Response($jsonWork);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
 
         return $this->render('@WeCrea/Admin/artist_work_creation.html.twig', array(
             'artist' => $artist,
@@ -207,103 +242,6 @@ class AdminController extends Controller
     }
 
     /*
-     * Method for creating a new work (without images)
-     */
-
-    public function newWorkCaracteristicsAjaxAction(Request $request){
-
-        $work = new Work();
-        $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
-
-            $title = $request->request->get('wecreabundle_work')['title'];
-            $description = $request->request->get('wecreabundle_work')['description'];
-            $technic = $request->request->get('wecreabundle_work')['technic'];
-            $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
-            $dimensions2 = $request->request->get('wecreabundle_work')['dimensions2'];
-            $dimensions3 = $request->request->get('wecreabundle_work')['dimensions3'];
-            $dimensions4 = $request->request->get('wecreabundle_work')['dimensions4'];
-            $dimensions5 = $request->request->get('wecreabundle_work')['dimensions5'];
-            $weight = $request->request->get('wecreabundle_work')['weight'];
-            $weight2 = $request->request->get('wecreabundle_work')['weight2'];
-            $weight3 = $request->request->get('wecreabundle_work')['weight3'];
-            $weight4 = $request->request->get('wecreabundle_work')['weight4'];
-            $weight5 = $request->request->get('wecreabundle_work')['weight5'];
-            $quantity = $request->request->get('wecreabundle_work')['quantity'];
-            $quantity2 = $request->request->get('wecreabundle_work')['quantity2'];
-            $quantity3 = $request->request->get('wecreabundle_work')['quantity3'];
-            $quantity4 = $request->request->get('wecreabundle_work')['quantity4'];
-            $quantity5 = $request->request->get('wecreabundle_work')['quantity5'];
-            $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
-            $natureId = $request->request->get('wecreabundle_work')['nature'];
-            $price = $request->request->get('wecreabundle_work')['price'];
-            $price2 = $request->request->get('wecreabundle_work')['price2'];
-            $price3 = $request->request->get('wecreabundle_work')['price3'];
-            $price4 = $request->request->get('wecreabundle_work')['price4'];
-            $price5 = $request->request->get('wecreabundle_work')['price5'];
-
-            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
-
-            $work->setNature($nature);
-
-            $idArt = $request->request->get('idArt');
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-            $work->setArtist($artist);
-
-            $work->setTitle($title);
-            $work->setDescription($description);
-            $work->setTechnic($technic);
-            $work->setTimelimit($timelimit);
-
-            $work->setDimensions($dimensions);
-            $dimensions2 != '' ? $work->setDimensions2($dimensions2) : $work->setDimensions2(NULL);
-            $dimensions3 != '' ? $work->setDimensions3($dimensions3) : $work->setDimensions3(NULL);
-            $dimensions4 != '' ? $work->setDimensions4($dimensions4) : $work->setDimensions4(NULL);
-            $dimensions5 != '' ? $work->setDimensions5($dimensions5) : $work->setDimensions5(NULL);
-
-            $work->setWeight($weight);
-            $weight2 != '' ? $work->setWeight2($weight2) : $work->setWeight2(NULL);
-            $weight3 != '' ? $work->setWeight3($weight3) : $work->setWeight3(NULL);
-            $weight4 != '' ? $work->setWeight4($weight4) : $work->setWeight4(NULL);
-            $weight5 != '' ? $work->setWeight5($weight5) : $work->setWeight5(NULL);
-
-            $work->setQuantity($quantity);
-            $quantity2 != '' ? $work->setQuantity2($quantity2) : $work->setQuantity2(NULL);
-            $quantity3 != '' ? $work->setQuantity3($quantity3) : $work->setQuantity3(NULL);
-            $quantity4 != '' ? $work->setQuantity4($quantity4) : $work->setQuantity4(NULL);
-            $quantity5 != '' ? $work->setQuantity5($quantity5) : $work->setQuantity5(NULL);
-
-            $work->setPrice($price);
-            $price2 != '' ? $work->setPrice2($price2) : $work->setPrice2(NULL);
-            $price3 != '' ? $work->setPrice3($price3) : $work->setPrice3(NULL);
-            $price4 != '' ? $work->setPrice4($price4) : $work->setPrice4(NULL);
-            $price5 != '' ? $work->setPrice5($price5) : $work->setPrice5(NULL);
-
-            $em->persist($work);
-            $em->persist($nature);
-            $em->flush();
-
-            /* We send back the data regarding the profile */
-            $work = $em->getRepository('WeCreaBundle:Work')->findAll();
-
-            /* Let's get the last work created */
-            $work = $work[count($work) - 1];
-
-            $encoders = new JsonEncoder();
-            $normalizer = new ObjectNormalizer();
-            $normalizer->setIgnoredAttributes(array("artist", "nature"));
-            $serializer = new Serializer(array($normalizer), array($encoders));
-
-            $jsonWork = $serializer->serialize($work, "json");
-
-            $response = new Response($jsonWork);
-            $response->headers->set('Content-Type', 'application/json');
-
-            return $response;
-        }
-    }
-
-    /*
      * Method for managing the images linked to a work
      */
 
@@ -425,10 +363,10 @@ class AdminController extends Controller
      * Access to the page for editing a specific artist profile & his/her works
      */
 
-    public function editArtistWorkAction($id)
+    public function editArtistWorkAction($id, Request $request)
     {
-        $image = new Images(); // A retirer??
-        $work = new Work(); // Idem
+        $image = new Images();
+        $work = new Work();
 
         $em = $this->getDoctrine()->getManager();
         $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
@@ -447,6 +385,22 @@ class AdminController extends Controller
         $workImageForm = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
         $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
         $lastWorksImageForm = $this->createForm('WeCreaBundle\Form\LastImagesWorkType', $image);
+
+        if($request->isXmlHttpRequest()){
+
+            $id = $request->request->get('wecreabundle_work')['id'];
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+
+            $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+            $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+            $workForm->handleRequest($request);
+            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+            $work->setNature($nature);
+
+            $em->flush();
+
+            return new Response("L'oeuvre a bien été mise à jour");
+        }
 
         /* If there's at least on completed form
         * If not, that means that the administrator has previously
@@ -498,7 +452,7 @@ class AdminController extends Controller
 
     public function editProfileAjaxAction(Request $request)
     {
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
             $id = $request->request->get('wecreabundle_artist')['id'];
             $name = $request->request->get('wecreabundle_artist')['name'];
@@ -517,85 +471,6 @@ class AdminController extends Controller
             $em->flush();
 
             return new Response("Le profil a bien été mis à jour");
-        }
-    }
-
-    /*
-     * Method for editing the works of the artist
-     */
-
-    public function editWorkAjaxAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        if($request->isXmlHttpRequest()){
-
-            $id = $request->request->get('wecreabundle_work')['id'];
-            $natureId = $request->request->get('wecreabundle_work')['nature'];
-
-            $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
-            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
-
-            $title = $request->request->get('wecreabundle_work')['title'];
-            $description = $request->request->get('wecreabundle_work')['description'];
-            $technic = $request->request->get('wecreabundle_work')['technic'];
-            $dimensions = $request->request->get('wecreabundle_work')['dimensions'];
-            $dimensions2 = $request->request->get('wecreabundle_work')['dimensions2'];
-            $dimensions3 = $request->request->get('wecreabundle_work')['dimensions3'];
-            $dimensions4 = $request->request->get('wecreabundle_work')['dimensions4'];
-            $dimensions5 = $request->request->get('wecreabundle_work')['dimensions5'];
-            $weight = $request->request->get('wecreabundle_work')['weight'];
-            $weight2 = $request->request->get('wecreabundle_work')['weight2'];
-            $weight3 = $request->request->get('wecreabundle_work')['weight3'];
-            $weight4 = $request->request->get('wecreabundle_work')['weight4'];
-            $weight5 = $request->request->get('wecreabundle_work')['weight5'];
-            $quantity = $request->request->get('wecreabundle_work')['quantity'];
-            $quantity2 = $request->request->get('wecreabundle_work')['quantity2'];
-            $quantity3 = $request->request->get('wecreabundle_work')['quantity3'];
-            $quantity4 = $request->request->get('wecreabundle_work')['quantity4'];
-            $quantity5 = $request->request->get('wecreabundle_work')['quantity5'];
-            $timelimit = $request->request->get('wecreabundle_work')['timelimit'];
-            $price = $request->request->get('wecreabundle_work')['price'];
-            $price2 = $request->request->get('wecreabundle_work')['price2'];
-            $price3 = $request->request->get('wecreabundle_work')['price3'];
-            $price4 = $request->request->get('wecreabundle_work')['price4'];
-            $price5 = $request->request->get('wecreabundle_work')['price5'];
-
-            $work->setTitle($title);
-            $work->setDescription($description);
-            $work->setTechnic($technic);
-
-            $work->setDimensions($dimensions);
-            $dimensions2 != '' ? $work->setDimensions2($dimensions2) : $work->setDimensions2(NULL);
-            $dimensions3 != '' ? $work->setDimensions3($dimensions3) : $work->setDimensions3(NULL);
-            $dimensions4 != '' ? $work->setDimensions4($dimensions4) : $work->setDimensions4(NULL);
-            $dimensions5 != '' ? $work->setDimensions5($dimensions5) : $work->setDimensions5(NULL);
-
-            $work->setWeight($weight);
-            $weight2 != '' ? $work->setWeight2($weight2) : $work->setWeight2(NULL);
-            $weight3 != '' ? $work->setWeight3($weight3) : $work->setWeight3(NULL);
-            $weight4 != '' ? $work->setWeight4($weight4) : $work->setWeight4(NULL);
-            $weight5 != '' ? $work->setWeight5($weight5) : $work->setWeight5(NULL);
-
-            $work->setQuantity($quantity);
-            $quantity2 != '' ? $work->setQuantity2($quantity2) : $work->setQuantity2(NULL);
-            $quantity3 != '' ? $work->setQuantity3($quantity3) : $work->setQuantity3(NULL);
-            $quantity4 != '' ? $work->setQuantity4($quantity4) : $work->setQuantity4(NULL);
-            $quantity5 != '' ? $work->setQuantity5($quantity5) : $work->setQuantity5(NULL);
-
-            $work->setPrice($price);
-            $price2 != '' ? $work->setPrice2($price2) : $work->setPrice2(NULL);
-            $price3 != '' ? $work->setPrice3($price3) : $work->setPrice3(NULL);
-            $price4 != '' ? $work->setPrice4($price4) : $work->setPrice4(NULL);
-            $price5 != '' ? $work->setPrice5($price5) : $work->setPrice5(NULL);
-
-
-            $work->setTimelimit($timelimit);
-            $work->setNature($nature);
-
-            $em->flush();
-
-            return new Response("L'oeuvre a bien été mise à jour");
         }
     }
 

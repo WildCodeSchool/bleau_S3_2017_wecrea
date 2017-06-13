@@ -232,6 +232,7 @@
                         <label for="nature{{form.id.vars.value}} " > Nature de l'oeuvre </label>
                     </div>
 
+                    <div class="id">{{ form.id.vars.value }}</div>
                     <button class="btn waves-effect waves-light right update-work" type="submit" name="action">
                         Éditer l'oeuvre
                         <i class="material-icons left">mode_edit</i>
@@ -660,10 +661,12 @@
         $('form[name="wecreabundle_work"] .update-work').click(function(e){
             e.preventDefault();
             var $data = $(this).parent().serialize();
-
+            var id = $(this).parent().find('.id')[0].innerHTML;
+            var url = "{{ path('we_crea_admin_artist_work_edition', {id: 2} ) }}";
+            url = url.replace('2', id);
             $.ajax({
                 method: "post",
-                url: "{{ path('we_crea_admin_edit_work_ajax') }}",
+                url: url,
                 data: $data,
                 success: function(response){
                     alert(response);
@@ -730,7 +733,7 @@
 
                 $.ajax({
                     method: "post",
-                    url: "{{ path('we_crea_admin_work_caracteristics_creation_ajax') }}",
+                    url: "{{ path('we_crea_admin_artist_work_creation') }}",
                     data: $data,
                     success: function(response){
                         console.log(response);
