@@ -7,3 +7,7 @@ services:
     app.basket:
         class:     WeCreaBundle\Service\Basket
         arguments: []
+
+    favs:
+        class: WeCreaBundle\Service\Favs
+        arguments: []

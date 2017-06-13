@@ -1,0 +1,35 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container container_custom">
+            <div class="row">
+              <div class="col m10 offset-m1">
+                  <h2>Résumé de votre panier :</h2>
+                  <form name="basket" method="post" action="">
+                      <ul>
+                              {% for prod in works %}
+                                  <li>
+                                      <img class="prod_img" src="{{ asset("images/") }}{{ prod.work.images[0].url }}" alt="">
+                                      <div>
+                                          <p>
+                                              {{ prod.work.title }} x <input type="number"
+                                                                             name="{{ prod.work.id }}"
+                                                                             min="1"
+                                                                             max="{{ prod.work.quantity }}"
+                                                                             value="{{ prod.quant }}"
+                                                                             class="prod_content"
+                                              >
+                                          </p>
+                                          <br>
+                                      </div>
+                                  </li>
+                              {% endfor %}
+                      </ul>
+                      <input type="submit" class="btn black" value="confirmer">
+                  </form>
+              </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

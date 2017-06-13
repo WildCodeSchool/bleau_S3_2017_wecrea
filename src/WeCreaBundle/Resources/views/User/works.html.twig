@@ -12,12 +12,17 @@
                 </div>
                 <div class="cards">
                     {% for work in works %}
-                        <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                             <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
-                                <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
-                                </div>
+                                <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                                    <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
+                                        <div class="fav_btn" data="{{ work.id }}">
+                                            <button class="btn">Ajouter aux favoris</button>
+                                        </div>
+                                    </div>
+                                </a>
                                 <div class="card-content card-content_custom">
-                                    <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}<i class="material-icons right">more_vert</i></span>
+                                    <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                                        <img class="show_more" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
                                     <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
                                 </div>
                                 <div class="card-reveal">
@@ -30,10 +35,32 @@
                                     <p>Description</p>
                                 </div>
                             </div>
-                        </a>
                     {% endfor %}
                 </div>
 
 
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('.fav_btn').click( function (e) {
+                e.preventDefault();
+                var data = {'idWork': $(this).attr('data')};
+                console.log(data);
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_add_fav') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(response);
+                        alert(response.name + ' ajouté(e) à vos favoris');
+                        $('.fCount').text(response.fCount);
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}
