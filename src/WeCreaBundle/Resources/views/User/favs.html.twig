@@ -5,10 +5,13 @@
 
         <div class="buttons filters-button-group">
             <button class="waves-effect waves-light btn iso_button active_button" data-filter="*">Tous</button>
+            <button class="waves-effect waves-light iso_button btn " data-filter=".Dessin">Dessin</button>
+            <button class="waves-effect waves-light iso_button btn " data-filter=".Photographie">Photographie</button>
             <button class="waves-effect waves-light iso_button btn " data-filter=".Peinture">Peinture</button>
+            <button class="waves-effect waves-light iso_button btn " data-filter=".Verre">Verre</button>
+            <button class="waves-effect waves-light iso_button btn" data-filter=".Ceramique">Céramique</button>
+            <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
             <button class="waves-effect waves-light iso_button btn" data-filter=".Sculpture">Sculpture</button>
-            <button class="waves-effect waves-light iso_button btn" data-filter=".Bronzes">Bronze</button>
-            <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat d'art">Artisanat d'art</button>
         </div>
         <div class="cards">
             {% for work in favs %}

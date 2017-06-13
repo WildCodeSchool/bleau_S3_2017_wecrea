@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col m4">
-                    <form name="addBasket">
+                    <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <p>
                             Quantité : <input type="number" name="quantity" value="1" min="1" max="{{ work.quantity }}">
                             <input type="hidden" name="work" value="{{ work.id }}">
@@ -26,22 +26,22 @@
 
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        $(document).ready( function () {
-            $('form[name="addBasket"]').submit( function (e) {
-                e.preventDefault();
-                var data = $(this).serialize();
-                $.ajax({
-                    method: 'post',
-                    url: '{{ path('we_crea_add_basket') }}',
-                    data: data,
+{#{% block javascripts %}#}
+    {#<script>#}
+        {#$(document).ready( function () {#}
+            {#$('form[name="addBasket"]').submit( function (e) {#}
+                {#e.preventDefault();#}
+                {#var data = $(this).serialize();#}
+                {#$.ajax({#}
+                    {#method: 'post',#}
+                    {#url: '{{ path('we_crea_add_basket') }}',#}
+                    {#data: data,#}
 
-                    success: function (response) {
-                        alert(response.msg);
-                    }
-                })
-            });
-        });
-    </script>
-{% endblock %}
+                    {#success: function (response) {#}
+                        {#alert(response.msg);#}
+                    {#}#}
+                {#})#}
+            {#});#}
+        {#});#}
+    {#</script>#}
+{#{% endblock %}#}
