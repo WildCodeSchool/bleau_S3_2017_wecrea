@@ -196,14 +196,25 @@ class UserController extends Controller
     public function deleteFavAction(Request $request) {
         $session = $this->get('session');
 
-        $fCount = $this->container->get('favs')->countFavs($session);
-
         $idFav = $request->request->get('idfav');
         $favs = $session->get('favs');
         unset($favs[$idFav]);
         $session->set('favs', $favs);
 
-        $response = new Response('ok');
+        $workName =
+            $this->getDoctrine()->getManager()
+                ->getRepository('WeCreaBundle:Work')->findOneById($idWork)
+                ->getTitle()
+        ;
+
+        $fCount = $this->container->get('favs')->countFavs($session);
+
+        $content = array(
+            'fCount' => $fCount,
+            'name' => $workName
+        );
+
+        $response = new Response(json_encode($content));
 
         return $response;
     }
