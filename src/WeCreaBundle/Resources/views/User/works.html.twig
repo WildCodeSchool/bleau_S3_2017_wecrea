@@ -5,35 +5,63 @@
 
                 <div class="buttons filters-button-group">
                     <button class="waves-effect waves-light btn iso_button active_button" data-filter="*">Tous</button>
+                    <button class="waves-effect waves-light iso_button btn " data-filter=".Dessin">Dessin</button>
+                    <button class="waves-effect waves-light iso_button btn " data-filter=".Photographie">Photographie</button>
                     <button class="waves-effect waves-light iso_button btn " data-filter=".Peinture">Peinture</button>
+                    <button class="waves-effect waves-light iso_button btn " data-filter=".Verre">Verre</button>
+                    <button class="waves-effect waves-light iso_button btn" data-filter=".Ceramique">Céramique</button>
+                    <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat_d'art">Artisanat d'art</button>
                     <button class="waves-effect waves-light iso_button btn" data-filter=".Sculpture">Sculpture</button>
-                    <button class="waves-effect waves-light iso_button btn" data-filter=".Bronzes">Bronze</button>
-                    <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat d'art">Artisanat d'art</button>
                 </div>
                 <div class="cards">
                     {% for work in works %}
-                        <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
-                            <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                        <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                            <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                                 <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
+                                    <div class="fav_btn" data="{{ work.id }}">
+                                        <button class="btn">Ajouter aux favoris</button>
+                                    </div>
                                 </div>
-                                <div class="card-content card-content_custom">
-                                    <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}<i class="material-icons right">more_vert</i></span>
-                                    <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
-                                </div>
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                                    <p>{{ work.technic }} {{ work.nature.name }}</p>
-                                    <p>Dimensions: {{ work.dimensions }}</p>
-                                    <p>Poids: {{ work.weight }}</p>
-                                    <p>Prix: {{ work.price }} €</p>
-                                    <p>Quantité: {{ work.quantity }}</p>
-                                    <p>Description</p>
-                                </div>
+                            </a>
+                            <div class="card-content card-content_custom">
+                                <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                                    <img class="show_more" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
+                                <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
                             </div>
-                        </a>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                                <p>{{ work.technic }} {{ work.nature.name }}</p>
+                                <p>Dimensions: {{ work.dimensions }}</p>
+                                <p>Poids: {{ work.weight }}</p>
+                                <p>Prix: {{ work.price }} €</p>
+                                <p>Quantité: {{ work.quantity }}</p>
+                                <p>Description</p>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
-
-
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('.fav_btn').click( function (e) {
+                e.preventDefault();
+                var data = {'idWork': $(this).attr('data')};
+                console.log(data);
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_add_fav') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(response);
+                        alert(response.name + ' ajouté(e) à vos favoris');
+                        $('.fCount').text(response.fCount);
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}

@@ -51,6 +51,14 @@ $(document).ready( function () {
         slidesToShow: 1,
         slidesToScroll: 1,
     });
+    
+    // Show "add favs" button on mouse hover card-image
+    $('.card-image').hover( function () {
+        $(this).find('.fav_btn').slideDown(200);
+    }, function () {
+        $(this).find('.fav_btn').slideUp(200);
+
+    })
 
 });
 

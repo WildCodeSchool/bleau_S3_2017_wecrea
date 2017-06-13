@@ -1,0 +1,43 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main>
+
+        <div class="buttons filters-button-group">
+            <button class="waves-effect waves-light btn iso_button active_button" data-filter="*">Tous</button>
+            <button class="waves-effect waves-light iso_button btn " data-filter=".Peinture">Peinture</button>
+            <button class="waves-effect waves-light iso_button btn" data-filter=".Sculpture">Sculpture</button>
+            <button class="waves-effect waves-light iso_button btn" data-filter=".Bronzes">Bronze</button>
+            <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat d'art">Artisanat d'art</button>
+        </div>
+        <div class="cards">
+            {% for work in favs %}
+                <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                    <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                        <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
+                        </div>
+                    </a>
+                    <div class="card-content card-content_custom">
+                                    <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                                        <img class="show_more" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
+                        <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
+                        <div class="fav_btn" data="{{ work.id }}">
+                            <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="favori">
+                        </div>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                        <p>{{ work.technic }} {{ work.nature.name }}</p>
+                        <p>Dimensions: {{ work.dimensions }}</p>
+                        <p>Poids: {{ work.weight }}</p>
+                        <p>Prix: {{ work.price }} €</p>
+                        <p>Quantité: {{ work.quantity }}</p>
+                        <p>Description</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </main>
+{% endblock %}

@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Pompiere');
+
+
 /* BASE */
+html,
+body {
+    font-family: 'Pompiere', cursive;
+}
+
 .container_custom {
     width: 99%;
     margin: 0;
@@ -96,6 +104,28 @@
 }
 
 /* partie fabien */
+
+.fav_icon,
+.bask_icon {
+    display: block;
+    white-space: nowrap;
+    width: 24px;
+    padding-bottom: 18px;
+}
+
+@media screen and (max-width: 600px){
+    .fav_icon,
+    .bask_icon {
+        float: left;
+    }
+}
+
+.nav_custom_cont {
+    border-bottom: 6px solid transparent!important;
+    border-image: url(../pics/Bandeau.png) 10 round!important;
+    box-sizing: unset;
+}
+
 .nav_custom {
     background-color: white;
 }
@@ -261,6 +291,20 @@ main {
     color: white!important;
 }
 
+.card-title {
+    display: block;
+    position: relative;
+}
+
+.show_more {
+    display: block;
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    width: 24px;
+    align-self: right;
+}
+
 @media (max-width: 600px) {
     .card_custom {
         width: 33%;
@@ -275,6 +319,7 @@ main {
 
 
 .card-image_custom {
+    position: relative;
     height: 70%;
     margin-top: 2%;
 }
@@ -282,6 +327,28 @@ main {
 .card-content_custom {
     padding: 0!important;
 }
+
+.fav_btn {
+    display: none;
+    position: absolute;
+    right: 7px;
+    top: 2px;
+    cursor: pointer;
+}
+    .fav_btn button {
+        color: red;
+        background-color: white;
+        font-size: 0.65em;
+        padding: 0 10px;
+        height: 20px;
+        line-height: 20px;
+        text-transform: none;
+    }
+
+    .fav_btn button:hover {
+        color: red!important;
+        background-color: white!important;
+    }
 
 @media (max-width: 500px) {
     .card-content_custom{
@@ -346,4 +413,16 @@ main {
 .col-description-artist{
     background: #fafafa;
     margin: 10px 0 10px 0;
+}
+
+/* ----- Basket ----- */
+.prod_img {
+    width: 140px!important;
+    float: left;
+    padding-right: 20px;
+}
+
+.prod_content {
+    width: 30px!important;
+    border-bottom: none!important;
 }

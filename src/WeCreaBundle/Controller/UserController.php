@@ -16,12 +16,15 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
 
         return $this->render('WeCreaBundle:User:index.html.twig', array(
             'carrousels' => $carrousels,
-            'bCount' => $bCount
+            'bCount' => $bCount,
+            'fCount' =>$fCount,
         ));
     }
 
@@ -31,11 +34,14 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('id'=>'desc'));
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
 
         return $this->render('WeCreaBundle:User:works.html.twig', array(
             'bCount' => $bCount,
+            'fCount' =>$fCount,
             'works' => $works,
         ));
     }
@@ -48,13 +54,16 @@ class UserController extends Controller
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
         $images = $work->getImages();
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
 
         return $this->render('WeCreaBundle:User:work.html.twig', array(
             'bCount' => $bCount,
             'work' => $work,
             'images' => $images,
+            'fCount' => $fCount
         ));
     }
 
@@ -64,8 +73,10 @@ class UserController extends Controller
 
         $session = $this->get('session');
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
 
         $artists = $em->getRepository('WeCreaBundle:Artist')->findBy(array(),
             array(
@@ -74,7 +85,8 @@ class UserController extends Controller
 
         return $this->render('WeCreaBundle:User:artists.html.twig', array(
             'bCount' => $bCount,
-            'artists' => $artists
+            'artists' => $artists,
+            'fCount' => $fCount
         ));
     }
 
@@ -84,14 +96,17 @@ class UserController extends Controller
 
         $session = $this->get('session');
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
 
         $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
 
         return $this->render('WeCreaBundle:User:artist.html.twig', array(
             'artist' => $artist,
             'bCount' => $bCount,
+            'fCount' => $fCount
         ));
     }
 
@@ -112,10 +127,110 @@ class UserController extends Controller
 
         $session->set('basket', $pBasket);
 
-        $bCount = $this->container->get('app.basket');
-        $bCount = $bCount->countBasket($session);
+        return $this->redirectToRoute('we_crea_works');
+    }
 
-        $response = new Response($bCount);
+    public function showBasketAction() {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
+
+        $bWorks =[];
+
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
+
+        $works = $em->getRepository('WeCreaBundle:Work');
+        $pBasket = $session->get('basket');
+        if(isset($pBasket)) {
+            foreach ($pBasket as $idWork => $quant) {
+                $work = $works->findOneById($idWork);
+                $bWorks [] = array(
+                    'work' => $work,
+                    'quant' => $quant
+                );
+            }
+        }
+
+        return $this->render('@WeCrea/User/basket/summary.html.twig', array(
+            'works' => $bWorks,
+            'bCount' => $bCount,
+            'fCount' => $fCount
+        ));
+    }
+
+    /* ----- Add Favs -----*/
+    public function addFavAction(Request $request) {
+        $session = $this->get('session');
+        $favs = $session->get('favs');
+
+
+        $idWork = $request->request->get('idWork');
+        $workName =
+            $this->getDoctrine()->getManager()
+            ->getRepository('WeCreaBundle:Work')->findOneById($idWork)
+            ->getTitle()
+        ;
+
+        if (!isset($favs[$idWork])){
+            $favs[$idWork] = $workName;
+        }
+
+        $session->set('favs', $favs);
+
+        $fCount = $this->container->get('favs')->countFavs($session);
+
+        $content = array(
+            'fCount' => $fCount,
+            'name' => $workName
+        );
+
+        $response = new Response(json_encode($content));
+        $response->headers->set('Content-Type', 'application/json');
+
         return $response;
+    }
+
+    /* ----- delete favs -----*/
+    public function deleteFavAction(Request $request) {
+        $session = $this->get('session');
+
+        $fCount = $this->container->get('favs')->countFavs($session);
+
+        $idFav = $request->request->get('idfav');
+        $favs = $session->get('favs');
+        unset($favs[$idFav]);
+        $session->set('favs', $favs);
+
+        $response = new Response('ok');
+
+        return $response;
+    }
+
+    /* ----- show favs ----- */
+    public function showFavsAction() {
+        $session = $this->get('session');
+        $works = $this->getDoctrine()->getManager()->getRepository('WeCreaBundle:Work');
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
+
+        $favObjs = [];
+        $favs = $session->get('favs');
+
+        if (isset($favs)) {
+            foreach ($favs as $key => $fav) {
+                $favObj = $works->findOneById($key);
+                $favObjs [] = $favObj;
+            }
+        }
+
+        return $this->render('@WeCrea/User/favs.html.twig', array(
+            'favs' => $favObjs,
+            'bCount' => $bCount,
+            'fCount' => $fCount
+        ));
     }
 }
