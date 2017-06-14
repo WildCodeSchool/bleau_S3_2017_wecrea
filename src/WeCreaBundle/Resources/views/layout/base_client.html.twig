@@ -4,22 +4,20 @@
         <div class="navbar-fixed nav_custom_cont">
             <nav class="nav_custom">
                 <div class="nav-wrapper">
-                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo logo_container"><img class="logo" src="{{ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo"></a>
+                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo logo_container"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#">Concept</a></li>
+                        <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="#">Actualités</a></li>
-                        <li>
-                            <span class="badge" data-badge-caption="">{{ bCount }}</span>
+                        <li id="basket">
                             <a href="{{ path('we_crea_basket') }}">
                                 <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
                             </a>
                         </li>
-                        <li>
-                            <span class="badge fCount" data-badge-caption="">{{ fCount }}</span>
+                        <li id="favs">
                             <a href="{{ path('we_crea_favs') }}">
                                 <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="">
                             </a>
@@ -59,16 +57,16 @@
         <div class="container container_footer">
             <div class="row row_custom">
                 <div class="col l6 s12">
-                    <h5 class="white-text">Fiscalité entreprises</h5>
-                    <p class="grey-text text-lighten-4">Texte défiscalisation?</p>
+                    <h5>Fiscalité entreprises</h5>
+                    <p>Texte défiscalisation?</p>
                 </div>
                 <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Contacts</h5>
+                    <h5>Contacts</h5>
                     <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Twitter</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Youtube</a></li>
+                        <li><a href="#!">Facebook</a></li>
+                        <li><a href="#!">Twitter</a></li>
+                        <li><a href="#!">Instagram</a></li>
+                        <li><a href="#!">Youtube</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +74,7 @@
         <div class="footer-copyright bar_footer">
             <div class="container">
                 © 2017 Copyright WCS
-                <a class="grey-text text-lighten-4 right" id="moreLink">More Links</a>
+                <a class="right" id="moreLink">More Links</a>
             </div>
         </div>
     </footer>

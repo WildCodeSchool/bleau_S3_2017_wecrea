@@ -22,12 +22,19 @@ $(document).ready( function () {
 
 // init Isotope
     var $grid = $('.cards').isotope({
-        itemSelector: '.card',
+        itemSelector: '.iso_item',
         layoutMode: 'fitRows'
     });
 
+
+
 // filter functions
     var filterFns = {};
+    //filter 'Tous' on load
+    var filterValue = '.Tous';
+    // use filterFn if matches value
+    filterValue = filterFns[ filterValue ] || filterValue;
+    $grid.isotope({ filter: filterValue });
 // bind filter button click
     $('.filters-button-group').on( 'click', 'button', function() {
         var filterValue = $( this ).attr('data-filter');
@@ -40,8 +47,9 @@ $(document).ready( function () {
     $('.buttons').each( function( i, buttonGroup ) {
         var $buttonGroup = $(buttonGroup);
         $buttonGroup.on( 'click', 'button', function() {
-            $buttonGroup.find('.active_button').removeClass('active_button');
-            $(this).addClass('active_button');
+            $('.active_button').removeClass('active_button');
+            var btnClass = $(this).attr('data-filter');
+            $('button[data-filter="' + btnClass + '"]').addClass('active_button');
         });
     });
 
@@ -54,9 +62,9 @@ $(document).ready( function () {
     
     // Show "add favs" button on mouse hover card-image
     $('.card-image').hover( function () {
-        $(this).find('.fav_btn').slideDown(200);
+        $(this).find('.fav_btn, .fav_btn_delete').slideDown(200);
     }, function () {
-        $(this).find('.fav_btn').slideUp(200);
+        $(this).find('.fav_btn, .fav_btn_delete').slideUp(200);
 
     })
 
