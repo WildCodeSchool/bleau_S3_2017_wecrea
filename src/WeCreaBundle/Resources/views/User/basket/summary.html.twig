@@ -9,7 +9,7 @@
                   <form name="basket" method="post" action="">
                       <ul>
                               {% for prod in works %}
-                                  <li>
+                                  <li id="{{ prod.work.id }}">
                                       <img class="prod_img" src="{{ asset("images/") }}{{ prod.work.images[0].url }}" alt="">
                                       <div>
                                           <p>
@@ -23,6 +23,7 @@
                                           </p>
                                           <br>
                                       </div>
+                                      <button class="btn delete_basket" data="{{ prod.work.id }}">retirer du panier</button>
                                   </li>
                               {% endfor %}
                       </ul>
@@ -32,4 +33,27 @@
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('.delete_basket').click( function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data');
+                var data = {'id' : id};
+                $.ajax({
+                    method: 'get',
+                    url: '{{ path('we_crea_delete_basket') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(id);
+                        alert(response.name + ' a été retiré du panier !');
+                        $('#' + id).remove();
+                    }
+                })
+            });
+        });
+    </script>
 {% endblock %}

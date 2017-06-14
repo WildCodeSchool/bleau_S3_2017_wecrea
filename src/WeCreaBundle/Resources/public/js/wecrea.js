@@ -59,7 +59,7 @@ $(document).ready( function () {
         slidesToShow: 1,
         slidesToScroll: 1,
     });
-    
+
     // Show "add favs" button on mouse hover card-image
     $('.card-image').hover( function () {
         $(this).find('.fav_btn, .fav_btn_delete').slideDown(200);
