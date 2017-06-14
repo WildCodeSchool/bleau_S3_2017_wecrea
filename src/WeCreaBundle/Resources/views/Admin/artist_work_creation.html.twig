@@ -291,7 +291,7 @@
 
                 $.ajax({
                     method: 'post',
-                    url: "{{ path('we_crea_admin_artist_profil_creation_ajax') }}",
+                    url: "{{ path('we_crea_admin_artist_work_creation') }}",
                     data: $form,
                     success: function (response) {
                         $idArt = response.id;
@@ -357,7 +357,7 @@
             */
 
             $.ajax({
-                url: "{{ path('we_crea_admin_artist_image_creation_ajax') }}",
+                url: "{{ path('we_crea_admin_artist_work_creation') }}",
                 method: "post",
                 data: data,
                 processData: false,
@@ -515,7 +515,7 @@
 
             $.ajax({
                 method: 'post',
-                url: '{{ path('we_crea_admin_work_image_creation_ajax') }}',
+                url: '{{ path('we_crea_admin_artist_work_creation') }}',
                 data: $data,
                 contentType: false,
                 processData: false,

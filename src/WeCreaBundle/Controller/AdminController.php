@@ -61,7 +61,7 @@ class AdminController extends Controller
 
     }
 
-    /* Render the page for the creation a new artist & some or all of his/her works */
+    /* Render the page for the creation of a new artist & some or all of his/her works */
     public function newArtistWorkAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -72,40 +72,154 @@ class AdminController extends Controller
         $formArtist = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
         $formImageArtist = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $formWorkImage = $this->createForm('WeCreaBundle\Form\ImagesWorkType', $image);
+        $formLastWorkImages = $this->createForm('WeCreaBundle\Form\LastImagesWorkType', $image);
         $formWork = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         if($request->isXmlHttpRequest()) {
-            $formWork->handleRequest($request);
-            $natureId = $request->request->get('wecreabundle_work')['nature'];
-            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+            $newArtist = $request->request->get('wecreabundle_artist');
+            $newWork = $request->request->get('wecreabundle_work');
+            $newArtistImage = $request->request->get('wecreabundle_images');
+            $newWorkImage = $request->request->get('wecreabundle_images_work');
+            $lastWorkImage = $request->request->get('wecreabundle_images_last_work_images');
 
-            $work->setNature($nature);
+            $lastOrNew = isset($newWorkImage) || isset($lastWorkImage) ?
+                isset($newWorkImage) ? $lastOrNew = 'new' : $lastOrNew = 'last' :
+                    $lastOrNew = NULL;
 
-            $idArt = $request->request->get('idArt');
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-            $work->setArtist($artist);
+            if(isset($newWork)) {
+                $formWork->handleRequest($request);
 
-            $em->persist($work);
+                $natureId = $request->request->get('wecreabundle_work')['nature'];
+                $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
 
-            $em->flush();
+                $work->setNature($nature);
 
-            /* We send back the data regarding the profile */
-            $work = $em->getRepository('WeCreaBundle:Work')->findAll();
+                $idArt = $request->request->get('idArt');
+                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+                $work->setArtist($artist);
 
-            /* Let's get the last work created */
-            $work = $work[count($work) - 1];
+                $em->persist($work);
+                $em->flush();
 
-            $encoders = new JsonEncoder();
-            $normalizer = new ObjectNormalizer();
-            $normalizer->setIgnoredAttributes(array("artist", "nature"));
-            $serializer = new Serializer(array($normalizer), array($encoders));
+                /* We send back the data regarding the profile */
+                $work = $em->getRepository('WeCreaBundle:Work')->findAll();
 
-            $jsonWork = $serializer->serialize($work, "json");
+                /* Let's get the last work created */
+                $work = $work[count($work) - 1];
 
-            $response = new Response($jsonWork);
-            $response->headers->set('Content-Type', 'application/json');
+                $encoders = new JsonEncoder();
+                $normalizer = new ObjectNormalizer();
+                $normalizer->setIgnoredAttributes(array("artist", "nature"));
+                $serializer = new Serializer(array($normalizer), array($encoders));
 
-            return $response;
+                $jsonWork = $serializer->serialize($work, "json");
+
+                $response = new Response($jsonWork);
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
+            }
+
+            if($newArtist){
+                $formArtist->handleRequest($request);
+
+                $em->persist($artist);
+                $em->flush();
+
+                /* We send back the data regarding the profile */
+                $artist = $em->getRepository('WeCreaBundle:Artist')->findAll();
+                /* Let's return the latest profile created */
+                $artist = $artist[count($artist)-1];
+
+                $encoders = array(new JsonEncoder());
+                $normalizer = array(new ObjectNormalizer());
+                $serializer = new Serializer($normalizer, $encoders);
+
+                $jsonArtist = $serializer->serialize($artist, "json");
+
+                $response = new Response($jsonArtist);
+                $response->headers->set('Content-Type','application/json');
+
+                return $response;
+            }
+
+            if(isset($newArtistImage)) {
+                $formImageArtist->handleRequest($request);
+                $file = $request->files->get('wecreabundle_images')['url'];
+
+                $fileName = uniqId() . '.' . $file->guessExtension();
+                $file->move($this->getParameter('image_directory'), $fileName);
+                $image->setUrl($fileName);
+
+                /* As the artist profile has been created
+                *  before the submission of the new image,
+                *  we can make the association
+                */
+                $idArt = $request->request->get('idArt');
+                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
+                $artist->addImage($image);
+
+                $em->persist($image);
+                $em->flush();
+
+                /* We send back the data regarding the freshly
+                *  created image to enable deletion
+                */
+                $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
+
+                $encoders = array(new JsonEncoder());
+                $normalizer = array(new ObjectNormalizer());
+                $serializer = new Serializer($normalizer, $encoders);
+
+                $jsonImage = $serializer->serialize($image, "json");
+
+                $response = new Response($jsonImage);
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
+            }
+
+            if(isset($lastOrNew)) {
+
+                if($lastOrNew == "new"){
+                    $formWorkImage->handleRequest($request);
+                    $file = $request->files->get('wecreabundle_images_work')['url'];
+                }
+                else if($lastOrNew == "last"){
+                    $formLastWorkImages->handleRequest($request);
+                    $file = $request->files->get('wecreabundle_images_last_work_images')['url'];
+                }
+
+                $fileName = uniqId() . '.' . $file->guessExtension();
+                $file->move($this->getParameter('image_directory'), $fileName);
+
+                $image->setUrl($fileName);
+
+                if(!empty($request->request->get('idWork'))){
+                    $idWork = $request->request->get('idWork');
+                    $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
+                    $work->addImage($image);
+                }
+
+                $em->persist($image);
+                $em->flush();
+
+                /* We send back the data regarding the freshly
+                *  created image to enable modifications
+                */
+                $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
+
+                $encoders = array(new JsonEncoder());
+                $normalizer = array(new ObjectNormalizer());
+                $serializer = new Serializer($normalizer, $encoders);
+
+                $jsonImage = $serializer->serialize($image, "json");
+
+                $response = new Response($jsonImage);
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
+            }
         }
 
         return $this->render('@WeCrea/Admin/artist_work_creation.html.twig', array(
@@ -118,103 +232,13 @@ class AdminController extends Controller
     }
 
     /*
-     * Method for creation a new artist profile(without images)
-     */
-
-    public function newArtistProfilAjaxAction(Request $request){
-
-        $artist = new Artist();
-
-        if($request->isXmlHttpRequest()){
-            $em = $this->getDoctrine()->getManager();
-
-            $name = $request->request->get('wecreabundle_artist')['name'];
-            $firstName = $request->request->get('wecreabundle_artist')['firstname'];
-            $localization = $request->request->get('wecreabundle_artist')['localization'];
-            $expertise = $request->request->get('wecreabundle_artist')['expertise'];
-            $biography = $request->request->get('wecreabundle_artist')['biography'];
-
-            $artist->setName($name);
-            $artist->setFirstname($firstName);
-            $artist->setLocalization($localization);
-            $artist->setExpertise($expertise);
-            $artist->setBiography($biography);
-
-            $em->persist($artist);
-            $em->flush();
-
-            /* We send back the data regarding the profile */
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findAll();
-            /* Let's return the latest profile created */
-            $artist = $artist[count($artist)-1];
-
-            $encoders = array(new JsonEncoder());
-            $normalizer = array(new ObjectNormalizer());
-            $serializer = new Serializer($normalizer, $encoders);
-
-            $jsonArtist = $serializer->serialize($artist, "json");
-
-            $response = new Response($jsonArtist);
-            $response->headers->set('Content-Type','application/json');
-
-            return $response;
-        }
-    }
-
-    /*
-     * Method for managing the artist pictures
-     */
-
-    public function newArtistImageAjaxAction(Request $request)
-    {
-        $image = new Images();
-
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $alt = $request->request->get('wecreabundle_images')['alt'];
-            $file = $request->files->get('wecreabundle_images')['url'];
-
-            $fileName = uniqId() . '.' . $file->guessExtension();
-            $file->move($this->getParameter('image_directory'), $fileName);
-            $image->setUrl($fileName);
-            $image->setAlt($alt);
-
-            /* As the artist profile has been created
-            *  before the submission of the new image,
-            *  we can make the association
-            */
-            $idArt = $request->request->get('idArt');
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-            $artist->addImage($image);
-
-            $em->persist($image);
-            $em->flush();
-
-            /* We send back the data regarding the freshly
-            *  created image to enable deletion
-            */
-            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
-
-            $encoders = array(new JsonEncoder());
-            $normalizer = array(new ObjectNormalizer());
-            $serializer = new Serializer($normalizer, $encoders);
-
-            $jsonImage = $serializer->serialize($image, "json");
-
-            $response = new Response($jsonImage);
-            $response->headers->set('Content-Type', 'application/json');
-
-            return $response;
-        }
-    }
-
-    /*
     * Method for deleting an image from the artist profile
     */
 
     public function deleteArtistImageAjaxAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
         /* If the artist profile has been created */
         $idArt = $request->request->get('idArt');
         $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
@@ -239,58 +263,6 @@ class AdminController extends Controller
         $em->flush();
 
         return new Response("L'image a bien été supprimée");
-    }
-
-    /*
-     * Method for managing the images linked to a work
-     */
-
-    public function newWorkImageAjaxAction(Request $request)
-    {
-        $image = new Images();
-
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            if($request->request->get('wecreabundle_images_work')){
-                $alt = $request->request->get('wecreabundle_images_work')['alt'];
-                $file = $request->files->get('wecreabundle_images_work')['url'];
-            }
-            if($request->request->get('wecreabundle_images_last_work_images')){
-                $alt = $request->request->get('wecreabundle_images_last_work_images')['alt'];
-                $file = $request->files->get('wecreabundle_images_last_work_images')['url'];
-            }
-
-            $fileName = uniqId() . '.' . $file->guessExtension();
-            $file->move($this->getParameter('image_directory'), $fileName);
-
-            $image->setUrl($fileName);
-            $image->setAlt($alt);
-
-            if(!empty($request->request->get('idWork'))){
-                $idWork = $request->request->get('idWork');
-                $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
-                $work->addImage($image);
-            }
-
-            $em->persist($image);
-            $em->flush();
-
-            /* We send back the data regarding the freshly
-            *  created image to enable modifications
-            */
-            $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($fileName);
-
-            $encoders = array(new JsonEncoder());
-            $normalizer = array(new ObjectNormalizer());
-            $serializer = new Serializer($normalizer, $encoders);
-
-            $jsonImage = $serializer->serialize($image, "json");
-
-            $response = new Response($jsonImage);
-            $response->headers->set('Content-Type', 'application/json');
-
-            return $response;
-        }
     }
 
     /*
@@ -356,7 +328,7 @@ class AdminController extends Controller
         $em->remove($work);
         $em->flush();
 
-        return new Response("L'oeuvre et ses images ont bien été supprimées");
+        return new Response("L'oeuvre ".$work->getTitle()." et ses images ont bien été supprimées");
     }
 
     /*
@@ -388,18 +360,35 @@ class AdminController extends Controller
 
         if($request->isXmlHttpRequest()){
 
-            $id = $request->request->get('wecreabundle_work')['id'];
+            $idWork = $request->request->get('wecreabundle_work')['id'];
+            $idArtist = $request->request->get('wecreabundle_artist')['id'];
             $natureId = $request->request->get('wecreabundle_work')['nature'];
 
-            $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
-            $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
-            $workForm->handleRequest($request);
-            $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
-            $work->setNature($nature);
+            /* If the user updates a work */
+            if(isset($idWork) && isset($natureId)){
 
-            $em->flush();
+                $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+                $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+                $workForm->handleRequest($request);
+                $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+                $work->setNature($nature);
 
-            return new Response("L'oeuvre a bien été mise à jour");
+                $em->flush();
+
+                return new Response("L'oeuvre ".$work->getTitle()." a bien été mise à jour");
+            }
+
+            /* If the user updates the artist profile */
+            if(isset($idArtist)){
+
+                $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
+                $artistForm = $this->createForm('WeCreaBundle\Form\ArtistType', $artist);
+                $artistForm->handleRequest($request);
+
+                $em->flush();
+
+                return new Response("Le profil de " .$artist->getFirstname(). " " .$artist->getName(). " a bien été mis à jour");
+            }
         }
 
         /* If there's at least on completed form
@@ -443,34 +432,6 @@ class AdminController extends Controller
                 /* New image form for existed works */
                 'lastWorksImageForm' => $lastWorksImageForm->createView()
             ));
-        }
-    }
-
-    /*
-     * Method for editing the profile of the artist
-     */
-
-    public function editProfileAjaxAction(Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $id = $request->request->get('wecreabundle_artist')['id'];
-            $name = $request->request->get('wecreabundle_artist')['name'];
-            $firstname = $request->request->get('wecreabundle_artist')['firstname'];
-            $localization = $request->request->get('wecreabundle_artist')['localization'];
-            $expertise = $request->request->get('wecreabundle_artist')['expertise'];
-            $biography = $request->request->get('wecreabundle_artist')['biography'];
-
-            $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
-            $artist->setName($name);
-            $artist->setFirstname($firstname);
-            $artist->setLocalization($localization);
-            $artist->setExpertise($expertise);
-            $artist->setBiography($biography);
-
-            $em->flush();
-
-            return new Response("Le profil a bien été mis à jour");
         }
     }
 
