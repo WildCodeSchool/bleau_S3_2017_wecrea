@@ -28,6 +28,20 @@ class UserController extends Controller
         ));
     }
 
+    public function conceptAction() {
+        $session = $this->get('session');
+
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+        $fCount = $container->get('favs')->countFavs($session);
+
+        return $this->render('@WeCrea/User/concept.html.twig', array(
+            'bCount' => $bCount,
+            'fCount' => $fCount,
+
+        ));
+    }
     public function worksShowAction() {
         $session = $this->get('session');
 
@@ -36,6 +50,8 @@ class UserController extends Controller
 
         $container = $this->container;
 
+        $favs = $session->get('favs');
+
         $bCount = $container->get('app.basket')->countBasket($session);
         $fCount = $container->get('favs')->countFavs($session);
 
@@ -43,6 +59,7 @@ class UserController extends Controller
             'bCount' => $bCount,
             'fCount' =>$fCount,
             'works' => $works,
+            'favs' => $favs
         ));
     }
 
@@ -196,14 +213,14 @@ class UserController extends Controller
     public function deleteFavAction(Request $request) {
         $session = $this->get('session');
 
-        $idFav = $request->request->get('idfav');
+        $idFav = $request->request->get('idWork');
         $favs = $session->get('favs');
         unset($favs[$idFav]);
         $session->set('favs', $favs);
 
         $workName =
             $this->getDoctrine()->getManager()
-                ->getRepository('WeCreaBundle:Work')->findOneById($idWork)
+                ->getRepository('WeCreaBundle:Work')->findOneById($idFav)
                 ->getTitle()
         ;
 
@@ -215,6 +232,7 @@ class UserController extends Controller
         );
 
         $response = new Response(json_encode($content));
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
     }

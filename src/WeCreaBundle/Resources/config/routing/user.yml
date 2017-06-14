@@ -2,6 +2,10 @@ we_crea_homepage:
     path:    /
     defaults: {_controller: "WeCreaBundle:User:index"}
 
+we_crea_concept:
+    path: /concept
+    defaults: {_controller: "WeCreaBundle:User:concept"}
+
 we_crea_works:
     path: /works
     defaults: {_controller: "WeCreaBundle:User:worksShow"}
@@ -34,6 +38,11 @@ we_crea_add_basket:
 we_crea_add_fav:
     path: /fav/add
     defaults: {_controller: "WeCreaBundle:User:addFav"}
+    methods: 'POST'
+
+we_crea_delete_fav:
+    path: /fav/delete
+    defaults: {_controller: "WeCreaBundle:User:deleteFav"}
     methods: 'POST'
 
 we_crea_favs:
