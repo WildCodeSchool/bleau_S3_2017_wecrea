@@ -147,6 +147,23 @@ class UserController extends Controller
         return $this->redirectToRoute('we_crea_works');
     }
 
+    /* Method for delete an article from basket */
+    public function deleteBasketAction(Request $request) {
+        $session = $this->get('session');
+        $basket = $session->get('basket');
+        $idWork = $request->query->get('id');
+        $workName = $this->getDoctrine()->getManager()->getRepository('WeCreaBundle:Work')->findOneById($idWork)->getTitle();
+        unset($basket[$idWork]);
+        $session->set('basket', $basket);
+
+        $content = array('name' => $workName);
+
+        $response = new Response(json_encode($content));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function showBasketAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
