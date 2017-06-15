@@ -22,6 +22,10 @@ class Concept
      */
     private $content;
 
+    /**
+     * @var \WeCreaBundle\Entity\Images
+     */
+    private $images;
 
     /**
      * Get id
@@ -80,11 +84,6 @@ class Concept
     {
         return $this->content;
     }
-    /**
-     * @var \WeCreaBundle\Entity\Images
-     */
-    private $image;
-
 
     /**
      * Set image
@@ -93,9 +92,9 @@ class Concept
      *
      * @return Concept
      */
-    public function setImage(\WeCreaBundle\Entity\Images $image = null)
+    public function setImages(\WeCreaBundle\Entity\Images $images = null)
     {
-        $this->image = $image;
+        $this->images = $images;
 
         return $this;
     }
@@ -105,8 +104,8 @@ class Concept
      *
      * @return \WeCreaBundle\Entity\Images
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 }

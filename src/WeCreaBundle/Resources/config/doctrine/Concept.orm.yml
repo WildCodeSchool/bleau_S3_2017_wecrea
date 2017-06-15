@@ -16,7 +16,7 @@ WeCreaBundle\Entity\Concept:
             type: text
 
     oneToOne:
-        image:
+        images:
             targetEntity: WeCreaBundle\Entity\Images
             cascade: ['all']
 
