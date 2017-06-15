@@ -1,0 +1,39 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+<main>
+    <div class="container container_custom">
+        <div id="profilCont" class="row row_custom">
+                {% include '@WeCrea/User/profil/profilResume.html.twig' %}
+        </div>
+        <div id="formUser" class="row row_custom">
+            <div class="col m10 offset-m1">
+                {{ form_start(formUser) }}
+                {{ form_end(formUser) }}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('form[name="app_user_registration"]').submit( function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_user_profil') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(response);
+                        $('#userProfil').remove();
+                        $('#profilCont').append(response);
+                    }
+                });
+            });
+        })
+    </script>
+{% endblock %}

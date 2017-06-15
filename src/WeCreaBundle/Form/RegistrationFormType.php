@@ -12,6 +12,7 @@
 namespace WeCreaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationFormType extends AbstractType
@@ -20,6 +21,8 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('name')
+            ->add('firstname')
             ->add('address1')
             ->add('zipCode1')
             ->add('town1')
@@ -28,9 +31,7 @@ class RegistrationFormType extends AbstractType
             ->add('zipCode2')
             ->add('town2')
             ->add('country2')
-            ->add('name')
-            ->add('firstname')
-
+            ->add('submit', SubmitType::class)
         ;
     }
 

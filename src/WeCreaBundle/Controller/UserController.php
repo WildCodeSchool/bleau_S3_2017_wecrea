@@ -3,9 +3,16 @@
 namespace WeCreaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class UserController extends Controller
 {
@@ -277,6 +284,32 @@ class UserController extends Controller
             'favs' => $favObjs,
             'bCount' => $bCount,
             'fCount' => $fCount
+        ));
+    }
+
+    /* ----- show user profil ----- */
+    public function showProfilAction(Request $request) {
+        $user = $this->getUser();
+        $formUser = $this->createForm('WeCreaBundle\Form\RegistrationFormType', $user);
+
+        $formUser->handleRequest($request);
+        if($formUser->isSubmitted() && $formUser->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $user = $this->getUser();
+            $content = $this->renderView('@WeCrea/User/profil/profilResume.html.twig', array(
+                'user' => $user
+            ));
+
+            $response = new JsonResponse($content);
+
+            return $response;
+        }
+
+        return $this->render('@WeCrea/User/profil/profil.html.twig', array(
+            'user' => $user,
+            'formUser' => $formUser->createView(),
         ));
     }
 }

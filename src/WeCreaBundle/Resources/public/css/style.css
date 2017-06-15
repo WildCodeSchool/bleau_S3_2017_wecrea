@@ -515,3 +515,8 @@ main {
 .concept_txt p:nth-child(1) {
     float: none;
 }
+
+/* ----- Profil Page ----- */
+#formUser {
+    display: none;
+}
