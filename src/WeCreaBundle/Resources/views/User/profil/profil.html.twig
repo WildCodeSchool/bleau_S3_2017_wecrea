@@ -3,15 +3,29 @@
 {% block body %}
 <main>
     <div class="container container_custom">
-        <div id="profilCont" class="row row_custom">
-                {% include '@WeCrea/User/profil/profilResume.html.twig' %}
-        </div>
-        <div id="formUser" class="row row_custom">
-            <div class="col m10 offset-m1">
-                {{ form_start(formUser) }}
-                {{ form_end(formUser) }}
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs ">
+                    <li class="tab col s6"><a class="active" href="#profil">Mon profile</a></li>
+                    <li class="tab col s6"><a href="#commandes">Mes commandes</a></li>
+
+                </ul>
+            </div>
+            <div id="profil" class="col s12">
+                <div id="profilCont" class="row row_custom">
+                    {% include '@WeCrea/User/profil/profilResume.html.twig' %}
+                </div>
+                <div id="formUser" class="row row_custom">
+                    <div class="col m10 offset-m1">
+                        {{ form_start(formUser) }}
+                        {{ form_end(formUser) }}
+                    </div>
+                </div></div>
+            <div id="commandes" class="col s12">
+                <h2>Historique des commandes</h2>
             </div>
         </div>
+
     </div>
 </main>
 {% endblock %}
@@ -31,6 +45,7 @@
                         console.log(response);
                         $('#userProfil').remove();
                         $('#profilCont').append(response);
+                        $('#formUser').slideUp(200);
                     }
                 });
             });

@@ -5,19 +5,6 @@
 
         <div class="row row_custom">
             <div class="col m10 offset-m1">
-                {{ form_start(formImages) }}
-                    {{ form_row(formImages.url) }}
-                    {{ form_row(formImages.alt) }}
-                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
-                        Ajouter l'image
-                        <i class="material-icons left">add</i>
-                    </button>
-                {{ form_end(formImages) }}
-            </div>
-        </div>
-
-        <div class="row row_custom">
-            <div class="col m10 offset-m1" id="formCarr">
                 {{ form_start(formCarrousel) }}
                     {{ form_row(formCarrousel.title) }}
                     {{ form_row(formCarrousel.content) }}
@@ -47,45 +34,20 @@
 {% block javascripts %}
     <script type="text/javascript">
         $(document).ready( function(){
-           $('form[name="wecreabundle_images"]').submit( function(e){
-               e.preventDefault();
-
-               var $form = new FormData($(this)[0]);
-               console.log($form);
-               $.ajax({
-                   method: 'post',
-                   url: "{{ path('we_crea_admin_image_carrousel') }}",
-                   processData: false,
-                   contentType: false,
-                   data: $form,
-
-                   success: function (response) {
-                       var $formCarrousel = $('form[name="wecreabundle_carrousel"] input[id="wecreabundle_carrousel__token"]');
-                       var idImg = response.id;
-                       var inputElt = $(document.createElement('input'));
-                        console.log(idImg);
-                        console.log(response['id']);
-                       inputElt.attr('value', '' + idImg + '');
-                       inputElt.attr('type', 'hidden');
-                       inputElt.attr('name', 'images_id');
-
-                       inputElt.insertBefore($formCarrousel);
-
-                       $('#formCarr').slideDown(800);
-                   }
-               });
-           });
 
            $('form[name="wecreabundle_carrousel"]').submit( function(e) {
                e.preventDefault();
 
-
-               var $data = $(this).serialize();
+               var $data = new FormData($(this)[0]);
                $.ajax({
                    method: 'post',
                    url: "{{ path('we_crea_admin_add_carrousel') }}",
                    data: $data,
+                   processData: false,
+                   contentType: false,
+
                    success: function (response) {
+                       console.log(response);
 
                        alert("La vignette a bien été créée !");
 

@@ -11,3 +11,7 @@ services:
     favs:
         class: WeCreaBundle\Service\Favs
         arguments: []
+
+    uploader:
+        class: WeCreaBundle\Service\FileUploader
+        arguments: ['%image_directory%']
