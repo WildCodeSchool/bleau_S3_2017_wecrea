@@ -23,6 +23,10 @@ class ConceptController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
+            $file=$conceptPage->getImages()->getUrl();
+            $this->get('uploader')->upload($file, $conceptPage);
+
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Section concept modifié avec succès');
             return $this->redirectToRoute('we_crea_admin_homepage');

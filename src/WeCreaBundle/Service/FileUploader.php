@@ -14,11 +14,11 @@ class FileUploader
         $this->targetDir = $targetDir;
     }
 
-    public function upload(UploadedFile $file, Carrousel $carrousel)
+    public function upload(UploadedFile $file, $object)
     {
         $fileName = uniqid().'.'.$file->guessExtension();
 
-        $carrousel->getImages()->setUrl($fileName);
+        $object->getImages()->setUrl($fileName);
 
         $file->move($this->targetDir, $fileName);
     }
