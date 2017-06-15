@@ -30,31 +30,33 @@ we_crea_admin_artist_work_edition:
     path: /artist/edition/{id}
     defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
 
+# ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
     path: /carrousel/edition
-    defaults: {_controller: "WeCreaBundle:Admin:editCarrousel"}
+    defaults: {_controller: "WeCreaBundle:Carrousel:editCarrousel"}
 
 we_crea_admin_image_carrousel:
     path: /carrousel/image
-    defaults: {_controller: "WeCreaBundle:Admin:addImageCarrousel"}
+    defaults: {_controller: "WeCreaBundle:Carrousel:addImageCarrousel"}
 
 we_crea_admin_add_carrousel:
     path: /carrousel/add
-    defaults: {_controller: "WeCreaBundle:Admin:addCarrousel"}
+    defaults: {_controller: "WeCreaBundle:Carrousel:addCarrousel"}
 
 we_crea_admin_delete_carrousel:
     path: /carrousel/delete
-    defaults: {_controller: "WeCreaBundle:Admin:deleteCarrousel"}
+    defaults: {_controller: "WeCreaBundle:Carrousel:deleteCarrousel"}
 
+# ------ Actu ROUT
 we_crea_admin_actu:
     path: /actu
-    defaults: {_controller: "WeCreaBundle:Admin:actu"}
+    defaults: {_controller: "WeCreaBundle:Actu:actu"}
 
 we_crea_admin_actu_add:
     path: /actu/add
-    defaults: {_controller: "WeCreaBundle:Admin:addActu"}
+    defaults: {_controller: "WeCreaBundle:Actu:addActu"}
 
 we_crea_admin_actu_delete:
     path: /actu/delete
-    defaults: {_controller: "WeCreaBundle:Admin:deleteActu"}
+    defaults: {_controller: "WeCreaBundle:Actu:deleteActu"}
 

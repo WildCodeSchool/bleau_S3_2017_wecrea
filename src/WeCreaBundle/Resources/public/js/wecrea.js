@@ -75,5 +75,8 @@ $(document).ready( function () {
         $(form).slideToggle(200);
     });
 
+    // Materialize Tabs
+    $('ul.tabs').tabs();
+
 });
 
