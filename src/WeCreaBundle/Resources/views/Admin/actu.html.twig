@@ -4,21 +4,10 @@
     <div class="container container_custom">
         <div class="row row_custom">
             <div class="col m10 offset-m1">
-                {{ form_start(formImages) }}
-                {{ form_row(formImages.url) }}
-                {{ form_row(formImages.alt) }}
-                <button class="btn waves-effect waves-light right black" type="submit" name="action">
-                    Ajouter l'image
-                    <i class="material-icons left">add</i>
-                </button>
-                {{ form_end(formImages) }}
-            </div>
-        </div>
-        <div class="row row_custom">
-            <div class="col m10 offset-m1" id="formActu">
                 {{ form_start(formActu) }}
                 {{ form_row(formActu.title) }}
                 {{ form_row(formActu.content) }}
+                {{ form_row(formActu.images) }}
                 <button class="btn waves-effect waves-light right black" type="submit" name="action">
                     Ajouter l'actualité
                     <i class="material-icons left">add</i>
@@ -27,15 +16,14 @@
             </div>
         </div>
         <div class="row row_custom show_actu">
-        {% for actu in actus %}
-            <div class="actu" style="background:  url({{ asset("bundles/wecrea/images/") }}{{ actu.images[0].url }}) center; background-size: cover;">
-                <h2>{{ actu.title }}</h2>
-                <p>{{ actu.content }}</p>
-                <p>{{ actu.date|date("m/d/Y") }}</p>
-                <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
-                <a id="{{ actu.id }}" class="waves-effect waves-light btn black edit_btn">éditer</a>
-            </div>
-        {% endfor %}
+            {% for actu in actus %}
+                <div class="actu" style="background:  url({{ asset("images/") }}{{ actu.images.url }}) center; background-size: cover;">
+                    <h2>{{ actu.title }}</h2>
+                    <p>{{ actu.content }}</p>
+                    <p>{{ actu.date|date("m/d/Y") }}</p>
+                    <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
@@ -43,91 +31,23 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            $('form[name="wecreabundle_images"]').submit(  function(e){
-                e.preventDefault();
-
-                var $form = new FormData($(this)[0]);
-                console.log($form);
-                $.ajax({
-                    method: 'post',
-                    url: "{{ path('we_crea_admin_image_carrousel') }}",
-                    processData: false,
-                    contentType: false,
-                    data: $form,
-
-                    success: function (response) {
-                        var $formActu = $('form[name="wecreabundle_actu"] input[id="wecreabundle_actu__token"]');
-                        var idImg = response.id;
-
-                        var inputElt = $(document.createElement('input'));
-                        inputElt.attr({
-                            'value': idImg,
-                            'type': 'hidden',
-                            'name': 'images_id',
-                            'id' : 'image_input',
-                        });
-
-                        inputElt.insertBefore($formActu);
-
-                        $('#formActu').slideDown(800);
-                    }
-                });
-            });
 
             $('form[name="wecreabundle_actu"]').submit( function (e) {
                 e.preventDefault();
-                var $data = $(this).serialize();
-                var $this = $(this);
+                var $data = new FormData($(this)[0]);
 
                 $.ajax({
                     method: 'post',
                     url: "{{ path('we_crea_admin_actu_add') }}",
                     data: $data,
+                    processData: false,
+                    contentType: false,
 
                     success: function (response) {
                         alert("L'actu a bien été créée !");
-
-                        var card = $(document.createElement('div'));
-                        card.attr('class', 'actu');
-                        card.css({
-                            'background':  'url({{ asset("bundles/wecrea/images/") }}' +response.images[0].url+') center',
-                            'background-size': 'cover',
-                            'display': 'none'
-                        });
-
-                        var titleCard = $(document.createElement('h2'));
-                        titleCard.text(response.title);
-
-                        var contentCard = $(document.createElement('p'));
-                        contentCard.text(response.content);
-
-                        var dateCard = $(document.createElement('p'));
-                        var date = new Date(response.date['timestamp'] * 1000);
-                        console.log(date);
-                        dateCard.text(date);
-
-                        var deleteBtn = $(document.createElement('a'));
-                        deleteBtn.attr({
-                            'class': 'waves-effect waves-light btn black delete_btn',
-                            'id': response.id
-                        });
-                        deleteBtn.text('supprimer');
-
-                        var editBtn = $(document.createElement('a'));
-                        editBtn.attr({
-                            'class': 'waves-effect waves-light btn black edit_btn',
-                            'id': response.id
-                        });
-                        editBtn.text('éditer');
-
-                        card.append(titleCard, contentCard, dateCard, deleteBtn, editBtn);
-
-                        $('.show_actu').prepend(card);
-                        card.slideDown(800);
-                        $('form[name="wecreabundle_images"]').trigger('reset');
+                        $('.show_actu').prepend(response);
+                        $(response).hide().slideDown(200);
                         $('form[name="wecreabundle_actu"]').trigger('reset');
-                        $('#formActu').slideUp(800);
-                        $('#image_input').remove();
 
                         $('.delete_btn').on('click', function (e) {
                             var id = $(this).attr('id');
@@ -145,20 +65,6 @@
                             });
                         });
 
-                        /*$('.edit_btn').on('click', function (e) {
-                            var id = $(this).attr('id');
-                            e.preventDefault();
-
-                            $.ajax({
-                                method: 'get',
-                                url:  "",
-                                data: {'id': id},
-
-                                success: function (response) {
-
-                                }
-                            });
-                        });*/
                     }
                 })
             });

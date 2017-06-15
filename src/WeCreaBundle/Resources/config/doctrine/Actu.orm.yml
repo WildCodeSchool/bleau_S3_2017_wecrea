@@ -17,7 +17,7 @@ WeCreaBundle\Entity\Actu:
         date:
             type: datetime
 
-    manyToMany:
+    oneToOne:
         images:
             targetEntity: WeCreaBundle\Entity\Images
             cascade: ['all']

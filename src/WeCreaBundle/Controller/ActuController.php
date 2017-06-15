@@ -3,6 +3,7 @@
 namespace WeCreaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -10,6 +11,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Actu;
 use WeCreaBundle\Entity\Images;
+use WeCreaBundle\Form\ActuType;
 
 class ActuController extends Controller {
 
@@ -23,14 +25,11 @@ class ActuController extends Controller {
         $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
 
         $actu = new Actu();
-        $image = new Images();
 
-        $formImages = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
         $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
 
         return $this->render('@WeCrea/Admin/actu.html.twig', array(
             'formActu' => $formActu->createView(),
-            'formImages' => $formImages->createView(),
             'actus' => $actus,
         ));
     }
@@ -44,17 +43,16 @@ class ActuController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $actu = new Actu();
 
+        $form = $this->createForm(ActuType::class, $actu);
+
+        $form->handleRequest($request);
         if($request->isXmlHttpRequest()) {
-            $content = $request->request->get('wecreabundle_actu')['content'];
-            $title = $request->request->get('wecreabundle_actu')['title'];
-            $imageId = $request->request->get('images_id');
 
-            $image = $em->getRepository('WeCreaBundle:Images')->findOneById($imageId);
+            $file = $actu->getImages()->getUrl();
+
+            $this->get('uploader')->upload($file, $actu);
+
             $date = new \DateTime();
-
-            $actu->setContent($content);
-            $actu->setTitle($title);
-            $actu->addImage($image);
             $actu->setDate($date);
 
             $em->persist($actu);
@@ -64,15 +62,11 @@ class ActuController extends Controller {
 
             $actu = $actus[count($actus)-1];
 
-            $encoders = array(new JsonEncoder()) ;
-            $normalizer = array(new ObjectNormalizer()) ;
-            $serializer = new Serializer($normalizer, $encoders);
+            $content= $this->renderView('@WeCrea/Admin/actu_show.html.twig', array(
+                'actu' => $actu,
+            ));
 
-            $jsonActu = $serializer->serialize($actu, 'json');
-
-            $response = new response($jsonActu);
-
-            $response->headers->set('Content-Type', 'application/json');
+            $response= new JsonResponse($content);
 
         }
 
@@ -90,8 +84,7 @@ class ActuController extends Controller {
 
         $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
 
-        $idImage = $actu->getImages()[0]->getId();
-        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImage);
+        $image = $actu->getImages();
         $url = $image->getUrl();
 
         $path = $this->getParameter('image_directory')."/".$url;
@@ -117,14 +110,10 @@ class ActuController extends Controller {
 
         $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
 
-        $image = $actu->getImages()[0];
-
         $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
-        $formImage = $this->createForm('WeCreaBundle\Form\ImagesType', $image);
 
         return $this->render('@WeCrea/Admin/actu.html.twig', array(
             'formActu' => $formActu->createView(),
-            'formImage' => $formImage->createView(),
         ));
 
     }

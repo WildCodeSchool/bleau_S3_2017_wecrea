@@ -1,0 +1,6 @@
+    <div class="actu" style="background:  url({{ asset("images/") }}{{ actu.images.url }}) center; background-size: cover;">
+        <h2>{{ actu.title }}</h2>
+        <p>{{ actu.content }}</p>
+        <p>{{ actu.date|date("m/d/Y") }}</p>
+        <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
+    </div>
