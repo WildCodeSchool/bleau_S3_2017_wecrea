@@ -68,5 +68,12 @@ $(document).ready( function () {
 
     })
 
+    // Show Form User on profil's user page
+    $('#showFormUser').click( function (e) {
+        e.preventDefault();
+        var form = $(this).attr('href');
+        $(form).slideToggle(200);
+    });
+
 });
 

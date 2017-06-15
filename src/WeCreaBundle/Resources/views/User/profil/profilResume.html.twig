@@ -1,0 +1,18 @@
+<div id="userProfil" class="col m10 offset-m1">
+
+    <h2>{{ user.name }} {{ user.firstname }}</h2>
+
+    <ul>
+        <li>Nom d'utilisateur : {{ user.username }}</li>
+        <li>Email : {{ user.email }}</li>
+        <li>
+            Addresse 1 : {{ user.address1 }}<br>
+            {{ user.zipCode1 }} {{ user.town1 }} {{ user.country1 }}<br>
+        </li>
+        <li>
+            Addresse 2 : {{ user.address2 }}<br>
+            {{ user.zipCode2 }} {{ user.town2 }} {{ user.country2 }}<br>
+        </li>
+        <li><a id="showFormUser" href="#formUser">Éditer votre profil</a></li>
+    </ul>
+</div>
