@@ -8,6 +8,12 @@ body {
     font-size: 1.2em;
 }
 
+/* Overide Materialize Hover button */
+.btn:hover, .btn-large:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
 .container_custom {
     width: 99%;
     margin: 0;
@@ -123,6 +129,7 @@ nav {
     height: 80px;
     border-bottom: 15px solid transparent!important;
     border-image: url(../pics/Bandeau.png) 10 round!important;
+    padding-bottom: 10px;
 }
 
 nav a {
@@ -327,8 +334,16 @@ main {
 }
 
 .iso_button {
-    background-color: white!important;
+    background-color: transparent;
     color: #313131!important;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.nav_works{
+    margin-top: 20px;
+    padding-bottom: 3px;
+    background-color: rgb(234, 235, 237);
 }
 
 .tous_btn {
