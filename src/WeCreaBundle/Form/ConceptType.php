@@ -4,7 +4,6 @@ namespace WeCreaBundle\Form;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +19,7 @@ class ConceptType extends AbstractType
             ->add('content', CKEditorType::class, array(
                 'config_name' => 'my_config',
             ))
-//            ->add('image', ImagesType::class)
+            ->add('images', ImagesType::class)
         ;
     }
     
