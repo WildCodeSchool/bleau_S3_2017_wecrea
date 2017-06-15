@@ -4,12 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
+    "hash": "bfb8526c11e8b386ca0a5a59e29e581c",
     "content-hash": "e34e897138797f12cf90b027486f1e77",
-=======
-    "hash": "e78d321f8e77b5091cd2b1b27fedafb4",
-    "content-hash": "4996d4b35537fc6bb27b1a7f87c4bce5",
->>>>>>> dev
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2300,7 +2296,7 @@
             "keywords": [
                 "database"
             ],
-            "time": "2016-09-20T10:07:57+00:00"
+            "time": "2016-09-20 10:07:57"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -2357,7 +2353,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2015-11-04T21:23:23+00:00"
+            "time": "2015-11-04 21:23:23"
         },
         {
             "name": "sensio/generator-bundle",
