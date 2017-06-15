@@ -9,6 +9,11 @@ use WeCreaBundle\Form\ConceptType;
 
 class ConceptController extends Controller
 {
+    /**
+     * Edit Concept section
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function editAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
