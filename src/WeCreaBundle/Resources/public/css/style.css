@@ -117,7 +117,6 @@ header {
 }
 
 .nav_custom_cont {
-
     box-sizing: unset;
 }
 
@@ -142,7 +141,7 @@ nav ul li {
 
 nav ul li a {
     padding-top: 25px;
-    font-size: 1.3em!important;
+    font-size: 1.1em!important;
     height: 55px!important;
 }
 
@@ -281,12 +280,13 @@ body {
 
 main {
     flex: 1 0 auto;
+
 }
 
 
 .slider {
-    margin-top: 95px;
-    height: calc(100% - 148px) !important;
+    margin-top: 115px;
+    height: calc(100% - 178px) !important;
 }
 .slider .indicators .indicator-item.active {
     background-color: #313131!important;

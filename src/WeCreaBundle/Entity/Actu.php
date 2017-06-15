@@ -11,7 +11,7 @@ class Actu
      * @var int
      */
     private $id;
-
+    
     /**
      * @var string
      */
@@ -27,11 +27,16 @@ class Actu
      */
     private $date;
 
+    /**
+     * @var \WeCreaBundle\Entity\Images
+     */
+    private $images;
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -109,47 +114,25 @@ class Actu
     {
         return $this->date;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $images;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add image
+     * Set images
      *
-     * @param \WeCreaBundle\Entity\Images $image
+     * @param \WeCreaBundle\Entity\Images $images
      *
      * @return Actu
      */
-    public function addImage(\WeCreaBundle\Entity\Images $image)
+    public function setImages(\WeCreaBundle\Entity\Images $images = null)
     {
-        $this->images[] = $image;
+        $this->images = $images;
 
         return $this;
     }
 
     /**
-     * Remove image
-     *
-     * @param \WeCreaBundle\Entity\Images $image
-     */
-    public function removeImage(\WeCreaBundle\Entity\Images $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
      * Get images
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \WeCreaBundle\Entity\Images
      */
     public function getImages()
     {
