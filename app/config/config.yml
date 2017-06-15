@@ -81,3 +81,9 @@ fos_user:
     from_email:
         address: blabla@msn.com
         sender_name: blabla
+
+ivory_ck_editor:
+    configs:
+        my_config:
+            toolbar: [ [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript' ], [ 'NumberedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink' ] ]
+            language: %locale%

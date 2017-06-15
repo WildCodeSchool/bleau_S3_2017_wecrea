@@ -1,0 +1,23 @@
+WeCreaBundle\Entity\Concept:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\ConceptRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        content:
+            type: text
+
+    oneToOne:
+        image:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']
+
+    lifecycleCallbacks: {  }

@@ -12,6 +12,7 @@
                         <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
                         <li><a href="{{ path('we_crea_admin_actu') }}">Actualités</a></li>
                         <li><a href="#">Édition Newsletter</a></li>
+                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
                     </ul>
 
                     <ul id="mobile-demo" class="side-nav">
@@ -19,12 +20,21 @@
                         <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
                         <li><a href="#">Actualités</a></li>
                         <li><a href="#">Édition Newsletter</a></li>
+                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
                     </ul>
                 </div>
             </nav>
         </div>
     </header>
 {% endblock %}
-
+{% block flash_notice %}
+    {% if app.session.flashBag.has('notice') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('notice') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
 {% block body %}
 {% endblock %}

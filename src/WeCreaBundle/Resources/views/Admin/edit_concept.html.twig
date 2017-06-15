@@ -1,0 +1,28 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+
+    <div class="container container_custom">
+
+        <div class="row row_custom">
+            <div class="col m10 offset-m1">
+                {{ form_start(form) }}
+
+                {{ form_row(form.title) }}
+
+                {{ form_row(form.content) }}
+
+                {#{{ form_row(form.image) }}#}
+
+                <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                    Valider la modification
+                    <i class="material-icons left">add</i>
+                </button>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

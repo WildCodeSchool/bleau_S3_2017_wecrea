@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use WeCreaBundle\Entity\Concept;
 
 
 class UserController extends Controller
@@ -43,9 +44,13 @@ class UserController extends Controller
         $bCount = $container->get('app.basket')->countBasket($session);
         $fCount = $container->get('favs')->countFavs($session);
 
+        $em = $this->getDoctrine()->getManager();
+        $conceptPage = $em->getRepository(Concept::class)->getConceptPage();
+
         return $this->render('@WeCrea/User/concept.html.twig', array(
             'bCount' => $bCount,
             'fCount' => $fCount,
+            'concept' => $conceptPage
 
         ));
     }

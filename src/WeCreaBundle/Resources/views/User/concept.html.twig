@@ -10,17 +10,9 @@
         <div class="row">
             <div class="col m8 offset-m2">
                 <img class="concept_pic" src="{{ asset('bundles/wecrea/pics/concept.jpg') }}" alt="">
-                <h2>Notre Concept</h2>
+                <h2>{{ concept.title }}</h2>
                 <div class="concept_txt">
-                    <p>«  <i>C’est épatant les artistes. Ils sont fous, comme tout le monde, mais pas vraiment comme tout le monde. J’ai un faible pour eux</i> »
-                        Françoise Giroud</p>
-                    <p>C’est parce que nous aussi, avons un faible pour les artistes, que « nous avons pris l’initiative de créer ce site « Les @rtistes d’@bord ». A bord, « son capitaine et ses mat’lots » comme dans la chanson de Brassens, « les copains d’abord ».</p>
-                    <p>Au départ Jazz et Watt, créartisans ; ils imaginent et créent des objets d’art et de décoration en faïence,  fonderie d’aluminium et bronze. Leur Société We-Créa voit le jour en 2014. Adhérents à plusieurs collectifs d’artistes, participant à des salons et des expositions, ils vont vite prendre conscience de l’énergie déployée  pour la majorité des artistes à se faire connaître et à « se vendre » au détriment du temps passé sur leurs  créations.</p>
-                    <p>Forts de ce constat, Jazz et Watt décident  de mettre en place ce site de vente en ligne pour promouvoir le travail de leurs ami(e)s artistes et le leur.</p>
-                    <p>«  Nous sommes à la fois  attentifs à la recherche esthétique de l’œuvre et à la maîtrise des différentes techniques utilisées, mais avons aussi l’envie de créer une belle cohésion humaine et artistique à travers  la personnalité et la « beauté intérieure » de chaque artiste. »
-                    </p>
-                    <p>Nous vous proposons ici davantage une ambiance qu’un catalogue d’œuvres, tout en étant respectueux des univers de chacun.</p>
-                    <p>Nous espérons que vous trouverez ici  l’œuvre qui suscitera chez vous  l’émotion recherchée. N’hésitez pas, faites-vous du bien, prenez plaisir à naviguer sur notre site comme nous prenons plaisir à vous y accueillir. </p>
+                    {{ concept.content | raw }}
                 </div>
             </div>
         </div>
