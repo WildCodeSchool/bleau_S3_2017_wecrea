@@ -2,13 +2,19 @@ we_crea_admin_homepage:
     path: /
     defaults: {_controller: "WeCreaBundle:Admin:adminHome"}
 
+we_crea_admin_edit_artist:
+    path: artist/edit/{id}
+    defaults: {_controller: "WeCreaBundle:Admin:editArtist"}
+    requirements:
+        id: '\d+'
+
 we_crea_admin_artist_list:
     path: /artists/
     defaults: {_controller: "WeCreaBundle:Admin:artistList"}
 
-we_crea_admin_artist_work_creation:
+we_crea_admin_artist_creation:
     path: /artist/creation
-    defaults: {_controller: "WeCreaBundle:Admin:newArtistWork"}
+    defaults: {_controller: "WeCreaBundle:Admin:addArtist"}
 
 we_crea_admin_delete_artist:
     path: /artist/delete/{id}
@@ -63,4 +69,4 @@ we_crea_admin_actu_delete:
 # -------- Edit Concept -----
 we_crea_admin_concept_edit:
     path:     /concept/edit
-    defaults: { _controller: WeCreaBundle:Concept:edit }
+    defaults: { _controller: "WeCreaBundle:Concept:edit" }

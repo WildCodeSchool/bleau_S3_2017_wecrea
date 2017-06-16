@@ -122,109 +122,9 @@
                         {{ form_widget(form.technic, {'id': 'technic'~id} ) }}
                     </div>
                     <div class="input-field col s12">
-                        <label for="dimensions{{form.id.vars.value}} " > Dimensions (préciser "cm" ou "m") </label>
-                        {{ form_errors(form.dimensions) }}
-                        {{ form_widget(form.dimensions, {'id': 'dimensions'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="dimensions2-{{form.id.vars.value}} " > Dimensions du modèle 2 (préciser "cm" ou "m") </label>
-                        {{ form_errors(form.dimensions2) }}
-                        {{ form_widget(form.dimensions2, {'id': 'dimensions2-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="dimensions3-{{form.id.vars.value}} " > Dimensions du modèle 3 (préciser "cm" ou "m") </label>
-                        {{ form_errors(form.dimensions3) }}
-                        {{ form_widget(form.dimensions3, {'id': 'dimensions3-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="dimensions4-{{form.id.vars.value}} " > Dimensions du modèle 4 (préciser "cm" ou "m") </label>
-                        {{ form_errors(form.dimensions4) }}
-                        {{ form_widget(form.dimensions4, {'id': 'dimensions4-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="dimensions5-{{form.id.vars.value}} " > Dimensions du modèle 5 (préciser "cm" ou "m") </label>
-                        {{ form_errors(form.dimensions5) }}
-                        {{ form_widget(form.dimensions5, {'id': 'dimensions5-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="weight{{form.id.vars.value}} " > Poids (préciser "g" ou "kg") </label>
-                        {{ form_errors(form.weight) }}
-                        {{ form_widget(form.weight, {'id': 'weight'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="weight2-{{form.id.vars.value}} " > Poids du modèle 2 (préciser "g" ou "kg") </label>
-                        {{ form_errors(form.weight2) }}
-                        {{ form_widget(form.weight2, {'id': 'weight2-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="weight3-{{form.id.vars.value}} " > Poids du modèle 3 (préciser "g" ou "kg") </label>
-                        {{ form_errors(form.weight3) }}
-                        {{ form_widget(form.weight3, {'id': 'weight3-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="weight4-{{form.id.vars.value}} " > Poids du modèle 4 (préciser "g" ou "kg") </label>
-                        {{ form_errors(form.weight4) }}
-                        {{ form_widget(form.weight4, {'id': 'weight4-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="weight5-{{form.id.vars.value}} " > Poids du modèle 5 (préciser "g" ou "kg") </label>
-                        {{ form_errors(form.weight5) }}
-                        {{ form_widget(form.weight5, {'id': 'weight5-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="quantity{{form.id.vars.value}} " > Quantités disponibles </label>
-                        {{ form_errors(form.quantity) }}
-                        {{ form_widget(form.quantity, {'id': 'quantity'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="quantity2-{{form.id.vars.value}} " > Quantités modèle 2 disponibles </label>
-                        {{ form_errors(form.quantity2) }}
-                        {{ form_widget(form.quantity2, {'id': 'quantity2-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="quantity3-{{form.id.vars.value}} " > Quantités modèle 3 disponibles </label>
-                        {{ form_errors(form.quantity3) }}
-                        {{ form_widget(form.quantity3, {'id': 'quantity3-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="quantity4-{{form.id.vars.value}} " > Quantités modèle 4 disponibles </label>
-                        {{ form_errors(form.quantity4) }}
-                        {{ form_widget(form.quantity4, {'id': 'quantity4-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="quantity5-{{form.id.vars.value}} " > Quantités modèle 5 disponibles </label>
-                        {{ form_errors(form.quantity5) }}
-                        {{ form_widget(form.quantity5, {'id': 'quantity5-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
                         <label for="timelimit{{form.id.vars.value}} " > Délai de livraison (préciser "jour(s)") </label>
                         {{ form_errors(form.timelimit) }}
                         {{ form_widget(form.timelimit, {'id': 'timelimit'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="price{{form.id.vars.value}} " > Prix (aura "€" pour sigle) </label>
-                        {{ form_errors(form.price) }}
-                        {{ form_widget(form.price, {'id': 'price'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="price2-{{form.id.vars.value}} " > Prix modèle 2 (aura "€" pour sigle) </label>
-                        {{ form_errors(form.price2) }}
-                        {{ form_widget(form.price2, {'id': 'price2-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="price3-{{form.id.vars.value}} " > Prix modèle 3 (aura "€" pour sigle) </label>
-                        {{ form_errors(form.price3) }}
-                        {{ form_widget(form.price3, {'id': 'price3-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="price4-{{form.id.vars.value}} " > Prix modèle 4 (aura "€" pour sigle) </label>
-                        {{ form_errors(form.price4) }}
-                        {{ form_widget(form.price4, {'id': 'price4-'~id} ) }}
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="price5-{{form.id.vars.value}} " > Prix modèle 5 (aura "€" pour sigle) </label>
-                        {{ form_errors(form.price5) }}
-                        {{ form_widget(form.price5, {'id': 'price5-'~id} ) }}
                     </div>
                     <div class="input-field col s12">
                         {{ form_errors(form.nature) }}
@@ -338,114 +238,13 @@
                     {{ form_errors(formWork.technic) }}
                 </div>
                 <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions, "Dimensions (préciser \"cm\" ou \"m\")") }}
-                    {{ form_widget(formWork.dimensions) }}
-                    {{ form_errors(formWork.dimensions) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions2, "Dimensions modèle 2 (préciser \"cm\" ou \"m\")") }}
-                    {{ form_widget(formWork.dimensions2) }}
-                    {{ form_errors(formWork.dimensions2) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions3, "Dimensions modèle 3 (préciser \"cm\" ou \"m\")") }}
-                    {{ form_widget(formWork.dimensions3) }}
-                    {{ form_errors(formWork.dimensions3) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions4, "Dimensions modèle 4 (préciser \"cm\" ou \"m\")") }}
-                    {{ form_widget(formWork.dimensions4) }}
-                    {{ form_errors(formWork.dimensions4) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.dimensions5, "Dimensions modèle 5 (préciser \"cm\" ou \"m\")") }}
-                    {{ form_widget(formWork.dimensions5) }}
-                    {{ form_errors(formWork.dimensions5) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.weight, "Poids (préciser \"g\" ou \"kg\")") }}
-                    {{ form_widget(formWork.weight) }}
-                    {{ form_errors(formWork.weight) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.weight2, "Poids modèle 2 (préciser \"g\" ou \"kg\")") }}
-                    {{ form_widget(formWork.weight2) }}
-                    {{ form_errors(formWork.weight2) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.weight3, "Poids modèle 3 (préciser \"g\" ou \"kg\")") }}
-                    {{ form_widget(formWork.weight3) }}
-                    {{ form_errors(formWork.weight3) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.weight4, "Poids modèle 4 (préciser \"g\" ou \"kg\")") }}
-                    {{ form_widget(formWork.weight4) }}
-                    {{ form_errors(formWork.weight4) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.weight5, "Poids modèle 5 (préciser \"g\" ou \"kg\")") }}
-                    {{ form_widget(formWork.weight5) }}
-                    {{ form_errors(formWork.weight5) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.quantity, "Quantité(s) disponible(s)") }}
-                    {{ form_widget(formWork.quantity) }}
-                    {{ form_errors(formWork.quantity) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.quantity2, "Quantité(s) modèle 2 disponible(s)") }}
-                    {{ form_widget(formWork.quantity2) }}
-                    {{ form_errors(formWork.quantity2) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.quantity3, "Quantité(s) modèle 3 disponible(s)") }}
-                    {{ form_widget(formWork.quantity3) }}
-                    {{ form_errors(formWork.quantity3) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.quantity4, "Quantité(s) modèle 4 disponible(s)") }}
-                    {{ form_widget(formWork.quantity4) }}
-                    {{ form_errors(formWork.quantity4) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.quantity5, "Quantité(s) modèle 5 disponible(s)") }}
-                    {{ form_widget(formWork.quantity5) }}
-                    {{ form_errors(formWork.quantity5) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.timelimit, 'Délai de livraison (préciser \"jour(s)\")') }}
-                    {{ form_widget(formWork.timelimit) }}
-                    {{ form_errors(formWork.timelimit) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.price, "Prix de l'oeuvre (aura \"€\" pour sigle)") }}
-                    {{ form_widget(formWork.price) }}
-                    {{ form_errors(formWork.price) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.price2, "Prix modèle 2 (aura \"€\" pour sigle)") }}
-                    {{ form_widget(formWork.price2) }}
-                    {{ form_errors(formWork.price2) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.price3, "Prix modèle 3 (aura \"€\" pour sigle)") }}
-                    {{ form_widget(formWork.price3) }}
-                    {{ form_errors(formWork.price3) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.price4, "Prix modèle 4 (aura \"€\" pour sigle)") }}
-                    {{ form_widget(formWork.price4) }}
-                    {{ form_errors(formWork.price4) }}
-                </div>
-                <div class="input-field col s12">
-                    {{ form_label(formWork.price5, "Prix modèle 5 (aura \"€\" pour sigle)") }}
-                    {{ form_widget(formWork.price5) }}
-                    {{ form_errors(formWork.price5) }}
-                </div>
-                <div class="input-field col s12">
                     {{ form_widget(formWork.nature) }}
                     {{ form_errors(formWork.nature) }}
                     {{ form_label(formWork.nature, "Nature de l'oeuvre") }}
+                </div>
+                <div>
+                    {{ form_row(formWork.caracts) }}
+                    <a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>
                 </div>
             </div>
             <div class="row">
@@ -500,6 +299,76 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    {# Voici le script en question : #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('form[name="wecreabundle_work"]');
+            console.log($container);
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $('#add_category').click(function(e) {
+                addCategory($container);
+                console.log($container);
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                addCategory($container);
+            } else {
+                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // La fonction qui ajoute un formulaire CategoryType
+            function addCategory($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+                    .replace(/__name__/g,        index)
+                ;
+
+                // On crée un objet jquery qui contient ce template
+                var $prototype = $(template);
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'une catégorie
+            function addDeleteLink($prototype) {
+                // Création du lien
+                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
 <script>
     $(document).ready(function(){
         /* Enables the select input in materialize */

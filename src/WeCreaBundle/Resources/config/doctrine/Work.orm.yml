@@ -17,81 +17,21 @@ WeCreaBundle\Entity\Work:
         technic:
             type: string
             length: 255
-        dimensions:
-            type: string
-            length: 255
-        dimensions2:
-            type: string
-            length: 255
-            nullable: true
-        dimensions3:
-            type: string
-            length: 255
-            nullable: true
-        dimensions4:
-            type: string
-            length: 255
-            nullable: true
-        dimensions5:
-            type: string
-            length: 255
-            nullable: true
-        weight:
-            type: string
-            length: 255
-        weight2:
-            type: string
-            length: 255
-            nullable: true
-        weight3:
-            type: string
-            length: 255
-            nullable: true
-        weight4:
-            type: string
-            length: 255
-            nullable: true
-        weight5:
-            type: string
-            length: 255
-            nullable: true
-        quantity:
-            type: integer
-        quantity2:
-            type: integer
-            nullable: true
-        quantity3:
-            type: integer
-            nullable: true
-        quantity4:
-            type: integer
-            nullable: true
-        quantity5:
-            type: integer
-            nullable: true
         timelimit:
             type: string
             length: 255
-        price:
-            type: integer
-        price2:
-            type: integer
-            nullable: true
-        price3:
-            type: integer
-            nullable: true
-        price4:
-            type: integer
-            nullable: true
-        price5:
-            type: integer
-            nullable: true
     manyToOne:
         artist:
             targetEntity: WeCreaBundle\Entity\Artist
             inversedBy: works
         nature:
             targetEntity: WeCreaBundle\Entity\Nature
+
+    oneToMany:
+        caracts:
+            targetEntity: WeCreaBundle\Entity\Caract
+            mappedBy: 'work'
+            cascade: ['all']
 
     manyToMany:
         images:
