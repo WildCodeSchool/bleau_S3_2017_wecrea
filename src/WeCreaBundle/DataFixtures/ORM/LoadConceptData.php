@@ -18,7 +18,7 @@ class LoadConceptData implements FixtureInterface
         $conceptPage = new Concept();
         $conceptPage->setTitle('Titre de la section');
         $conceptPage->setContent('Contenu de la section');
-        $conceptPage->setImage($img);
+        $conceptPage->setImages($img);
 
         $manager->persist($conceptPage);
         $manager->flush();

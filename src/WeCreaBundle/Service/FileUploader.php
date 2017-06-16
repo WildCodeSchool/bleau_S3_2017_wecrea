@@ -23,6 +23,15 @@ class FileUploader
         $file->move($this->targetDir, $fileName);
     }
 
+    public function uploadImg(UploadedFile $file, $image)
+    {
+        $fileName = uniqid().'.'.$file->guessExtension();
+
+        $image->setUrl($fileName);
+
+        $file->move($this->targetDir, $fileName);
+    }
+
     public function getTargetDir()
     {
         return $this->targetDir;

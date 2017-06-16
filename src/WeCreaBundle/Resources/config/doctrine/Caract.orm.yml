@@ -1,0 +1,28 @@
+WeCreaBundle\Entity\Caract:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\CaractRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        dimension:
+            type: string
+            length: 255
+        weigth:
+            type: string
+            length: 255
+        price:
+            type: integer
+        quantity:
+            type: integer
+
+    manyToOne:
+        work:
+            targetEntity: 'WeCreaBundle\Entity\Work'
+            inversedBy: 'caracts'
+
+    lifecycleCallbacks: {  }

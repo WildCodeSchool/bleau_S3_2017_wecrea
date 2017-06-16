@@ -22,7 +22,6 @@ class Images
      */
     private $alt;
 
-
     /**
      * Get id
      *
