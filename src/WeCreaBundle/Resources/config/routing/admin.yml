@@ -1,49 +1,37 @@
+# Panel admin
 we_crea_admin_homepage:
     path: /
     defaults: {_controller: "WeCreaBundle:Admin:adminHome"}
 
-we_crea_admin_edit_artist:
-    path: artist/edit/{id}
-    defaults: {_controller: "WeCreaBundle:Admin:editArtist"}
-    requirements:
-        id: '\d+'
-
+# Artist route
 we_crea_admin_artist_list:
-    path: /artists/
-    defaults: {_controller: "WeCreaBundle:Admin:artistList"}
+    path: /artists
+    defaults: {_controller: "WeCreaBundle:Artist:artistList"}
 
 we_crea_admin_artist_creation:
     path: /artist/creation
-    defaults: {_controller: "WeCreaBundle:Admin:addArtist"}
+    defaults: {_controller: "WeCreaBundle:Artist:addArtist"}
+
+we_crea_admin_edit_artist:
+    path: artist/edit/{id}
+    defaults: {_controller: "WeCreaBundle:Artist:editArtist"}
+    requirements:
+        id: '\d+'
 
 we_crea_admin_delete_artist:
     path: /artist/delete/{id}
-    defaults: {_controller: "WeCreaBundle:Admin:deleteArtist"}
+    defaults: {_controller: "WeCreaBundle:Artist:deleteArtist"}
+    requirements:
+        id: '\d+'
 
 we_crea_admin_delete_artist_image_ajax:
     path: /deleteArtistImage
-    defaults: {_controller: "WeCreaBundle:Admin:deleteArtistImageAjax"}
-
-we_crea_admin_delete_work_image_ajax:
-    path: /deleteWorkImage
-    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkImageAjax"}
-
-we_crea_admin_delete_work_ajax:
-    path: /deleteWork
-    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkAjax"}
-
-we_crea_admin_artist_work_edition:
-    path: /artist/edition/{id}
-    defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
+    defaults: {_controller: "WeCreaBundle:Artist:deleteArtistImageAjax"}
 
 # ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
     path: /carrousel/edition
     defaults: {_controller: "WeCreaBundle:Carrousel:editCarrousel"}
-
-we_crea_admin_image_carrousel:
-    path: /carrousel/image
-    defaults: {_controller: "WeCreaBundle:Carrousel:addImageCarrousel"}
 
 we_crea_admin_add_carrousel:
     path: /carrousel/add
@@ -70,3 +58,21 @@ we_crea_admin_actu_delete:
 we_crea_admin_concept_edit:
     path:     /concept/edit
     defaults: { _controller: "WeCreaBundle:Concept:edit" }
+
+
+
+
+
+we_crea_admin_delete_work_image_ajax:
+    path: /deleteWorkImage
+    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkImageAjax"}
+
+we_crea_admin_delete_work_ajax:
+    path: /deleteWork
+    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkAjax"}
+
+we_crea_admin_artist_work_edition:
+    path: /artist/edition/{id}
+    defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
+
+
