@@ -190,6 +190,8 @@ class ArtistController extends Controller
         */
         $artist->removeImage($image);
 
+        // TODO: Add remove img in entity
+        $em->remove($image);
 
         $path = $this->get('uploader')->getTargetDir() . '/' . $url;
 

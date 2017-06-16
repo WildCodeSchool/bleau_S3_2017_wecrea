@@ -2,76 +2,75 @@
 
 {% block body %}
     <main>
+        <div class="buttons filters-button-group nav_works">
+            <button class="waves-effect waves-light btn iso_button iso_link active_button" data-filter=".Tous">Tous</button>
+            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Dessin">Dessin</button>
+            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Photographie">Photographie</button>
+            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Peinture">Peinture</button>
+            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Ceramique">Céramique</button>
+            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
+            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Sculpture">Sculpture</button>
+            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Curiosite">Curiosité</button>
+        </div>
 
-                <div class="buttons filters-button-group nav_works">
-                    <button class="waves-effect waves-light btn iso_button iso_link active_button" data-filter=".Tous">Tous</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Dessin">Dessin</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Photographie">Photographie</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Peinture">Peinture</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Ceramique">Céramique</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Sculpture">Sculpture</button>
-                    <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Curiosite">Curiosité</button>
+        <div class="cards" style="height: 700px!important;">
+            <div class="buttons filters-button-group row">
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Dessin">Dessin</button>
                 </div>
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Photographie">Photographie</button>
+                </div>
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Peinture">Peinture</button>
+                </div>
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Sculpture">Sculpture</button>
+                </div>
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Ceramique">Céramique</button>
+                </div>
+                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <button class="tous_btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
+                </div>
+            </div>
 
-                <div class="cards" style="height: 700px!important;">
-                    <div class="buttons filters-button-group row">
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Dessin">Dessin</button>
+            {% for work in works %}
+                <div class="card card_custom iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                    <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                        <div class="card-image waves-effect waves-block waves-light card-image_custom"
+                        {% if work.images[0] is defined %}
+                             style="background: url('{{ asset("images/" ~ work.images[0].url) }}') center / cover"
+                        {% endif %}
+                        >
+                            {% if favs[work.id] is defined %}
+                            <div class="fav_btn_delete" data="{{ work.id }}">
+                                <button class="btn">Retirer des favoris</button>
+                            </div>
+                            {% else %}
+                            <div class="fav_btn" data="{{ work.id }}">
+                                <button class="btn">Ajouter aux favoris</button>
+                            </div>
+                            {% endif %}
                         </div>
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Photographie">Photographie</button>
-                        </div>
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Peinture">Peinture</button>
-                        </div>
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Sculpture">Sculpture</button>
-                        </div>
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Ceramique">Céramique</button>
-                        </div>
-                        <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                            <button class="tous_btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
-                        </div>
+                    </a>
+                    <div class="card-content card-content_custom">
+                        <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                            <img class="show_more" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
+                        <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
                     </div>
-
-                    {% for work in works %}
-                        <div class="card card_custom iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
-                            <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
-                                <div class="card-image waves-effect waves-block waves-light card-image_custom"
-                                {% if work.images[0] is defined %}
-                                     style="background: url('{{ asset("images/" ~ work.images[0].url) }}') center / cover"
-                                {% endif %}
-                                >
-                                    {% if favs[work.id] is defined %}
-                                    <div class="fav_btn_delete" data="{{ work.id }}">
-                                        <button class="btn">Retirer des favoris</button>
-                                    </div>
-                                    {% else %}
-                                    <div class="fav_btn" data="{{ work.id }}">
-                                        <button class="btn">Ajouter aux favoris</button>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </a>
-                            <div class="card-content card-content_custom">
-                                <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                                    <img class="show_more" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
-                                <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                                <p>{{ work.technic }} {{ work.nature.name }}</p>
-                                <p>Dimensions: {{ work.dimensions }}</p>
-                                <p>Poids: {{ work.weight }}</p>
-                                <p>Prix: {{ work.price }} €</p>
-                                <p>Quantité: {{ work.quantity }}</p>
-                                <p>Description</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                        <p>{{ work.technic }} {{ work.nature.name }}</p>
+                        <p>Dimensions: {{ work.dimensions }}</p>
+                        <p>Poids: {{ work.weight }}</p>
+                        <p>Prix: {{ work.price }} €</p>
+                        <p>Quantité: {{ work.quantity }}</p>
+                        <p>Description</p>
+                    </div>
                 </div>
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}
 
