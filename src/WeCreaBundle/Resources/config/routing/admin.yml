@@ -34,7 +34,7 @@ we_crea_admin_works_artist:
     defaults: {_controller: "WeCreaBundle:Works:listAllArtistWorks"}
 
 we_crea_admin_works_delete:
-    path: /{id}/delete
+    path: /delete
     defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
 
 # ------ Carrousel ROUT
