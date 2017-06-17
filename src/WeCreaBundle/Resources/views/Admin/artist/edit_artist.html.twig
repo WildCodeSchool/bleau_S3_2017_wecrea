@@ -2,7 +2,7 @@
 
 {% block body %}
     <main>
-        <div class="container container_custom">
+        <div class="container">
             <div class="row">
                 <h4>Edition de l'artiste {{ artist.name ~ ' ' ~ artist.firstname }}</h4>
                 {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
@@ -27,12 +27,10 @@
                         {{ form_widget(form.expertise) }}
                         {{ form_errors(form.expertise) }}
                     </div>
-                    <div class="col s12">
-                        {{ form_label(form.biography, 'Biographie de l\'artiste') }}
-                    </div>
                     <div class="input-field col s12">
+                        {{ form_label(form.biography, 'Biographie de l\'artiste') }}
                         {{ form_errors(form.biography) }}
-                        {{ form_widget(form.biography, {'attr': {'class':'biography'}} ) }}
+                        {{ form_widget(form.biography, {'attr': {'class':'biography materialize-textarea'}} ) }}
                     </div>
                     <div class="input-field col s12">
                         <button class="btn waves-effect waves-light left edit-profil" type="submit" name="action">
@@ -78,7 +76,7 @@
                     <div class="col s12" id="images-artist-confirmed">
                         <h4>Images de l'artiste validées</h4>
                         {% for image in artist.images %}
-                            <div class="col s12 existent-images">
+                            <div class="col s12 m4 existent-images">
                                 <img src="{{ asset('images/'~image.url) }}" id="{{ image.url }}"/>
                                 <button class="btn waves-effect waves-light red delete-image-artist">
                                     Supprimer
@@ -96,6 +94,7 @@
 
 {% block javascripts %}
     <script>
+
         var $idArt;
 
 //        Validation of profil artist
@@ -161,7 +160,7 @@
                     var $id = response.url;
                     console.log(response);
                     var $newArtImg = $(document.createElement('div'));
-                    $newArtImg.attr('class', 'new-artist-image');
+                    $newArtImg.attr('class', 'col m4 s12 new-artist-image');
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));
