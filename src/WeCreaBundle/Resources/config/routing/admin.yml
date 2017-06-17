@@ -28,6 +28,15 @@ we_crea_admin_delete_artist_image_ajax:
     path: /deleteArtistImage
     defaults: {_controller: "WeCreaBundle:Artist:deleteArtistImageAjax"}
 
+# Works rout
+we_crea_admin_works_artist:
+    path: /{id}/works
+    defaults: {_controller: "WeCreaBundle:Works:listAllArtistWorks"}
+
+we_crea_admin_works_delete:
+    path: /delete
+    defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
+
 # ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
     path: /carrousel/edition

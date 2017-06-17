@@ -36,4 +36,12 @@ class FileUploader
     {
         return $this->targetDir;
     }
+
+    public function deleteImg($img){
+        $path = $this->getTargetDir() . '/' . $img->getUrl();
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
+    }
 }

@@ -88,7 +88,7 @@
     <script>
         var $idArt;
 
-
+//        Add artist action
         $('form[id="artist-profil"]').submit(function(e){
             e.preventDefault();
             if(confirm("Vous allez créer le profil de l'artiste.")) {
@@ -185,9 +185,11 @@
 
                     $("#images-artist-confirmed").fadeIn(2000);
 
-                    $('.delete-image-artist').click(function(e){
+                    $cancel.click(function(e){
+                        console.log($(this));
                         e.preventDefault();
                         $idImgToDelete = $(this).prev().attr('id');
+                        console.log($idImgToDelete);
                         var $data = {'idImg' : $idImgToDelete, 'idArt' : $idArt};
 
                         /* Let's remove the delete button & the image deleted */
