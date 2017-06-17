@@ -2,7 +2,11 @@
 
 {% block body %}
 <main>
-    <div class="container container_custom">
+    <div class="container">
+        <div class="row artist_menu">
+            <a class="waves-effect waves-light btn" href="{{ path('we_crea_admin_artist_creation') }}">Ajouter un nouvel artiste</a>
+            <a class="waves-effect waves-light btn" href="{{ path('we_crea_admin_homepage') }}">Retour au menu d'accueil</a>
+        </div>
         <div class="row">
             <h4>Création d'un nouvel artiste</h4>
             {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
@@ -27,12 +31,10 @@
                     {{ form_widget(form.expertise) }}
                     {{ form_errors(form.expertise) }}
                 </div>
-                <div class="col s12">
-                    {{ form_label(form.biography, 'Biographie de l\'artiste') }}
-                </div>
                 <div class="input-field col s12">
+                    {{ form_label(form.biography, 'Biographie de l\'artiste') }}
                     {{ form_errors(form.biography) }}
-                    {{ form_widget(form.biography, {'attr': {'class':'biography'}} ) }}
+                    {{ form_widget(form.biography, {'attr': {'class':'biography materialize-textarea'}} ) }}
                 </div>
                 <div class="input-field col s12">
                     <button class="btn waves-effect waves-light left" type="submit" name="action">
@@ -45,6 +47,7 @@
 
             {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
             <div class="row">
+                {{ form_label(formImage.url, "Photo de l'artiste") }}
                 <div class="file-field input-field col s12">
                     <div class="btn btn-file">
                         <span>Choisissez un fichier</span>
@@ -86,6 +89,7 @@
 
 {% block javascripts %}
     <script>
+
         var $idArt;
 
 //        Add artist action
@@ -96,7 +100,7 @@
                 var $form = $(this).serialize();
 
                 $("#artist-picture").fadeIn(2000);
-                $(".add-work").fadeIn(2000);
+                $(".artist_menu").fadeIn(2000);
 
                 $.ajax({
                     method: 'post',
@@ -166,7 +170,7 @@
                     var $id = response.url;
                     console.log(response);
                     var $newArtImg = $(document.createElement('div'));
-                    $newArtImg.attr('class', 'new-artist-image');
+                    $newArtImg.attr('class', 'col m4 s12 new-artist-image');
 
                     /* Creation of the image with the data returned */
                     var $img = $(document.createElement('img'));

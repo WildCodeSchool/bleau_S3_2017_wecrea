@@ -21,23 +21,14 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', IntegerType::class, array(
-                'required' => false
-            ))
             ->add('title')
             ->add('description')
             ->add('technic')
             ->add('timelimit')
             ->add('nature', EntityType::class, array(
-            'class' => Nature::class,
-            'choice_label' => 'name',
-            'multiple' => false
-                )
-            )
-            ->add('caracts', CollectionType::class, array(
-                'entry_type'   => CaractType::class,
-                'allow_add'    => true,
-                'allow_delete' => true
+                'class' => Nature::class,
+                'choice_label' => 'name',
+                'multiple' => false
             ))
         ;
     }

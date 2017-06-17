@@ -78,5 +78,8 @@ $(document).ready( function () {
     // Materialize Tabs
     $('ul.tabs').tabs();
 
+    // Materialize textarea
+    $('textarea').trigger('autoresize');
+
 });
 
