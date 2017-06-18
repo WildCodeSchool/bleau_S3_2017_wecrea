@@ -19,7 +19,9 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.connect_button{
+    width: 100%;
+}
 /* ADMIN */
 
 #images-artist-confirmed img,
@@ -289,7 +291,6 @@ body {
 
 main {
     flex: 1 0 auto;
-
 }
 
 

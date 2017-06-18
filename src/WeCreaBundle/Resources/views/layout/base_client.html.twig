@@ -12,6 +12,11 @@
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="#">Actualités</a></li>
+                        <li>
+                            <a href="{{ path('we_crea_user_profil') }}">
+                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
+                            </a>
+                        </li>
                         <li id="basket">
                             <a href="{{ path('we_crea_basket') }}">
                                 <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
@@ -48,6 +53,10 @@
 {% endblock %}
 
 {% block body %}
+
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+
 {% endblock %}
 
 {% block footer %}
