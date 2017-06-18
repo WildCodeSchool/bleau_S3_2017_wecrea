@@ -2,20 +2,11 @@
 
 {% block body %}
     <main>
+        {% include '@WeCrea/layout/nav_works.html.twig' %}
 
-        <div class="buttons filters-button-group">
-            <button class="waves-effect waves-light btn iso_button active_button" data-filter="*">Tous</button>
-            <button class="waves-effect waves-light iso_button btn " data-filter=".Dessin">Dessin</button>
-            <button class="waves-effect waves-light iso_button btn " data-filter=".Photographie">Photographie</button>
-            <button class="waves-effect waves-light iso_button btn " data-filter=".Peinture">Peinture</button>
-            <button class="waves-effect waves-light iso_button btn " data-filter=".Verre">Verre</button>
-            <button class="waves-effect waves-light iso_button btn" data-filter=".Ceramique">Céramique</button>
-            <button class="waves-effect waves-light iso_button btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
-            <button class="waves-effect waves-light iso_button btn" data-filter=".Sculpture">Sculpture</button>
-        </div>
         <div class="cards">
             {% for work in favs %}
-                <div class="card card_custom  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                <div class="card card_custom  cardResizer iso_item {{ work.nature.name }} Tous" data-filter=".{{ work.nature.name }}">
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                         <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
                         </div>
@@ -31,10 +22,9 @@
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
                         <p>{{ work.technic }} {{ work.nature.name }}</p>
-                        <p>Dimensions: {{ work.dimensions }}</p>
-                        <p>Poids: {{ work.weight }}</p>
-                        <p>Prix: {{ work.price }} €</p>
-                        <p>Quantité: {{ work.quantity }}</p>
+                        {# TODO :
+                        ADD Caract for Caracts
+                        #}
                         <p>Description</p>
                     </div>
                 </div>

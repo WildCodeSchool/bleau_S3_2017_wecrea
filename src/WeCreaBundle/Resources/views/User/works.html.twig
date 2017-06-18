@@ -2,16 +2,7 @@
 
 {% block body %}
     <main>
-        <div class="buttons filters-button-group nav_works">
-            <button class="waves-effect waves-light btn iso_button iso_link active_button" data-filter=".Tous">Tous</button>
-            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Dessin">Dessin</button>
-            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Photographie">Photographie</button>
-            <button class="waves-effect waves-light iso_button iso_link btn " data-filter=".Peinture">Peinture</button>
-            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Ceramique">Céramique</button>
-            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
-            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Sculpture">Sculpture</button>
-            <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".Curiosite">Curiosité</button>
-        </div>
+        {% include '@WeCrea/layout/nav_works.html.twig' %}
 
         <div class="cards" style="height: 700px!important;">
             <div class="buttons filters-button-group row">
@@ -91,8 +82,8 @@
                         data: data,
 
                         success: function (response) {
-                            console.log(response);
-                            // alert(response.name + ' a été ajouté(e) à vos favoris');
+                            Materialize.toast('<span class="toast_custom">' + response.name + ' a été ajouté(e) à vos favoris</span>', 4000) // 4000 is the duration of the toast
+
                             $('.fCount').text(response.fCount);
                             btn.find('button').text('Retirer des favoris');
                             btn.removeClass('fav_btn');
@@ -115,8 +106,7 @@
                         data: data,
 
                         success: function (response) {
-                            console.log(response);
-                            // alert(response.name + ' a été retiré(e) de vos favoris');
+                            Materialize.toast('<span class="toast_custom">' + response.name + ' a été retiré(e) de vos favoris</span>', 4000) // 4000 is the duration of the toast
                             $('.fCount').text(response.fCount);
                             btn.find('button').text('Ajouter aux favoris');
                             btn.removeClass('fav_btn_delete');
