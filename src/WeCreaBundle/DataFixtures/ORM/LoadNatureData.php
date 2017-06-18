@@ -15,9 +15,9 @@ class LoadNatureData implements FixtureInterface
             "Photographie",
             "Peinture",
             "Verre",
-            "Sculture",
-            "Artisanat d'art",
-            "Céramique",
+            "Sculpture",
+            "Artisanat_dart",
+            "Ceramique",
         );
 
         foreach ($natures as $n){
