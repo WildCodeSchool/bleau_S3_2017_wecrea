@@ -131,6 +131,7 @@
     <script>
         $(document).ready(function() {
             $('select').material_select();
+            var $idWork;
 
 //            Add work caract
             $('form[id="work-caracteristics"]').submit(function(e){
@@ -292,15 +293,14 @@
                             e.preventDefault();
                             $idImgToDelete = $(this).prev().attr('id');
                             console.log($idImgToDelete);
-                            var $data = {'idImg' : $idImgToDelete, 'idArt' : $idArt};
+                            var $data = {'idImg' : $idImgToDelete, 'idWork' :  $idWork}
 
                             /* Let's remove the delete button & the image deleted */
-                            $(this).prev().remove();
-                            $(this).remove();
+                            $(this).parent().remove();
 
                             $.ajax({
                                 method: 'post',
-                                url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
+                                url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                                 data : $data,
                                 success: function (response){
                                     alert(response);

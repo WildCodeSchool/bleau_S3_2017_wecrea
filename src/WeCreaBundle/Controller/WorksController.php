@@ -135,4 +135,34 @@ class WorksController extends Controller
             'artist' => $artist
         ));
     }
+
+    public function deleteWorkImageAjaxAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        dump($request);
+        /* Stores the work id */
+        $idWork = $request->request->get('idWork');
+        /* Looks for the work corresponding to the id */
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
+        /* Stores the image id */
+        $idImg = $request->request->get('idImg');
+        /* Looks for the image corresponding to the id */
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($idImg);
+        /* Gets the url of the image */
+        $url = $image->getUrl();
+        /* Let's remove the images the work is linked with */
+        $work->removeImage($image);
+        /* Check if the image exists within the images folder */
+        $path = $this->getParameter('image_directory')."/".$url;
+        /* If yes, unlink the image */
+        if(file_exists($path)){
+            unlink($path);
+        }
+        /* Remove this image */
+        $em->remove($image);
+        /* Update the database */
+        $em->flush();
+        /* Confirm the image has been deleted successfully */
+        return new Response("L'image a bien été supprimée");
+    }
 }

@@ -74,13 +74,9 @@ we_crea_admin_concept_edit:
     path:     /concept/edit
     defaults: { _controller: "WeCreaBundle:Concept:edit" }
 
-
-
-
-
 we_crea_admin_delete_work_image_ajax:
     path: /deleteWorkImage
-    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkImageAjax"}
+    defaults: {_controller: "WeCreaBundle:Works:deleteWorkImageAjax"}
 
 we_crea_admin_delete_work_ajax:
     path: /deleteWork

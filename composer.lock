@@ -1028,11 +1028,7 @@
             "keywords": [
                 "User management"
             ],
-<<<<<<< HEAD
-            "time": "2017-05-31T11:50:14+00:00"
-=======
             "time": "2017-05-31 11:50:14"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1404,11 +1400,7 @@
                 "configuration",
                 "distribution"
             ],
-<<<<<<< HEAD
-            "time": "2017-05-11T16:21:03+00:00"
-=======
             "time": "2017-05-11 16:21:03"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1478,11 +1470,7 @@
                 "annotations",
                 "controllers"
             ],
-<<<<<<< HEAD
-            "time": "2017-05-11T17:01:57+00:00"
-=======
             "time": "2017-05-11 17:01:57"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "sensiolabs/security-checker",
@@ -1694,11 +1682,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T08:25:21+00:00"
-=======
             "time": "2017-06-09 08:25:21"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -1756,11 +1740,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T08:25:21+00:00"
-=======
             "time": "2017-06-09 08:25:21"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1819,11 +1799,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T14:24:12+00:00"
-=======
             "time": "2017-06-09 14:24:12"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/polyfill-php56",
@@ -1879,11 +1855,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T08:25:21+00:00"
-=======
             "time": "2017-06-09 08:25:21"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/polyfill-php70",
@@ -1942,11 +1914,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T14:24:12+00:00"
-=======
             "time": "2017-06-09 14:24:12"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/polyfill-util",
@@ -1998,11 +1966,7 @@
                 "polyfill",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09T08:25:21+00:00"
-=======
             "time": "2017-06-09 08:25:21"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2061,11 +2025,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-05-22T04:58:24+00:00"
-=======
             "time": "2017-05-22 04:58:24"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "symfony/symfony",
@@ -2209,11 +2169,7 @@
             "keywords": [
                 "framework"
             ],
-<<<<<<< HEAD
-            "time": "2017-05-29T19:32:17+00:00"
-=======
             "time": "2017-05-29 19:32:17"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         },
         {
             "name": "twig/twig",
@@ -2279,11 +2235,7 @@
             "keywords": [
                 "templating"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-07T18:47:58+00:00"
-=======
             "time": "2017-06-07 18:47:58"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         }
     ],
     "packages-dev": [
@@ -2517,11 +2469,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-06-01T14:45:22+00:00"
-=======
             "time": "2017-06-01 14:45:22"
->>>>>>> bdda8002f59e37d87708d836d9cde99fb71b3d13
         }
     ],
     "aliases": [],
