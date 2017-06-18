@@ -49,6 +49,7 @@ class WorksController extends Controller
             $em->remove($work);
             $em->flush();
             $response = new JsonResponse(array(
+                'msg' => "L'oeuvre " . $work->getTitle() . " et ses images ont bien été supprimées",
                 'id' => $id
             ));
             return $response;

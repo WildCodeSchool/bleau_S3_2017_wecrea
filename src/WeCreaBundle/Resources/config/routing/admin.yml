@@ -40,12 +40,16 @@ we_crea_admin_works_add:
         id: '\d+'
 
 we_crea_admin_works_delete:
-    path: /work/delete
+    path: /{id}/work/delete
     defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
 
 we_crea_admin_delete_work_image_ajax:
     path: /deleteWorkImage
     defaults: {_controller: "WeCreaBundle:Works:deleteWorkImageAjax"}
+
+we_crea_admin_works_edit:
+    path: /{id}/works/edit
+    defaults: {_controller: "WeCreaBundle:Works:editWork"}
 
 # ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
