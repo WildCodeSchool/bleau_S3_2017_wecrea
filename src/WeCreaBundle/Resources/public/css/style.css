@@ -71,12 +71,19 @@ body {
     margin: 0 auto;
 }
 
+.artist_menu{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display: none;
+}
+
 /* First three -> forms */
 #artist-picture,
-#work-caracteristics,
 #edit-work-caracteristics,
+#specificity-work-confirmed,
+#work-specificity,
 #work-picture,
-#images-artist-confirmed,
 #add-image-form,
 #work-confirmed,
 #images-work-confirmed,
@@ -95,10 +102,12 @@ body {
 }
 
 .new-artist-image,
+.new-work-image,
 .new-work,
 .row-custom-edit-work-image,
 .existent-images{
     border: 1px solid #c8c8c8;
+    height:200px;
 }
 
 .new-work-image img{

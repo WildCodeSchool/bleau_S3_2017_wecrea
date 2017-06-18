@@ -3,6 +3,7 @@
 namespace WeCreaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -11,49 +12,12 @@ use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Artist;
 use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Entity\Work;
+use WeCreaBundle\Form\ArtistType;
+use WeCreaBundle\Form\ImagesType;
+use WeCreaBundle\Form\WorkType;
 
 class AdminController extends Controller
 {
-    /* Render the page for listing all the artists */
-    public function artistListAction(Request $request){
-
-        $em = $this->getDoctrine()->getManager();
-        $artists = $em->getRepository('WeCreaBundle:Artist')->findAll();
-
-        return $this->render('@WeCrea/Admin/artist_list.html.twig', array(
-            'artists' => $artists
-        ));
-    }
-
-    /* Method for deleting the artist */
-    public function deleteArtistAction($id){
-        $em = $this->getDoctrine()->getManager();
-        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
-
-        $works = $em->getRepository('WeCreaBundle:Work')->findByArtist(array(
-            'artist' => $artist
-        ));
-
-        foreach($works as $work){
-            $images = $work->getImages();
-            foreach($images as $image){
-                $img = $image->getUrl();
-                $file = $this->getParameter('image_directory')."/".$img;
-
-                if(file_exists($file)){
-                    unlink($file);
-                }
-            }
-            $em->remove($work);
-        }
-
-        $em->remove($artist);
-        $em->flush();
-
-        return $this->redirectToRoute('we_crea_admin_artist_list');
-
-    }
-
     /* Render the page for the creation of a new artist & some or all of his/her works */
     public function newArtistWorkAction(Request $request)
     {
@@ -224,39 +188,7 @@ class AdminController extends Controller
         ));
     }
 
-    /*
-    * Method for deleting an image from the artist profile
-    */
 
-    public function deleteArtistImageAjaxAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* If the artist profile has been created */
-        $idArt = $request->request->get('idArt');
-        $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($idArt);
-
-        $idImg = $request->request->get('idImg');
-
-        $image = $em->getRepository('WeCreaBundle:Images')->findOneById($idImg);
-        $url = $image->getUrl();
-
-        /*
-        * Let's remove the image linked with the artist
-        */
-        $artist->removeImage($image);
-
-        $path = $this->getParameter('image_directory')."/".$url;
-
-        if(file_exists($path)){
-            unlink($path);
-        }
-
-        $em->remove($image);
-        $em->flush();
-
-        return new Response("L'image a bien été supprimée");
-    }
 
     /*
      * Method for deleting a specific image linked to a specific work
@@ -341,7 +273,16 @@ class AdminController extends Controller
 
         if(!empty($work)) {
             foreach ($works as $key) {
-                $editWorkForms[] = $this->createForm('WeCreaBundle\Form\WorkType', $key)->createView();
+                $editWorkForms[] =
+                    $this
+                        ->get('form.factory')
+                        ->createNamedBuilder(
+                            'works_'.$key->getId(),
+                            WorkType::class, $key
+                        )
+                        ->getForm()
+                        ->createView()
+                ;
             }
         }
 

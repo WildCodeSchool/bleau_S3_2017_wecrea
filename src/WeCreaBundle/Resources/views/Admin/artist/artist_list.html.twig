@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row row-artist-work-custom">
         <div class="col s12">
-            <a class="btn waves-effect waves-light black btn-custom-artist" href="{{ path('we_crea_admin_artist_work_creation') }}">
+            <a class="btn waves-effect waves-light black btn-custom-artist" href="{{ path('we_crea_admin_artist_creation') }}">
                 Créer un nouvel artiste
                 <i class="material-icons left">add</i>
             </a>
@@ -24,7 +24,11 @@
                 Supprimer
                 <i class="material-icons left">delete</i>
             </button></a>
-            <a href="{{ path('we_crea_admin_artist_work_edition', {id : artist.id}) }}"><button class="btn waves-effect waves-light right">
+            <a href="{{ path('we_crea_admin_works_artist', {id : artist.id }) }}">
+                <button class="btn waves-effect waves-light red">Oeuvres de l'artiste<i class="material-icons left">pageview</i>
+                </button>
+            </a>
+            <a href="{{ path('we_crea_admin_edit_artist', {id : artist.id}) }}"><button class="btn waves-effect waves-light right">
                 Éditer
                 <i class="material-icons left">mode_edit</i>
             </button></a>

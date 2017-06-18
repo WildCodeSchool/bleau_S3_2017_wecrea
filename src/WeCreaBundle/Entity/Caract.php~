@@ -3,13 +3,14 @@
 namespace WeCreaBundle\Entity;
 
 /**
- * Work
+ * Caract
  */
-class Work
+class Caract
 {
     /**
      * @var int
      */
     private $id;
-
+    
 }
+
