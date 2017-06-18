@@ -139,7 +139,6 @@ class WorksController extends Controller
     public function deleteWorkImageAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
 
-        dump($request);
         /* Stores the work id */
         $idWork = $request->request->get('idWork');
         /* Looks for the work corresponding to the id */

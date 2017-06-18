@@ -43,6 +43,10 @@ we_crea_admin_works_delete:
     path: /work/delete
     defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
 
+we_crea_admin_delete_work_image_ajax:
+    path: /deleteWorkImage
+    defaults: {_controller: "WeCreaBundle:Works:deleteWorkImageAjax"}
+
 # ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
     path: /carrousel/edition
@@ -74,9 +78,7 @@ we_crea_admin_concept_edit:
     path:     /concept/edit
     defaults: { _controller: "WeCreaBundle:Concept:edit" }
 
-we_crea_admin_delete_work_image_ajax:
-    path: /deleteWorkImage
-    defaults: {_controller: "WeCreaBundle:Works:deleteWorkImageAjax"}
+
 
 we_crea_admin_delete_work_ajax:
     path: /deleteWork
