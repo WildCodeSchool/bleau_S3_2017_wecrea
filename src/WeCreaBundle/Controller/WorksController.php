@@ -148,16 +148,14 @@ class WorksController extends Controller
         $editWorkForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         if ($request->isXmlHttpRequest()) {
-
+            $workForm = $request->request->get('wecreabundle_work');
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $newImg = $request->request->get('wecreabundle_images');
 
             /* If the user updates a work */
-            if (isset($idWork) && isset($natureId)) {
+            if (isset($workForm)) {
 
-                $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
-                $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
-                $workForm->handleRequest($request);
+                $editWorkForm->handleRequest($request);
                 $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
                 $work->setNature($nature);
 
