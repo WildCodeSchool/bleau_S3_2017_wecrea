@@ -176,6 +176,8 @@ class WorksController extends Controller
                 $work->addImage($image);
                 $url = $image->getUrl();
 
+                $em->flush();
+
                 return new JsonResponse(array('url' => $url));
             }
         }
