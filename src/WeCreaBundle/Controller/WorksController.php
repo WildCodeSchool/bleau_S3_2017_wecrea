@@ -137,6 +137,56 @@ class WorksController extends Controller
         ));
     }
 
+    public function editWorkAction($id, Request $request)
+    {
+        $image = new Images();
+        $imageForm = $this->createForm(ImagesType::class, $image);
+
+        $em = $this->getDoctrine()->getManager();
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+
+        $editWorkForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+
+        if ($request->isXmlHttpRequest()) {
+
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+            $newImg = $request->request->get('wecreabundle_images');
+
+            /* If the user updates a work */
+            if (isset($idWork) && isset($natureId)) {
+
+                $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+                $workForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+                $workForm->handleRequest($request);
+                $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+                $work->setNature($nature);
+
+                $em->flush();
+
+                return new Response("L'oeuvre " . $work->getTitle() . " a bien été mise à jour");
+            }
+
+            if (isset($newImg)) {
+                $imageForm->handleRequest($request);
+                $file = $image->getUrl();
+                $this->get('uploader')->uploadImg($file, $image);
+                $em->persist($image);
+
+                $work = $em->getRepository(Work::class)->findOneById($id);
+                $work->addImage($image);
+                $url = $image->getUrl();
+
+                return new JsonResponse(array('url' => $url));
+            }
+        }
+
+        return $this->render('@WeCrea/Admin/artist/works/works_edit.html.twig', array(
+            'edit_form' => $editWorkForm->createView(),
+            'image_form' => $imageForm->createView(),
+            'work' => $work,
+        ));
+    }
+
     public function deleteWorkImageAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
 

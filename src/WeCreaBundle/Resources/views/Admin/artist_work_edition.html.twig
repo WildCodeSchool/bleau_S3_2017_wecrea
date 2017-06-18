@@ -461,12 +461,11 @@
         $('form[name="wecreabundle_work"] .update-work').click(function(e){
             e.preventDefault();
             var $data = $(this).parent().serialize();
-            var id = $(this).parent().find('.id')[0].innerHTML;
-            var url = "{{ path('we_crea_admin_artist_work_edition', {id : 2} ) }}";
-            url = url.replace('2', id);
+            console.log($data);
+            console.log(idWork);
             $.ajax({
                 method: "post",
-                url: url,
+                //url: "{{ path('we_crea_admin_artist_work_edition', {id : idWork} ) }}",
                 data: $data,
                 success: function(response){
                     alert(response);
