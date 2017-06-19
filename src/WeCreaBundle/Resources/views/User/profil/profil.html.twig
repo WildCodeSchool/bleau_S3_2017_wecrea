@@ -1,14 +1,17 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
+{% block stylesheets %}
 
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+{% endblock %}
 {% block body %}
 <main>
-    <div class="container container_custom">
+    <div class="container">
         <div class="row">
             <div class="col s12">
                 <ul class="tabs ">
                     <li class="tab col s6"><a class="active" href="#profil">Mon profile</a></li>
                     <li class="tab col s6"><a href="#commandes">Mes commandes</a></li>
-
                 </ul>
             </div>
             <div id="profil" class="col s12">
@@ -18,37 +21,170 @@
                 <div id="formUser" class="row row_custom">
                     <div class="col m10 offset-m1">
                         {{ form_start(formUser) }}
+
+                        <div class="input-field">
+                            <div class="row">
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.firstname, 'Prénom') }}
+                                    {{ form_widget(formUser.firstname) }}
+                                    {{ form_errors(formUser.firstname) }}
+                                </div>
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.name, 'Nom') }}
+                                    {{ form_widget(formUser.name) }}
+                                    {{ form_errors(formUser.name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.username, 'Identifiant') }}
+                                    {{ form_widget(formUser.username) }}
+                                    {{ form_errors(formUser.username) }}
+                                </div>
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.email, 'Email') }}
+                                    {{ form_widget(formUser.email) }}
+                                    {{ form_errors(formUser.email) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p>Adresse de livraison</p>
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.address1, 'Adresse') }}
+                                    {{ form_widget(formUser.address1) }}
+                                    {{ form_errors(formUser.address1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.zipCode1, 'Code postal') }}
+                                    {{ form_widget(formUser.zipCode1) }}
+                                    {{ form_errors(formUser.zipCode1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.town1, 'Ville') }}
+                                    {{ form_widget(formUser.town1) }}
+                                    {{ form_errors(formUser.town1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.country1, 'Pays') }}
+                                    {{ form_widget(formUser.country1) }}
+                                    {{ form_errors(formUser.country1) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p>Adresse de facturation</p>
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.address2, 'Adresse') }}
+                                    {{ form_widget(formUser.address2) }}
+                                    {{ form_errors(formUser.address2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.zipCode2, 'Code postale') }}
+                                    {{ form_widget(formUser.zipCode2) }}
+                                    {{ form_errors(formUser.zipCode2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.town2, 'Ville') }}
+                                    {{ form_widget(formUser.town2) }}
+                                    {{ form_errors(formUser.town2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.country2, 'Pays') }}
+                                    {{ form_widget(formUser.country2) }}
+                                    {{ form_errors(formUser.country2) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.current_password, 'Mot de pass actuel') }}
+                                    {{ form_widget(formUser.current_password) }}
+                                    {{ form_errors(formUser.current_password) }}
+                                </div>
+                            </div>
+                            <div class="input-field row">
+                                <button class="btn waves-effect waves-light connect_button" id="_submit" type="submit" name="_submit">
+                                    Valider
+                                    <i class="material-icons left">send</i>
+                                </button>
+                            </div>
+                        </div>
                         {{ form_end(formUser) }}
                     </div>
-                </div></div>
+                </div>
+            </div>
             <div id="commandes" class="col s12">
                 <h2>Historique des commandes</h2>
+                <table id="works_table" class="display" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>N° Commande</th>
+                        <th>Recap</th>
+                        <th>Prix</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# TODO: Get all orders for user #}
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </div>
 </main>
 {% endblock %}
 
 {% block javascripts %}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready( function () {
-            $('form[name="app_user_registration"]').submit( function (e) {
-                e.preventDefault();
-                var data = $(this).serialize();
-                $.ajax({
-                    method: 'post',
-                    url: '{{ path('we_crea_user_profil') }}',
-                    data: data,
+            $('.artist_menu').show();
 
-                    success: function (response) {
-                        console.log(response);
-                        $('#userProfil').remove();
-                        $('#profilCont').append(response);
-                        $('#formUser').slideUp(200);
+//            Datatable Init
+            $('#works_table').DataTable({
+                "dom": '<lf<t>ip>',
+                "pageLength": 10,
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "language": {
+                    "sProcessing":     "Traitement en cours...",
+                    "sSearch":         "Rechercher&nbsp;:",
+                    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    "sInfoPostFix":    "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst":      "Premier",
+                        "sPrevious":   "Pr&eacute;c&eacute;dent",
+                        "sNext":       "Suivant",
+                        "sLast":       "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
                     }
-                });
+                }}
+            );
+        });
+
+        $('form[name="app_user_profil"]').submit( function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_user_profil') }}',
+                data: data,
+
+                success: function (response) {
+                    console.log(response);
+                    $('#userProfil').remove();
+                    $('#profilCont').append(response);
+                    $('#formUser').slideUp(200);
+                }
             });
-        })
+        });
     </script>
 {% endblock %}

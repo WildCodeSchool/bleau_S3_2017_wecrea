@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
 {
@@ -288,7 +289,7 @@ class UserController extends Controller
     /* ----- show user profil ----- */
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
-        $formUser = $this->createForm('WeCreaBundle\Form\RegistrationFormType', $user);
+        $formUser = $this->createForm(ProfilFormType::class, $user);
 
         $formUser->handleRequest($request);
         if($formUser->isSubmitted() && $formUser->isValid()) {
