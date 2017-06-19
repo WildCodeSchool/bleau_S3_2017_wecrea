@@ -24,4 +24,50 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
 
     }
     */
+
+    public function myFindByRegExpWorks($exp){
+        $qb = $this->createQueryBuilder('w')
+            ->select('w.id')
+            ->join('w.nature', 'n')
+            ->where('REGEXP(w.title, :regexp) = true')
+            ->orWhere('REGEXP(w.description, :regexp) = true')
+            ->orWhere('REGEXP(w.technic, :regexp) = true')
+            ->orWhere('REGEXP(n.name, :regexp) = true')
+            ->setParameter('regexp', $exp);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function myFindByRegExpArtists($exp){
+        $qb = $this->createQueryBuilder('w')
+            ->select('w.id')
+            ->join('w.artist', 'a')
+            ->where('REGEXP(a.name, :regexp) = true')
+            ->orWhere('REGEXP(a.firstname, :regexp) = true')
+            ->setParameter('regexp', $exp);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function myFindWorksByIds(array $ids){
+        $qb = $this->createQueryBuilder('w')
+        ->select('w.title');
+        $qb->add('where', $qb->expr()->in('w.id', '?1'))
+            ->setParameter('1', $ids)
+            ->orderBy('w.title');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function myFindWorksAllFieldsByIds(array $ids){
+        $qb = $this->createQueryBuilder('w');
+
+        $qb->add('where', $qb->expr()->in('w.id', '?1'))
+            ->setParameter('1', $ids)
+            ->orderBy('w.title');
+
+        return $qb->getQuery()->getResult();
+    }
 }

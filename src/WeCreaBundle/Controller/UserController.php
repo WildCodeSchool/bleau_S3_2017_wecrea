@@ -310,4 +310,48 @@ class UserController extends Controller
             'formUser' => $formUser->createView(),
         ));
     }
+
+    public function suggestionAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        $exp = htmlspecialchars($request->request->get('expression'));
+
+        if($exp != NULL) {
+            $resultsWorks = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpWorks($exp);
+            $resultsArtists = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpArtists($exp);
+
+            if (!empty($resultsWorks || !empty($resultsArtists))) {
+
+                foreach ($resultsWorks as $result) {
+                    $matchingWorks[$result['id']] = $result['id'];
+                }
+
+                foreach ($resultsArtists as $result) {
+                    $matchingWorks[$result['id']] = $result['id'];
+                }
+
+                if ($request->isXmlHttpRequest()) {
+                    $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksByIds($matchingWorks);
+                    return new JsonResponse($works);
+                } else {
+                    $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksAllFieldsByIds($matchingWorks);
+                    return $this->render('WeCreaBundle:User:search.html.twig', array(
+                        'works' => $works,
+                        'exp' => $exp
+                    ));
+                }
+            } else {
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse('Aucune suggestion');
+                } else {
+                    return $this->render('WeCreaBundle:User:search.html.twig', array(
+                        'response' => "Aucun article ne correspond à votre recherche"
+                    ));
+                }
+            }
+        }
+        else{
+            return $this->redirectToRoute('we_crea_homepage');
+        }
+    }
 }

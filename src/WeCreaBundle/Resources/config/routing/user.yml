@@ -56,3 +56,8 @@ we_crea_delete_fav:
 we_crea_favs:
     path: /favs
     defaults: {_controller: "WeCreaBundle:User:showFavs"}
+
+we_crea_suggestion:
+    path: /suggestion
+    defaults:
+        _controller: "WeCreaBundle:User:suggestion"
