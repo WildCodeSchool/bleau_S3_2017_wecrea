@@ -1,10 +1,30 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends "@WeCrea/layout/base_client.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+
+<main class="valign-wrapper">
+    <div class="container">
+        <div class="row center-align">
+            <div class="col s12">
+                <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+                <p>
+                    Vous allez être redirigé vers la page d'accueil automatiquement.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
 {% endblock fos_user_content %}
+
+{% block javascripts %}
+
+    <script>
+        window.setTimeout(function() {
+            window.location.href = '{{ path('we_crea_homepage') }}';
+        }, 5000);
+    </script>
+
+{% endblock %}

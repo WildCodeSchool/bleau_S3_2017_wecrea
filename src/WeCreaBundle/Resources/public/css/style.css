@@ -166,7 +166,7 @@ nav ul a:hover {
     text-decoration: underline;
 }
 
-#basket {
+#profil_icon {
     margin-left: 40px;
 }
 
@@ -544,4 +544,7 @@ main {
 /* ----- Profil Page ----- */
 #formUser {
     display: none;
+}
+.title_list_profil{
+    text-decoration: underline;
 }

@@ -1,9 +1,32 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends "@WeCrea/layout/base_client.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-</p>
+    <main class="valign-wrapper">
+        <div class="container">
+            <div class="row center-align">
+                <div class="col s12">
+                    <p>
+                        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+                    </p>
+                    <p>
+                        Vous allez être redirigé vers la page d'accueil automatiquement.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        window.setTimeout(function() {
+            window.location.href = '{{ path('we_crea_homepage') }}';
+        }, 5000);
+    </script>
+
 {% endblock %}

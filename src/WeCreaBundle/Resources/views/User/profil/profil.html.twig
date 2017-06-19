@@ -21,6 +21,99 @@
                 <div id="formUser" class="row row_custom">
                     <div class="col m10 offset-m1">
                         {{ form_start(formUser) }}
+
+                        <div class="input-field">
+                            <div class="row">
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.firstname, 'Prénom') }}
+                                    {{ form_widget(formUser.firstname) }}
+                                    {{ form_errors(formUser.firstname) }}
+                                </div>
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.name, 'Nom') }}
+                                    {{ form_widget(formUser.name) }}
+                                    {{ form_errors(formUser.name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.username, 'Identifiant') }}
+                                    {{ form_widget(formUser.username) }}
+                                    {{ form_errors(formUser.username) }}
+                                </div>
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.email, 'Email') }}
+                                    {{ form_widget(formUser.email) }}
+                                    {{ form_errors(formUser.email) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p>Adresse de livraison</p>
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.address1, 'Adresse') }}
+                                    {{ form_widget(formUser.address1) }}
+                                    {{ form_errors(formUser.address1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.zipCode1, 'Code postal') }}
+                                    {{ form_widget(formUser.zipCode1) }}
+                                    {{ form_errors(formUser.zipCode1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.town1, 'Ville') }}
+                                    {{ form_widget(formUser.town1) }}
+                                    {{ form_errors(formUser.town1) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.country1, 'Pays') }}
+                                    {{ form_widget(formUser.country1) }}
+                                    {{ form_errors(formUser.country1) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p>Adresse de facturation</p>
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.address2, 'Adresse') }}
+                                    {{ form_widget(formUser.address2) }}
+                                    {{ form_errors(formUser.address2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.zipCode2, 'Code postale') }}
+                                    {{ form_widget(formUser.zipCode2) }}
+                                    {{ form_errors(formUser.zipCode2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.town2, 'Ville') }}
+                                    {{ form_widget(formUser.town2) }}
+                                    {{ form_errors(formUser.town2) }}
+                                </div>
+                                <div class="col m4 s12 input-field">
+                                    {{ form_label(formUser.country2, 'PAys') }}
+                                    {{ form_widget(formUser.country2) }}
+                                    {{ form_errors(formUser.country2) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.plainPassword.first, 'Mot de pass') }}
+                                    {{ form_widget(formUser.plainPassword.first) }}
+                                    {{ form_errors(formUser.plainPassword.first) }}
+                                </div>
+                                <div class="col m6 s12 input-field">
+                                    {{ form_label(formUser.plainPassword.second, 'Répéter le mot de pass') }}
+                                    {{ form_widget(formUser.plainPassword.second) }}
+                                    {{ form_errors(formUser.plainPassword.second) }}
+                                </div>
+                            </div>
+                            <div class="input-field row">
+                                <button class="btn waves-effect waves-light connect_button" id="_submit" type="submit" name="_submit">
+                                    Valider
+                                    <i class="material-icons left">send</i>
+                                </button>
+                            </div>
+                        </div>
                         {{ form_end(formUser) }}
                     </div>
                 </div>

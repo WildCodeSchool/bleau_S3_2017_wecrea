@@ -1,18 +1,41 @@
 <div id="userProfil" class="col m10 offset-m1">
 
-    <h2>{{ user.name }} {{ user.firstname }}</h2>
-
-    <ul>
-        <li>Nom d'utilisateur : {{ user.username }}</li>
-        <li>Email : {{ user.email }}</li>
-        <li>
-            Addresse 1 : {{ user.address1 }}<br>
-            {{ user.zipCode1 }} {{ user.town1 }} {{ user.country1 }}<br>
-        </li>
-        <li>
-            Addresse 2 : {{ user.address2 }}<br>
-            {{ user.zipCode2 }} {{ user.town2 }} {{ user.country2 }}<br>
-        </li>
-        <li><a id="showFormUser" href="#formUser">Éditer votre profil</a></li>
-    </ul>
+    <div class="row">
+        <h2 class="center-align">{{ user.name }} {{ user.firstname }}</h2>
+        <div class="col m6 s12">
+            <p class="title_list_profil">Profil</p>
+            <ul>
+                <li>Nom d'utilisateur : {{ user.username }}</li>
+                <li>Email : {{ user.email }}</li>
+            </ul>
+        </div>
+        <div class="col m6 s12">
+            <div class="col m6 s12">
+                <p class="title_list_profil">Adresse de livraison</p>
+                <ul>
+                    <li>
+                        {{ user.address1 }}
+                    </li>
+                    <li>
+                        {{ user.zipCode1 }} {{ user.town1 }} {{ user.country1 }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col m6 s12">
+                <p class="title_list_profil">Adresse de facturation</p>
+                <ul>
+                    <li>
+                        {{ user.address2 }}
+                    </li>
+                    <li>
+                        {{ user.zipCode2 }} {{ user.town2 }} {{ user.country2 }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row center-align">
+            <a id="showFormUser" href="#formUser">Éditer votre profil</a>
+            <a id="showFormUser" href="{{ path('fos_user_change_password') }}">Modifier mon mot de pass</a>
+        </div>
+    </div>
 </div>

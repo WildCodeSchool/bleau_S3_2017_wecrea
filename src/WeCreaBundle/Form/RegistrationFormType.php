@@ -33,7 +33,6 @@ class RegistrationFormType extends AbstractType
             ->add('zipCode2', NumberType::class)
             ->add('town2', TextType::class)
             ->add('country2', TextType::class)
-            ->add('submit', SubmitType::class)
         ;
     }
 
