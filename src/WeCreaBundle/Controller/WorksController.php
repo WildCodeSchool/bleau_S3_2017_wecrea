@@ -49,6 +49,7 @@ class WorksController extends Controller
             $em->remove($work);
             $em->flush();
             $response = new JsonResponse(array(
+                'msg' => "L'oeuvre " . $work->getTitle() . " et ses images ont bien été supprimées",
                 'id' => $id
             ));
             return $response;
@@ -134,5 +135,84 @@ class WorksController extends Controller
             'formCaract' => $formCaract->createView(),
             'artist' => $artist
         ));
+    }
+
+    public function editWorkAction($id, Request $request)
+    {
+        $image = new Images();
+        $imageForm = $this->createForm(ImagesType::class, $image);
+
+        $em = $this->getDoctrine()->getManager();
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+
+        $editWorkForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
+
+        if ($request->isXmlHttpRequest()) {
+            $workForm = $request->request->get('wecreabundle_work');
+            $natureId = $request->request->get('wecreabundle_work')['nature'];
+            $newImg = $request->request->get('wecreabundle_images');
+
+            /* If the user updates a work */
+            if (isset($workForm)) {
+
+                $editWorkForm->handleRequest($request);
+                $nature = $em->getRepository('WeCreaBundle:Nature')->findOneById($natureId);
+                $work->setNature($nature);
+
+                $em->flush();
+
+                return new Response("L'oeuvre " . $work->getTitle() . " a bien été mise à jour");
+            }
+
+            if (isset($newImg)) {
+                $imageForm->handleRequest($request);
+                $file = $image->getUrl();
+                $this->get('uploader')->uploadImg($file, $image);
+                $em->persist($image);
+
+                $work = $em->getRepository(Work::class)->findOneById($id);
+                $work->addImage($image);
+                $url = $image->getUrl();
+
+                $em->flush();
+
+                return new JsonResponse(array('url' => $url));
+            }
+        }
+
+        return $this->render('@WeCrea/Admin/artist/works/works_edit.html.twig', array(
+            'edit_form' => $editWorkForm->createView(),
+            'image_form' => $imageForm->createView(),
+            'work' => $work,
+        ));
+    }
+
+    public function deleteWorkImageAjaxAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        /* Stores the work id */
+        $idWork = $request->request->get('idWork');
+        /* Looks for the work corresponding to the id */
+        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($idWork);
+        /* Stores the image id */
+        $idImg = $request->request->get('idImg');
+        /* Looks for the image corresponding to the id */
+        $image = $em->getRepository('WeCreaBundle:Images')->findOneByUrl($idImg);
+        /* Gets the url of the image */
+        $url = $image->getUrl();
+        /* Let's remove the images the work is linked with */
+        $work->removeImage($image);
+        /* Check if the image exists within the images folder */
+        $path = $this->getParameter('image_directory')."/".$url;
+        /* If yes, unlink the image */
+        if(file_exists($path)){
+            unlink($path);
+        }
+        /* Remove this image */
+        $em->remove($image);
+        /* Update the database */
+        $em->flush();
+        /* Confirm the image has been deleted successfully */
+        return new Response("L'image a bien été supprimée");
     }
 }

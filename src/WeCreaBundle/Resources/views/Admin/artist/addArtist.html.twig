@@ -197,8 +197,7 @@
                         var $data = {'idImg' : $idImgToDelete, 'idArt' : $idArt};
 
                         /* Let's remove the delete button & the image deleted */
-                        $(this).prev().remove();
-                        $(this).remove();
+                        $(this).parent().remove();
 
                         $.ajax({
                             method: 'post',

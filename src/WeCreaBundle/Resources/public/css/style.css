@@ -84,7 +84,6 @@ body {
 #specificity-work-confirmed,
 #work-specificity,
 #work-picture,
-#add-image-form,
 #work-confirmed,
 #images-work-confirmed,
 .add-work,
@@ -107,7 +106,7 @@ body {
 .row-custom-edit-work-image,
 .existent-images{
     border: 1px solid #c8c8c8;
-    height:200px;
+    min-height:200px;
 }
 
 .new-work-image img{
