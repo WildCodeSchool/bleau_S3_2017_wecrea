@@ -1,0 +1,48 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="row images_content">
+                <div class="col s12 images_work">
+                    {% for image in images %}
+                    <div class="image_work" style="background: url('{{ asset('images/') }}{{ image.url }}') center / cover "></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4">
+                    <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
+                        {#TODO: Get quantity max for selected specificity#}
+                        {#<p>#}
+                            {#Quantité : <input type="number" name="quantity" value="1" min="1" max="{{ work.quantity }}">#}
+                            {#<input type="hidden" name="work" value="{{ work.id }}">#}
+                        {#</p>#}
+                        <input type="submit" class="btn" value="acheter">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{#{% block javascripts %}#}
+    {#<script>#}
+        {#$(document).ready( function () {#}
+            {#$('form[name="addBasket"]').submit( function (e) {#}
+                {#e.preventDefault();#}
+                {#var data = $(this).serialize();#}
+                {#$.ajax({#}
+                    {#method: 'post',#}
+                    {#url: '{{ path('we_crea_add_basket') }}',#}
+                    {#data: data,#}
+
+                    {#success: function (response) {#}
+                        {#alert(response.msg);#}
+                    {#}#}
+                {#})#}
+            {#});#}
+        {#});#}
+    {#</script>#}
+{#{% endblock %}#}

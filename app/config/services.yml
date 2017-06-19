@@ -4,6 +4,14 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.basket:
+        class:     WeCreaBundle\Service\Basket
+        arguments: []
+
+    favs:
+        class: WeCreaBundle\Service\Favs
+        arguments: []
+
+    uploader:
+        class: WeCreaBundle\Service\FileUploader
+        arguments: ['%image_directory%']

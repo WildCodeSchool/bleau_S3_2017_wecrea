@@ -1,0 +1,3 @@
+we_crea_user_profil:
+    path: /profil
+    defaults: {_controller: "WeCreaBundle:User:showProfil"}

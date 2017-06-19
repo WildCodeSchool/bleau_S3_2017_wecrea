@@ -1,0 +1,89 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+    <div class="container container_custom">
+        <div class="row row_custom">
+            <div class="col m10 offset-m1">
+                {{ form_start(formActu) }}
+                {{ form_row(formActu.title) }}
+                {{ form_row(formActu.content) }}
+                {{ form_row(formActu.images) }}
+                <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                    Ajouter l'actualité
+                    <i class="material-icons left">add</i>
+                </button>
+                {{ form_end(formActu) }}
+            </div>
+        </div>
+        <div class="row row_custom show_actu">
+            {% for actu in actus %}
+                <div class="actu" style="background:  url({{ asset("images/") }}{{ actu.images.url }}) center; background-size: cover;">
+                    <h2>{{ actu.title }}</h2>
+                    <p>{{ actu.content }}</p>
+                    <p>{{ actu.date|date("m/d/Y") }}</p>
+                    <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('form[name="wecreabundle_actu"]').submit( function (e) {
+                e.preventDefault();
+                var $data = new FormData($(this)[0]);
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_actu_add') }}",
+                    data: $data,
+                    processData: false,
+                    contentType: false,
+
+                    success: function (response) {
+                        alert("L'actu a bien été créée !");
+                        $('.show_actu').prepend(response);
+                        $(response).hide().slideDown(200);
+                        $('form[name="wecreabundle_actu"]').trigger('reset');
+
+                        $('.delete_btn').on('click', function (e) {
+                            var id = $(this).attr('id');
+                            e.preventDefault();
+
+                            $.ajax({
+                                method: 'get',
+                                url:  "{{ path('we_crea_admin_actu_delete') }}",
+                                data: {'id': id},
+
+                                success: function (response) {
+                                    alert(response);
+                                    $('#' + id).parent().slideUp(800).remove();
+                                }
+                            });
+                        });
+
+                    }
+                })
+            });
+
+            $('.delete_btn').on('click', function (e) {
+                var id = $(this).attr('id');
+                e.preventDefault();
+
+                $.ajax({
+                    method: 'get',
+                    url:  "{{ path('we_crea_admin_actu_delete') }}",
+                    data: {'id': id},
+
+                    success: function (response) {
+                        alert(response);
+                        $('#' + id).parent().slideUp(800);
+                    }
+                });
+            });
+        });
+    </script>
+{%  endblock %}

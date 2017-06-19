@@ -1,0 +1,115 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+    <div class="container container_custom">
+
+        <div class="row row_custom">
+            <div class="col m10 offset-m1">
+                {{ form_start(formCarrousel) }}
+                    {{ form_row(formCarrousel.title) }}
+                    {{ form_row(formCarrousel.content) }}
+                    {{ form_row(formCarrousel.rout) }}
+                <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                    Ajouter la vignette
+                    <i class="material-icons left">add</i>
+                </button>
+                {{ form_end(formCarrousel) }}
+
+            </div>
+        </div>
+
+        <div class="row row_custom">
+            <div id="show_carrousel">
+                {% for carrousel in carrousels %}
+                    <div class="card" style="background: url('{{ asset('images/') }}{{ carrousel.images.url }}') center / cover">
+                        <h2>{{ carrousel.title }}</h2>
+                        <p>{{ carrousel.content }}</p>
+                        <a class="waves-effect waves-light btn black delete_btn" id="{{ carrousel.id }}">supprimer</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready( function(){
+
+           $('form[name="wecreabundle_carrousel"]').submit( function(e) {
+               e.preventDefault();
+
+               var $data = new FormData($(this)[0]);
+               $.ajax({
+                   method: 'post',
+                   url: "{{ path('we_crea_admin_add_carrousel') }}",
+                   data: $data,
+                   processData: false,
+                   contentType: false,
+
+                   success: function (response) {
+                       console.log(response);
+
+                       alert("La vignette a bien été créée !");
+
+                       var card = $(document.createElement('div'));
+                       card.attr('class', 'card');
+                       card.css({'background':  'url({{ asset("images/") }}' +response.images.url+') center',
+                            'background-size': 'cover',
+                            'display': 'none'});
+
+                       var titleCard = $(document.createElement('h2'));
+                       titleCard.text(response.title);
+
+                       var contentCard = $(document.createElement('p'));
+                       contentCard.text(response.content);
+
+                       var deleteBtn = $(document.createElement('a'));
+                       deleteBtn.attr('class', 'waves-effect waves-light btn black delete_btn');
+                       deleteBtn.attr('id', response.id);
+                       deleteBtn.text('supprimer');
+
+                       card.append(titleCard);
+                       card.append(contentCard);
+                       card.append(deleteBtn);
+
+                       $('#show_carrousel').prepend(card);
+                       card.slideDown(800);
+
+                       $('.delete_btn').on('click', function (e) {
+                           var id = $(this).attr('id');
+                           e.preventDefault();
+                           $.ajax({
+                               method: 'get',
+                               url:  "{{ path('we_crea_admin_delete_carrousel') }}",
+                               data: {'id': id},
+                               success: function (response) {
+                                   alert(response);
+                                   $('#' + id).parent().slideUp(800);
+                               }
+                           });
+                       });
+                   },
+                   complete: function () {
+                       $('form[name="wecreabundle_images"]').trigger('reset');
+                       $('form[name="wecreabundle_carrousel"]').trigger('reset');
+                       $('#formCarr').slideUp(800);
+                   }
+               });
+           });
+            $('.delete_btn').on('click', function (e) {
+                var id = $(this).attr('id');
+                e.preventDefault();
+                $.ajax({
+                    method: 'get',
+                    url:  "{{ path('we_crea_admin_delete_carrousel') }}",
+                    data: {'id': id},
+                    success: function (response) {
+                        alert(response);
+                        $('#' + id).parent().slideUp(800);
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

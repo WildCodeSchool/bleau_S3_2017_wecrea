@@ -1,0 +1,15 @@
+<?php
+
+namespace WeCreaBundle\Entity;
+
+/**
+ * Work
+ */
+class Work
+{
+    /**
+     * @var int
+     */
+    private $id;
+
+}

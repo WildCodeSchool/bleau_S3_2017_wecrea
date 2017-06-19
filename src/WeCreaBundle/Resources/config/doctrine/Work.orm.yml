@@ -1,0 +1,39 @@
+WeCreaBundle\Entity\Work:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\WorkRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: text
+        technic:
+            type: string
+            length: 255
+        timelimit:
+            type: string
+            length: 255
+    manyToOne:
+        artist:
+            targetEntity: WeCreaBundle\Entity\Artist
+            inversedBy: works
+        nature:
+            targetEntity: WeCreaBundle\Entity\Nature
+
+    oneToMany:
+        caracts:
+            targetEntity: WeCreaBundle\Entity\Caract
+            mappedBy: 'work'
+            cascade: ['all']
+
+    manyToMany:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']

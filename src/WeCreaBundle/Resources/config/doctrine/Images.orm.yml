@@ -1,0 +1,17 @@
+WeCreaBundle\Entity\Images:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\ImagesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        url:
+            type: string
+            length: 255
+        alt:
+            type: string
+            length: 255

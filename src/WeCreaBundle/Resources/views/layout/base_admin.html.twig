@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block header %}
+    <header>
+        <div class="navbar-fixed nav_custom_cont">
+            <nav class="nav_custom">
+                <div class="nav-wrapper">
+                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="{{ path('we_crea_admin_artist_list') }}">Gestion Artistes</a></li>
+                        <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
+                        <li><a href="{{ path('we_crea_admin_actu') }}">Actualités</a></li>
+                        <li><a href="#">Édition Newsletter</a></li>
+                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
+                    </ul>
+
+                    <ul id="mobile-demo" class="side-nav">
+                        <li><a href="{{ path('we_crea_admin_artist_list') }}">Gestion Artistes</a></li>
+                        <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
+                        <li><a href="{{ path('we_crea_admin_actu') }}">Actualités</a></li>
+                        <li><a href="#">Édition Newsletter</a></li>
+                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+{% block flash_notice %}
+    {% if app.session.flashBag.has('notice') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('notice') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+{% block body %}
+{% endblock %}
+
+{% block js_admin %}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+{% endblock %}

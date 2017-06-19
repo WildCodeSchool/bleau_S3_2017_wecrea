@@ -1,0 +1,64 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+
+    <div class="container container_custom">
+
+        <div class="row row_custom">
+            <div class="col m10 offset-m1">
+                {{ form_start(form) }}
+
+                {{ form_row(form.title) }}
+
+                {{ form_row(form.content) }}
+
+                <div>
+                    {{ form_widget(form.images.url, { 'id': 'imgInp' }) }}
+                    {{ form_errors(form.images.url) }}
+                </div>
+
+                <div>
+                    {{ form_widget(form.images.alt) }}
+                    {{ form_errors(form.images.alt) }}
+                </div>
+                <div>
+                    <img id="conceptImg" src="#" alt="conecpt image" />
+                </div>
+                <div>
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                        Valider la modification
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#conceptImg').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function(){
+            readURL(this);
+        });
+    </script>
+
+{% endblock %}

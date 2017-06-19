@@ -1,0 +1,23 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main id="concept">
+        <div class="row">
+            <div class="col m10 offset-m1 center-align">
+                <img class="concept_logo" src="" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m8 offset-m2">
+                <img class="concept_pic" src="{{ asset('images/') }}{{ concept.images.url }}" alt="{{ concept.images.alt }}">
+                <h2>{{ concept.title }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m8 offset-m2">
+                {{ concept.content | raw }}
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
