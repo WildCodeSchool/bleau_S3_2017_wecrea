@@ -11,9 +11,11 @@
             <div class="col m8 offset-m2">
                 <img class="concept_pic" src="{{ asset('images/') }}{{ concept.images.url }}" alt="{{ concept.images.alt }}">
                 <h2>{{ concept.title }}</h2>
-                <div class="concept_txt">
-                    {{ concept.content | raw }}
-                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m8 offset-m2">
+                {{ concept.content | raw }}
             </div>
         </div>
     </main>

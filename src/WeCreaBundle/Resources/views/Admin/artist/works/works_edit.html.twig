@@ -39,7 +39,63 @@
                     <i class="material-icons left">mode_edit</i>
                 </button>
                 {{ form_end(edit_form) }}
+         </div>
+    </div>
+
+    <div style="display: flex; margin: 20px auto;" >
+        {% for caract in caracts %}
+            <div class="col m4 s12 new-specificity-work" style="width: 30%;">
+                <p style="color: blue;"><b>Modèle {{ loop.index }}</b></p>
+                <p style="display: none" class="id">{{ caract.id }}</p>
+                <p><b>Dimensions : </b> {{ caract.dimension }}</p>
+                <p><b>Poids :</b>{{ caract.weigth}}</p>
+                <p><b>Prix : </b>{{ caract.price }}</p>
+                <p><b>Quantité(s) : </b>{{ caract.quantity }}</p>
+                <button class="btn waves-effect waves-light red delete-work-caract">
+                    Supprimer
+                    <i class="material-icons left">delete</i>
+                </button>
             </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col s12" id="specificity-work-confirmed">
+            <h5>Spécificité(s) de l'oeuvre validées</h5>
+        </div>
+    </div>
+
+    {{ form_start(formCaract) }}
+    <div class="row">
+        <h4 class="center-align">Ajout des spécificités de l'oeuvre</h4>
+        <div class="input-field col s12 m3">
+            {{ form_label(formCaract.dimension, 'Dimension de l\'oeuvre') }}
+            {{ form_widget(formCaract.dimension) }}
+            {{ form_errors(formCaract.dimension) }}
+        </div>
+        <div class="input-field col s12 m3">
+            {{ form_label(formCaract.weigth, "Poid de l'oeuvre") }}
+            {{ form_widget(formCaract.weigth) }}
+            {{ form_errors(formCaract.weigth) }}
+        </div>
+        <div class="input-field col s12 m3">
+            {{ form_label(formCaract.price, 'Prix') }}
+            {{ form_widget(formCaract.price) }}
+            {{ form_errors(formCaract.price) }}
+        </div>
+        <div class="input-field col s6 m3">
+            {{ form_label(formCaract.quantity, 'Quantité disponible') }}
+            {{ form_widget(formCaract.quantity) }}
+            {{ form_errors(formCaract.quantity) }}
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn waves-effect waves-light left create-work" type="submit" name="action">
+            Valider la spécificité
+            <i class="material-icons left">send</i>
+        </button>
+    </div>
+    {{ form_end(formCaract) }}
 
 
             <div class="row row-custom-edit-work-image">
@@ -279,6 +335,121 @@
                     }
                 });
             });
+
+            $('.edit-caract').click(function(e){
+                e.preventDefault();
+                var name = $(this).parent().parent().attr('name');
+                var form = new FormData($(this).parent().parent());
+                url = "{{ path('we_crea_admin_works_edit', {id : 0} ) }}";
+                url = url.replace('0', idWork);
+
+                $.ajax({
+                    method: "post",
+                    url: url,
+                    processData: false,
+                    contentType: false,
+                    data: {'form' : form, 'name' : name},
+                    success: function(response){
+                        var $id = response.idCaract;
+
+                        $('#specificity-work-confirmed').show();
+
+                        var $newSpecificity = $(document.createElement('div'));
+                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+
+                        /* Creation of the image with the data returned */
+                        var $p = $(document.createElement('p'));
+                        $p.html(
+                            'Dimension: ' + response.caract.dimension +
+                            '<br>Poid: ' + response.caract.weight +
+                            '<br>Quantitée: ' + response.caract.quantity +
+                            '<br>Prix: ' + response.caract.price
+                        );
+
+                        $p.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newSpecificity.append($p);
+                        $newSpecificity.append($cancel);
+
+                        $("#specificity-work-confirmed").append($newSpecificity);
+                        $("#specificity-work-confirmed").fadeIn(2000);
+
+                        $("#work-picture").fadeIn(2000);
+                    }
+                });
+            });
+
+            /* When deleting a model caracteristics */
+            $('.delete-work-caract').click(function(e){
+                e.preventDefault();
+                var idCaract = $(this).parent().find('.id')[0].innerHTML;
+                $(this).parent().remove();
+                url = "{{ path('we_crea_admin_delete_work_caract', {id : 0} ) }}";
+                url = url.replace('0', idCaract);
+                $.ajax({
+                    method : "POST",
+                    url : url,
+                    data: {'idCaract' : idCaract, 'idWork' : idWork},
+                    success: function(response){
+                        alert(response.msg);
+                    }
+                });
+            });
+
+            $('form[name="wecreabundle_caract"]').submit(function(e){
+                e.preventDefault();
+                var data = new FormData($(this)[0]);
+
+                var url = "{{ path('we_crea_admin_works_edit', {id : 0}) }}";
+                url = url.replace('0', idWork);
+
+                $(this).trigger('reset');
+                $.ajax({
+                    url: url,
+                    method: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        var $id = response.idCaract;
+
+                        $('#specificity-work-confirmed').show();
+
+                        var $newSpecificity = $(document.createElement('div'));
+                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+
+                        /* Creation of the image with the data returned */
+                        var $p = $(document.createElement('p'));
+                        $p.html(
+                            'Dimension: ' + response.caract.dimension +
+                            '<br>Poid: ' + response.caract.weight +
+                            '<br>Quantitée: ' + response.caract.quantity +
+                            '<br>Prix: ' + response.caract.price
+                        );
+
+                        $p.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newSpecificity.append($p);
+                        $newSpecificity.append($cancel);
+
+                        $("#specificity-work-confirmed").append($newSpecificity);
+                        $("#specificity-work-confirmed").fadeIn(2000);
+
+                    }
+                });
+            });
+
         });
+
     </script>
 {% endblock %}
