@@ -2,6 +2,7 @@
 
 namespace WeCreaBundle\Controller;
 
+use function PHPSTORM_META\type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -139,18 +140,28 @@ class WorksController extends Controller
 
     public function editWorkAction($id, Request $request)
     {
-        $image = new Images();
-        $imageForm = $this->createForm(ImagesType::class, $image);
-
         $em = $this->getDoctrine()->getManager();
+
+        $image = new Images();
+        $caract = new Caract();
+
+        $imageForm = $this->createForm(ImagesType::class, $image);
+        $formCaract = $this->createForm(CaractType::class, $caract);
+
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+
+        $caracts = $em->getRepository('WeCreaBundle:Caract')->findByWork(array(
+            'work' => $work
+        ));
 
         $editWorkForm = $this->createForm('WeCreaBundle\Form\WorkType', $work);
 
         if ($request->isXmlHttpRequest()) {
+
             $workForm = $request->request->get('wecreabundle_work');
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $newImg = $request->request->get('wecreabundle_images');
+            $newCaract = $request->request->get('wecreabundle_caract');
 
             /* If the user updates a work */
             if (isset($workForm)) {
@@ -178,10 +189,33 @@ class WorksController extends Controller
 
                 return new JsonResponse(array('url' => $url));
             }
+
+            if (isset($newCaract)){
+                $formCaract->handleRequest($request);
+
+                $id = $request->request->get('idWork');
+                $work = $em->getRepository(Work::class)->findOneById($id);
+
+                $caract->setWork($work);
+                $em->persist($caract);
+                $em->flush();
+
+                $response['idCaract'] = $caract->getId();
+                $response['caract'] = array(
+                    'dimension' => $caract->getDimension(),
+                    'price' => $caract->getPrice(),
+                    'weight' => $caract->getWeigth(),
+                    'quantity' => $caract->getQuantity()
+                );
+
+                return new JsonResponse($response);
+            }
         }
 
         return $this->render('@WeCrea/Admin/artist/works/works_edit.html.twig', array(
             'edit_form' => $editWorkForm->createView(),
+            'caracts' => $caracts,
+            'formCaract' => $formCaract->createView(),
             'image_form' => $imageForm->createView(),
             'work' => $work,
         ));
@@ -214,5 +248,18 @@ class WorksController extends Controller
         $em->flush();
         /* Confirm the image has been deleted successfully */
         return new Response("L'image a bien été supprimée");
+    }
+
+    public function deleteCaractAction($id, Request $request){
+        if($request->isXMLHttpRequest()){
+            $idCaract = $request->request->get('idCaract');
+
+            $em = $this->getDoctrine()->getManager();
+            $caract = $em->getRepository('WeCreaBundle:Caract')->findOneById($idCaract);
+            $em->remove($caract);
+            $em->flush();
+
+            return new JsonResponse(array('msg' => "Les caractéristiques ont bien été supprimées"));
+        }
     }
 }
