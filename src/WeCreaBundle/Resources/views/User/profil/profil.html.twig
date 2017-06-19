@@ -89,22 +89,17 @@
                                     {{ form_errors(formUser.town2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.country2, 'PAys') }}
+                                    {{ form_label(formUser.country2, 'Pays') }}
                                     {{ form_widget(formUser.country2) }}
                                     {{ form_errors(formUser.country2) }}
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.plainPassword.first, 'Mot de pass') }}
-                                    {{ form_widget(formUser.plainPassword.first) }}
-                                    {{ form_errors(formUser.plainPassword.first) }}
-                                </div>
-                                <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.plainPassword.second, 'Répéter le mot de pass') }}
-                                    {{ form_widget(formUser.plainPassword.second) }}
-                                    {{ form_errors(formUser.plainPassword.second) }}
+                                <div class="col s12 input-field">
+                                    {{ form_label(formUser.current_password, 'Mot de pass actuel') }}
+                                    {{ form_widget(formUser.current_password) }}
+                                    {{ form_errors(formUser.current_password) }}
                                 </div>
                             </div>
                             <div class="input-field row">
@@ -175,7 +170,7 @@
             );
         });
 
-        $('form[name="app_user_registration"]').submit( function (e) {
+        $('form[name="app_user_profil"]').submit( function (e) {
             e.preventDefault();
             var data = $(this).serialize();
             $.ajax({
