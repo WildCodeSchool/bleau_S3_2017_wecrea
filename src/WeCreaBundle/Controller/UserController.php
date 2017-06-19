@@ -76,6 +76,7 @@ class UserController extends Controller
 
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
         $images = $work->getImages();
+        $caracts = $work->getCaracts();
 
         $container = $this->container;
 
@@ -86,7 +87,8 @@ class UserController extends Controller
             'bCount' => $bCount,
             'work' => $work,
             'images' => $images,
-            'fCount' => $fCount
+            'fCount' => $fCount,
+            'caracts' => $caracts
         ));
     }
 
@@ -137,15 +139,16 @@ class UserController extends Controller
     public function addBasketAction(Request $request) {
         $session = $this->get('session');
         $req = $request->request;
-        $idWork = $req->get('work');
+        $idWork = $req->get('work_id');
+        $carWork = $req->get('caract');
         $quant = $req->get('quantity');
         $pBasket = $session->get('basket');
 
         if (isset($pBasket[$idWork])){
-            $pBasket[$idWork] += $quant;
+            $pBasket[$idWork][$carWork] += $quant;
         }
         else {
-            $pBasket [$idWork] = $quant;
+            $pBasket [$idWork][$carWork] = $quant;
         }
 
         $session->set('basket', $pBasket);

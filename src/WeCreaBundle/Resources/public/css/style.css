@@ -282,6 +282,10 @@ footer {
     margin-right: 0!important;
 }
 
+.row_top {
+    margin-top: 20px;
+}
+
 body {
     display: flex;
     min-height: 100vh;
@@ -291,7 +295,6 @@ body {
 main {
     flex: 1 0 auto;
 }
-
 
 .slider {
     margin-top: 115px;
@@ -466,12 +469,45 @@ main {
 
 /* WORK CLIENT */
 .images_content {
-    height: 40%;
+    margin-top: 50px;
+    height: 60vh;
 }
 
-.image_work{
-    height: 40vh;
+.images_content_show{
+    height:60%;
 }
+
+.images_content_nav {
+    height:30%;
+}
+
+.image_work {
+    width: 100%;
+    height:100%;
+}
+
+.item-nav {
+    padding-top: 15px;
+    width: 100px;
+    height: 100px;
+}
+
+.item-nav:focus {
+    outline: none;
+}
+
+.image_work img{
+    max-width: 100%;
+    height: calc(60vh * 60 /100);
+    margin: 0 auto;
+}
+
+.item-nav img {
+    max-width:100px;
+    max-height: 100px;
+    margin: auto;
+}
+
 /* Artist list pages */
 
 .container-custom-artists{
