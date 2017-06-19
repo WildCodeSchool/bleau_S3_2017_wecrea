@@ -40,7 +40,7 @@ we_crea_admin_works_add:
         id: '\d+'
 
 we_crea_admin_works_delete:
-    path: /{id}/work/delete
+    path: /work/delete
     defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
 
 we_crea_admin_delete_work_image_ajax:

@@ -154,7 +154,7 @@ nav ul li a {
 }
 
 .nav_custom ul{
-    top: 57px;
+    top: 108px;
 }
 
 nav ul a:hover {
@@ -214,6 +214,13 @@ nav ul a:hover {
     display: none;
 }
 
+/* ADMIN WORKS list */
+
+.img_works {
+    max-width: 100%;
+    max-height: 150px;
+}
+
 /* ADMIN HOME */
 
 .link-box {
@@ -231,6 +238,10 @@ nav ul a:hover {
 
 .link-box:hover {
     box-shadow: 0px 0px 4px #313131;
+}
+
+.ad_home {
+    margin-top: 20px;
 }
 
 /* CLIENT LAYOUT */

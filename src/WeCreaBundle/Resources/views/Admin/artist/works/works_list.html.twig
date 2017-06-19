@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row artist_menu">
                 <h1>Oeuvre(s) de {{ artist.name ~ ' ' ~ artist.firstname }}</h1>
-                <a class="waves-effect waves-light btn" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une oeuvre</a>
+                <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une oeuvre</a>
             </div>
             <div class="row">
                 <table id="works_table" class="display" cellspacing="0" width="100%">
@@ -21,14 +21,14 @@
                         <tr id="{{ work.id }}">
                             <td>{{ work.title ~ work.id}}</td>
                             {% if work.images|first.url is defined %}
-                                <td><img class="thumbsindex" src="{{ asset("images/" ~ work.images|first.url) }}" alt="{{ work.images|first.alt }}"></td>
+                                <td><img class="thumbsindex img_works" src="{{ asset("images/" ~ work.images|first.url) }}" alt="{{ work.images|first.alt }}"></td>
                             {% else %}
-                                <td><img class="thumbsindex" src="{{ asset("bundles/wecrea/pics/no_picture.png") }}" alt="no picture"></td>
+                                <td><img class="thumbsindex img_works" src="{{ asset("bundles/wecrea/pics/no_picture.png") }}" alt="no picture"></td>
                             {% endif %}
                             <td>
                                 <div class="boutons">
-                                    <a href="{{ path('we_crea_admin_works_edit', {id : work.id } ) }}" title="Editer"><i class="material-icons contactme">edit</i></a>
-                                    <a href="{{ path('we_crea_admin_works_delete', {id : work.id } ) }}" title="Effacer"id="{{ work.id }}"><i class="material-icons contactme">delete</i></a>
+                                    <a href="{{ path('we_crea_admin_works_edit', {id : work.id }) }}" id="{{ work.id }}" title="Editer"><i class="material-icons contactme">edit</i></a>
+                                    <a href="#" title="Effacer" id="{{ work.id }}"><i class="material-icons contactme">delete</i></a>
                                 </div>
                             </td>
                         </tr>
@@ -79,16 +79,14 @@
                 e.preventDefault();
                 var idWork = $(this).attr('id');
                 var data = {'id': idWork};
-                var url = "{{ path('we_crea_admin_works_delete', {id : 0}) }}";
-                url = url.replace('0', idWork);
 
                 $.ajax({
                     method: 'get',
-                    url: url,
+                    url: '{{ path('we_crea_admin_works_delete') }}',
                     data: data,
 
                     success: function (response) {
-                        alert(response.msg);
+                        Materialize.toast('<span class="toast_custom">' + response.msg + '</span>', 4000); // 4000 is the duration of the toast
                         $('#' + response.id).remove();
                     }
                 })

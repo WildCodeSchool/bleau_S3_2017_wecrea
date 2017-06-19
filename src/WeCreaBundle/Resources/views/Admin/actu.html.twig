@@ -44,7 +44,7 @@
                     contentType: false,
 
                     success: function (response) {
-                        alert("L'actu a bien été créée !");
+                        Materialize.toast('<span class="toast_custom">la vignette a bien été ajoutée</span>', 4000) // 4000 is the duration of the toast
                         $('.show_actu').prepend(response);
                         $(response).hide().slideDown(200);
                         $('form[name="wecreabundle_actu"]').trigger('reset');
@@ -59,7 +59,7 @@
                                 data: {'id': id},
 
                                 success: function (response) {
-                                    alert(response);
+                                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                                     $('#' + id).parent().slideUp(800).remove();
                                 }
                             });
@@ -79,7 +79,7 @@
                     data: {'id': id},
 
                     success: function (response) {
-                        alert(response);
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                         $('#' + id).parent().slideUp(800);
                     }
                 });

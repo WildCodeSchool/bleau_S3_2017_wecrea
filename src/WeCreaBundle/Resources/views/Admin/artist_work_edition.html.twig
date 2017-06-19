@@ -342,7 +342,7 @@
                 url: "{{ path('we_crea_admin_artist_work_edition', {id : artist.id} ) }}",
                 data: $data,
                 success: function(response){
-                    alert(response);
+                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                 }
             });
         });
@@ -448,7 +448,7 @@
                             url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
                             data : $data,
                             success: function (response){
-                                alert(response);
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                             }
                         });
                     });
@@ -468,7 +468,7 @@
                 //url: "{{ path('we_crea_admin_artist_work_edition', {id : idWork} ) }}",
                 data: $data,
                 success: function(response){
-                    alert(response);
+                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                 }
             });
         });
@@ -488,7 +488,7 @@
                 url: "{{ path('we_crea_admin_delete_work_ajax') }}",
                 data: $data,
                 success: function(response){
-                    alert(response);
+                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                 }
             });
         });
@@ -508,7 +508,7 @@
                url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                data: $data,
                success: function(response){
-                   alert(response);
+                   Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                }
            });
         });
@@ -766,7 +766,7 @@
                             url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                             data: $data,
                             success: function(response){
-                                alert(response);
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                             }
                         });
                     });
@@ -859,7 +859,7 @@
                             url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                             data : $data,
                             success: function (response){
-                                alert(response);
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                             }
                         });
                     });
@@ -872,7 +872,9 @@
             $("#work-picture").hide();
             $('.edit-add-work').prop('disabled', false);
             $('.create-work').prop('disabled', false);
-            alert('Vous pouvez désormais créer une autre oeuvre ou quitter cette page');
+            Materialize.toast('<span class="toast_custom">Vous pouvez désormais créer une autre oeuvre ou quitter cette page</span>', 4000) // 4000 is the duration of the toast
+
+            alert('');
             $('form[id="edit-work-caracteristics"]').trigger('reset');// check idArt tjs présent
             $('form[id="edit-work-caracteristics"]').hide();
             $('form[id="edit-work-caracteristics"]').find('input').prop('disabled', false);
@@ -894,7 +896,7 @@
                     url: "{{ path('we_crea_admin_delete_work_ajax') }}",
                     data: {'idWork' : $data},
                     success: function(response){
-                        alert(response);
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                     }
                 });
             });

@@ -121,7 +121,7 @@
                     url: url,
                     data: $data,
                     success: function(response){
-                        alert(response);
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                     }
                 });
             });
@@ -142,7 +142,7 @@
                     url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                     data: $data,
                     success: function(response){
-                        alert(response);
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                     }
                 });
             });
@@ -272,7 +272,7 @@
                                 url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                                 data: $data,
                                 success: function(response){
-                                    alert(response);
+                                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
                                 }
                             });
                         });
