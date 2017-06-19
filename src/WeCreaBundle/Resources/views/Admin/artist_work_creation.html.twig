@@ -82,7 +82,7 @@
             </div>
 
             <div class="row">
-                <button class="btn waves-effect waves-light left add-work" type="submit" name="action">
+                <button class="btn waves-effect waves-light left add-work black" type="submit" name="action">
                     Ajouter une oeuvre
                     <i class="material-icons left">add</i>
                 </button>
@@ -284,8 +284,7 @@
                         $inputElt2.attr("type", "hidden");
                         $inputElt2.attr("name", "idArt");
                         $inputElt2.insertBefore($formImgWorkLastChild);
-
-                        alert('Le profil a bien été créé. Pour le modifier, rendez-vous dans l\'espace édition');
+                        Materialize.toast('<span class="toast_custom">Le profil a bien été créé. Pour le modifier, rendez-vous dans l\'espace édition</span>', 4000); // 4000 is the duration of the toast
                     }
                 });
             }
@@ -373,7 +372,7 @@
                             url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
                             data : $data,
                             success: function (response){
-                                alert(response);
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                             }
                         });
                     });
@@ -403,7 +402,6 @@
                     url: "{{ path('we_crea_admin_artist_work_creation') }}",
                     data: $data,
                     success: function(response){
-                        console.log(response);
                         $idWork = response.id;
 
                         var $newWork = $(document.createElement('div'));
@@ -549,7 +547,7 @@
                             url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
                             data : $data,
                             success: function (response){
-                                alert(response);
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                             }
                         });
                     });
@@ -562,7 +560,8 @@
             $("#work-picture").hide();
             $('.add-work').prop('disabled', false);
             $('.create-work').prop('disabled', false);
-            alert('Vous pouvez désormais créer une autre oeuvre ou quitter cette page');
+            Materialize.toast('<span class="toast_custom">Vous pouvez désormais créer une autre oeuvre ou quitter cette page</span>', 4000); // 4000 is the duration of the toast
+
             $('form[id="work-caracteristics"]').trigger('reset');// check idArt tjs présent
             $('form[id="work-caracteristics"]').hide();
             $('form[id="work-caracteristics"]').find('input').prop('disabled', false);
@@ -584,7 +583,7 @@
                     url: "{{ path('we_crea_admin_delete_work_ajax') }}",
                     data: {'idWork' : $data},
                     success: function(response){
-                        alert(response);
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
                     }
                 });
             });
