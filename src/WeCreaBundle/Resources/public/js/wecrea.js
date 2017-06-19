@@ -54,6 +54,7 @@ $(document).ready( function () {
     });
 
     // carousel SLICK
+    // !-------TODO CHANGE TIME VALUE--------!
     $('.images_work').slick({
         infinite: true,
         slidesToShow: 1,
