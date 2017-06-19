@@ -53,12 +53,23 @@ $(document).ready( function () {
         });
     });
 
-    // carousel SLICK
-    // !-------TODO CHANGE TIME VALUE--------!
-    $('.images_work').slick({
-        infinite: true,
+    // carousel SLICK -- Work's page
+    $('.slider-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.slider-nav'
+    });
+
+    $('.slider-nav').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        asNavFor: '.slider-for',
+        dots: true,
+        centerMode: false,
+        focusOnSelect: true,
+        variableWidth: true
     });
 
     // Show "add favs" button on mouse hover card-image
@@ -82,5 +93,7 @@ $(document).ready( function () {
     // Materialize textarea
     $('textarea').trigger('autoresize');
 
+    // Materialize Select
+    $('select').material_select();
 });
 

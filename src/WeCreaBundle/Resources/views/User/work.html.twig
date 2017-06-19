@@ -3,23 +3,58 @@
 {% block body %}
     <main>
         <div class="container">
-            <div class="row images_content">
-                <div class="col s12 images_work">
-                    {% for image in images %}
-                    <div class="image_work" style="background: url('{{ asset('images/') }}{{ image.url }}') center / cover "></div>
-                    {% endfor %}
+            <div class="row row_top">
+                <div class="col m7 images_content">
+                    <div class="slider-for images_content_show">
+                        {% for image in images %}
+                            <div class="slider-for__item image_work">
+                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="slider-nav images_content_nav">
+                        {% for image in images %}
+                            <div class="slider-for__item item-nav">
+                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}">
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col m4">
+
+                <div class="col m5 work_desc">
+                    <h2>{{ work.title }}</h2>
+                    <p>{{ work.artist.name }}</p>
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
-                        {#TODO: Get quantity max for selected specificity#}
-                        {#<p>#}
-                            {#Quantité : <input type="number" name="quantity" value="1" min="1" max="{{ work.quantity }}">#}
-                            {#<input type="hidden" name="work" value="{{ work.id }}">#}
-                        {#</p>#}
-                        <input type="submit" class="btn" value="acheter">
+                        <div class="row">
+                            <p class="col m3">
+                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{{ caracts[0].quantity }}">
+                                <input type="hidden" name="work_id" value="{{ work.id }}">
+                            </p>
+                            <p class="col m7 offset-m2">
+                                Restant : <span id="quant_max">{{ caracts[0].quantity }}</span>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p>
+                                Dimensions :
+                                <select name="caract">
+                                    {% for key, caract in caracts %}
+                                        <option value="{{ caract.id }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} - prix : {{ caract.price }}€</option>
+                                    {% endfor %}
+                                </select>
+                            </p>
+                        </div>
+                        <input type="submit" class="btn black" value="Ajouter au panier">
                     </form>
+                </div>
+
+                <div class="row">
+                    <div class="col m12">
+                        <p><u>Technic :</u> {{ work.technic }}</p>
+                    </div>
+                    <div class="col m12">
+                        <p><u>Description :</u> {{ work.description }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,22 +62,16 @@
 
 {% endblock %}
 
-{#{% block javascripts %}#}
-    {#<script>#}
-        {#$(document).ready( function () {#}
-            {#$('form[name="addBasket"]').submit( function (e) {#}
-                {#e.preventDefault();#}
-                {#var data = $(this).serialize();#}
-                {#$.ajax({#}
-                    {#method: 'post',#}
-                    {#url: '{{ path('we_crea_add_basket') }}',#}
-                    {#data: data,#}
-
-                    {#success: function (response) {#}
-                        {#alert(response.msg);#}
-                    {#}#}
-                {#})#}
-            {#});#}
-        {#});#}
-    {#</script>#}
-{#{% endblock %}#}
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('select[name="caract"]').on('change', function () {
+                var quant = $(this).find('option:selected');
+                quant = quant.attr('quant');
+                console.log(quant);
+                $('input[name="quantity"]').attr('max', quant);
+                $('#quant_max').text(quant);
+            });
+        });
+    </script>
+{% endblock %}
