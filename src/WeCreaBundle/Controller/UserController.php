@@ -187,11 +187,11 @@ class UserController extends Controller
         $works = $em->getRepository('WeCreaBundle:Work');
         $pBasket = $session->get('basket');
         if(isset($pBasket)) {
-            foreach ($pBasket as $idWork => $quant) {
+            foreach ($pBasket as $idWork => $caract) {
                 $work = $works->findOneById($idWork);
                 $bWorks [] = array(
                     'work' => $work,
-                    'quant' => $quant
+                    'quant' => $caract
                 );
             }
         }
