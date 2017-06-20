@@ -57,7 +57,7 @@ we_crea_favs:
     path: /favs
     defaults: {_controller: "WeCreaBundle:User:showFavs"}
 
-we_crea_suggestion:
-    path: /suggestion
+we_crea_search:
+    path: /search
     defaults:
-        _controller: "WeCreaBundle:User:suggestion"
+        _controller: "WeCreaBundle:User:search"

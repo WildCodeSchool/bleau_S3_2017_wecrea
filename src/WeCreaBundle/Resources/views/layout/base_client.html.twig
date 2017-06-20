@@ -13,11 +13,11 @@
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="#">Actualités</a></li>
                         <li>
-                            <form name="search" method="post" action="{{ path('we_crea_suggestion') }}">
-                                <input type="search" name="expression" class="search" placeholder="Recherche"/>
+                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
+                                <input type="search" name="search" class="search" placeholder="Recherche"/>
                                 <ul class="suggest"></ul>
                                 <button type="submit" class="button-search">
-                                    <i type="submit" class="material-icons right">search</i>
+                                    <i class="material-icons right">search</i>
                                 </button>
                             </form>
                         <li id="profil_icon">
@@ -42,6 +42,15 @@
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="#">Actualités</a></li>
+                        <li>
+                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
+                                <input type="search" name="search" class="search" placeholder="Recherche"/>
+                                <ul class="suggest"></ul>
+                                <button type="submit" class="button-search">
+                                    <i class="material-icons right">search</i>
+                                </button>
+                            </form>
+                        </li>
                         <li id="profil_icon">
                             <a href="{{ path('we_crea_user_profil') }}">
                                 <i class="material-icons">person</i>
@@ -108,7 +117,7 @@
 
         var searchBar = document.getElementsByClassName('search');
 
-        var suggestElt, liElt, timer, expression, formSearch, p0, p1, perf;
+        var suggestElt, liElt, timer, search, formSearch, p0, p1, perf;
         var t = [];
 
         function cleanUp(){
@@ -120,7 +129,7 @@
             }
         }
 
-        function ajaxGetResults(url, expression, callback){
+        function ajaxGetResults(url, search, callback){
             var req;
             if(window.XMLHttpRequest){
                 req = new XMLHttpRequest();
@@ -141,7 +150,7 @@
             });
             req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            req.send("expression="+expression);
+            req.send("search="+search);
         }
 
         function blueBackground(){
@@ -178,7 +187,7 @@
                 results = JSON.parse(results);
                 var resultsLength;
                
-                if(results != 'No suggestion' && results != 'Aucune suggestion') {
+                if(results != 'Aucune suggestion') {
 
                     cleanUp();
 
@@ -235,11 +244,11 @@
             }
 
             function request() {
-                var expression = searchBar.value;
-                if (expression.trim().length > 0) {
-                    ajaxGetResults("{{ path('we_crea_suggestion') }}", expression, showSuggestions);
+                var search = searchBar.value;
+                if (search.trim().length > 0) {
+                    ajaxGetResults("{{ path('we_crea_search') }}", search, showSuggestions);
                 }
-                if (expression.length === 0) {
+                if (search.length === 0) {
                     setTimeout(function(){
                         cleanUp();
                     }, 300);
