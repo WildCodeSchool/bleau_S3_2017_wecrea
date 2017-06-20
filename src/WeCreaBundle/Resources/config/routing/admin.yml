@@ -40,7 +40,7 @@ we_crea_admin_works_add:
         id: '\d+'
 
 we_crea_admin_delete_work_caract:
-    path: /{id}/caract/delete
+    path: /caract/delete
     defaults: {_controller: "WeCreaBundle:Works:deleteCaract"}
     requirements:
         id: '\d+'

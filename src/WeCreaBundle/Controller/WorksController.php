@@ -158,6 +158,7 @@ class WorksController extends Controller
 
         if ($request->isXmlHttpRequest()) {
 
+            dump($request);
             $workForm = $request->request->get('wecreabundle_work');
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $newImg = $request->request->get('wecreabundle_images');
@@ -192,9 +193,6 @@ class WorksController extends Controller
 
             if (isset($newCaract)){
                 $formCaract->handleRequest($request);
-
-                $id = $request->request->get('idWork');
-                $work = $em->getRepository(Work::class)->findOneById($id);
 
                 $caract->setWork($work);
                 $em->persist($caract);
@@ -250,7 +248,8 @@ class WorksController extends Controller
         return new Response("L'image a bien été supprimée");
     }
 
-    public function deleteCaractAction($id, Request $request){
+    public function deleteCaractAction(Request $request){
+
         if($request->isXMLHttpRequest()){
             $idCaract = $request->request->get('idCaract');
 

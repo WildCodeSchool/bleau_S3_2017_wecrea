@@ -445,6 +445,20 @@
                         $("#specificity-work-confirmed").append($newSpecificity);
                         $("#specificity-work-confirmed").fadeIn(2000);
 
+                        $cancel.click(function(e){
+                            e.preventDefault();
+                            $(this).parent().remove();
+                            idCaract = $id;
+
+                            $.ajax({
+                                method : "POST",
+                                url : "{{ path('we_crea_admin_delete_work_caract') }}",
+                                data : {'idCaract' : idCaract},
+                                success : function(response){
+                                    alert(response.msg);
+                                }
+                            });
+                        });
                     }
                 });
             });

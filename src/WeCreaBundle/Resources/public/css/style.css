@@ -155,6 +155,11 @@ nav ul li a {
     height: 55px!important;
 }
 
+nav ul li:nth-child(5){
+    line-height: 100px;
+    color: black;
+}
+
 .nav_custom ul{
     top: 108px;
 }
@@ -521,7 +526,8 @@ main {
 
 /* Artist list pages */
 
-.container-custom-artists{
+.container-custom-artists,
+.container-custom-search{
     margin-top: 75px;
 }
 
@@ -583,6 +589,66 @@ main {
 #formUser {
     display: none;
 }
+
+/* Search Bar */
+
+form[name='search']{
+    position: relative;
+    bottom: 0;
+}
+
+form[name='search'] i{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+form[name='search'] input{
+    height: 30px;
+}
+
+form[name="search"] input[type='search']{
+    width: 15vw;
+}
+
+.button-search{
+    background: transparent;
+    border: none;
+}
+
+nav ul li .suggest {
+    color: #fff;
+    position: absolute;
+    top: 70px;
+    width: 15vw;
+    text-align: left;
+    height: auto;
+    box-shadow: 0 0 5px #a8a8a8;
+}
+
+@media all and (max-width: 1024px){
+    form[name='search'] input[type='search']{
+        width: 70%;
+    }
+
+    .suggest{
+        width: 70%;
+    }
+}
+
+@media all and (max-width: 640px){
+    form[name='search']{
+        width: 90%;
+    }
+}
+
+form[name='search'] input[type="submit"]{
+    background: #1e90ff;
+    color: #fff;
+    outline: none;
+    border: none;
+
 .title_list_profil{
     text-decoration: underline;
 }

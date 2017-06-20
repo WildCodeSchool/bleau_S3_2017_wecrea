@@ -136,12 +136,13 @@
 //            Add work caract
             $('form[id="work-caracteristics"]').submit(function(e){
                 e.preventDefault();
-
                 $(this).find('button').hide();
                 var $form = new FormData($(this)[0]);
 
                 $("#work-specificity").fadeIn(2000);
                 $(".artist_menu").fadeIn(2000);
+                $(this).find('input').prop('disabled', true);
+                $(this).find('textarea').prop('disabled', true);
 
                 $.ajax({
                     method: 'post',
@@ -216,6 +217,20 @@
 
                         $("#work-picture").fadeIn(2000);
 
+                        $cancel.click(function(e){
+                            e.preventDefault();
+                            $(this).parent().remove();
+                            idCaract = $id;
+
+                            $.ajax({
+                                method : "POST",
+                                url : "{{ path('we_crea_admin_delete_work_caract') }}",
+                                data : {'idCaract' : idCaract},
+                                success : function(response){
+                                    alert(response.msg);
+                                }
+                            });
+                        });
                     }
                 });
             });
