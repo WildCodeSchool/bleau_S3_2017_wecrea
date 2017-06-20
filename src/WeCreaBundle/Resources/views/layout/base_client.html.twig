@@ -20,6 +20,10 @@
                                     <i type="submit" class="material-icons right">search</i>
                                 </button>
                             </form>
+                        <li id="profil_icon">
+                            <a href="{{ path('we_crea_user_profil') }}">
+                                <i class="material-icons">person</i>
+                            </a>
                         </li>
                         <li id="basket">
                             <a href="{{ path('we_crea_basket') }}">
@@ -38,6 +42,11 @@
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="#">Actualités</a></li>
+                        <li id="profil_icon">
+                            <a href="{{ path('we_crea_user_profil') }}">
+                                <i class="material-icons">person</i>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ path('we_crea_basket') }}" class="valign-wrapper">
                                 <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
@@ -57,6 +66,10 @@
 {% endblock %}
 
 {% block body %}
+
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+
 {% endblock %}
 
 {% block footer %}
@@ -164,8 +177,7 @@
             function showSuggestions(results){
                 results = JSON.parse(results);
                 var resultsLength;
-                console.log(results);
-
+               
                 if(results != 'No suggestion' && results != 'Aucune suggestion') {
 
                     cleanUp();

@@ -8,10 +8,12 @@ class Basket
     {
         $count = 0;
 
-        $basket = $session->get('basket');
-        if (isset($basket)){
-            foreach ($basket as $value) {
-                $count += $value;
+        $baskets = $session->get('basket');
+        if (isset($baskets)){
+            foreach ($baskets as $works) {
+                foreach ($works as $caract) {
+                    $count += $caract;
+                }
             }
         }
 

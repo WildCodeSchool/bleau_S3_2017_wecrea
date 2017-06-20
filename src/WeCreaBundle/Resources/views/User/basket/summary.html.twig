@@ -12,15 +12,16 @@
                                   <li id="{{ prod.work.id }}">
                                       <img class="prod_img" src="{{ asset("images/") }}{{ prod.work.images[0].url }}" alt="">
                                       <div>
-                                          <p>
-                                              {{ prod.work.title }} x <input type="number"
-                                                                             name="{{ prod.work.id }}"
-                                                                             min="1"
-                                                                             max="{{ prod.work.quantity }}"
-                                                                             value="{{ prod.quant }}"
-                                                                             class="prod_content"
-                                              >
-                                          </p>
+                                          TODO : check session data
+                                          {#<p>#}
+                                              {#{{ prod.work.title }} x <input type="number"#}
+                                                                             {#name="{{ prod.work.id }}"#}
+                                                                             {#min="1"#}
+                                                                             {#max="{{ prod.work.quantity }}"#}
+                                                                             {#value="{{ prod.quant }}"#}
+                                                                             {#class="prod_content"#}
+                                              {#>#}
+                                          {#</p>#}
                                           <br>
                                       </div>
                                       <button class="btn delete_basket" data="{{ prod.work.id }}">retirer du panier</button>

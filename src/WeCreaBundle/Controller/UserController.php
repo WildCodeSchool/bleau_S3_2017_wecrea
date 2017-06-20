@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
 {
@@ -75,6 +76,7 @@ class UserController extends Controller
 
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
         $images = $work->getImages();
+        $caracts = $work->getCaracts();
 
         $container = $this->container;
 
@@ -85,7 +87,8 @@ class UserController extends Controller
             'bCount' => $bCount,
             'work' => $work,
             'images' => $images,
-            'fCount' => $fCount
+            'fCount' => $fCount,
+            'caracts' => $caracts
         ));
     }
 
@@ -136,15 +139,16 @@ class UserController extends Controller
     public function addBasketAction(Request $request) {
         $session = $this->get('session');
         $req = $request->request;
-        $idWork = $req->get('work');
+        $idWork = $req->get('work_id');
+        $carWork = $req->get('caract');
         $quant = $req->get('quantity');
         $pBasket = $session->get('basket');
 
         if (isset($pBasket[$idWork])){
-            $pBasket[$idWork] += $quant;
+            $pBasket[$idWork][$carWork] += $quant;
         }
         else {
-            $pBasket [$idWork] = $quant;
+            $pBasket [$idWork][$carWork] = $quant;
         }
 
         $session->set('basket', $pBasket);
@@ -288,7 +292,7 @@ class UserController extends Controller
     /* ----- show user profil ----- */
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
-        $formUser = $this->createForm('WeCreaBundle\Form\RegistrationFormType', $user);
+        $formUser = $this->createForm(ProfilFormType::class, $user);
 
         $formUser->handleRequest($request);
         if($formUser->isSubmitted() && $formUser->isValid()) {
