@@ -4,44 +4,49 @@
     <main>
         <div class="container container-custom-search">
             <div class="row">
-                Résultats pour : <b>{{ exp|upper }}</b>
-                {% for work in works %}
-                    <div class="card card_custom iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
-                        <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
-                            <div class="card-image waves-effect waves-block waves-light card-image_custom"
-                                    {% if work.images[0] is defined %}
-                                        style="background: url('{{ asset("images/" ~ work.images[0].url) }}') center / cover"
-                                    {% endif %}
-                            >
-                                {% if favs[work.id] is defined %}
-                                    <div class="fav_btn_delete" data="{{ work.id }}">
-                                        <button class="btn">Retirer des favoris</button>
-                                    </div>
-                                {% else %}
-                                    <div class="fav_btn" data="{{ work.id }}">
-                                        <button class="btn">Ajouter aux favoris</button>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </a>
-                        <div class="card-content card-content_custom">
-                        <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
-                            <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                            <p>{{ work.technic }} {{ work.nature.name }}</p>
 
-                            {#TODO: List all specificity pour one work#}
-                            {#<p>Dimensions: {{ work.dimensions }}</p>#}
-                            {#<p>Poids: {{ work.weight }}</p>#}
-                            {#<p>Prix: {{ work.price }} €</p>#}
-                            {#<p>Quantité: {{ work.quantity }}</p>#}
-                            <p>Description</p>
+                {% if works is defined %}
+                    Résultats pour : <b>{{ exp|upper }}</b>
+                    {% for work in works %}
+                        <div class="card card_custom iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                            <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                                <div class="card-image waves-effect waves-block waves-light card-image_custom"
+                                        {% if work.images[0] is defined %}
+                                            style="background: url('{{ asset("images/" ~ work.images[0].url) }}') center / cover"
+                                        {% endif %}
+                                >
+                                    {% if favs[work.id] is defined %}
+                                        <div class="fav_btn_delete" data="{{ work.id }}">
+                                            <button class="btn">Retirer des favoris</button>
+                                        </div>
+                                    {% else %}
+                                        <div class="fav_btn" data="{{ work.id }}">
+                                            <button class="btn">Ajouter aux favoris</button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div class="card-content card-content_custom">
+                            <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                                <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
+                                <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                                <p>{{ work.technic }} {{ work.nature.name }}</p>
+
+                                {#TODO: List all specificity pour one work#}
+                                {#<p>Dimensions: {{ work.dimensions }}</p>#}
+                                {#<p>Poids: {{ work.weight }}</p>#}
+                                {#<p>Prix: {{ work.price }} €</p>#}
+                                {#<p>Quantité: {{ work.quantity }}</p>#}
+                                <p>Description</p>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <b>{{ response }}</b>
+                {% endif %}
             </div>
         </div>
     </main>
