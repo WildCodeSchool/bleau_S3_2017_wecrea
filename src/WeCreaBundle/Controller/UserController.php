@@ -315,10 +315,10 @@ class UserController extends Controller
         ));
     }
 
-    public function suggestionAction(Request $request){
+    public function searchAction(Request $request){
         $em = $this->getDoctrine()->getManager();
 
-        $exp = htmlspecialchars($request->request->get('expression'));
+        $exp = htmlspecialchars($request->request->get('search'));
 
         if($exp != NULL) {
             $resultsWorks = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpWorks($exp);
@@ -355,7 +355,9 @@ class UserController extends Controller
             }
         }
         else{
-            return $this->redirectToRoute('we_crea_homepage');
+            return $this->render('WeCreaBundle:User:search.html.twig', array(
+                'response' => "Aucun article ne correspond à votre recherche"
+            ));
         }
     }
 }
