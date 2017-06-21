@@ -34,6 +34,10 @@ we_crea_basket:
     path: /basket
     defaults: {_controller: "WeCreaBundle:User:showBasket"}
 
+we_crea_basket_address:
+    path: /basket/address
+    defaults: {_controller: "WeCreaBundle:User:"}
+
 we_crea_add_basket:
     path: /work/basket/add
     defaults: {_controller: "WeCreaBundle:User:addBasket"}

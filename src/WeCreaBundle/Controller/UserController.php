@@ -144,12 +144,7 @@ class UserController extends Controller
         $quant = $req->get('quantity');
         $pBasket = $session->get('basket');
 
-        if (isset($pBasket[$idWork])){
-            $pBasket[$idWork][$carWork] += $quant;
-        }
-        else {
-            $pBasket [$idWork][$carWork] = $quant;
-        }
+        $pBasket [$idWork][$carWork] = $quant;
 
         $session->set('basket', $pBasket);
 
@@ -184,23 +179,40 @@ class UserController extends Controller
         $bCount = $container->get('app.basket')->countBasket($session);
         $fCount = $container->get('favs')->countFavs($session);
 
-        $works = $em->getRepository('WeCreaBundle:Work');
+        $Works = $em->getRepository('WeCreaBundle:Work');
+        $Caracts = $em->getRepository('WeCreaBundle:Caract');
+
         $pBasket = $session->get('basket');
+
         if(isset($pBasket)) {
-            foreach ($pBasket as $idWork => $quant) {
-                $work = $works->findOneById($idWork);
-                $bWorks [] = array(
-                    'work' => $work,
-                    'quant' => $quant
-                );
+            foreach ($pBasket as $idWork => $bCaracts)
+            {
+                $work = $Works->findOneById($idWork);
+
+                foreach ($bCaracts as $bCaract => $quant)
+                {
+                    $caract = $Caracts->findOneById($bCaract);
+
+                    $works [$idWork] = array(
+                        'caract' => $caract,
+                        'quant' => $quant
+                    );
+                }
+
+                $works [$idWork] ['work'] = $work;
             }
         }
 
         return $this->render('@WeCrea/User/basket/summary.html.twig', array(
-            'works' => $bWorks,
+            'works' => $works,
             'bCount' => $bCount,
             'fCount' => $fCount
         ));
+    }
+
+    public function basketAddressAction() {
+
+        return $this->render('@WeCrea/User/basket/addressConfirm.html.twig');
     }
 
     /* ----- Add Favs -----*/
