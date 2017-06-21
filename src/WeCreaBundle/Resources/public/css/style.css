@@ -559,15 +559,71 @@ main {
 }
 
 /* ----- Basket ----- */
+form[name="basket"] {
+    display: block;
+    position: relative;
+}
+
+.prods {
+    display: block;
+    position: relative;
+    height:100%;
+}
+
+.prod {
+    display: block;
+    position: relative;
+    height:100%;
+    border-bottom: 1px solid lightgray;
+    margin-top: 10px;
+}
+
+.prod:nth-child(1) {
+    margin-top: 0;
+}
+
 .prod_img {
-    width: 140px!important;
-    float: left;
+    max-width: 100%;
+    max-height: 100%;
     padding-right: 20px;
 }
 
 .prod_content {
     width: 30px!important;
     border-bottom: none!important;
+}
+
+.prod_quant input{
+    height: 20px;
+    margin-bottom: 0;
+}
+
+.prod_title {
+    font-weight: bold;
+    font-size: 1.5em
+}
+
+.prod_title p {
+    margin-top: 0;
+}
+
+.prod_caract {
+    margin-bottom: 20px;
+}
+
+.prod_price {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding-top: 10px;
+}
+
+.delete_basket {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
 
 /* ----- Concept page ----- */

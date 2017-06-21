@@ -2,32 +2,51 @@
 
 {% block body %}
     <main>
-        <div class="container container_custom">
+        <div class="container">
             <div class="row">
               <div class="col m10 offset-m1">
                   <h2>Résumé de votre panier :</h2>
                   <form name="basket" method="post" action="">
-                      <ul>
-                              {% for prod in works %}
-                                  <li id="{{ prod.work.id }}">
+                      <div class="prods row">
+                          {% for prod in works %}
+                              <div class="prod col s12 row" id="{{ prod.work.id }}">
+                                  <div class="col m3">
                                       <img class="prod_img" src="{{ asset("images/") }}{{ prod.work.images[0].url }}" alt="">
-                                      <div>
-                                          TODO : check session data
-                                          {#<p>#}
-                                              {#{{ prod.work.title }} x <input type="number"#}
-                                                                             {#name="{{ prod.work.id }}"#}
-                                                                             {#min="1"#}
-                                                                             {#max="{{ prod.work.quantity }}"#}
-                                                                             {#value="{{ prod.quant }}"#}
-                                                                             {#class="prod_content"#}
-                                              {#>#}
-                                          {#</p>#}
-                                          <br>
+                                  </div>
+                                  <div class="col m9 row">
+                                      <div class="prod_title col s12">
+                                          <p>{{ prod.work.title }}</p>
                                       </div>
-                                      <button class="btn delete_basket" data="{{ prod.work.id }}">retirer du panier</button>
-                                  </li>
-                              {% endfor %}
-                      </ul>
+                                      <div class="prod_quant col s12">
+                                          <p class="col m3">
+                                              Quantité :
+                                              <input class="quant_input"
+                                                     type="number"
+                                                     name="{{ prod.work.id }}"
+                                                     min="1"
+                                                     max="{{ prod.caract.quantity }}"
+                                                     value="{{ prod.quant }}"
+                                                     class="prod_content"
+                                              />
+                                          </p>
+                                          <p class="col m3 offset-m6">
+                                              Restants : <span class="quant_max">{{ prod.caract.quantity }}</span>
+                                          </p>
+                                      </div>
+                                      <div class="prod_caract col s12">
+                                          <select name="caract">
+                                              <option value="{{ prod.caract.id }}" selected quant="{{ prod.caract.quantity }}" price="{{ prod.caract.price }}"> {{ prod.caract.dimension }} - poids : {{ prod.caract.weigth }} - prix : {{ prod.caract.price }}€</option>
+                                              {% for caract in prod.work.caracts %}
+                                                  <option value="{{ caract.id }}" quant="{{ caract.quantity }}" price="{{ caract.price }}">{{ caract.dimension }} - poids : {{ caract.weigth }} - prix : {{ caract.price }}€</option>
+                                              {% endfor %}
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <i title="Enlever cet article" class="material-icons delete_basket" data="{{ prod.work.id }}">clear</i>
+                                  <p class="prod_price">Prix : <span class="price">{{ prod.quant * prod.caract.price }}</span>€</p>
+                              </div>
+                          {% endfor %}
+                      </div>
                       <input type="submit" class="btn black" value="confirmer">
                   </form>
               </div>
@@ -39,6 +58,7 @@
 {% block javascripts %}
     <script>
         $(document).ready( function () {
+            // --- AJAX DELETE ---//
             $('.delete_basket').click( function (e) {
                 e.preventDefault();
                 var id = $(this).attr('data');
@@ -55,6 +75,38 @@
                     }
                 })
             });
+
+        // --- Update quantity by caract --- //
+            $('select[name="caract"]').on('change', function () {
+                var selected = $(this).find('option:selected');
+                var container = $(this).closest('.prod');
+
+                var quant = container.find('.quant_input').val();
+                var max = selected.attr('quant');
+                var price = selected.attr('price');
+                var priceTot = quant * price;
+
+                container.find('.quant_input').attr('max', max);
+                container.find('.quant_max').text(max);
+                container.find('.price').text(priceTot);
+            });
+
+            $('input[type="number"]').on('change', function (e) {
+                e.preventDefault();
+
+                var val = $(this).val();
+                console.log(val);
+
+                var container = $(this).closest('.prod');
+                var price = container.find('select[name="caract"]').find('option:selected').attr('price');
+                console.log(price);
+
+                var priceTot = val * price;
+                console.log(priceTot);
+                container.find('.price').text(priceTot);
+
+            });
         });
+
     </script>
 {% endblock %}
