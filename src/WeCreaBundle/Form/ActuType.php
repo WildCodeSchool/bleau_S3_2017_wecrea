@@ -2,6 +2,7 @@
 
 namespace WeCreaBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +15,9 @@ class ActuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title')
-            ->add('content')
+            ->add('content', CKEditorType::class, array(
+                'config_name' => 'my_config',
+            ))
             ->add('images', ImagesType::class)
         ;
     }

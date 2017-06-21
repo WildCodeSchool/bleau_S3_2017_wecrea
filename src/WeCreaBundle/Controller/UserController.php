@@ -372,4 +372,15 @@ class UserController extends Controller
             ));
         }
     }
+
+    public function actuAction(){
+        $em = $this->getDoctrine()->getManager();
+        $actu = $em->getRepository('WeCreaBundle:Actu')->findBy([], array(
+            'date' => 'DESC'
+    ));
+
+        return $this->render('WeCreaBundle:User:actu.html.twig', array(
+            'actus' => $actu
+        ));
+    }
 }
