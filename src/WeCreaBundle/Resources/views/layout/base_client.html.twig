@@ -11,7 +11,7 @@
                         <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
-                        <li><a href="#">Actualités</a></li>
+                        <li><a href="{{ path('we_crea_actu') }}">Actualités</a></li>
                         <li>
                             <form name="search" method="post" action="{{ path('we_crea_search') }}">
                                 <input type="search" name="search" class="search" placeholder="Recherche"/>
@@ -38,10 +38,10 @@
                     </ul>
 
                     <ul id="mobile-demo" class="side-nav">
-                        <li><a href="#">Concept</a></li>
+                        <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
-                        <li><a href="#">Actualités</a></li>
+                        <li><a href="{{ path('we_crea_actu') }}">Actualités</a></li>
                         <li>
                             <form name="search" method="post" action="{{ path('we_crea_search') }}">
                                 <input type="search" name="search" class="search" placeholder="Recherche"/>

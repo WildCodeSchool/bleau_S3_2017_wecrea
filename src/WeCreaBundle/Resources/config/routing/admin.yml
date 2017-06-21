@@ -75,10 +75,12 @@ we_crea_admin_actu:
     path: /actu
     defaults: {_controller: "WeCreaBundle:Actu:actu"}
 
+# Ajax treatment
 we_crea_admin_actu_add:
     path: /actu/add
     defaults: {_controller: "WeCreaBundle:Actu:addActu"}
 
+# Ajax treatment
 we_crea_admin_actu_delete:
     path: /actu/delete
     defaults: {_controller: "WeCreaBundle:Actu:deleteActu"}

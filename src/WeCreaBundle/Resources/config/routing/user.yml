@@ -10,6 +10,10 @@ we_crea_concept:
     path: /concept
     defaults: {_controller: "WeCreaBundle:User:concept"}
 
+we_crea_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:User:actu"}
+
 we_crea_works:
     path: /works
     defaults: {_controller: "WeCreaBundle:User:worksShow"}
