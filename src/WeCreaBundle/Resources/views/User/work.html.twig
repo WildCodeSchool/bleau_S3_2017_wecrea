@@ -7,8 +7,14 @@
                 <div class="col m7 images_content">
                     <div class="slider-for images_content_show">
                         {% for image in images %}
-                            <div class="slider-for__item image_work">
-                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}">
+                            <div class="image_work image" value="{{ loop.index }}">
+                                {#
+                                <div class='image_zoom'></div>
+                                <div class='image_dezoom'></div>
+                                <div class='image_button_right'></div>
+                                <div class='image_button_left'></div>
+                                #}
+                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}"/>
                             </div>
                         {% endfor %}
                     </div>
@@ -73,6 +79,120 @@
                 $('input[name="quantity"]').attr('max', quant);
                 $('#quant_max').text(quant);
             });
+
+            /**** A implémenter si le temps ****/
+
+            /*
+            $('.image').hover(function(){
+                $(this).css({'box-shadow':'0 0 10px #111','transition':'.5s'});
+            }, function(){
+                $(this).css({'box-shadow':'0 0 5px #777','transition':'.5s'});
+            });
+
+            $(function() {
+                $Img = $('.image');
+                Index = $Img.length - 1;
+
+                function imageRemoveAnimation() {
+                    $Img.removeClass('image_animation');
+                    $Img.css('transition', '0s');
+                    $Img.find('img').css({'height': 'calc(60vh * 60/100)', 'width': 'auto'});
+                }
+
+                function imageAnimation() {
+
+                    $Img.find('.image_zoom, .image_dezoom, .image_button_left, .image_button_right').css('opacity', '0');
+                    $CurrentImg.addClass('image_animation');
+                    $CurrentImg.find('img').css({'height': '100vh', 'width': 'auto'});
+                    $CurrentImg.css('transition', '0s');
+
+                    if (Index >= 1) {
+                        $CurrentImg.find('.image_button_left, .image_button_right').css('opacity', '1');
+                    }
+
+                    $CurrentImg.find('.image_zoom').css({'opacity': '0', 'z-index': '0'});
+                    $CurrentImg.find('.image_dezoom').css({'opacity': '1', 'z-index': '1'});
+                    $('body').css('overflow', 'hidden');
+                }
+
+                function slideImg(arg) {
+                    $CurrentImg = $Img.eq(arg);
+                    console.log(arg);
+                    $Img.find('.image_zoom').css('opacity', '0');
+                    imageRemoveAnimation();
+                    imageAnimation();
+                }
+
+                $('.image_zoom').click(function () {
+                    if (Index >= 2) {
+                        var i = $(this).parent()[0].getAttribute('value') - 1;
+                        $CurrentImg = $Img.eq(i);
+                    }
+
+                    if (Index < 2) {
+                        var a = $(this).parent()[0].getAttribute('value') - 1;
+                        $CurrentImg = $Img.eq(a);
+                    }
+                    imageAnimation();
+
+                    $('.image_button_right').click(function () {
+
+                        if (Index >= 2) {
+                            if (i < Index) {
+                                i++;
+                            }
+                            else {
+                                i = 0;
+                            }
+                            slideImg(i);
+                        }
+
+                        else {
+                            if (a < Index) {
+                                a++;
+                            }
+                            else {
+                                a = 0;
+                            }
+                            slideImg(a);
+                        }
+                    });
+
+                    $('.image_button_left').click(function () {
+
+                        if (Index >= 2) {
+                            if (i > 0) {
+                                i--;
+                            }
+                            else {
+                                i = Index;
+                            }
+                            slideImg(i);
+                        }
+                        else {
+
+                            if (a > 0) {
+                                a--;
+                            }
+                            else {
+                                a = 1;
+                            }
+                            slideImg(a);
+                        }
+                    });
+
+                    $('.image_dezoom').click(function () {
+                        imageRemoveAnimation();
+                        $Img.find('.image_zoom').css({'opacity': '1', 'z-index': '1'})
+                        $Img.find('.image_dezoom').css({'opacity': '0', 'z-index': '0'});
+                        $Img.find('.image_button_right, .image_button_left').css({'opacity': '0'});
+                        $('body').css('overflow', 'visible');
+                        i = 0;
+                        a = 0;
+                    });
+                });
+            });
+            */
         });
     </script>
 {% endblock %}

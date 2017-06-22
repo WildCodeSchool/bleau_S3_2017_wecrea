@@ -303,9 +303,7 @@ footer {
 }
 
 body {
-    display: flex;
     min-height: 100vh;
-    flex-direction: column;
 }
 
 main {
@@ -347,17 +345,16 @@ main {
 
 /* WORKS CLIENT */
 .cards {
-    width:100%;
-    height: auto;
+    width:80%;
+    margin: auto;
+    display: flex;
+    margin-bottom: 100px;
+    justify-content: space-around;
+    min-height: calc(100vh - 195px);
 }
 
 .card_custom {
-    width: 20%;
-    padding: 0 0.5%;
-}
-
-.card_custom_artists {
-    width: 33.3333333333333%;
+    width: 30%;
     padding: 0 0.5%;
 }
 
@@ -502,6 +499,60 @@ main {
     height:100%;
 }
 
+/**** CODE POUR JQUERY ****/
+
+.image_zoom{
+    background: url('../pics/loupe.png');
+    background-size: cover;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+.image_zoom:hover{
+    background: url('../pics/loupe-orange.png');
+    background-size: cover;
+}
+
+.image_dezoom{
+    background: url('../pics/reduction.png');
+    background-size: cover;
+    position: absolute;
+    z-index: 0;
+    top: 10px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    border: 1px solid white;
+}
+
+.image_dezoom:hover{
+    background: url('../pics/reduction-orange.png');
+    background-size: cover;
+}
+
+.image_animation{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    width: 100%;
+    background: rgba(0,0,0,.8);
+    margin: 0;
+    text-align: center;
+    border: none;
+    transition: 0s;
+}
+
+
+/*************************/
+
 .item-nav {
     padding-top: 15px;
     width: 100px;
@@ -529,6 +580,7 @@ main {
 .container-custom-artists,
 .container-custom-search{
     margin-top: 75px;
+    min-height: calc(100vh - 195px);
 }
 
 /* Artist page */
@@ -687,7 +739,6 @@ form[name="basket"] {
     }
 }
 
-
 /* ----- Profil Page ----- */
 #formUser {
     display: none;
@@ -712,7 +763,8 @@ form[name='search'] input{
 }
 
 form[name="search"] input[type='search']{
-    width: 15vw;
+    width: 12vw;
+    margin-left: 40px;
 }
 
 .button-search{
