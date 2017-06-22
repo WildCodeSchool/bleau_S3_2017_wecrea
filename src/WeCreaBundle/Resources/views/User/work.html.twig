@@ -63,6 +63,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script>
         $(document).ready( function () {
             $('select[name="caract"]').on('change', function () {
