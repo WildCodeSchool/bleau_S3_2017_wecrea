@@ -7,13 +7,11 @@
                 <div class="col m7 images_content">
                     <div class="slider-for images_content_show">
                         {% for image in images %}
-                            <div class="image_work image" value="{{ loop.index }}">
-                                {#
+                            <div class="slider-for__item image_work" value="{{ loop.index }}">
                                 <div class='image_zoom'></div>
                                 <div class='image_dezoom'></div>
                                 <div class='image_button_right'></div>
                                 <div class='image_button_left'></div>
-                                #}
                                 <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}"/>
                             </div>
                         {% endfor %}
