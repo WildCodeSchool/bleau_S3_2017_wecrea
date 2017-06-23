@@ -19,7 +19,9 @@ class ConceptType extends AbstractType
             ->add('content', CKEditorType::class, array(
                 'config_name' => 'my_config',
             ))
-            ->add('images', ImagesType::class)
+            ->add('images', ImagesType::class, array(
+            	"required" => false
+            ))
         ;
     }
     
