@@ -499,60 +499,6 @@ main {
     height:100%;
 }
 
-/**** CODE POUR JQUERY ****/
-
-.image_zoom{
-    background: url('../pics/loupe.png');
-    background-size: cover;
-    position: absolute;
-    z-index: 1;
-    top: 5px;
-    right: 5px;
-    width: 35px;
-    height: 35px;
-}
-
-.image_zoom:hover{
-    background: url('../pics/loupe-orange.png');
-    background-size: cover;
-}
-
-.image_dezoom{
-    background: url('../pics/reduction.png');
-    background-size: cover;
-    position: absolute;
-    z-index: 0;
-    top: 10px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    opacity: 0;
-    border: 1px solid white;
-}
-
-.image_dezoom:hover{
-    background: url('../pics/reduction-orange.png');
-    background-size: cover;
-}
-
-.image_animation{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 10;
-    width: 100%;
-    background: rgba(0,0,0,.8);
-    margin: 0;
-    text-align: center;
-    border: none;
-    transition: 0s;
-}
-
-
-/*************************/
-
 .item-nav {
     padding-top: 15px;
     width: 100px;
@@ -677,7 +623,6 @@ form[name="basket"] {
     right: 10px;
     cursor: pointer;
 }
-
 /* ----- Concept page ----- */
 
 #concept h2 {

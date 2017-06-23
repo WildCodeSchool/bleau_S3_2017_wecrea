@@ -1,26 +1,27 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/wecrea/vendor/fancybox/jquery.fancybox-1.3.4.css') }}">
+
+{% endblock %}
+
 {% block body %}
     <main>
         <div class="container">
             <div class="row row_top">
-                <div class="col m7 images_content">
-                    <div class="slider-for images_content_show">
-                        {% for image in images %}
-                            <div class="slider-for__item image_work" value="{{ loop.index }}">
-                                <div class='image_zoom'></div>
-                                <div class='image_dezoom'></div>
-                                <div class='image_button_right'></div>
-                                <div class='image_button_left'></div>
-                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}"/>
-                            </div>
-                        {% endfor %}
+
+                <div class="col m7 img_basket">
+                    <div class="center-align">
+                        <img id="zoom_03" height="350" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
                     </div>
-                    <div class="slider-nav images_content_nav">
+                    <div id="gallery_01">
                         {% for image in images %}
-                            <div class="slider-for__item item-nav">
-                                <img src="{{ asset('images/') }}{{ image.url }}" alt="{{ image.alt }}">
-                            </div>
+                            <a href="#" data-image="{{ image.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ image.url) }}">
+                                <img src="{{ image.url | imagine_filter('thumb') }}" alt="{{ image.alt }}">
+                            </a>
                         {% endfor %}
                     </div>
                 </div>
@@ -68,125 +69,36 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src='{{ asset('bundles/wecrea/vendor/jquery-1.8.3.min.js') }}'></script>
+    <script type="text/javascript" src="{{ asset('bundles/wecrea/vendor/fancybox/jquery.fancybox-1.3.4.js') }}"></script>
+    <script src='{{ asset('bundles/wecrea/vendor/jquery.elevateZoom-3.0.8.min.js') }}'></script>
     <script>
         $(document).ready( function () {
+
+            $("#zoom_03").elevateZoom({
+                constrainType:"height",
+                constrainSize:350,
+                gallery:'gallery_01',
+                cursor: 'pointer',
+                galleryActiveClass: 'active',
+//                scrollZoom : true,
+                responsive: true
+            }
+        );
+
+            //pass the images to Fancybox
+            $("#zoom_03").bind("click", function(e) {
+                var ez = $('#zoom_03').data('elevateZoom');
+                $.fancybox(ez.getGalleryList());
+                return false;
+            });
+
             $('select[name="caract"]').on('change', function () {
                 var quant = $(this).find('option:selected');
                 quant = quant.attr('quant');
                 console.log(quant);
                 $('input[name="quantity"]').attr('max', quant);
                 $('#quant_max').text(quant);
-            });
-
-            /**** A implémenter si possible ****/
-            $('.image').hover(function(){
-                $(this).css({'box-shadow':'0 0 10px #111','transition':'.5s'});
-            }, function(){
-                $(this).css({'box-shadow':'0 0 5px #777','transition':'.5s'});
-            });
-
-            $(function() {
-                $Img = $('.image');
-                Index = $Img.length - 1;
-
-                function imageRemoveAnimation() {
-                    $Img.removeClass('image_animation');
-                    $Img.css('transition', '0s');
-                    $Img.find('img').css({'height': 'calc(60vh * 60/100)', 'width': 'auto'});
-                }
-
-                function imageAnimation() {
-
-                    $Img.find('.image_zoom, .image_dezoom, .image_button_left, .image_button_right').css('opacity', '0');
-                    $CurrentImg.addClass('image_animation');
-                    $CurrentImg.find('img').css({'height': '100vh', 'width': 'auto'});
-                    $CurrentImg.css('transition', '0s');
-
-                    if (Index >= 1) {
-                        $CurrentImg.find('.image_button_left, .image_button_right').css('opacity', '1');
-                    }
-
-                    $CurrentImg.find('.image_zoom').css({'opacity': '0', 'z-index': '0'});
-                    $CurrentImg.find('.image_dezoom').css({'opacity': '1', 'z-index': '1'});
-                    $('body').css('overflow', 'hidden');
-                }
-
-                function slideImg(arg) {
-                    $CurrentImg = $Img.eq(arg);
-                    console.log(arg);
-                    $Img.find('.image_zoom').css('opacity', '0');
-                    imageRemoveAnimation();
-                    imageAnimation();
-                }
-
-                $('.image_zoom').click(function () {
-                    if (Index >= 2) {
-                        var i = $(this).parent()[0].getAttribute('value') - 1;
-                        $CurrentImg = $Img.eq(i);
-                    }
-
-                    if (Index < 2) {
-                        var a = $(this).parent()[0].getAttribute('value') - 1;
-                        $CurrentImg = $Img.eq(a);
-                    }
-                    imageAnimation();
-
-                    $('.image_button_right').click(function () {
-
-                        if (Index >= 2) {
-                            if (i < Index) {
-                                i++;
-                            }
-                            else {
-                                i = 0;
-                            }
-                            slideImg(i);
-                        }
-
-                        else {
-                            if (a < Index) {
-                                a++;
-                            }
-                            else {
-                                a = 0;
-                            }
-                            slideImg(a);
-                        }
-                    });
-
-                    $('.image_button_left').click(function () {
-
-                        if (Index >= 2) {
-                            if (i > 0) {
-                                i--;
-                            }
-                            else {
-                                i = Index;
-                            }
-                            slideImg(i);
-                        }
-                        else {
-
-                            if (a > 0) {
-                                a--;
-                            }
-                            else {
-                                a = 1;
-                            }
-                            slideImg(a);
-                        }
-                    });
-
-                    $('.image_dezoom').click(function () {
-                        imageRemoveAnimation();
-                        $Img.find('.image_zoom').css({'opacity': '1', 'z-index': '1'})
-                        $Img.find('.image_dezoom').css({'opacity': '0', 'z-index': '0'});
-                        $Img.find('.image_button_right, .image_button_left').css({'opacity': '0'});
-                        $('body').css('overflow', 'visible');
-                        i = 0;
-                        a = 0;
-                    });
-                });
             });
         });
     </script>

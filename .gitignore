@@ -15,5 +15,6 @@
 /vendor/
 /web/bundles/
 /web/images/*
+/web/media/
 Supprimerait src/WeCreaBundle/Resources/public/img/
 .idea/
