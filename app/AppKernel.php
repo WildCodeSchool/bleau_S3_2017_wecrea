@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new WeCreaBundle\WeCreaBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+	        new Liip\ImagineBundle\LiipImagineBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
