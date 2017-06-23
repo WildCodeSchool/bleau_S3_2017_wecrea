@@ -303,9 +303,7 @@ footer {
 }
 
 body {
-    display: flex;
     min-height: 100vh;
-    flex-direction: column;
 }
 
 main {
@@ -347,17 +345,16 @@ main {
 
 /* WORKS CLIENT */
 .cards {
-    width:100%;
-    height: auto;
+    width:80%;
+    margin: auto;
+    display: flex;
+    margin-bottom: 100px;
+    justify-content: space-around;
+    min-height: calc(100vh - 195px);
 }
 
 .card_custom {
-    width: 20%;
-    padding: 0 0.5%;
-}
-
-.card_custom_artists {
-    width: 33.3333333333333%;
+    width: 30%;
     padding: 0 0.5%;
 }
 
@@ -529,6 +526,7 @@ main {
 .container-custom-artists,
 .container-custom-search{
     margin-top: 75px;
+    min-height: calc(100vh - 195px);
 }
 
 /* Artist page */
@@ -686,7 +684,6 @@ form[name="basket"] {
     }
 }
 
-
 /* ----- Profil Page ----- */
 #formUser {
     display: none;
@@ -711,7 +708,8 @@ form[name='search'] input{
 }
 
 form[name="search"] input[type='search']{
-    width: 15vw;
+    width: 12vw;
+    margin-left: 40px;
 }
 
 .button-search{

@@ -2,11 +2,10 @@
 
 {% block body %}
     <main>
-    <div class="container container-custom-artists">
         <h2>Les artistes</h2>
         <div class="cards">
             {% for artist in artists %}
-                <div class="card card_custom_artists cardResizer" data-filter=".">
+                <div class="card card_custom cardResizer">
                     {% if artist.images|first != false %}
                         <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~artist.images|first.url ) }} ') center / cover ">
                         </div>
@@ -21,13 +20,11 @@
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
                         <b>{{ artist.name }} {{ artist.firstname }}</b>
-                        <p>Localisation : {{ artist.localization }}</p>
                         <p>{{ artist.biography[0:50] }}... </p>
                         <a href="{{ path('we_crea_artist', {'id' : artist.id} ) }}"> Accéder au profil </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </div>
     </main>
 {% endblock %}

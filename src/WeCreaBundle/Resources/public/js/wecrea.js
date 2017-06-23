@@ -1,17 +1,14 @@
-function cardResize(ratio) {
-    var card = $('.cardResizer');
-    var width = parseFloat(card.css('width'));
-    var height = width * ratio;
-    card.css('height', height);
-};
-
-cardResize(1);
-
+function cardResize() {
+    var width = parseFloat($('.card').css('width'))
+    $('.card').css('height', width);
+}
 
 $(document).ready( function () {
 
+    cardResize();
+
     $(window).resize(function () {
-        cardResize(1);
+        cardResize();
     });
 
     $(".button-collapse").sideNav();
@@ -49,6 +46,7 @@ $(document).ready( function () {
         $buttonGroup.on( 'click', 'button', function() {
             $('.active_button').removeClass('active_button');
             var btnClass = $(this).attr('data-filter');
+            cardResize();
             $('button[data-filter="' + btnClass + '"]').addClass('active_button');
         });
     });
