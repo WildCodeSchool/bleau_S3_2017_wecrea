@@ -155,8 +155,13 @@ nav ul li a {
     height: 55px!important;
 }
 
+nav ul li:nth-child(5){
+    line-height: 100px;
+    color: black;
+}
+
 .nav_custom ul{
-    top: 57px;
+    top: 108px;
 }
 
 nav ul a:hover {
@@ -216,6 +221,13 @@ nav ul a:hover {
     display: none;
 }
 
+/* ADMIN WORKS list */
+
+.img_works {
+    max-width: 100%;
+    max-height: 150px;
+}
+
 /* ADMIN HOME */
 
 .link-box {
@@ -233,6 +245,10 @@ nav ul a:hover {
 
 .link-box:hover {
     box-shadow: 0px 0px 4px #313131;
+}
+
+.ad_home {
+    margin-top: 20px;
 }
 
 /* CLIENT LAYOUT */
@@ -510,7 +526,8 @@ main {
 
 /* Artist list pages */
 
-.container-custom-artists{
+.container-custom-artists,
+.container-custom-search{
     margin-top: 75px;
 }
 
@@ -542,15 +559,71 @@ main {
 }
 
 /* ----- Basket ----- */
+form[name="basket"] {
+    display: block;
+    position: relative;
+}
+
+.prods {
+    display: block;
+    position: relative;
+    height:100%;
+}
+
+.prod {
+    display: block;
+    position: relative;
+    height:100%;
+    border-bottom: 1px solid lightgray;
+    margin-top: 10px;
+}
+
+.prod:nth-child(1) {
+    margin-top: 0;
+}
+
 .prod_img {
-    width: 140px!important;
-    float: left;
+    max-width: 100%;
+    max-height: 100%;
     padding-right: 20px;
 }
 
 .prod_content {
     width: 30px!important;
     border-bottom: none!important;
+}
+
+.prod_quant input{
+    height: 20px;
+    margin-bottom: 0;
+}
+
+.prod_title {
+    font-weight: bold;
+    font-size: 1.5em
+}
+
+.prod_title p {
+    margin-top: 0;
+}
+
+.prod_caract {
+    margin-bottom: 20px;
+}
+
+.prod_price {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding-top: 10px;
+}
+
+.delete_basket {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
 
 /* ----- Concept page ----- */
@@ -568,10 +641,118 @@ main {
     width: 25%;
 }
 
+/********** ACTU PAGE ***********/
+
+.actu-user{
+    width: 70%;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #c8c8c8;
+    margin-bottom: 15px;
+}
+
+#title-actu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0088CC;
+    height: 80px;
+}
+
+.actu-user img{
+    width: 100%;
+}
+
+.actu-user .content{
+    margin-bottom: 20px;
+}
+
+.actu-user i{
+    background: #eee;
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+@media all and (max-width: 1024px){
+    .actu-user {
+        width: 80%;
+    }
+}
+
+@media all and (max-width: 768px){
+    .actu-user {
+        width: 100%;
+    }
+}
+
+
 /* ----- Profil Page ----- */
 #formUser {
     display: none;
 }
+
+/* Search Bar */
+
+form[name='search']{
+    position: relative;
+    bottom: 0;
+}
+
+form[name='search'] i{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+form[name='search'] input{
+    height: 30px;
+}
+
+form[name="search"] input[type='search']{
+    width: 15vw;
+}
+
+.button-search{
+    background: transparent;
+    border: none;
+}
+
+nav ul li .suggest {
+    color: #fff;
+    position: absolute;
+    top: 70px;
+    width: 15vw;
+    text-align: left;
+    height: auto;
+    box-shadow: 0 0 5px #a8a8a8;
+}
+
+@media all and (max-width: 1024px){
+    form[name='search'] input[type='search']{
+        width: 70%;
+    }
+
+    .suggest{
+        width: 70%;
+    }
+}
+
+@media all and (max-width: 640px){
+    form[name='search']{
+        width: 90%;
+    }
+}
+
+form[name='search'] input[type="submit"] {
+    background: #1e90ff;
+    color: #fff;
+    outline: none;
+    border: none;
+}
+
 .title_list_profil{
     text-decoration: underline;
 }

@@ -10,6 +10,10 @@ we_crea_concept:
     path: /concept
     defaults: {_controller: "WeCreaBundle:User:concept"}
 
+we_crea_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:User:actu"}
+
 we_crea_works:
     path: /works
     defaults: {_controller: "WeCreaBundle:User:worksShow"}
@@ -34,6 +38,10 @@ we_crea_basket:
     path: /basket
     defaults: {_controller: "WeCreaBundle:User:showBasket"}
 
+we_crea_basket_address:
+    path: /basket/address
+    defaults: {_controller: "WeCreaBundle:User:"}
+
 we_crea_add_basket:
     path: /work/basket/add
     defaults: {_controller: "WeCreaBundle:User:addBasket"}
@@ -56,3 +64,8 @@ we_crea_delete_fav:
 we_crea_favs:
     path: /favs
     defaults: {_controller: "WeCreaBundle:User:showFavs"}
+
+we_crea_search:
+    path: /search
+    defaults:
+        _controller: "WeCreaBundle:User:search"

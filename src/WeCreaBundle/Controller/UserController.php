@@ -144,12 +144,7 @@ class UserController extends Controller
         $quant = $req->get('quantity');
         $pBasket = $session->get('basket');
 
-        if (isset($pBasket[$idWork])){
-            $pBasket[$idWork][$carWork] += $quant;
-        }
-        else {
-            $pBasket [$idWork][$carWork] = $quant;
-        }
+        $pBasket [$idWork][$carWork] = $quant;
 
         $session->set('basket', $pBasket);
 
@@ -184,22 +179,45 @@ class UserController extends Controller
         $bCount = $container->get('app.basket')->countBasket($session);
         $fCount = $container->get('favs')->countFavs($session);
 
-        $works = $em->getRepository('WeCreaBundle:Work');
+        $Works = $em->getRepository('WeCreaBundle:Work');
+        $Caracts = $em->getRepository('WeCreaBundle:Caract');
+
         $pBasket = $session->get('basket');
+
         if(isset($pBasket)) {
-            foreach ($pBasket as $idWork => $caract) {
-                $work = $works->findOneById($idWork);
-                $bWorks [] = array(
-                    'work' => $work,
-                    'quant' => $caract
-                );
+            foreach ($pBasket as $idWork => $bCaracts)
+            {
+                $work = $Works->findOneById($idWork);
+
+                foreach ($bCaracts as $bCaract => $quant)
+                {
+                    $caract = $Caracts->findOneById($bCaract);
+
+                    $works [$idWork] = array(
+                        'caract' => $caract,
+                        'quant' => $quant
+                    );
+                }
+
+                $works [$idWork] ['work'] = $work;
             }
+        }
+        else {
+            $works=null;
         }
 
         return $this->render('@WeCrea/User/basket/summary.html.twig', array(
-            'works' => $bWorks,
+            'works' => $works,
             'bCount' => $bCount,
             'fCount' => $fCount
+        ));
+    }
+
+    public function basketAddressAction() {
+        $user = $this->getUser();
+
+        return $this->render('@WeCrea/User/basket/addressConfirm.html.twig', array(
+            'user' => $user
         ));
     }
 
@@ -312,6 +330,63 @@ class UserController extends Controller
         return $this->render('@WeCrea/User/profil/profil.html.twig', array(
             'user' => $user,
             'formUser' => $formUser->createView(),
+        ));
+    }
+
+    public function searchAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        $exp = htmlspecialchars($request->request->get('search'));
+
+        if($exp != NULL) {
+            $resultsWorks = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpWorks($exp);
+            $resultsArtists = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpArtists($exp);
+
+            if (!empty($resultsWorks || !empty($resultsArtists))) {
+
+                foreach ($resultsWorks as $result) {
+                    $matchingWorks[$result['id']] = $result['id'];
+                }
+
+                foreach ($resultsArtists as $result) {
+                    $matchingWorks[$result['id']] = $result['id'];
+                }
+
+                if ($request->isXmlHttpRequest()) {
+                    $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksByIds($matchingWorks);
+                    return new JsonResponse($works);
+                } else {
+                    $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksAllFieldsByIds($matchingWorks);
+                    return $this->render('WeCreaBundle:User:search.html.twig', array(
+                        'works' => $works,
+                        'exp' => $exp
+                    ));
+                }
+            } else {
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse('Aucune suggestion');
+                } else {
+                    return $this->render('WeCreaBundle:User:search.html.twig', array(
+                        'response' => "Aucun article ne correspond à votre recherche"
+                    ));
+                }
+            }
+        }
+        else{
+            return $this->render('WeCreaBundle:User:search.html.twig', array(
+                'response' => "Aucun article ne correspond à votre recherche"
+            ));
+        }
+    }
+
+    public function actuAction(){
+        $em = $this->getDoctrine()->getManager();
+        $actu = $em->getRepository('WeCreaBundle:Actu')->findBy([], array(
+            'date' => 'DESC'
+    ));
+
+        return $this->render('WeCreaBundle:User:actu.html.twig', array(
+            'actus' => $actu
         ));
     }
 }
