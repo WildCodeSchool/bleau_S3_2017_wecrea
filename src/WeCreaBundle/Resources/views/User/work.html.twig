@@ -32,11 +32,11 @@
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <div class="row">
                             <p class="col m3">
-                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{{ caracts[0].quantity }}">
+                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caract is defined %} {{ caracts[0].quantity }} {% endif %}">
                                 <input type="hidden" name="work_id" value="{{ work.id }}">
                             </p>
                             <p class="col m7 offset-m2">
-                                Restant : <span id="quant_max">{{ caracts[0].quantity }}</span>
+                                Restant : <span id="quant_max">{% if caract is defined %} {{ caracts[0].quantity }} {% endif%}</span>
                             </p>
                         </div>
                         <div class="row">
@@ -81,7 +81,8 @@
                 gallery:'gallery_01',
                 cursor: 'pointer',
                 galleryActiveClass: 'active',
-//                scrollZoom : true,
+                lensSize : 100,
+                //scrollZoom : true,
                 responsive: true
             }
         );

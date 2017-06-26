@@ -15,9 +15,6 @@ WeCreaBundle\Entity\Artist:
         firstname:
             type: string
             length: 255
-        localization:
-            type: string
-            length: 255
         expertise:
             type: string
             length: 255

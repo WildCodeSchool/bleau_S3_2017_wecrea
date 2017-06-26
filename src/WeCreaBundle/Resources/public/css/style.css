@@ -59,10 +59,9 @@ body {
 #images-artist-check img,
 #images-work-check img,
 #add-image-work-check img{
-    margin-top: 10px;
     width: 30%;
     display: block;
-    margin: 0 auto;
+    margin: 10px auto 0 auto;
 }
 
 #images-artist-check button,
@@ -155,7 +154,7 @@ nav ul li a {
     height: 55px!important;
 }
 
-nav ul li:nth-child(5){
+nav ul li:nth-child(6){
     line-height: 100px;
     color: black;
 }
@@ -170,7 +169,20 @@ nav ul a:hover {
     text-decoration: underline;
 }
 
-#profil_icon {
+.side-nav-custom{
+	height: 100%;
+}
+
+.side-nav-custom li{
+	height: 60px!important;
+	margin: 0;
+}
+
+.side-nav-custom li:first-child{
+	margin: 30px 0 0 0;
+}
+
+#profil_iconprofil_icon {
     margin-left: 40px;
 }
 
@@ -200,9 +212,17 @@ nav ul a:hover {
 
 @media screen and (max-width: 600px) {
     .brand-logo img {
-        height: 56px !important;
+        height: 50px !important;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .brand-logo img {
+        height: 40px !important;
+    }
+}
+
+
 
 /* ADMIN CARROUSEL*/
 
@@ -273,10 +293,17 @@ nav ul a:hover {
 
 #moreLink {
     color: black!important;
+    cursor: pointer;
 }
 
-.logo_container {
+.logo_container,{
     height: 100%!important;
+    display: flex!important;
+    align-items: center!important;
+}
+
+.button-collapse-custom{
+	display: none;
 }
 
 .bar_footer {
@@ -344,18 +371,49 @@ main {
 }
 
 /* WORKS CLIENT */
-.cards {
+
+/** For artist **/
+.cards{
     width:80%;
-    margin: auto;
+    margin: 0 auto 100px auto;
     display: flex;
-    margin-bottom: 100px;
     justify-content: space-around;
     min-height: calc(100vh - 195px);
 }
 
-.card_custom {
+/** For works **/
+.cardz{
+    width:80%;
+    min-height: calc(100vh - 195px);
+    margin: 0 auto 50px auto;
+}
+
+.card_custom_artist {
     width: 30%;
     padding: 0 0.5%;
+}
+
+.card_custom_work{
+    width: 31.33%;
+    margin: 5vh 1%;
+}
+
+@media all and (max-width: 992px){
+    .cardz{
+        width: 100%;
+    }
+
+    .card_custom_work{
+        width: 48%;
+        margin: 2vh .5%;
+    }
+}
+
+@media all and (max-width: 768px){
+    .card_custom_work{
+        width: 96%;
+        margin: 2vh 2%;
+    }
 }
 
 .iso_button {
@@ -369,6 +427,13 @@ main {
     margin-top: 20px;
     padding-bottom: 3px;
     background-color: rgb(234, 235, 237);
+}
+
+@media all and (max-width: 1024px){
+    .nav_works {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .tous_btn {
@@ -415,7 +480,6 @@ main {
     }
 }
 
-
 .card-image_custom {
     position: relative;
     height: 70%;
@@ -423,7 +487,11 @@ main {
 }
 
 .card-content_custom {
-    padding: 0!important;
+    padding: 10px!important;
+}
+
+.card-content_custom p{
+    margin: 0;
 }
 
 .fav_btn,
@@ -553,7 +621,7 @@ main {
 
 .col-description-artist{
     background: #fafafa;
-    margin: 10px 0 10px 0;
+    margin: 10px 0;
 }
 
 /* ----- Basket ----- */
@@ -705,6 +773,7 @@ form[name='search'] i{
 
 form[name='search'] input{
     height: 30px;
+    color: black;
 }
 
 form[name="search"] input[type='search']{
@@ -717,6 +786,31 @@ form[name="search"] input[type='search']{
     border: none;
 }
 
+#validation-search{
+    background: black;
+    border: none;
+    color: #fff;
+}
+
+@media all and (max-width: 1024px){
+	.button-collapse-custom{
+		 display: flex!important;
+		 align-items: center!important;
+	}
+
+    form[name="search"]{
+        display: flex;
+        width: 85%;
+        margin: 0 auto;
+        justify-content:flex-start;
+    }
+
+    form[name="search"] input[type="search"]{
+        width: calc(95% - 20px);
+        margin: 0 5px 0 0;
+    }
+}
+
 nav ul li .suggest {
     color: #fff;
     position: absolute;
@@ -727,27 +821,9 @@ nav ul li .suggest {
     box-shadow: 0 0 5px #a8a8a8;
 }
 
-@media all and (max-width: 1024px){
-    form[name='search'] input[type='search']{
-        width: 70%;
-    }
-
-    .suggest{
-        width: 70%;
-    }
-}
-
-@media all and (max-width: 640px){
-    form[name='search']{
-        width: 90%;
-    }
-}
-
-form[name='search'] input[type="submit"] {
-    background: #1e90ff;
-    color: #fff;
-    outline: none;
-    border: none;
+nav ul li .suggest li{
+	height: 35px!important;
+	line-height: 35px;
 }
 
 .title_list_profil{
