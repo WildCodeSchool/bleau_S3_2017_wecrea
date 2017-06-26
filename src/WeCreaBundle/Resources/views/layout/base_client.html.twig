@@ -111,6 +111,16 @@
 {% block javascripts %}
     <script type="text/javascript">
 
+        {% if app.request.get('_route') == 'we_crea_homepage' %}
+            var $footer = $('footer');
+            
+            $footer.css({
+                'position' : 'absolute',
+                'bottom' : '0',
+                'width' : '100vw'
+            });
+        {% endif %}
+
         /************ SUGGESTIONS MOTEUR DE RECHERCHE ***************/
 
        'use strict';
