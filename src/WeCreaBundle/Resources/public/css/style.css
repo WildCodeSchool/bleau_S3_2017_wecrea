@@ -296,7 +296,7 @@ nav ul a:hover {
     cursor: pointer;
 }
 
-.logo_container,{
+.logo_container{
     height: 100%!important;
     display: flex!important;
     align-items: center!important;
@@ -728,7 +728,6 @@ form[name="basket"] {
     padding: 0;
     width: 100%;
     overflow: hidden;
-    -webkit-tra
 }
 
 .figure-zoom{
