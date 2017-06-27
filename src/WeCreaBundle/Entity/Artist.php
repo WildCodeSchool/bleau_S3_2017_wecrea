@@ -27,11 +27,6 @@ class Artist
     /**
      * @var string
      */
-    private $localization;
-
-    /**
-     * @var string
-     */
     private $expertise;
 
     /**
@@ -109,30 +104,6 @@ class Artist
     public function getFirstname()
     {
         return $this->firstname;
-    }
-
-    /**
-     * Set localization
-     *
-     * @param string $localization
-     *
-     * @return Artist
-     */
-    public function setLocalization($localization)
-    {
-        $this->localization = $localization;
-
-        return $this;
-    }
-
-    /**
-     * Get localization
-     *
-     * @return string
-     */
-    public function getLocalization()
-    {
-        return $this->localization;
     }
 
     /**

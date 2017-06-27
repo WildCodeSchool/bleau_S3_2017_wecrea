@@ -18,7 +18,7 @@ $(document).ready( function () {
     });
 
 // init Isotope
-    var $grid = $('.cards').isotope({
+    var $grid = $('.cardz').isotope({
         itemSelector: '.iso_item',
         layoutMode: 'fitRows'
     });

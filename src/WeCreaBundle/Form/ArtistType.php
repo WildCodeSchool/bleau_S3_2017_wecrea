@@ -21,7 +21,6 @@ class ArtistType extends AbstractType
         $builder
             ->add('name')
             ->add('firstname')
-            ->add('localization')
             ->add('expertise')
             ->add('biography');
     }

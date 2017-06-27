@@ -15,10 +15,6 @@
         {% endfor %}
         <div class="row">
             <div class="col s12 col-description-artist">
-                <p><b>{{ artist.name }} {{ artist.firstname }} : </b> {{ artist.localization }}</p>
-            </div>
-
-            <div class="col s12 col-description-artist">
                 <p><b>Qualité : </b> {{ artist.expertise }}</p>
             </div>
             <div class="col s12 col-description-artist">
@@ -30,24 +26,27 @@
             <h4> Les oeuvres de l'artiste </h4>
             <div class="cards">
             {% for work in artist.works %}
-                <div class="card card_custom_artists cardResizer">
+                <div class="card card_custom_artist cardResizer">
                     {% if work.images|first != false %}
-                        <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~artist.images|first.url ) }} ') center / cover ">
-                        </div>
+                        <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
+                            <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~artist.images|first.url ) }} ') center / cover ">
+                            </div>
+                        </a>
                     {% else %}
-                        <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/soap.jpg' ) }} ') center / cover ">
-                        </div>
+                        <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
+                            <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/soap.jpg' ) }} ') center / cover ">
+                            </div>
+                        </a>
                     {% endif %}
                     <div class="card-content card-content_custom">
                         <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
-                        <p><a href="#"></a></p>
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
                         <b>{{ work.title }}</b>
                         <p>{{ work.description[0:50] }}</p>
                         <p></p>
-                        <a href="#{#{{ path('we_crea_work_########', {'id' : work.id} ) }} #}"> En savoir plus </a>
+                        <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
                     </div>
                 </div>
             {% endfor %}

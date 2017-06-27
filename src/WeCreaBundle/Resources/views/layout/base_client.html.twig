@@ -5,9 +5,10 @@
             <nav class="nav_custom">
                 <div class="nav-wrapper">
                     <a href="{{ path('we_crea_homepage') }}" class="brand-logo logo_container"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse button-collapse-custom"><i class="material-icons">menu</i></a>
 
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="{{ path('we_crea_homepage') }}">Accueil</a></li>
                         <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
@@ -20,37 +21,36 @@
                                     <i class="material-icons right">search</i>
                                 </button>
                             </form>
-                        <li id="profil_icon">
+                          <li id="profil_icon">
                             <a href="{{ path('we_crea_user_profil') }}">
                                 <i class="material-icons">person</i>
                             </a>
                         </li>
-                        <li id="basket">
-                            <a href="{{ path('we_crea_basket') }}">
+                        <li>
+                            <a href="{{ path('we_crea_basket') }}" class="valign-wrapper">
                                 <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
+                                Panier
                             </a>
                         </li>
-                        <li id="favs">
+                        <li>
                             <a href="{{ path('we_crea_favs') }}">
                                 <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="">
                             </a>
                         </li>
                     </ul>
 
-                    <ul id="mobile-demo" class="side-nav">
+                    <ul id="mobile-demo" class="side-nav side-nav-custom">
+						<li>
+                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
+                                <input type="search" name="search" class="search" placeholder="Recherche"/>
+                                <input type="submit" value="OK" id="validation-search"/>
+                            </form>
+                        </li>
+                        <li><a href="{{ path('we_crea_homepage') }}">Accueil</a></li>
                         <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
                         <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
                         <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
                         <li><a href="{{ path('we_crea_actu') }}">Actualités</a></li>
-                        <li>
-                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
-                                <input type="search" name="search" class="search" placeholder="Recherche"/>
-                                <ul class="suggest"></ul>
-                                <button type="submit" class="button-search">
-                                    <i class="material-icons right">search</i>
-                                </button>
-                            </form>
-                        </li>
                         <li id="profil_icon">
                             <a href="{{ path('we_crea_user_profil') }}">
                                 <i class="material-icons">person</i>
@@ -111,166 +111,155 @@
 {% block javascripts %}
     <script type="text/javascript">
 
+        {% if app.request.get('_route') == 'we_crea_homepage' %}
+            var $footer = $('footer');
+
+            $footer.css({
+                'position' : 'absolute',
+                'bottom' : '0',
+                'width' : '100vw'
+            });
+        {% endif %}
+	
+
         /************ SUGGESTIONS MOTEUR DE RECHERCHE ***************/
 
        'use strict';
 
-        var searchBar = document.getElementsByClassName('search');
+       if(window.innerWidth >= 1024) {
+           var searchBar = document.getElementsByClassName('search');
 
-        var suggestElt, liElt, timer, search, formSearch, p0, p1, perf;
-        var t = [];
+           var suggestElt, liElt, timer, search, formSearch, p0, p1, perf;
+           var t = [];
 
-        function cleanUp(){
-            while (suggestElt.firstChild) {
-                suggestElt.firstChild.removeEventListener('mouseover', blueBackground);
-                suggestElt.firstChild.removeEventListener('mouseleave', whiteBackground);
-                suggestElt.firstChild.removeEventListener('click', searchBarValue);
-                suggestElt.removeChild(suggestElt.firstChild);
-            }
-        }
+           function cleanUp() {
+               while (suggestElt.firstChild) {
+                   suggestElt.firstChild.removeEventListener('mouseover', blueBackground);
+                   suggestElt.firstChild.removeEventListener('mouseleave', whiteBackground);
+                   suggestElt.firstChild.removeEventListener('click', searchBarValue);
+                   suggestElt.removeChild(suggestElt.firstChild);
+               }
+           }
 
-        function ajaxGetResults(url, search, callback){
-            var req;
-            if(window.XMLHttpRequest){
-                req = new XMLHttpRequest();
-            }
-            else{
-                req = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            req.open('post', url, true);
-            req.addEventListener('load', function(){
-                if(req.status >= 200 && req.status < 400){
-                    p1 = performance.now();
-                    perf = 'Trouvé en ' + ((p1 - p0)/1000).toFixed(2) + ' s';
-                    callback(req.responseText);
-                }
-            });
-            req.addEventListener('error', function(){
-                console.log('error');
-            });
-            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            req.send("search="+search);
-        }
+           function ajaxGetResults(url, search, callback) {
+               var req;
+               if (window.XMLHttpRequest) {
+                   req = new XMLHttpRequest();
+               }
+               else {
+                   req = new ActiveXObject("Microsoft.XMLHTTP");
+               }
+               req.open('post', url, true);
+               req.addEventListener('load', function () {
+                   if (req.status >= 200 && req.status < 400) {
+                       p1 = performance.now();
+                       perf = 'Trouvé en ' + ((p1 - p0) / 1000).toFixed(2) + ' s';
+                       callback(req.responseText);
+                   }
+               });
+               req.addEventListener('error', function () {
+                   console.log('error');
+               });
+               req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+               req.send("search=" + search);
+           }
 
-        function blueBackground(){
-            this.style.cursor = 'pointer';
-            this.style.backgroundColor = '#1E90FF';
-            this.style.color = '#fff';
-        }
+           function blueBackground() {
+               this.style.cursor = 'pointer';
+               this.style.backgroundColor = '#1E90FF';
+               this.style.color = '#fff';
+           }
 
-        function whiteBackground(){
-            this.style.backgroundColor = '#fff';
-            this.style.color = 'black';
-        }
+           function whiteBackground() {
+               this.style.backgroundColor = '#fff';
+               this.style.color = 'black';
+           }
 
-        function searchBarValue(){
-            searchBar.value = this.textContent;
-            cleanUp();
-        }
+           function searchBarValue() {
+               searchBar.value = this.textContent;
+               cleanUp();
+           }
 
-        function styleSuggestions(){
-            for (var i = 0; i < suggestElt.childNodes.length; ++i) {
-                suggestElt.childNodes[i].addEventListener('mouseover', blueBackground);
-                suggestElt.childNodes[i].addEventListener('mouseleave', whiteBackground);
-                suggestElt.childNodes[i].addEventListener('click', searchBarValue);
-            }
-        }
+           function styleSuggestions() {
+               for (var i = 0; i < suggestElt.childNodes.length; ++i) {
+                   suggestElt.childNodes[i].addEventListener('mouseover', blueBackground);
+                   suggestElt.childNodes[i].addEventListener('mouseleave', whiteBackground);
+                   suggestElt.childNodes[i].addEventListener('click', searchBarValue);
+               }
+           }
 
-        function getResults(e){
+           function getResults(e) {
 
-            searchBar = this;
-            formSearch = this.parentNode;
-            suggestElt = this.nextElementSibling;
+               searchBar = this;
+               formSearch = this.parentNode;
+               suggestElt = this.nextElementSibling;
 
-            function showSuggestions(results){
-                results = JSON.parse(results);
-                var resultsLength;
-               
-                if(results != 'Aucune suggestion') {
+               function showSuggestions(results) {
+                   results = JSON.parse(results);
+                   var resultsLength;
 
-                    cleanUp();
+                   if (results != 'Aucune suggestion') {
 
-                    results.length > 11 ? resultsLength = 12 : resultsLength = results.length + 1;
+                       cleanUp();
 
-                    for (var i = 0; i < resultsLength; ++i) {
-                        liElt = document.createElement('li');
-                        liElt.style.width = "100%";
-                        liElt.style.position = "relative";
-                        liElt.style.textIndent = "10px";
-                        liElt.style.textAlign = "left";
-                        liElt.style.color = "black";
-                        liElt.style.backgroundColor = "#fff";
-                        liElt.style.fontSize = ".9em";
+                       results.length > 11 ? resultsLength = 12 : resultsLength = results.length + 1;
 
-                        if(window.innerWidth < 1024){
-                            liElt.style.height = "35px!important";
-                            liElt.style.lineHeight = "35px!important";
-                        }
-                        else{
-                            liElt.style.height = "30px!important";
-                            liElt.style.lineHeight = "30px!important";
-                        }
+                       for (var i = 0; i < resultsLength; ++i) {
+                           liElt = document.createElement('li');
+                           liElt.style.width = "100%";
+                           liElt.style.position = "relative";
+                           liElt.style.textIndent = "10px";
+                           liElt.style.textAlign = "left";
+                           liElt.style.color = "black";
+                           liElt.style.backgroundColor = "#fff";
+                           liElt.style.fontSize = ".9em";
+						   liElt.textContent = results[i].title;
+                           suggestElt.appendChild(liElt);
+                       }
+                   }
+                   else {
 
-                        i === resultsLength - 1 ?
-                            (liElt.textContent = perf,
-                                    liElt.style.textAlign = 'center',
-                                    liElt.style.fontSize = '.85em',
-                                    liElt.style.fontWeight = 'bold',
-                                    styleSuggestions()
-                            ) :
+                       cleanUp();
 
-                            liElt.textContent = results[i].title;
+                       liElt = document.createElement('li');
+                       liElt.style.width = "100%";
+                       liElt.style.textIndent = "10px";
+                       liElt.style.color = "black";
+                       liElt.style.backgroundColor = '#fff';
+                       liElt.textContent = results;
+                       suggestElt.appendChild(liElt);
+                   }
+               }
 
+               function request() {
+                   var search = searchBar.value;
+                   if (search.trim().length > 0) {
+                       ajaxGetResults("{{ path('we_crea_search') }}", search, showSuggestions);
+                   }
+                   if (search.length === 0) {
+                       setTimeout(function () {
+                           cleanUp();
+                       }, 300);
+                   }
+               }
 
-                        suggestElt.appendChild(liElt);
-                    }
-                }
-                else {
+               t.push(new Date().getTime());
 
-                    cleanUp();
+               if (t.length > 1) {
+                   if (t[1] < t[0] + 349) {
+                       window.clearTimeout(timer);
+                   }
+                   timer = setTimeout(function () {
+                       request();
+                   }, 350);
+                   t = [t[1]];
+               }
+           }
 
-                    liElt = document.createElement('li');
-                    liElt.style.width = "100%";
-                    liElt.style.height = "30px!important";
-                    liElt.style.lineHeight = "30px!important";
-                    liElt.style.textIndent = "10px";
-                    liElt.style.color = "black";
-                    liElt.style.backgroundColor = '#fff';
-
-                    liElt.textContent = results;
-                    suggestElt.appendChild(liElt);
-                }
-            }
-
-            function request() {
-                var search = searchBar.value;
-                if (search.trim().length > 0) {
-                    ajaxGetResults("{{ path('we_crea_search') }}", search, showSuggestions);
-                }
-                if (search.length === 0) {
-                    setTimeout(function(){
-                        cleanUp();
-                    }, 300);
-                }
-            }
-
-            t.push(new Date().getTime());
-
-            if(t.length>1){
-                if(t[1] < t[0] + 349){
-                    window.clearTimeout(timer);
-                }
-                timer = setTimeout(function(){
-                    request();
-                    p0 = performance.now();
-                }, 350);
-                t = [t[1]];
-            }
-        }
-
-        for(var i = 0, c = searchBar.length; i < c; ++i){
-            searchBar[i].addEventListener('input', getResults);
-        }
+           for (var i = 0, c = searchBar.length; i < c; ++i) {
+               searchBar[i].addEventListener('input', getResults);
+           }
+       }
     </script>
 {% endblock %}

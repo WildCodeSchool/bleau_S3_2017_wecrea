@@ -4,7 +4,7 @@
     <main>
         {% include '@WeCrea/layout/nav_works.html.twig' %}
 
-        <div class="cards" style="height: 700px!important;">
+        <div class="cardz" style="height: 700px!important;">
             <div class="buttons filters-button-group row">
                 <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
                     <button class="tous_btn" data-filter=".Peinture">Peinture</button>
@@ -22,12 +22,12 @@
                     <button class="tous_btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
                 </div>
                 <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Ceramique">Céramique</button>
+                    <button class="tous_btn" data-filter=".Curiosités">Curiosités</button>
                 </div>
             </div>
-
             {% for work in works %}
-                <div class="card card_custom iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                <div class="card card_custom_work iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                         <div class="card-image waves-effect waves-block waves-light card-image_custom"
                         {% if work.images[0] is defined %}
@@ -47,13 +47,15 @@
                     </a>
                     <div class="card-content card-content_custom">
                         <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
-                        <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
+                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
+                        </span>
+                        <p>
+                            <a href="{{ path('we_crea_artist', {id : work.artist.id} ) }}" class="artist">{{ work.artist.name }}</a>
+                        </p>
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                        <p>{{ work.technic }} {{ work.nature.name }}</p>
-                        <p>Description</p>
+                        <p> <b>Description : </b>{{ work.description }} </p>
                     </div>
                 </div>
             {% endfor %}
