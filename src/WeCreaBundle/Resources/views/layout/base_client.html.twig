@@ -152,8 +152,6 @@
                req.open('post', url, true);
                req.addEventListener('load', function () {
                    if (req.status >= 200 && req.status < 400) {
-                       p1 = performance.now();
-                       perf = 'Trouvé en ' + ((p1 - p0) / 1000).toFixed(2) + ' s';
                        callback(req.responseText);
                    }
                });
@@ -197,15 +195,16 @@
 
                function showSuggestions(results) {
                    results = JSON.parse(results);
+                   console.log(results);
                    var resultsLength;
 
                    if (results != 'Aucune suggestion') {
 
                        cleanUp();
 
-                       results.length > 11 ? resultsLength = 12 : resultsLength = results.length + 1;
+                       results.length > 11 ? resultsLength = 12 : resultsLength = results.length;
 
-                       for (var i = 0; i < resultsLength; ++i) {
+                       for (var i = 0; i < resultsLength ; ++i) {
                            liElt = document.createElement('li');
                            liElt.style.width = "100%";
                            liElt.style.position = "relative";
@@ -216,6 +215,9 @@
                            liElt.style.fontSize = ".9em";
 						   liElt.textContent = results[i].title;
                            suggestElt.appendChild(liElt);
+                           if(i === resultsLength - 1){
+                               styleSuggestions();
+                           }
                        }
                    }
                    else {

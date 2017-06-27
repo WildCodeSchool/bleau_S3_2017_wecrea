@@ -7,7 +7,10 @@
             {% for actu in actus %}
                 <div class="actu-user">
                     <h4>{{ actu.title }}</h4>
-                    <img src="{{ asset('images/'~actu.images.url) }}"/>
+                    <figure class="figure-no-zoom">
+                        <div class="dezoom"></div>
+                        <img src="{{ asset('images/'~actu.images.url) }}" class="image-no-zoom"/>
+                    </figure>
                     <div class="content">
                     {% autoescape %}
                         {{ actu.content|raw }}
@@ -18,4 +21,73 @@
             {% endfor %}
         </div>
     <div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+if(window.innerWidth > 768){
+
+    var $figureElts = $('.figure-no-zoom').find('img');
+    var $bodyElt = $('body');
+
+    $figureElts.on("mouseover", showPointer);
+
+    function showPointer(){
+        $(this).css({
+            'cursor' : 'pointer',
+            'transform' : 'scale(1.1)',
+            '-moz-transform' : 'scale(1.1)',
+            '-webkit-transform' : 'scale(1.1)',
+            '-moz-transition' : '.5s',
+            '-webkit-transition' : '.5s'
+        });
+    }
+
+    $figureElts.mouseleave(unshowPointer);
+
+    function unshowPointer(){
+        $(this).css({
+            'transform' : 'scale(1)',
+            '-moz-transform' : 'scale(1)',
+            '-webkit-transform' : 'scale(1)'
+        });
+    }
+
+    $figureElts.click(zoomIn);
+
+    function zoomIn(){
+        $(this).off('click', zoomIn);
+        $(this).off('mouseover', showPointer);
+        $(this).off('mouseleave', unshowPointer);
+
+        $figureElt = $(this).parent();
+        $img = $(this);
+        $dezoom = $(this).prev();
+
+        $bodyElt.css("overflow" , "hidden");
+        $figureElt.toggleClass('figure-zoom');
+        $img.toggleClass('image-zoomed-in');
+        $img.css({
+            'cursor' : 'initial',
+            'transform' : 'scale(1)',
+            '-moz-transform' : 'scale(1)',
+            '-webkit-transform' : 'scale(1)',
+            'transition' : '0s',
+            '-moz-transition' : '0s',
+            '-webkit-transition' : '0s'
+        });
+
+
+            $dezoom.click(function(){
+                $bodyElt.css("overflow" , "visible");
+                $figureElt.toggleClass('figure-zoom');
+                $img.toggleClass('image-zoomed-in');
+                $img.css('cursor' , 'pointer');
+                $img.on("click", zoomIn);
+                $img.on("mouseover", showPointer);
+                $img.on("mouseleave", unshowPointer);
+            });
+        }
+}
+</script>
 {% endblock %}
