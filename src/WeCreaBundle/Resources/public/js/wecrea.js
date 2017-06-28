@@ -85,6 +85,9 @@ $(document).ready( function () {
         $(form).slideToggle(200);
     });
 
+    // Materialize Modal
+    $('.modal').modal();
+
     // Materialize Tabs
     $('ul.tabs').tabs();
 
