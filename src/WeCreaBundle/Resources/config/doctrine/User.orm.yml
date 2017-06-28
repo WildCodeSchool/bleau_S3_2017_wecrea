@@ -55,4 +55,6 @@ WeCreaBundle\Entity\User:
             type: string
             length: 255
 
-
+    manyToMany:
+        commands:
+            targetEntity: WeCreaBundle\Entity\Command

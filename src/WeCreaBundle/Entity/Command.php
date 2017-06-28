@@ -358,4 +358,33 @@ class Command
     {
         return $this->works;
     }
+    /**
+     * @var \WeCreaBundle\Entity\Status
+     */
+    private $status;
+
+
+    /**
+     * Set status
+     *
+     * @param \WeCreaBundle\Entity\Status $status
+     *
+     * @return Command
+     */
+    public function setStatus(\WeCreaBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \WeCreaBundle\Entity\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }
