@@ -283,6 +283,7 @@ class UserController extends Controller
         $command->setTownfact($user->getTown1());
         $command->setTowndel($user->getTown2());
         $command->setMail($user->getEmail());
+
         $date = new \DateTime();
         $command->setDate($date);
         $command->setNb(uniqid().$date->format('dmY'));
@@ -310,12 +311,26 @@ class UserController extends Controller
 
         $em->flush();
 
-        $basket = [];
-        $session->set('basket', $basket);
+        $works = $command->getWorks();
+        $total = 0;
 
-        return $this->render('@WeCrea/User/basket/payement.html.twig');
+        foreach ($works as $work) {
+            $price = $work->getPrice() * $work->getQuant();
+            $total += $price;
+        }
+
+        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
+
+        $signature = sha1($signature);
+        return $this->render('@WeCrea/User/basket/payement.html.twig', array(
+            'commands' => $command,
+            'total' => $total,
+            'signature' => $signature,
+            'idTrans' => $id_trans,
+        ));
     }
-
     /* ----- Add Favs -----*/
     public function addFavAction(Request $request) {
         $session = $this->get('session');

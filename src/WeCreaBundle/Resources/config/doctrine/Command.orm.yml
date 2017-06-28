@@ -45,4 +45,8 @@ WeCreaBundle\Entity\Command:
             targetEntity: WeCreaBundle\Entity\WorkPurchased
             cascade: ['all']
 
+    manyToOne:
+        status:
+            targetEntity: WeCreaBundle\Entity\Status
+
     lifecycleCallbacks: {  }
