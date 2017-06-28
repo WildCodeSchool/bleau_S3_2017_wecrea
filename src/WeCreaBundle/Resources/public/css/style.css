@@ -296,7 +296,7 @@ nav ul a:hover {
     cursor: pointer;
 }
 
-.logo_container,{
+.logo_container{
     height: 100%!important;
     display: flex!important;
     align-items: center!important;
@@ -710,10 +710,9 @@ form[name="basket"] {
 
 .actu-user{
     width: 70%;
-    margin: 0 auto;
+    margin: 0 auto 15px auto;
     padding: 5px;
     border: 1px solid #c8c8c8;
-    margin-bottom: 15px;
 }
 
 #title-actu{
@@ -724,8 +723,45 @@ form[name="basket"] {
     height: 80px;
 }
 
-.actu-user img{
+.figure-no-zoom{
+    margin: 0;
+    padding: 0;
     width: 100%;
+    overflow: hidden;
+}
+
+.figure-zoom{
+    position: fixed;
+    /* Must be > 997 for nav menu zIndex = 997 !! */
+    z-index: 1000!important;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    background: rgba(0,0,0,.7);
+}
+
+.image-no-zoom{
+    width: 100%
+}
+
+.image-zoomed-in{
+    width: auto;
+    height: 100vh;
+    display: block;
+    margin: 0 auto;
+}
+
+.dezoom{
+    background: url('../pics/dezoom.png') no-repeat center;
+    background-size: cover;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 4vw;
+    width: 4vw;
+    cursor: pointer;
 }
 
 .actu-user .content{
