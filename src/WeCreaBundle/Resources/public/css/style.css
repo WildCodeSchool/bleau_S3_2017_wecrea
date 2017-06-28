@@ -6,6 +6,7 @@ html,
 body {
     font-family: 'Pompiere', cursive;
     font-size: 1.2em;
+    min-height: 100vh;
 }
 
 /* Overide Materialize Hover button */
@@ -275,9 +276,7 @@ nav ul a:hover {
 
 .container_footer {
     display: none;
-    position: absolute;
-    bottom: 50px;
-    min-width:100%;
+    min-width: 100vw!important;
     align-content: center;
     color: black!important;
     background-color: rgba(90, 90, 90, 0.7);
@@ -329,10 +328,6 @@ footer {
     margin-top: 20px;
 }
 
-body {
-    min-height: 100vh;
-}
-
 main {
     flex: 1 0 auto;
 }
@@ -377,6 +372,7 @@ main {
     width:80%;
     margin: 0 auto 100px auto;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     min-height: calc(100vh - 195px);
 }
@@ -847,6 +843,8 @@ form[name="search"] input[type='search']{
     }
 }
 
+/* Menu moteur de recherche */
+
 nav ul li .suggest {
     color: #fff;
     position: absolute;
@@ -861,6 +859,32 @@ nav ul li .suggest li{
 	height: 35px!important;
 	line-height: 35px;
 }
+
+#mobile-demo li:last-child{
+    display: flex;
+}
+
+#mobile-demo li:last-child a:first-child{
+
+    margin-left: 10%;
+    padding: 0;
+}
+
+#mobile-demo #profil_icon a:nth-child(2){
+
+     margin: 0;
+     padding-top: 10px;
+     height: auto!important;
+}
+
+#mobile-demo li:last-child a:nth-child(3){
+
+    margin: 0;
+    padding-top: 10px;
+    height: auto!important;
+}
+
+
 
 .title_list_profil{
     text-decoration: underline;
