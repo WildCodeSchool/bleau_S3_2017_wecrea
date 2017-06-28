@@ -12,8 +12,7 @@
 namespace WeCreaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,11 +25,11 @@ class ProfilFormType extends AbstractType
             ->add('name', TextType::class)
             ->add('firstname', TextType::class)
             ->add('address1', TextType::class)
-            ->add('zipCode1', NumberType::class)
+            ->add('zipCode1', IntegerType::class)
             ->add('town1', TextType::class)
             ->add('country1', TextType::class)
             ->add('address2', TextType::class)
-            ->add('zipCode2', NumberType::class)
+            ->add('zipCode2', IntegerType::class)
             ->add('town2', TextType::class)
             ->add('country2', TextType::class)
         ;

@@ -1,0 +1,25 @@
+WeCreaBundle\Entity\WorkPurchased:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\WorkPurchasedRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        caract:
+            type: string
+            length: 255
+        quant:
+            type: integer
+        price:
+            type: integer
+        artist:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }
