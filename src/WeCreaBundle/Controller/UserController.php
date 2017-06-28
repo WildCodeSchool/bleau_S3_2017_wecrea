@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
@@ -168,7 +170,7 @@ class UserController extends Controller
         return $response;
     }
 
-    public function showBasketAction() {
+    public function showBasketAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
 
@@ -184,7 +186,18 @@ class UserController extends Controller
 
         $pBasket = $session->get('basket');
 
-        if(isset($pBasket)) {
+        // UPDATE QUANTITY AJAX
+        if($request->isXmlHttpRequest()) {
+            $idWork = $request->get('work');
+            $caract = $request->get('caract');
+            $quant = $request->get('quant');
+            $pBasket[$idWork][$caract]=$quant;
+            $session->set('basket', $pBasket);
+
+            return new Response('ok');
+        }
+
+        if(isset($pBasket) && !empty($pBasket)) {
             foreach ($pBasket as $idWork => $bCaracts)
             {
                 $work = $Works->findOneById($idWork);
@@ -213,12 +226,94 @@ class UserController extends Controller
         ));
     }
 
-    public function basketAddressAction() {
+    public function basketAddressAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
+        $formUser = $this->createForm(ProfilFormType::class, $user);
+
+        if($request->isXmlHttpRequest()) {
+            $address1 = $request->get('app_user_profil')['address1'];
+            $zipCode1 = $request->get('app_user_profil')['zipCode1'];
+            $town1 = $request->get('app_user_profil')['town1'];
+
+            $address2 = $request->get('app_user_profil')['address2'];
+            $zipCode2 = $request->get('app_user_profil')['zipCode2'];
+            $town2 = $request->get('app_user_profil')['town2'];
+
+            $user->setAddress1($address1);
+            $user->setZipCode1($zipCode1);
+            $user->setTown1($town1);
+
+            $user->setAddress2($address2);
+            $user->setZipCode2($zipCode2);
+            $user->setTown2($town2);
+
+            $em->flush();
+            $content = $this->renderView('WeCreaBundle:User/basket:addressUser.html.twig', array(
+                'user' => $user
+            ));
+            $response = new JsonResponse($content);
+
+            return $response;
+        }
+
         return $this->render('@WeCrea/User/basket/addressConfirm.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'formUser' => $formUser->createView()
         ));
+    }
+
+    /* ----- Create Command ----- */
+    public function commandAction() {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
+        $basket = $session->get('basket');
+        $command = new Command();
+
+        $Works = $em->getRepository('WeCreaBundle:Work');
+        $Caracts = $em->getRepository('WeCreaBundle:Caract');
+        $user = $this->getUser();
+
+        $command->setName($user->getName());
+        $command->setAddressfact($user->getAddress1());
+        $command->setAddressdel($user->getAddress2());
+        $command->setZipCodefact($user->getZipCode1());
+        $command->setZipCodedel($user->getZipCode2());
+        $command->setTownfact($user->getTown1());
+        $command->setTowndel($user->getTown2());
+        $command->setMail($user->getEmail());
+        $date = new \DateTime();
+        $command->setDate($date);
+        $command->setNb(uniqid().$date->format('dmY'));
+
+        foreach ($basket as $prod=>$caract) {
+            $workPurchased = new WorkPurchased();
+            $work = $Works->findOneById($prod);
+            foreach ($caract as $key => $quant) {
+                $wCaract = $Caracts->findOneById($key);
+                $quant = $quant;
+            }
+
+            $workPurchased->setTitle($work->getTitle());
+            $workPurchased->setCaract($wCaract->getDimension());
+            $workPurchased->setQuant($quant);
+            $workPurchased->setPrice($wCaract->getPrice());
+            $workPurchased->setArtist($work->getArtist()->getName());
+
+            $em->persist($workPurchased);
+
+            $command->addWork($workPurchased);
+        }
+
+        $em->persist($command);
+
+        $em->flush();
+
+        $basket = [];
+        $session->set('basket', $basket);
+
+        return $this->render('@WeCrea/User/basket/payement.html.twig');
     }
 
     /* ----- Add Favs -----*/

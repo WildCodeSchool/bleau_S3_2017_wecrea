@@ -1,16 +1,60 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
 {% block body %}
-
     <main>
         <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    <h2>Addresse de livraison</h2>
-                    
-                </div>
+            <div class="row row_top addressCont">
+                {% include '@WeCrea/User/basket/addressUser.html.twig' %}
             </div>
+            <a class="waves-effect waves-light btn black" href="#modal1">Changer d'adresses</a>
+            <a class="waves-effect waves-light btn black" href="{{ path('we_crea_basket_command') }}">Passer au payment</a>
+
+            <div id="modal1" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    {{ form_start(formUser) }}
+
+                    <span>Addresse de livraison :</span>
+                    {{ form_row(formUser.address1) }}
+                    {{ form_row(formUser.zipCode1) }}
+                    {{ form_row(formUser.town1) }}
+                    <span>Addresse de facturation :</span>
+                    {{ form_row(formUser.address2) }}
+                    {{ form_row(formUser.zipCode2) }}
+                    {{ form_row(formUser.town2) }}
+                    <input type="submit" class="btn black" value="éditer">
+
+                    {{ form_end(formUser, {'render_rest': false}) }}
+
+                </div>
+
+        </div>
+
         </div>
     </main>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('form[name="app_user_profil"]').submit( function (e) {
+                e.preventDefault();
+                $data = $(this).serialize();
+
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_basket_address') }}',
+                    data: $data,
+
+                    success: function (response) {
+                        console.log(response);
+                        $('.addressCont').children().remove();
+                        $('.addressCont').html(response);
+                        $('.modal').modal('close');
+
+                    }
+                });
+            });
+        })
+    </script>
 {% endblock %}
