@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
@@ -382,5 +383,29 @@ class UserController extends Controller
         return $this->render('WeCreaBundle:User:actu.html.twig', array(
             'actus' => $actu
         ));
+    }
+
+    public function NewsletterAction(Request $request){
+        if($request->isMethod('post')){
+
+            $em = $this->getDoctrine()->getManager();
+            $message = $request->getSession()->getFlashBag();
+
+            $email = htmlspecialchars($request->request->get('email'));
+
+            $subscriber = new Subscriber();
+            $subscriber->setEmail($email);
+            $subscriber->setDate(new \DateTime());
+            $subscriber->setToken(md5(uniqid()));
+
+            $em->persist($subscriber);
+            $em->flush();
+
+            $subscriber->getId() != NULL ?
+                $message->add("Notice", "Vous avez bien été inscrit(e) à la newsletter"):
+                $message->add("Notice", "L'inscription à la newsletter a échoué. Veuillez réessayer.");
+
+            return $this->redirect($request->headers->get('referer'));
+        }
     }
 }

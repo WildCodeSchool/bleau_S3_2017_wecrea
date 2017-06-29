@@ -67,6 +67,13 @@
         </div>
     </header>
 {% endblock %}
+{% block flash_notice %}
+    {% for flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <p id="alert-newsletter-subscription">{{ flash }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
 
 {% block body %}
 
@@ -82,6 +89,11 @@
                 <div class="col l6 s12">
                     <h5>Fiscalité entreprises</h5>
                     <p>Texte défiscalisation?</p>
+                    <form name="newsletter" method="post" id="form-newsletter" action="{{ path('we_crea_newsletter') }}" style="display: flex; justify-content: space-between">
+                        <label for="newsletter" style="color: #fff; font-size: 1em; height: 30px;">Inscription Newsletter</label>
+                        <input type="email" name="email" placeholder="Saisissez votre email" required style="width: 60%; height: 30px; background: #fff; text-indent: 5px;">
+                        <input type="submit" style="background: black; height: 30px; width: 100px; border: none; color: #fff;">
+                    </form>
                 </div>
                 <div class="col l4 offset-l2 s12">
                     <h5>Contacts</h5>

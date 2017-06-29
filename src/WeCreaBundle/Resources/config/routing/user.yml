@@ -69,3 +69,8 @@ we_crea_search:
     path: /search
     defaults:
         _controller: "WeCreaBundle:User:search"
+
+we_crea_newsletter:
+    path: /newsletter
+    defaults:
+        _controller: "WeCreaBundle:User:Newsletter"

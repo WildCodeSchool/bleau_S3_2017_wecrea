@@ -93,7 +93,6 @@ $(document).ready( function () {
 
     // Materialize Select
     $('select').material_select();
-});
 
 /*** PAGE ACTU ***/
 /* Code ci-dessous appliqué uniquement si sur page actu (voir regexp) */
@@ -177,3 +176,8 @@ if(actu.test(window.location.href)){
         $footer.css('top', $offsetTop + 'px');
     }
 }
+
+    $('#alert-newsletter-subscription').delay(2000).fadeOut(2000);
+
+});
+
