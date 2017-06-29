@@ -1,0 +1,25 @@
+{% extends 'WeCreaBundle:layout:base_admin.html.twig' %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <div class="row">
+            <h4> Liste des inscrits à la Newsletter </h4>
+                <table>
+                    <thead>
+                        <td><b>Email</b></td>
+                        <td><b>Date d'inscription</b></td>
+                        <td style="text-align: right;"><b>Action</b></td>
+                    </thead>
+                    <tbody>
+                    {% for subscriber in subscribers %}
+                        <tr style="border-bottom: 1px solid #c8c8c8;">
+                            <td style="width: 40%">{{ subscriber.email }}</td>
+                            <td style="width: 40%;"> {{ subscriber.date|date }}</td>
+                            <td style="width: 20%; text-align: right;"><a href="{{ path('we_crea_admin_unsubscribe', {'token' : subscriber.token} ) }}"><button style="background: #b22222; color: #fff; border: none;">Supprimer</button></a></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+        </div>
+    </div>
+{% endblock %}

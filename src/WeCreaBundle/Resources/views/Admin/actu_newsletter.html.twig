@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="author" content="Florent ALEMANY">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style type="text/css">
+        body{
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        div{
+            width: 98%;
+            margin: 0 auto;
+        }
+
+        h1{
+            min-height: 80px;
+            line-height: 80px;
+            text-align: center;
+            background: #fafafa;
+            margin: 0 0 5px 0;
+        }
+
+        img{
+            display:block;
+            margin: 0 auto;
+            width: 40%;
+        }
+
+        p{
+            text-align: justify;
+            background: #fafafa;
+            padding: 5px;
+            width: 40%;
+            margin: 10px auto;
+        }
+
+        i{
+            margin: 0 auto;
+            width: 40%;
+            display: block;
+        }
+
+        button{
+            display: block;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background: #1E90FF;
+            color:#fff;
+            outline: none;
+            border-radius: 10px;
+            margin: 15px auto 0 auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        footer{
+            width: 100%;
+            background: black;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            margin-top: 30px;
+            color: #fff;
+            font-size: .9em;
+        }
+
+        #unsubscribe{
+            text-align: center;
+            display: block;
+            color: #1a82fd;
+            margin: 30px auto;
+            font-size: 1em;
+        }
+
+        @media all and (max-width: 768px) {
+            img,
+            p,
+            i,
+            button{
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+    <h1>{{ actu.title }}</h1>
+    <div>
+        <img src="{{ image }}"/>
+        {% autoescape %}
+            <p>{{ actu.content|slice(0, 200)|raw }}...</p>
+            <i><b> Publié le {{ actu.date|date('d/m/Y') }} </b> par <span style="color: #1E90FF;">We-Crea</span></i></p>
+        {% endautoescape %}
+        <a href="{{ url('we_crea_actu') }}" target="_blank"><button>En savoir plus</button></a>
+        <i style="margin-top: 20px;"><b> Si le lien ne fonctionne pas correctement, retrouver l'article à l'adresse : </b><br /> {{ url('we_crea_actu') }}</i>
+        <a href="{{ url('we_crea_unsubscribe', {token : subscriber.token} ) }}" id="unsubscribe"> Me désabonner </a>
+    </div>
+<footer>
+    &copy; 2017 We-Crea
+</footer>
+</html>
