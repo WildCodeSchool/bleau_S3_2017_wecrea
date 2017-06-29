@@ -393,16 +393,4 @@ class AdminController extends Controller
 
         return $this->redirectToRoute("we_crea_admin_subscribers_info");
     }
-
-    public function actuNewsletterAction(){
-        $em = $this->getDoctrine()->getManager();
-        $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById(1);
-
-        $subscriber = $em->getRepository("WeCreaBundle:Subscriber")->findOneById(19);
-
-        return $this->render('WeCreaBundle:Admin:actu_newsletter.html.twig', [
-            'actu' => $actu,
-            'subscriber' => $subscriber
-        ]);
-    }
 }
