@@ -46,6 +46,16 @@
                         </div>
                     </a>
                     <div class="card-content card-content_custom">
+                        {% set quantity = 0 %}
+                        {% for caract in work.caracts %}
+                            {% set quantity = quantity + caract.quantity %}
+                        {% endfor %}
+                        {% if quantity == 0 %}
+                            <span class="sold">
+                                <img src="{{ asset('bundles/wecrea/pics/vendu.png') }}" alt="vendu">
+                            </span>
+                        {% endif %}
+
                         <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
                             <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
                         </span>

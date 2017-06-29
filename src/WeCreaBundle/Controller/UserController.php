@@ -270,7 +270,7 @@ class UserController extends Controller
         $session = $this->get('session');
         $basket = $session->get('basket');
         $command = new Command();
-
+        $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
         $user = $this->getUser();
@@ -306,9 +306,9 @@ class UserController extends Controller
 
             $command->addWork($workPurchased);
         }
+        $command->setStatus($status);
 
         $em->persist($command);
-
         $em->flush();
 
         $works = $command->getWorks();
@@ -331,6 +331,7 @@ class UserController extends Controller
             'idTrans' => $id_trans,
         ));
     }
+
     /* ----- Add Favs -----*/
     public function addFavAction(Request $request) {
         $session = $this->get('session');
