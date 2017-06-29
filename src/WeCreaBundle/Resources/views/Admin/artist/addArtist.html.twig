@@ -4,8 +4,8 @@
 <main>
     <div class="container">
         <div class="row artist_menu">
-            <a class="waves-effect waves-light btn" href="{{ path('we_crea_admin_artist_creation') }}">Ajouter un nouvel artiste</a>
-            <a class="waves-effect waves-light btn" href="{{ path('we_crea_admin_homepage') }}">Retour au menu d'accueil</a>
+            <a class="waves-effect waves-light black btn" href="{{ path('we_crea_admin_artist_creation') }}">Ajouter un nouvel artiste</a>
+            <a class="waves-effect waves-light black btn" href="{{ path('we_crea_admin_homepage') }}">Retour au menu d'accueil</a>
         </div>
         <div class="row">
             <h4>Création d'un nouvel artiste</h4>
@@ -32,7 +32,7 @@
                     {{ form_widget(form.biography, {'attr': {'class':'biography materialize-textarea'}} ) }}
                 </div>
                 <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light left" type="submit" name="action">
+                    <button class="btn waves-effect waves-light black left" type="submit" name="action">
                         Créer le profil
                         <i class="material-icons left">send</i>
                     </button>

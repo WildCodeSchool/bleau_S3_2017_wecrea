@@ -285,8 +285,10 @@ class UserController extends Controller
         $command->setMail($user->getEmail());
 
         $date = new \DateTime();
+        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+
         $command->setDate($date);
-        $command->setNb(uniqid().$date->format('dmY'));
+        $command->setNb($id_trans);
 
         foreach ($basket as $prod=>$caract) {
             $workPurchased = new WorkPurchased();
@@ -306,6 +308,7 @@ class UserController extends Controller
 
             $command->addWork($workPurchased);
         }
+
         $command->setStatus($status);
 
         $em->persist($command);
@@ -319,7 +322,6 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
 
         $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
 
