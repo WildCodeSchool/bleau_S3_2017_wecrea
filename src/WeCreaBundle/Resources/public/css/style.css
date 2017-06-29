@@ -398,6 +398,20 @@ main {
     margin: 5vh 1%;
 }
 
+.sold{
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    right: 5px;
+    width: 50px;
+    max-height: 50px;
+
+}
+.sold img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
 @media all and (max-width: 992px){
     .cardz{
         width: 100%;
