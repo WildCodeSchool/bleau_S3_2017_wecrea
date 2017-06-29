@@ -11,7 +11,7 @@ $(document).ready( function () {
         cardResize();
     });
 
-    $(".button-collapse").sideNav();
+
     $('.slider').slider();
     $('#moreLink').click( function () {
         $('.container_footer').slideToggle(500);
@@ -96,5 +96,13 @@ $(document).ready( function () {
 
     // Materialize Select
     $('select').material_select();
+
+    // Materialize SideNav
+    $(".button-collapse").sideNav({
+        menuWidth: 200, // Default is 300
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+    });
 });
 

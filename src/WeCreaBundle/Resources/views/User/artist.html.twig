@@ -8,7 +8,7 @@
             <div class="col s12">
                 <div class="artist-img">
                     <img src="{{ asset('images/'~image.url) }}" alt="{{ image.alt }}"/>
-                    <i>{{ image.alt }}</i>
+                    <i>{{ artist.firstname }} {{ artist.name }}</i>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <p><b>Qualité : </b> {{ artist.expertise }}</p>
             </div>
             <div class="col s12 col-description-artist">
-                <p></p><b>À propos </b></p>
+                <p><b>À propos </b></p>
                 <p>{{ artist.biography }}</p>
             </div>
         </div>
