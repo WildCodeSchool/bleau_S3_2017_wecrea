@@ -103,13 +103,15 @@
                 console.log(quant);
                 $('input[name="quantity"]').attr('max', quant);
                 $('#price').text(price + ' €');
+
+                var submit = $('input[type="submit"]');
                 if(quant == 0) {
-                    $('input[type="submit"]').addClass('disabled');
-                    $('input[type="submit"]').attr('value', 'Épuisé');
+                    submit.addClass('disabled');
+                    submit.attr('value', 'Épuisé');
                 }
                 else{
-                    $('input[type="submit"]').removeClass('disabled');
-                    $('input[type="submit"]').attr('value', 'Ajouter au panier');
+                    submit.removeClass('disabled');
+                    submit.attr('value', 'Ajouter au panier');
                 }
             });
         });
