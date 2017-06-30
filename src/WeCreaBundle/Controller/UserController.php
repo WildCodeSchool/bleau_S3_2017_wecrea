@@ -542,17 +542,15 @@ class UserController extends Controller
 
         $subscriberToDelete = $em->getRepository('WeCreaBundle:Subscriber')->findOneByToken($token);
 
-        if($subscriberToDelete != NULL){
-            $em->remove($subscriberToDelete);
-            $em->flush();
+        $subscriberToDelete != NULL ?
+            array(
+                $em->remove($subscriberToDelete),
+                $em->flush(),
+                $message = "L'adresse " . $subscriberToDelete->getEmail() . " a bien été supprimée. Vous pouvez vous réabonner à tout moment."
+            ):
+            $message = "Vous vous êtes déjà désabonné(e) de la newsletter.";
 
-            $message = "L'adresse " . $subscriberToDelete->getEmail() . " a bien été supprimée. Vous pouvez vous réabonner à tout moment";
-        }
-        else{
-            $message = "Vous vous êtes déjà désabonné de la newsletter.";
-        }
-
-        return $this->render("WeCreaBundle:User:unsubscription_confirmation", [
+        return $this->render("WeCreaBundle:User:unsubscription_confirmation.html.twig", [
             'message' => $message
         ]);
     }
