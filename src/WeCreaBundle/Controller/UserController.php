@@ -316,6 +316,7 @@ class UserController extends Controller
         $command->setStatus($status);
 
         $em->persist($command);
+        $user->addCommand($command);
         $em->flush();
 
         $works = $command->getWorks();
@@ -427,6 +428,7 @@ class UserController extends Controller
     /* ----- show user profil ----- */
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
+        $comands = $user->getCommands();
         $formUser = $this->createForm(ProfilFormType::class, $user);
 
         $formUser->handleRequest($request);
@@ -446,6 +448,7 @@ class UserController extends Controller
 
         return $this->render('@WeCrea/User/profil/profil.html.twig', array(
             'user' => $user,
+            'comands' => $comands,
             'formUser' => $formUser->createView(),
         ));
     }

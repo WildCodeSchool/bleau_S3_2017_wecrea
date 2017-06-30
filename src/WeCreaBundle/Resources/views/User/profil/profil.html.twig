@@ -121,11 +121,24 @@
                         <th>N° Commande</th>
                         <th>Recap</th>
                         <th>Prix</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {# TODO: Get all orders for user #}
+                    {% for comand in comands %}
+                        <tr>
+                            <td>{{ comand.nb }}</td>
+                            <td>
+                                {% set total = 0 %}
+                                {% for work in comand.works %}
+                                    {% set total = total + work.price*work.quant %}
+                                    {{ work.title }}<br>
+                                {% endfor %}
+                            </td>
+                            <td>{{ total }}€</td>
+                            <td>{{ comand.status.name }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

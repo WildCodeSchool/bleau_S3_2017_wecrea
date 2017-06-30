@@ -1,6 +1,9 @@
 function cardResize() {
     var width = parseFloat($('.card').css('width'))
     $('.card').css('height', width);
+
+    var width = parseFloat($('.resizer').css('width'))
+    $('.resizer').css('height', width);
 }
 
 $(document).ready( function () {
@@ -189,5 +192,5 @@ $(document).ready( function () {
     }
 
     $('#alert-newsletter-subscription').delay(2000).fadeOut(2000);
-});
+};
 

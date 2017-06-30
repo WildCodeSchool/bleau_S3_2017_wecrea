@@ -12,18 +12,18 @@
         <div class="cardz" style="height: 700px!important;">
             <div class="buttons filters-button-group row">
                 {% for nature in natures %}
-                    <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                    <div class="col s6 m4 l4 iso_item iso_link Tous" data-filter=".Tous">
                         <button style="
                                 background: url('{{ asset('images/' ~ nature.images.url) }}') center no-repeat;
                                 background-size: cover;"
-                                class="tous_btn"
+                                class="tous_btn resizer"
                                 data-filter=".{{ nature.name }}">{{ nature.name }}
                         </button>
                     </div>
                 {% endfor %}
             </div>
             {% for work in works %}
-                <div class="card card_custom_work iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                <div class="card card_custom_work iso_item {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
 
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                         <div class="card-image waves-effect waves-block waves-light card-image_custom"
@@ -57,7 +57,7 @@
                             <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
                         </span>
                         <p>
-                            <a href="{{ path('we_crea_artist', {id : work.artist.id} ) }}" class="artist">{{ work.artist.name }}</a>
+                            <a href="{{ path('we_crea_artist', {id : work.artist.id} ) }}" class="artist">{{ work.artist.firstname }} {{ work.artist.name }}</a>
                         </p>
                     </div>
                     <div class="card-reveal">
@@ -122,7 +122,6 @@
                     })
                 };
             });
-
         })
     </script>
 {% endblock %}
