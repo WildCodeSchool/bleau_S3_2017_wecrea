@@ -76,3 +76,9 @@ we_crea_unsubscribe:
     path: /unsubscribe/{token}
     defaults:
         _controller: "WeCreaBundle:User:unsubscribe"
+
+# Contact page
+we_crea_contact:
+    path: /contact
+    defaults:
+        _controller: "WeCreaBundle:User:contact"

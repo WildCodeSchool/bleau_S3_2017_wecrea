@@ -1,0 +1,37 @@
+{% extends "WeCreaBundle:Layout:base_client.html.twig" %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <div class="row">
+            <h3> Formulaire de contact </h3>
+            {{ form_start(form) }}
+            <div class="input-field">
+                {{ form_label(form.name, 'Nom') }}
+                {{ form_widget(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+            <div class="input-field">
+                {{ form_label(form.firstname, 'Prénom') }}
+                {{ form_widget(form.firstname) }}
+                {{ form_errors(form.firstname) }}
+            </div>
+            <div class="input-field">
+                {{ form_label(form.email, 'Email') }}
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="input-field">
+                {{ form_label(form.phonenumber, 'Téléphone') }}
+                {{ form_widget(form.phonenumber) }}
+                {{ form_errors(form.phonenumber) }}
+            </div>
+            <div class="input-field">
+                {{ form_label(form.content, 'Message') }}
+                {{ form_widget(form.content, {'attr' : {'style' : 'min-height: 200px;'}}) }}
+                {{ form_errors(form.content) }}
+            </div>
+            <input type="submit" value="Envoyer" style="border: none; background: black; color: #fff; padding: 7px; display: block; margin: 0 auto;"/>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

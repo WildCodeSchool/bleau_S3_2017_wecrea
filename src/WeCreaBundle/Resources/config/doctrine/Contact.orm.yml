@@ -1,0 +1,29 @@
+WeCreaBundle\Entity\Contact:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\ContactRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        firstname:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        phonenumber:
+            type: string
+            length: 255
+            nullable: true
+        content:
+            type: text
+        date:
+            type: datetimetz
+    lifecycleCallbacks: {  }
