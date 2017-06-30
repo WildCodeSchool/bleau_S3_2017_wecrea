@@ -11,7 +11,7 @@ $(document).ready( function () {
         cardResize();
     });
 
-    $(".button-collapse").sideNav();
+
     $('.slider').slider();
     $('#moreLink').click( function () {
         $('.container_footer').slideToggle(500);
@@ -85,6 +85,9 @@ $(document).ready( function () {
         $(form).slideToggle(200);
     });
 
+    // Materialize Modal
+    $('.modal').modal();
+
     // Materialize Tabs
     $('ul.tabs').tabs();
 
@@ -93,6 +96,15 @@ $(document).ready( function () {
 
     // Materialize Select
     $('select').material_select();
+
+    // Materialize SideNav
+    $(".button-collapse").sideNav({
+        menuWidth: 200, // Default is 300
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+    });
+});
 
 /*** PAGE ACTU ***/
 /* Code ci-dessous appliqué uniquement si sur page actu (voir regexp) */
@@ -178,6 +190,5 @@ if(actu.test(window.location.href)){
 }
 
     $('#alert-newsletter-subscription').delay(2000).fadeOut(2000);
-
 });
 

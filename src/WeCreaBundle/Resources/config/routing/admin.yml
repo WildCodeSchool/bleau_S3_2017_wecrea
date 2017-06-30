@@ -110,3 +110,8 @@ we_crea_admin_unsubscribe:
 we_crea_admin_actu_newsletter:
     path: /actu/newsletter
     defaults: {_controller: "WeCreaBundle:Admin:actuNewsletter"}
+
+# -------- Edit card Isotop -----
+we_crea_admin_edit_isotop:
+    path: /nature/edit
+    defaults: { _controller: WeCreaBundle:Nature:edit }

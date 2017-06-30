@@ -63,6 +63,11 @@ class User extends BaseUser
      */
     private $firstname;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $commands;
+
 
     /**
      * Set address1
@@ -302,5 +307,39 @@ class User extends BaseUser
     public function getFirstname()
     {
         return $this->firstname;
+    }
+
+    /**
+     * Add command
+     *
+     * @param \WeCreaBundle\Entity\Command $command
+     *
+     * @return User
+     */
+    public function addCommand(\WeCreaBundle\Entity\Command $command)
+    {
+        $this->commands[] = $command;
+
+        return $this;
+    }
+
+    /**
+     * Remove command
+     *
+     * @param \WeCreaBundle\Entity\Command $command
+     */
+    public function removeCommand(\WeCreaBundle\Entity\Command $command)
+    {
+        $this->commands->removeElement($command);
+    }
+
+    /**
+     * Get commands
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommands()
+    {
+        return $this->commands;
     }
 }

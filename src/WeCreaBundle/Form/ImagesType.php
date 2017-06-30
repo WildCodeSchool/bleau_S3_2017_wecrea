@@ -18,8 +18,7 @@ class ImagesType extends AbstractType
         $builder
             ->add('url', FileType::class, array(
                 'data_class' => null,
-            ))
-            ->add('alt');
+            ));
     }
     
     /**

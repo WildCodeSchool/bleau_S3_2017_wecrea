@@ -18,3 +18,4 @@
 /web/media/
 Supprimerait src/WeCreaBundle/Resources/public/img/
 .idea/
+*.php~

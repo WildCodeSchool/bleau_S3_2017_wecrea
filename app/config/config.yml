@@ -9,6 +9,8 @@ imports:
 parameters:
     locale: fr
     image_directory: '%kernel.root_dir%/../web/images'
+    merchant_site_id: '%merchantsite_id%'
+    certif_test: '%certiftest%'
 
 framework:
     #esi: ~

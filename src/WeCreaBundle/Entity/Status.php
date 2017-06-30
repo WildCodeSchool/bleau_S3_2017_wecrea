@@ -3,9 +3,9 @@
 namespace WeCreaBundle\Entity;
 
 /**
- * Nature
+ * Status
  */
-class Nature
+class Status
 {
     /**
      * @var int
@@ -33,7 +33,7 @@ class Nature
      *
      * @param string $name
      *
-     * @return Nature
+     * @return Status
      */
     public function setName($name)
     {

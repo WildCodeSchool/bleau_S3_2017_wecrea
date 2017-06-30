@@ -6,7 +6,12 @@
             <div class="row">
               <div class="col m10 offset-m1">
                   <h2>Résumé de votre panier :</h2>
-                  <form name="basket" method="post" action="">
+                  {% if works == null %}
+                  <div class="col s10 offset s1">
+                      <p>Votre panier est vide.</p>
+                  </div>
+                    {% else %}
+                  <form name="basket" method="post" action="{{ path('we_crea_basket_address') }}">
                       <div class="prods row">
                           {% for prod in works %}
                               <div class="prod col s12 row" id="{{ prod.work.id }}">
@@ -22,11 +27,14 @@
                                               Quantité :
                                               <input class="quant_input"
                                                      type="number"
-                                                     name="{{ prod.work.id }}"
+                                                     name="{{ prod.work.id }}[{{ prod.caract.id }}]"
                                                      min="1"
                                                      max="{{ prod.caract.quantity }}"
                                                      value="{{ prod.quant }}"
                                                      class="prod_content"
+                                                     price="{{ prod.caract.price }}"
+                                                     caract="{{ prod.caract.id }}"
+                                                     work="{{ prod.work.id }}"
                                               />
                                           </p>
                                           <p class="col m3 offset-m6">
@@ -34,12 +42,7 @@
                                           </p>
                                       </div>
                                       <div class="prod_caract col s12">
-                                          <select name="caract">
-                                              <option value="{{ prod.caract.id }}" selected quant="{{ prod.caract.quantity }}" price="{{ prod.caract.price }}"> {{ prod.caract.dimension }} - poids : {{ prod.caract.weigth }} - prix : {{ prod.caract.price }}€</option>
-                                              {% for caract in prod.work.caracts %}
-                                                  <option value="{{ caract.id }}" quant="{{ caract.quantity }}" price="{{ caract.price }}">{{ caract.dimension }} - poids : {{ caract.weigth }} - prix : {{ caract.price }}€</option>
-                                              {% endfor %}
-                                          </select>
+                                          <p>Informations : {{ prod.caract.dimension }} - {{ prod.caract.weigth }} - {{ prod.caract.price }}€</p>
                                       </div>
                                   </div>
                                   <i title="Enlever cet article" class="material-icons delete_basket" data="{{ prod.work.id }}">clear</i>
@@ -47,8 +50,18 @@
                               </div>
                           {% endfor %}
                       </div>
-                      <input type="submit" class="btn black" value="confirmer">
+                      {% if is_granted('ROLE_USER') == true or is_granted('ROLE_ADMIN') == true %}
+                          <input type="submit" class="btn black" value="confirmer">
+                      {% else %}
+                          <p>Pour continuer :
+                              <a href="{{ path('fos_user_registration_register') }}" class="btn black">Enregistrez-vous</a>
+                              ou
+                              <a href="{{ path('fos_user_security_login') }}" class="btn black">Connectez-vous</a>
+                          </p>
+
+                      {% endif %}
                   </form>
+                  {% endif %}
               </div>
             </div>
         </div>
@@ -98,13 +111,22 @@
                 console.log(val);
 
                 var container = $(this).closest('.prod');
-                var price = container.find('select[name="caract"]').find('option:selected').attr('price');
+                var price = $(this).attr('price');
                 console.log(price);
 
                 var priceTot = val * price;
                 console.log(priceTot);
                 container.find('.price').text(priceTot);
 
+                var work = $(this).attr('work');
+                var caract = $(this).attr('caract');
+                var data = {'work': work, 'caract': caract, 'quant': val }
+                console.log(data);
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_basket') }}',
+                    data: data
+                })
             });
         });
 

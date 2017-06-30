@@ -2,6 +2,7 @@
 
 namespace WeCreaBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +15,20 @@ class NatureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+        $builder
+	        ->add('fontColor', TextType::class, array(
+	        	'attr' => array(
+	        		'class' => 'colorpicker'
+		        )
+	        ))
+	        ->add('images', ImagesType::class)
+	        ->add('submit', SubmitType::class, array(
+	        	'label' => 'Valider',
+		        'attr' => array(
+		        	'class' => "btn waves-effect waves-light right black submitButtonNature"
+		        )
+	        ))
+        ;
     }
     
     /**

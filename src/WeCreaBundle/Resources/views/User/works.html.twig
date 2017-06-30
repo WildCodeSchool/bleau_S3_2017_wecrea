@@ -2,28 +2,25 @@
 
 {% block body %}
     <main>
-        {% include '@WeCrea/layout/nav_works.html.twig' %}
+        <div class="buttons filters-button-group nav_works nav_works_custom">
+            <button class="waves-effect waves-light btn iso_button iso_link active_button" data-filter=".Tous">Tous</button>
+            {% for nature in natures %}
+                <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".{{ nature.name }}">{{ nature.name }}</button>
+            {% endfor %}
+        </div>
 
         <div class="cardz" style="height: 700px!important;">
             <div class="buttons filters-button-group row">
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Peinture">Peinture</button>
-                </div>
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Sculpture">Sculpture</button>
-                </div>
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Dessin">Dessin</button>
-                </div>
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Photographie">Photographie</button>
-                </div>
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Artisanat_dart">Artisanat d'art</button>
-                </div>
-                <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
-                    <button class="tous_btn" data-filter=".Curiosités">Curiosités</button>
-                </div>
+                {% for nature in natures %}
+                    <div class="col m4 iso_item iso_link Tous" data-filter=".Tous">
+                        <button style="
+                                background: url('{{ asset('images/' ~ nature.images.url) }}') center no-repeat;
+                                background-size: cover;"
+                                class="tous_btn"
+                                data-filter=".{{ nature.name }}">{{ nature.name }}
+                        </button>
+                    </div>
+                {% endfor %}
             </div>
             {% for work in works %}
                 <div class="card card_custom_work iso_item  cardResizer {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
@@ -46,6 +43,16 @@
                         </div>
                     </a>
                     <div class="card-content card-content_custom">
+                        {% set quantity = 0 %}
+                        {% for caract in work.caracts %}
+                            {% set quantity = quantity + caract.quantity %}
+                        {% endfor %}
+                        {% if quantity == 0 %}
+                            <span class="sold">
+                                <img src="{{ asset('bundles/wecrea/pics/vendu.png') }}" alt="vendu">
+                            </span>
+                        {% endif %}
+
                         <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
                             <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
                         </span>
