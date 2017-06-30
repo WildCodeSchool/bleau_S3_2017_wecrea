@@ -1,0 +1,112 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/wecrea/vendor/colorpicker/materialize-colorpicker.css') }}">
+
+{% endblock %}
+
+{% block body %}
+
+    <main>
+        <div class="container">
+            <h2>Edition des natures</h2>
+                {% for nature, form in forms %}
+                <div class="row">
+                    <h4 class="center-align">{{ nature }}</h4>
+                    <div class="col m6 s12">
+                        {{ form_start(form) }}
+
+                        <div class="col s12">
+                            {{ form_label(form.fontColor) }}
+                            {{ form_widget(form.fontColor, { 'attr': { 'style': "background-color:" ~ form.vars.value.fontColor } }) }}
+                            {{ form_errors(form.fontColor) }}
+                        </div>
+                        <div class="col s12">
+                            {{ form_widget(form.images.url) }}
+                            {{ form_errors(form.images.url) }}
+                        </div>
+
+                        <div class="center-align">
+                            {{ form_widget(form.submit) }}
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="col m4 offset-m1 s12">
+                        <div>
+                            <button
+                                    style="
+                                            background: url('{{ asset('images/' ~ form.vars.value.images.url ) }}') center no-repeat;
+                                            background-size: cover;
+                                            color: {{ form.vars.value.fontColor }}
+                                            "
+                                    class="tous_btn {{ nature|lower ~ '_button' }}">{{ nature }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/wecrea/vendor/colorpicker/materialize-colorpicker.js') }}"></script>
+    <script>
+
+        $(document).ready( function(){
+            $('.colorpicker').colorpicker({
+                format: 'rgb',
+                color: $('.colorpicker').css('background-color')
+            }).on('changeColor', function(ev) {
+                $(this).css('background-color',ev.color.toHex());
+
+                var form = $(this).parent().parent();
+                var name = form.attr('name');
+                $('.' + name + '_button').css('color',ev.color.toHex());
+            });
+
+
+            $('.submitButtonNature').click(function (e) {
+                e.preventDefault();
+                $( ".submitButtonNature" ).hide();
+                var form = $(this).parent().parent();
+                var data = new FormData(form[0]);
+                var name = form.attr('name');
+                data.append('name', name);
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_edit_isotop') }}",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+
+                    success: function (response) {
+                        Materialize.toast('<span class="toast_custom">La vignette a bien été modifiée !</span>', 4000); // 4000 is the duration of the toast
+
+                        var button = $(document.createElement('button'));
+                        button.attr('class', 'tous_btn ' + response.name.toLowerCase() + '_button');
+                        button.css({
+                            'background':  'url({{ asset("images/") }}' + response.images.url +') center no-repeat',
+                            'background-size': 'cover',
+                            'color': response.fontColor
+                        });
+                        button.html(response.name);
+
+                        $('.' + name + '_button').replaceWith(button).fadeIn(200);
+                    },
+                    complete: function () {
+                        $( ".submitButtonNature" ).show();
+                    }
+                })
+
+            });
+
+        });
+    </script>
+
+{% endblock %}

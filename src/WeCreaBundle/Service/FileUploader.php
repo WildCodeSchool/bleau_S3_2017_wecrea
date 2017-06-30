@@ -18,9 +18,20 @@ class FileUploader
     {
         $fileName = uniqid().'.'.$file->guessExtension();
 
+        if ($object->getImages()->getUrl() != null)
+        {
+	        $path = $this->getTargetDir() . '/' . $object->getImages()->getUrl();
+
+	        if (file_exists($path)) {
+		        unlink($path);
+	        }
+        }
+
         $object->getImages()->setUrl($fileName);
+		$object->getImages()->setAlt(str_replace('.' . $file->guessExtension(), '', $file->getClientOriginalName()));
 
         $file->move($this->targetDir, $fileName);
+
     }
 
     public function uploadImg(UploadedFile $file, $image)
@@ -28,6 +39,7 @@ class FileUploader
         $fileName = uniqid().'.'.$file->guessExtension();
 
         $image->setUrl($fileName);
+		$image->setAlt(str_replace($file->guessExtension(), '', $file->getClientOriginalName()));
 
         $file->move($this->targetDir, $fileName);
     }

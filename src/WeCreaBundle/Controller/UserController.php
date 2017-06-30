@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Entity\Nature;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ProfilFormType;
 
@@ -55,6 +56,7 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('id'=>'desc'));
+		$natures = $em->getRepository(Nature::class)->findAll();
 
         $container = $this->container;
 
@@ -67,7 +69,8 @@ class UserController extends Controller
             'bCount' => $bCount,
             'fCount' =>$fCount,
             'works' => $works,
-            'favs' => $favs
+            'favs' => $favs,
+	        'natures' => $natures
         ));
     }
 

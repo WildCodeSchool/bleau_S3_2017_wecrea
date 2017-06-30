@@ -12,4 +12,14 @@ WeCreaBundle\Entity\Nature:
         name:
             type: string
             length: 255
+        fontColor:
+            type: string
+            length: 255
+
+
+    oneToOne:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']
+
     lifecycleCallbacks: {  }
