@@ -7,8 +7,12 @@ namespace WeCreaBundle\Entity;
  */
 class Nature
 {
-    /**
-     * @var int
+	public $previousImage;
+
+	// Generated
+
+	/**
+     * @var integer
      */
     private $id;
 
@@ -17,11 +21,21 @@ class Nature
      */
     private $name;
 
+    /**
+     * @var string
+     */
+    private $fontColor;
+
+    /**
+     * @var \WeCreaBundle\Entity\Images
+     */
+    private $images;
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -50,5 +64,53 @@ class Nature
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set fontColor
+     *
+     * @param string $fontColor
+     *
+     * @return Nature
+     */
+    public function setFontColor($fontColor)
+    {
+        $this->fontColor = $fontColor;
+
+        return $this;
+    }
+
+    /**
+     * Get fontColor
+     *
+     * @return string
+     */
+    public function getFontColor()
+    {
+        return $this->fontColor;
+    }
+
+    /**
+     * Set images
+     *
+     * @param \WeCreaBundle\Entity\Images $images
+     *
+     * @return Nature
+     */
+    public function setImages(\WeCreaBundle\Entity\Images $images = null)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * Get images
+     *
+     * @return \WeCreaBundle\Entity\Images
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
