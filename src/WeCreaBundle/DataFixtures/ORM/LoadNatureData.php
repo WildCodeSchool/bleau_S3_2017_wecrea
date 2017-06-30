@@ -38,10 +38,9 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
             "Dessin",
             "Photographie",
             "Peinture",
-            "Verre",
             "Sculpture",
             "Artisanat_dart",
-            "Ceramique",
+            "Curiosités"
         );
 
 
