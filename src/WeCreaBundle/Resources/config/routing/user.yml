@@ -73,3 +73,14 @@ we_crea_search:
     path: /search
     defaults:
         _controller: "WeCreaBundle:User:search"
+
+# Subscription to the newsletter
+we_crea_newsletter:
+    path: /newsletter
+    defaults:
+        _controller: "WeCreaBundle:User:Newsletter"
+
+we_crea_unsubscribe:
+    path: /unsubscribe/{token}
+    defaults:
+        _controller: "WeCreaBundle:User:unsubscribe"

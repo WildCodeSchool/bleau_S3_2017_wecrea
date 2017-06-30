@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Artist;
 use WeCreaBundle\Entity\Images;
+use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Form\ArtistType;
 use WeCreaBundle\Form\ImagesType;
@@ -371,5 +372,25 @@ class AdminController extends Controller
 
     public function adminHomeAction() {
         return $this->render('@WeCrea/Admin/home_admin.html.twig');
+    }
+
+    public function subscribeAction(){
+        $em = $this->getDoctrine()->getManager();
+        $subscribers = $em->getRepository('WeCreaBundle:Subscriber')->findBy([], array(
+           'date' => 'DESC'
+        ));
+
+        return $this->render('WeCreaBundle:Admin:subscribers.html.twig', array(
+           'subscribers' => $subscribers
+        ));
+    }
+
+    public function unsubscribeAction($token){
+        $em = $this->getDoctrine()->getManager();
+        $subscriber = $em->getRepository('WeCreaBundle:Subscriber')->findOneByToken($token);
+        $em->remove($subscriber);
+        $em->flush();
+
+        return $this->redirectToRoute("we_crea_admin_subscribers_info");
     }
 }

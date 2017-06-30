@@ -90,8 +90,6 @@ we_crea_admin_concept_edit:
     path:     /concept/edit
     defaults: { _controller: "WeCreaBundle:Concept:edit" }
 
-
-
 we_crea_admin_delete_work_ajax:
     path: /deleteWork
     defaults: {_controller: "WeCreaBundle:Admin:deleteWorkAjax"}
@@ -99,6 +97,19 @@ we_crea_admin_delete_work_ajax:
 we_crea_admin_artist_work_edition:
     path: /artist/edition/{id}
     defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
+
+# Manage subscribers to the newsletter
+we_crea_admin_subscribers_info:
+    path: /subscribers
+    defaults: {_controller: "WeCreaBundle:Admin:subscribe"}
+
+we_crea_admin_unsubscribe:
+    path: /unsubscribe/{token}
+    defaults: {_controller: "WeCreaBundle:Admin:unsubscribe"}
+
+we_crea_admin_actu_newsletter:
+    path: /actu/newsletter
+    defaults: {_controller: "WeCreaBundle:Admin:actuNewsletter"}
 
 # -------- Edit card Isotop -----
 we_crea_admin_edit_isotop:

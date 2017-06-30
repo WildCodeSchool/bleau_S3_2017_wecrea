@@ -899,8 +899,23 @@ nav ul li .suggest li{
     height: auto!important;
 }
 
-
-
 .title_list_profil{
     text-decoration: underline;
+}
+
+/* Newsletter */
+
+#alert-newsletter-subscription{
+    height: 50px;
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    z-index: 50;
+    background: black;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 30%;
 }

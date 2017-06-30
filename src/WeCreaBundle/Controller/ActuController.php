@@ -25,7 +25,6 @@ class ActuController extends Controller {
         $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
 
         $actu = new Actu();
-
         $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
 
         return $this->render('@WeCrea/Admin/actu.html.twig', array(
@@ -58,9 +57,28 @@ class ActuController extends Controller {
             $em->persist($actu);
             $em->flush();
 
-            $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
-
+            $subscribers = $em->getRepository("WeCreaBundle:Subscriber")->findAll();
+            $actus = $em->getRepository("WeCreaBundle:Actu")->findAll();
             $actu = $actus[count($actus)-1];
+
+            foreach ($subscribers as $subscriber) {
+                $destination = $subscriber->getEmail();
+                $message = new \Swift_Message();
+                $message
+                    ->setSubject('We-Crea - Nouvelle actualité')
+                    ->setFrom('cotedesserts.info@gmail.com')
+                    ->setTo($destination);
+                $image = $message->embed(\Swift_Image::fromPath('images/'.$actu->getImages()->getUrl()));
+                $message->setBody(
+                    $this->renderView('WeCreaBundle:Admin:actu_newsletter.html.twig', array(
+                        'actu' => $actu,
+                        'image' => $image,
+                        'subscriber' => $subscriber
+                    )),
+                    'text/html'
+                );
+                $this->get('mailer')->send($message);
+            }
 
             $content= $this->renderView('@WeCrea/Admin/actu_show.html.twig', array(
                 'actu' => $actu,
@@ -69,7 +87,6 @@ class ActuController extends Controller {
             $response= new JsonResponse($content);
 
         }
-
         return $response;
     }
 

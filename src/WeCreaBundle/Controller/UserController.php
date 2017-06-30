@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Nature;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ProfilFormType;
@@ -504,5 +505,55 @@ class UserController extends Controller
         return $this->render('WeCreaBundle:User:actu.html.twig', array(
             'actus' => $actu
         ));
+    }
+
+    public function NewsletterAction(Request $request){
+        if($request->isMethod('post')){
+
+            $em = $this->getDoctrine()->getManager();
+            $message = $request->getSession()->getFlashBag();
+
+            $email = htmlspecialchars($request->request->get('email'));
+            $hasAlreadySubscribed = $em->getRepository('WeCreaBundle:Subscriber')->findOneByEmail($email);
+
+            if($hasAlreadySubscribed == NULL){
+                $subscriber = new Subscriber();
+                $subscriber->setEmail($email);
+                $subscriber->setDate(new \DateTime());
+                $subscriber->setToken(md5(uniqid()));
+
+                $em->persist($subscriber);
+                $em->flush();
+
+                $subscriber->getId() != NULL ?
+                    $message->add("Notice", "Vous avez bien été inscrit(e) à la newsletter"):
+                    $message->add("Notice", "L'inscription à la newsletter a échoué. Veuillez réessayer.");
+            }
+            else{
+                $message->add("Notice", "Vous êtes déjà inscrit à la newsletter");
+            }
+
+            return $this->redirect($request->headers->get('referer'));
+        }
+    }
+
+    public function unsubscribeAction($token){
+        $em = $this->getDoctrine()->getManager();
+
+        $subscriberToDelete = $em->getRepository('WeCreaBundle:Subscriber')->findOneByToken($token);
+
+        if($subscriberToDelete != NULL){
+            $em->remove($subscriberToDelete);
+            $em->flush();
+
+            $message = "L'adresse " . $subscriberToDelete->getEmail() . " a bien été supprimée. Vous pouvez vous réabonner à tout moment";
+        }
+        else{
+            $message = "Vous vous êtes déjà désabonné de la newsletter.";
+        }
+
+        return $this->render("WeCreaBundle:User:unsubscription_confirmation", [
+            'message' => $message
+        ]);
     }
 }
