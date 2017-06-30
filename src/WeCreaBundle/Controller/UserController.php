@@ -9,8 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Subscriber;
+use WeCreaBundle\Entity\Contact;
 use WeCreaBundle\Entity\Nature;
 use WeCreaBundle\Entity\WorkPurchased;
+use WeCreaBundle\Form\ContactType;
 use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
@@ -552,6 +554,46 @@ class UserController extends Controller
 
         return $this->render("WeCreaBundle:User:unsubscription_confirmation.html.twig", [
             'message' => $message
+        ]);
+    }
+
+    public function contactAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $contact->setDate(new \DateTime());
+            $em->persist($contact);
+            $em->flush();
+
+            $phone = $contact->getPhonenumber() != NULL ? $contact->getPhonenumber() : "Non renseigné";
+
+            $message = new \Swift_Message();
+            $message
+                    ->setSubject('Nouveau message de '. $contact->getFirstName() . ' ' . $contact->getName())
+                    ->setFrom('contact@wecrea.fr')
+                    ->setTo('contact@wecrea.fr')
+                    ->setBody(
+                        '<p><b> Coordonnées du contact : </b><br /><br />
+                            <b>Email : </b> '. $contact->getEmail() . '<br />
+                            <b>Téléphone : </b> ' . $phone .
+                            '</p>
+                            <p><b> Message : </b><br /><br />' . nl2br($contact->getContent()) . '</p>'
+                        ,'text/html'
+                    );
+            $this->get('mailer')->send($message);
+
+            $request->getSession()->getFlashBag()->add("Notice", "Votre message a bien été envoyé.");
+            return $this->redirectToRoute('we_crea_contact');
+        }
+
+        return $this->render('WeCreaBundle:User:contact.html.twig', [
+           'form' => $form->createView()
         ]);
     }
 }
