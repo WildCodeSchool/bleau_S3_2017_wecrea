@@ -74,8 +74,9 @@
     {{ parent() }}
     <script>
         $(document).ready( function () {
-            function addFav() {
-                $('.fav_btn').click( function (e) {
+            $('.fav_btn').on('click', function (e) {
+
+                function addFav() {
                     e.preventDefault();
                     var data = {'idWork': $(this).attr('data')};
                     var btn = $(this);
@@ -95,11 +96,12 @@
                             deleteFav();
                         }
                     })
-                });
-            };
+                };
+            });
+
+            $('.fav_btn_delete').on('click', function (e) {
 
             function deleteFav() {
-                $('.fav_btn_delete').click( function (e) {
                     e.preventDefault();
 
                     var data = {'idWork': $(this).attr('data')};
@@ -118,10 +120,9 @@
                             addFav();
                         }
                     })
-                });
-            };
-            addFav();
-            deleteFav();
+                };
+            });
+
         })
     </script>
 {% endblock %}

@@ -27,7 +27,9 @@ class NatureController extends Controller
 
 			$formBuilder = $this->get('form.factory')->createNamedBuilder(strtolower($nature->getName()), NatureType::class, $nature);
 			$forms[$nature->getName()] = $formBuilder->getForm();
-			$nature->previousImage = $nature->getImages()->getUrl();
+
+            $nature->previousImage = $nature->getImages()->getUrl();
+
 			$forms[$nature->getName()]->handleRequest($request);
 			$forms[$nature->getName()] = $formBuilder->getForm()->createView();
 		}
