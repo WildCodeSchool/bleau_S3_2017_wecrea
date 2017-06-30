@@ -1,3 +1,11 @@
 we_crea_user_profil:
     path: /profil
     defaults: {_controller: "WeCreaBundle:User:showProfil"}
+
+we_crea_basket_address:
+    path: /basket/address
+    defaults: {_controller: "WeCreaBundle:User:basketAddress"}
+
+we_crea_basket_command:
+    path: /basket/command
+    defaults: {_controller: "WeCreaBundle:User:command"}

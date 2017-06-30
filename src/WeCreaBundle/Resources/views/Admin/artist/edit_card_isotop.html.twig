@@ -1,10 +1,7 @@
 {% extends '@WeCrea/layout/base_admin.html.twig' %}
 
 {% block stylesheets %}
-
-    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/wecrea/vendor/colorpicker/materialize-colorpicker.css') }}">
-
 {% endblock %}
 
 {% block body %}
@@ -72,6 +69,7 @@
 
             $('.submitButtonNature').click(function (e) {
                 e.preventDefault();
+
                 $( ".submitButtonNature" ).hide();
                 var form = $(this).parent().parent();
                 var data = new FormData(form[0]);
