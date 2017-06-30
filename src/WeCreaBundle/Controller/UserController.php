@@ -273,7 +273,7 @@ class UserController extends Controller
         $session = $this->get('session');
         $basket = $session->get('basket');
         $command = new Command();
-
+        $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
         $user = $this->getUser();
@@ -288,8 +288,10 @@ class UserController extends Controller
         $command->setMail($user->getEmail());
 
         $date = new \DateTime();
+        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+
         $command->setDate($date);
-        $command->setNb(uniqid().$date->format('dmY'));
+        $command->setNb($id_trans);
 
         foreach ($basket as $prod=>$caract) {
             $workPurchased = new WorkPurchased();
@@ -310,8 +312,9 @@ class UserController extends Controller
             $command->addWork($workPurchased);
         }
 
-        $em->persist($command);
+        $command->setStatus($status);
 
+        $em->persist($command);
         $em->flush();
 
         $works = $command->getWorks();
@@ -322,7 +325,6 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
 
         $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
 
@@ -334,6 +336,7 @@ class UserController extends Controller
             'idTrans' => $id_trans,
         ));
     }
+
     /* ----- Add Favs -----*/
     public function addFavAction(Request $request) {
         $session = $this->get('session');

@@ -103,7 +103,7 @@
                     url:  "{{ path('we_crea_admin_delete_carrousel') }}",
                     data: {'id': id},
                     success: function (response) {
-                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000); // 4000 is the duration of the toast
+                        Materialize.toast('<span class="toast_custom">La vignette a bien été supprimée</span>', 4000); // 4000 is the duration of the toast
                         $('#' + id).parent().slideUp(800);
                     }
                 });

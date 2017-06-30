@@ -4,7 +4,6 @@
     <main>
         <div class="container container-custom-search">
             <div class="row">
-
                 {% if works is defined %}
                     Résultats pour : <b>{{ exp|upper }}</b>
                     {% for work in works %}
@@ -29,7 +28,7 @@
                             <div class="card-content card-content_custom">
                             <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
                                 <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
-                                <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
+                                <p><a href="{{ path('we_crea_artist', {id : work.artist.id} ) }}" class="artist">{{ work.artist.name }}</a></p>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>

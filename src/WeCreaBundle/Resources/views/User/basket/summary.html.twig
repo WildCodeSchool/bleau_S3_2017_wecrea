@@ -50,7 +50,16 @@
                               </div>
                           {% endfor %}
                       </div>
-                      <input type="submit" class="btn black" value="confirmer">
+                      {% if is_granted('ROLE_USER') == true or is_granted('ROLE_ADMIN') == true %}
+                          <input type="submit" class="btn black" value="confirmer">
+                      {% else %}
+                          <p>Pour continuer :
+                              <a href="{{ path('fos_user_registration_register') }}" class="btn black">Enregistrez-vous</a>
+                              ou
+                              <a href="{{ path('fos_user_security_login') }}" class="btn black">Connectez-vous</a>
+                          </p>
+
+                      {% endif %}
                   </form>
                   {% endif %}
               </div>
