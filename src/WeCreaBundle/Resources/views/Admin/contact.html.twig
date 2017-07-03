@@ -1,0 +1,27 @@
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <div class="row">
+            <h4 style="background: darkorange; color: #fff; padding: 10px;"> Demandes issues du formulaire de contact </h4>
+            <table>
+                <thead>
+                <td><b>Email</b></td>
+                <td><b>Date </b></td>
+                <td><b>Message</b></td>
+                </thead>
+                <tbody>
+                {% for contact in contacts %}
+                <tr style="border-bottom: 1px solid #c8c8c8;">
+                    <td style="width: 30%">{{ contact.email }}</td>
+                    <td style="width: 20%;"> {{ contact.date|date }}</td>
+                    <td style="width: 50%; line-height: 18px;">{{ contact.content|nl2br }}</td>
+                </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}

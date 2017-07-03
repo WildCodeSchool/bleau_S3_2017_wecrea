@@ -11,22 +11,7 @@
         <div class="navbar-fixed nav_custom_cont">
             <nav class="nav_custom">
                 <div class="nav-wrapper">
-                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="{{ path('we_crea_admin_artist_list') }}">Gestion Artistes</a></li>
-                        <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
-                        <li><a href="{{ path('we_crea_admin_actu') }}">Actualités</a></li>
-                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
-                    </ul>
-
-                    <ul id="mobile-demo" class="side-nav">
-                        <li><a href="{{ path('we_crea_admin_artist_list') }}">Gestion Artistes</a></li>
-                        <li><a href="{{ path('we_crea_admin_carrousel_edition') }}">Administration Carousel</a></li>
-                        <li><a href="{{ path('we_crea_admin_actu') }}">Actualités</a></li>
-                        <li><a href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a></li>
-                    </ul>
+                    <a href="{{ path('we_crea_admin_homepage') }}" class="brand-logo"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
                 </div>
             </nav>
         </div>
@@ -41,9 +26,38 @@
         </div>
     {% endif %}
 {% endblock %}
+{% block sidenav %}
+    {% if app.request.attributes.get('_route') != "we_crea_admin_homepage" %}
+    <ul style="width: 150px; position: fixed; left: 0; text-indent: 10px; margin-top: 75px;">
+        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="color: #fff; text-decoration: none;">Menu</a></li>
+        <li style="background: dodgerblue;"><a href="{{ path('we_crea_admin_carrousel_edition') }}" style="color: #fff; text-decoration: none;">Carrousel</a></li>
+        <li style="background: green;"><a href="{{ path('we_crea_admin_artist_list') }}" style="color: #fff; text-decoration: none;">Artistes</a></li>
+        <li style="background: tomato;"><a href="{{ path('we_crea_admin_concept_edit') }}" style="color: #fff; text-decoration: none;">Concept</a></li>
+        <li style="background: #b22222;"><a href="{{ path('we_crea_admin_actu') }}" style="color: #fff; text-decoration: none;">Actualités</a></li>
+        <li style="background: rebeccapurple;"><a href="{{ path('we_crea_admin_edit_isotop') }}" style="color: #fff; text-decoration: none;">Natures</a></li>
+        <li style="background: darkslategrey;"><a href="{{ path('we_crea_admin_subscribers_info') }}" style="color: #fff; text-decoration: none;">Newsletter</a>
+        <li style="background: darkorange;"><a href="{{ path('we_crea_admin_contact') }}" style="color: #fff; text-decoration: none;">Contacts</a>
+        <li style="background: black;"><a href="{{ path('we_crea_homepage') }}" style="color: #fff; text-decoration: none;">Site web</a></li>
+    </ul>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 {% endblock %}
 
 {% block js_admin %}
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $('li').on("mouseover", function(){
+            $(this).css({
+               'width' : '180px'
+            });
+        });
+
+        $('li').on("mouseleave", function(){
+            $(this).css({
+                'width': '150px'
+            });
+        })
+    </script>
 {% endblock %}

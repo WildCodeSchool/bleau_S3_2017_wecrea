@@ -1,20 +1,43 @@
 {% extends '@WeCrea/layout/base_admin.html.twig' %}
 
 {% block body %}
-    <div class="container">
-
-        <div class="row row_custom">
+    <div class="container container-custom-artists">
+        <h4 style="background: dodgerblue; color: #fff; padding: 10px;"> Édition du carrousel </h4>
+        <div class="row">
             <div class="col m10 offset-m1">
                 {{ form_start(formCarrousel) }}
-                    {{ form_row(formCarrousel.title) }}
-                    {{ form_row(formCarrousel.content) }}
-                    {{ form_row(formCarrousel.rout) }}
-                <button class="btn waves-effect waves-light right black" type="submit" name="action">
-                    Ajouter la vignette
-                    <i class="material-icons left">add</i>
-                </button>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.title, "Titre") }}
+                        {{ form_widget(formCarrousel.title) }}
+                        {{ form_errors(formCarrousel.title) }}
+                    </div>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.content, "Contenu") }}
+                        {{ form_widget(formCarrousel.content, {'attr' : {'class': 'materialize-textarea'}} ) }}
+                        {{ form_errors(formCarrousel.content) }}
+                    </div>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.rout, "Adresse de la page") }}
+                        {{ form_widget(formCarrousel.rout) }}
+                        {{ form_errors(formCarrousel.rout) }}
+                    </div>
+                    {{ form_label(formCarrousel.images.url, "Image") }}
+                    <div class="file-field input-field col s12">
+                        <div class="btn btn-file">
+                            <span>Choisissez un fichier</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            {{ form_widget(formCarrousel.images.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                        </div>
+                        {{ form_errors(formCarrousel.images.url) }}
+                    </div>
+                    <div id="check-image"></div>
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                        Ajouter la vignette
+                        <i class="material-icons left">add</i>
+                    </button>
                 {{ form_end(formCarrousel) }}
-
             </div>
         </div>
 
@@ -35,7 +58,32 @@
     <script type="text/javascript">
         $(document).ready( function(){
 
-           $('form[name="wecreabundle_carrousel"]').submit( function(e) {
+            $('input[type="file"]').on("change", function(){
+                var $file = $(this)[0].files[0];
+
+                $img = new Image();
+                $img.src = window.URL.createObjectURL($file);
+                $img.style.width = "50%";
+                $img.style.margin = "20px";
+
+                $button = document.createElement('button');
+                $button.style.display = "block";
+                $button.style.backgroundColor = "red";
+                $button.style.border = "none";
+                $button.style.color = "#fff";
+                $button.textContent = 'Supprimer';
+
+                $("#check-image").append($img);
+                $("#check-image").append($button);
+
+                $button.onclick = function(){
+
+                    $img.remove();
+                    $(this).remove();
+                }
+            });
+
+            $('form[name="wecreabundle_carrousel"]').submit( function(e) {
                e.preventDefault();
 
                var $data = new FormData($(this)[0]);
