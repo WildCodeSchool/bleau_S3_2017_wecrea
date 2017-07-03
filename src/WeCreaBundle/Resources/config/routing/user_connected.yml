@@ -10,6 +10,4 @@ we_crea_basket_command:
     path: /basket/command
     defaults: {_controller: "WeCreaBundle:User:command"}
 
-we_crea_api_response:
-    path: /pay
-    defaults: {_controller: "WeCreaBundle:User:apiResponse"}
+

@@ -601,15 +601,15 @@ class UserController extends Controller
     }
 
     // --- API response --- //
-    public function apiResponseAction(Request $request) {
+    public function apiResponseAction() {
         $em = $this->getDoctrine()->getManager();
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
-        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('553410');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('311925');
         $command->setStatus($pay);
 
         $em->flush();
         $response ='ok';
-        return $response;
+        return new Response($response) ;
     }
 }
