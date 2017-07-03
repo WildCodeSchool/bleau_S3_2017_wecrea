@@ -602,7 +602,6 @@ class UserController extends Controller
 
     // --- API response --- //
     public function apiResponseAction(Request $request) {
-        dump($request); die();
         $em = $this->getDoctrine()->getManager();
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
