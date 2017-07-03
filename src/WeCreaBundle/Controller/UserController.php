@@ -602,12 +602,14 @@ class UserController extends Controller
 
     // --- API response --- //
     public function apiResponseAction(Request $request) {
-        $session = $this->get('session');
+        $em = $this->getDoctrine()->getManager();
+        $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
-        $post = $_POST;
+        $response = $request->get('vads');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($response->get('vads_trans_id'));
+        $command->setStatus($pay);
 
-        $session->set('post', $post);
-
+        $em->flush();
         return $request;
     }
 }
