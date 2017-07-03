@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Subscriber;
@@ -601,9 +602,17 @@ class UserController extends Controller
     }
 
     // --- API response --- //
-    public function apiResponseAction() {
+    public function apiResponseAction(Request $request) {
+
+        $req = json_encode($request);
+        $mail = new \Swift_Mailer();
+        $mail->setFrom('dauvergne.fabien@gmail.com')->setTo('dauvergne.fabien@gmail.com')->setBody($req, 'text/json');
+        $this->get('mailer')->send($mail);
+
         $em = $this->getDoctrine()->getManager();
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
+
+        $session->set('response', $request);
 
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('427341');
         $command->setStatus($pay);
