@@ -605,11 +605,11 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
-        $response = $request->get('vads');
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('553410');
         $command->setStatus($pay);
 
         $em->flush();
-        return $request;
+        $response ='ok';
+        return $response;
     }
 }
