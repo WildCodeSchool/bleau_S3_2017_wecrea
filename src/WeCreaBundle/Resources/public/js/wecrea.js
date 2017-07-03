@@ -192,5 +192,5 @@ $(document).ready( function () {
     }
 
     $('#alert-newsletter-subscription').delay(2000).fadeOut(2000);
-};
+});
 

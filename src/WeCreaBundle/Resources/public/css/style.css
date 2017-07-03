@@ -223,7 +223,17 @@ nav ul a:hover {
     }
 }
 
+/* ADMIN ALL PAGES */
 
+.input-field label,
+label{
+    color: black;
+    font-size: 1em;
+}
+
+textarea{
+    min-height: 150px;
+}
 
 /* ADMIN CARROUSEL*/
 
@@ -253,15 +263,10 @@ nav ul a:hover {
 
 .link-box {
     height: 250px;
-    background-color: #ffffff;
-    border: solid 2px #5a5a5a;
-
-}
-
-.link-box a {
+    line-height: 250px;
+    margin: 5px 0;
     width: 100%;
-    font-style: normal;
-    color: #5a5a5a;
+    color: #fff;
 }
 
 .link-box:hover {

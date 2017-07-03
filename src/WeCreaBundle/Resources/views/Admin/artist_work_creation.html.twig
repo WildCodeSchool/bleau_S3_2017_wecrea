@@ -254,7 +254,7 @@
 
         $('form[id="artist-profil"]').submit(function(e){
             e.preventDefault();
-            console.log($(this).serialize());
+
             if(confirm("Vous allez créer le profil de l'artiste.")) {
                 $(this).find('button').hide();
                 var $form = $(this).serialize();

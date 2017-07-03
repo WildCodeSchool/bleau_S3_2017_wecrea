@@ -111,6 +111,12 @@ we_crea_admin_actu_newsletter:
     path: /actu/newsletter
     defaults: {_controller: "WeCreaBundle:Admin:actuNewsletter"}
 
+# Contact list in case of problem with email box
+we_crea_admin_contact:
+    path: /contacts
+    defaults:
+        _controller: "WeCreaBundle:Admin:contact"
+
 # -------- Edit card Isotop -----
 we_crea_admin_edit_isotop:
     path: /nature/edit

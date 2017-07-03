@@ -393,4 +393,15 @@ class AdminController extends Controller
 
         return $this->redirectToRoute("we_crea_admin_subscribers_info");
     }
+
+    public function contactAction(){
+
+        $contacts = $this->getDoctrine()->getManager()
+                         ->getRepository('WeCreaBundle:Contact')
+                         ->findBy([], ['date' => 'DESC']);
+
+        return $this->render('WeCreaBundle:Admin:contact.html.twig', [
+            'contacts' => $contacts
+        ]);
+    }
 }
