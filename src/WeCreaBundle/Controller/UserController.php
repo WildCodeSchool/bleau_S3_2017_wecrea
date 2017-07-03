@@ -603,8 +603,8 @@ class UserController extends Controller
 
     // --- API response --- //
     public function apiResponseAction(Request $request) {
-
-        $req = json_encode($_POST);
+        $result = $request->request;
+        $req = json_encode($result);
         $mail = new \Swift_Message();
         $mail->setFrom('dauvergne.fabien@gmail.com')->setTo('dauvergne.fabien@gmail.com')->setBody($req, 'text/json');
         $this->get('mailer')->send($mail);
