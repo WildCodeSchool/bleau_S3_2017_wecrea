@@ -603,9 +603,6 @@ class UserController extends Controller
     // --- API response --- //
     public function apiResponseAction(Request $request) {
         $session = $this->get('session');
-        $response = $request->request;
-
-        $session->set('response', $response);
 
         $post = $_POST;
 
