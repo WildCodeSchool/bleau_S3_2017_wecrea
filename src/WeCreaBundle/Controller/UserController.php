@@ -604,7 +604,7 @@ class UserController extends Controller
     // --- API response --- //
     public function apiResponseAction(Request $request) {
 
-        $req = json_encode($request);
+        $req = json_encode($request->request);
         $mail = new \Swift_Message();
         $mail->setFrom('dauvergne.fabien@gmail.com')->setTo('dauvergne.fabien@gmail.com')->setBody($req, 'text/json');
         $this->get('mailer')->send($mail);
@@ -612,7 +612,6 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
-        $session->set('response', $request);
 
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('427341');
         $command->setStatus($pay);
