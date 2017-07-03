@@ -595,7 +595,7 @@ class UserController extends Controller
             return $this->redirectToRoute('we_crea_contact');
         }
 
-        return $this->render('WeCreaBundle:User:contact.html.twig', [
+        return $this->render('@WeCrea/User/contact.html.twig', [
            'form' => $form->createView()
         ]);
     }
