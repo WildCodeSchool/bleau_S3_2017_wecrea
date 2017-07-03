@@ -605,7 +605,7 @@ class UserController extends Controller
     public function apiResponseAction(Request $request) {
 
         $req = json_encode($request);
-        $mail = new \Swift_Mailer();
+        $mail = new \Swift_Message();
         $mail->setFrom('dauvergne.fabien@gmail.com')->setTo('dauvergne.fabien@gmail.com')->setBody($req, 'text/json');
         $this->get('mailer')->send($mail);
 
