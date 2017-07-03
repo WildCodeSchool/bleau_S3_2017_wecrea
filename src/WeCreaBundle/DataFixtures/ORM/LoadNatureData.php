@@ -35,11 +35,11 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $natures = array(
-            "Dessin",
-            "Photographie",
             "Peinture",
             "Sculpture",
-            "Artisanat_dart",
+            "Dessin",
+            "Photographie",
+            "Artisanat d'art",
             "Curiosités"
         );
 
