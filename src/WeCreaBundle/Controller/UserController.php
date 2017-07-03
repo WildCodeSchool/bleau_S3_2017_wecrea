@@ -602,9 +602,10 @@ class UserController extends Controller
 
     // --- API response --- //
     public function apiResponseAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
+        $session->set('response', $request);
 
-        dump($request);die();
+
 
         return $request;
     }
