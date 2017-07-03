@@ -599,4 +599,13 @@ class UserController extends Controller
            'form' => $form->createView()
         ]);
     }
+
+    // --- API response --- //
+    public function apiResponseAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        dump($request);die();
+
+        return $request;
+    }
 }
