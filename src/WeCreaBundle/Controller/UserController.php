@@ -606,7 +606,7 @@ class UserController extends Controller
         $pay = $em->getRepository('WeCreaBundle:Status')->findOneById(4);
 
         $response = $request->get('vads');
-        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('872879');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb('553410');
         $command->setStatus($pay);
 
         $em->flush();
