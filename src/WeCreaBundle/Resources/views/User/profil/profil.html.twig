@@ -146,8 +146,8 @@
                                 {% else %}
                                 Comande en attente de paiement
                                 {% endif %}
-                                 {% if comand.status.name == 'error' OR comand.status.name == 'wait' %}
-                                <a href="{{ path('we_crea_payement', {'id': command.id}) }}">aller vers la page de paiement</a>
+                                 {% if comand.status.name != 'payed' %}
+                                <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
                                 {% endif %}
 
                             </td>

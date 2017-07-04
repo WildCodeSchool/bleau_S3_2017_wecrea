@@ -347,11 +347,10 @@ class UserController extends Controller
     }
 
     // --- Command payement --- //
-    public function payementAction(Request $request) {
+    public function payementAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-        $comandId = $request->query->get('id');
 
-        $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($comandId);
+        $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($id);
         $works = $comand->getWorks();
         $date = $comand->getDate();
         $id_trans = $comand->getNb();
