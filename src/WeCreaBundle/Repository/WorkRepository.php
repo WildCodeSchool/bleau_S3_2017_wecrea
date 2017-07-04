@@ -35,7 +35,6 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
             ->orWhere('REGEXP(n.name, :regexp) = true')
             ->setParameter('regexp', $exp);
 
-
         return $qb->getQuery()->getResult();
     }
 
@@ -46,7 +45,6 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
             ->where('REGEXP(a.name, :regexp) = true')
             ->orWhere('REGEXP(a.firstname, :regexp) = true')
             ->setParameter('regexp', $exp);
-
 
         return $qb->getQuery()->getResult();
     }

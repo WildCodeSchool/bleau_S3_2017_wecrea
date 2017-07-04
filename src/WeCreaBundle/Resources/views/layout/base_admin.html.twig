@@ -29,15 +29,15 @@
 {% block sidenav %}
     {% if app.request.attributes.get('_route') != "we_crea_admin_homepage" %}
     <ul style="width: 150px; position: fixed; left: 0; text-indent: 10px; margin-top: 75px;">
-        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="color: #fff; text-decoration: none;">Menu</a></li>
-        <li style="background: dodgerblue;"><a href="{{ path('we_crea_admin_carrousel_edition') }}" style="color: #fff; text-decoration: none;">Carrousel</a></li>
-        <li style="background: green;"><a href="{{ path('we_crea_admin_artist_list') }}" style="color: #fff; text-decoration: none;">Artistes</a></li>
-        <li style="background: tomato;"><a href="{{ path('we_crea_admin_concept_edit') }}" style="color: #fff; text-decoration: none;">Concept</a></li>
-        <li style="background: #b22222;"><a href="{{ path('we_crea_admin_actu') }}" style="color: #fff; text-decoration: none;">Actualités</a></li>
-        <li style="background: rebeccapurple;"><a href="{{ path('we_crea_admin_edit_isotop') }}" style="color: #fff; text-decoration: none;">Natures</a></li>
-        <li style="background: darkslategrey;"><a href="{{ path('we_crea_admin_subscribers_info') }}" style="color: #fff; text-decoration: none;">Newsletter</a>
-        <li style="background: darkorange;"><a href="{{ path('we_crea_admin_contact') }}" style="color: #fff; text-decoration: none;">Contacts</a>
-        <li style="background: black;"><a href="{{ path('we_crea_homepage') }}" style="color: #fff; text-decoration: none;">Site web</a></li>
+        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Menu</a></li>
+        <li style="background: dodgerblue;"><a href="{{ path('we_crea_admin_carrousel_edition') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Carrousel</a></li>
+        <li style="background: green;"><a href="{{ path('we_crea_admin_artist_list') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Artistes</a></li>
+        <li style="background: tomato;"><a href="{{ path('we_crea_admin_concept_edit') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Concept</a></li>
+        <li style="background: #b22222;"><a href="{{ path('we_crea_admin_actu') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Actualités</a></li>
+        <li style="background: rebeccapurple;"><a href="{{ path('we_crea_admin_edit_isotop') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Natures</a></li>
+        <li style="background: darkslategrey;"><a href="{{ path('we_crea_admin_subscribers_info') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Newsletter</a>
+        <li style="background: darkorange;"><a href="{{ path('we_crea_admin_contact') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Contacts</a>
+        <li style="background: black;"><a href="{{ path('we_crea_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Site web</a></li>
     </ul>
     {% endif %}
 {% endblock %}
