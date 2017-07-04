@@ -613,7 +613,8 @@ class UserController extends Controller
             $sign .= $value . '+';
         }
         $sign .= $this->getParameter('certif_test');
-        $signature = sha1(utf8_encode($sign));
+        $sign = utf8_encode($sign);
+        $signature = sha1($sign);
 
         $commandId = $r->get('vads_trans_id');
         $response = $r->get('vads_trans_status');
