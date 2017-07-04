@@ -347,14 +347,16 @@ class UserController extends Controller
     }
 
     // --- Command payement --- //
-    public function payementAction(Request $request, $id) {
+    public function payementAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($id);
-        $works = $comand->getWorks();
-        $date = $comand->getDate();
-        $id_trans = $comand->getNb();
+        $date = new \DateTime();
+        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+        $comand->setNb($id_trans);
+        $comand->setDate($date);
 
+        $works = $comand->getWorks();
         $total=0;
         foreach ($works as $work) {
             $price = $work->getPrice() * $work->getQuant();
@@ -363,6 +365,8 @@ class UserController extends Controller
 
         $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
         $signature = sha1($signature);
+
+        $em->flush();
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $comand,
