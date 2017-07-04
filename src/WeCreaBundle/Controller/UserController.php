@@ -275,8 +275,11 @@ class UserController extends Controller
     public function commandAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
+
         $basket = $session->get('basket');
+
         $command = new Command();
+
         $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
@@ -322,6 +325,8 @@ class UserController extends Controller
         $user->addCommand($command);
         $em->flush();
 
+        $session->remove('basket');
+
         $works = $command->getWorks();
         $total = 0;
 
@@ -330,16 +335,85 @@ class UserController extends Controller
             $total += $price;
         }
 
-
         $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
-
         $signature = sha1($signature);
+
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $command,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
         ));
+    }
+
+    // --- Command payement --- //
+    public function payementAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $comandId = $request->query->get('id');
+
+        $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($comandId);
+        $works = $comand->getWorks();
+        $date = $comand->getDate();
+        $id_trans = $comand->getNb();
+
+        $total=0;
+        foreach ($works as $work) {
+            $price = $work->getPrice() * $work->getQuant();
+            $total += $price;
+        }
+
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
+        $signature = sha1($signature);
+
+        return $this->render('@WeCrea/User/basket/payement.html.twig', array(
+            'commands' => $comand,
+            'total' => $total,
+            'signature' => $signature,
+            'idTrans' => $id_trans,
+        ));
+    }
+
+    // --- API response --- //
+    public function apiResponseAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $Status = $em->getRepository('WeCreaBundle:Status');
+        $r = $request->request;
+
+        $sign = utf8_encode($r->get('vads_action_mode') . "+" . $r->get('vads_amount') . "+" . $r->get('vads_auth_mode') . "+" . $r->get('vads_auth_number') . "+" . $r->get('vads_auth_result') . "+" . $r->get('vads_bank_product') . "+" . $r->get('vads_capture_delay') . "+" . $r->get('vads_card_brand') . "+" . $r->get('vads_card_country') . "+" . $r->get('vads_card_number') . "+" . $r->get('vads_contract_used') . "+" . $r->get('vads_ctx_mode') . "+" . $r->get('vads_currency') . "+" . $r->get('vads_effective_amount') . "+" . $r->get('vads_effective_creation_date') . "+" . $r->get('vads_effective_currency') . "+" . $r->get('vads_expiry_month') . "+" . $r->get('vads_expiry_year') . "+" . $r->get('vads_extra_result') . "+" . $r->get('vads_hash') . "+" . $r->get('vads_language') . "+" . $r->get('vads_operation_type') . "+" . $r->get('vads_page_action') . "+" . $r->get('vads_payment_certificate') . "+" . $r->get('vads_payment_config') . "+" . $r->get('vads_payment_src') . "+" . $r->get('vads_pays_ip') . "+" . $r->get('vads_presentation_date') . "+" . $r->get('vads_result') . "+" . $r->get('vads_sequence_number') . "+" . $r->get('vads_site_id') . "+" . $r->get('vads_threeds_cavv') . "+" . $r->get('vads_threeds_cavvAlgorithm') . "+" . $r->get('vads_threeds_eci') . "+" . $r->get('vads_threeds_enrolled') . "+" . $r->get('vads_threeds_error_code') . "+" . $r->get('vads_threeds_exit_status') . "+" . $r->get('vads_threeds_sign_valid') . "+" . $r->get('vads_threeds_status') . "+" . $r->get('vads_threeds_xid') . "+" . $r->get('vads_trans_date') . "+" . $r->get('vads_trans_id') . "+" . $r->get('vads_trans_status') . "+" . $r->get('vads_trans_uuid') . "+" . $r->get('vads_url_check_src') . "+" . $r->get('vads_validation_mode') . "+" . $r->get('vads_version') . "+" . $r->get('vads_warranty_result')."+".$this->getParameter('certif_test'));
+
+        $commandId = $r->get('vads_trans_id');
+
+        $signature = sha1($sign);
+        $prevSign = $r->get('signature');
+
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
+
+        if($command != null) {
+            if ($signature == $prevSign){
+                $response = $r->get('vads_trans_status');
+            }
+            else{
+                $response = "Erreur lors du payment";
+            }
+
+            if ($response == 'AUTHORISED'){
+                $status = $Status->findOneById(4);
+            }
+            elseif ($response == 'REFUSED'){
+                $status = $Status->findOneById(3);
+            }
+            elseif ($response == 'WAITING_AUTHORISATION' || $response == 'AUTHORISED_TO_VALIDATE') {
+                $status = $Status->findOneById(2);
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $command->setStatus($status);
+
+        $em->flush();
+        $response ='ok';
+        return new Response($response) ;
     }
 
     /* ----- Add Favs -----*/
@@ -599,53 +673,5 @@ class UserController extends Controller
         return $this->render('@WeCrea/User/contact.html.twig', [
            'form' => $form->createView()
         ]);
-    }
-
-    // --- API response --- //
-    public function apiResponseAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $Status = $em->getRepository('WeCreaBundle:Status');
-        $r = $request->request;
-
-        $sign = utf8_encode($r->get('vads_action_mode') . "+" . $r->get('vads_amount') . "+" . $r->get('vads_auth_mode') . "+" . $r->get('vads_auth_number') . "+" . $r->get('vads_auth_result') . "+" . $r->get('vads_bank_product') . "+" . $r->get('vads_capture_delay') . "+" . $r->get('vads_card_brand') . "+" . $r->get('vads_card_country') . "+" . $r->get('vads_card_number') . "+" . $r->get('vads_contract_used') . "+" . $r->get('vads_ctx_mode') . "+" . $r->get('vads_currency') . "+" . $r->get('vads_effective_amount') . "+" . $r->get('vads_effective_creation_date') . "+" . $r->get('vads_effective_currency') . "+" . $r->get('vads_expiry_month') . "+" . $r->get('vads_expiry_year') . "+" . $r->get('vads_extra_result') . "+" . $r->get('vads_hash') . "+" . $r->get('vads_language') . "+" . $r->get('vads_operation_type') . "+" . $r->get('vads_page_action') . "+" . $r->get('vads_payment_certificate') . "+" . $r->get('vads_payment_config') . "+" . $r->get('vads_payment_src') . "+" . $r->get('vads_pays_ip') . "+" . $r->get('vads_presentation_date') . "+" . $r->get('vads_result') . "+" . $r->get('vads_sequence_number') . "+" . $r->get('vads_site_id') . "+" . $r->get('vads_threeds_cavv') . "+" . $r->get('vads_threeds_cavvAlgorithm') . "+" . $r->get('vads_threeds_eci') . "+" . $r->get('vads_threeds_enrolled') . "+" . $r->get('vads_threeds_error_code') . "+" . $r->get('vads_threeds_exit_status') . "+" . $r->get('vads_threeds_sign_valid') . "+" . $r->get('vads_threeds_status') . "+" . $r->get('vads_threeds_xid') . "+" . $r->get('vads_trans_date') . "+" . $r->get('vads_trans_id') . "+" . $r->get('vads_trans_status') . "+" . $r->get('vads_trans_uuid') . "+" . $r->get('vads_url_check_src') . "+" . $r->get('vads_validation_mode') . "+" . $r->get('vads_version') . "+" . $r->get('vads_warranty_result')."+".$this->getParameter('certif_test'));
-
-        $commandId = $r->get('vads_trans_id');
-        $response = $r->get('vads_trans_status');
-
-        $signature = sha1($sign);
-        $prevSign = $r->get('signature');
-        $req = $response . ' _ ' . $commandId . ' - ' . $signature.' - '.$prevSign;
-        $mail = new \Swift_Message();
-        $mail->setFrom('dauvergne.fabien@gmail.com')->setTo('dauvergne.fabien@gmail.com')->setBody($req, 'text/json');
-
-        $this->get('mailer')->send($mail);
-        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
-
-        if($command != null) {
-            if ($signature == $prevSign){
-                $response = $r->get('vads_trans_status');
-            }
-            else{
-                $response = "Erreur lors du payment";
-            }
-
-            if ($response == 'AUTHORISED'){
-                $status = $Status->findOneById(4);
-            }
-            elseif ($response == 'REFUSED'){
-                $status = $Status->findOneById(3);
-            }
-            elseif ($response == 'WAITING_AUTHORISATION' || $response == 'AUTHORISED_TO_VALIDATE') {
-                $status = $Status->findOneById(2);
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $command->setStatus($status);
-
-        $em->flush();
-        $response ='ok';
-        return new Response($response) ;
     }
 }

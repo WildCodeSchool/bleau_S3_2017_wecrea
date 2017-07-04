@@ -10,4 +10,8 @@ we_crea_basket_command:
     path: /basket/command
     defaults: {_controller: "WeCreaBundle:User:command"}
 
-
+we_crea_payement:
+    path: /payement/{id}
+    defaults: {_controller: ""}
+    requirements:
+        id: '\d+'

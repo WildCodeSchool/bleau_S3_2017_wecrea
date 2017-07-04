@@ -136,7 +136,21 @@
                                 {% endfor %}
                             </td>
                             <td>{{ total }}€</td>
-                            <td>{{ comand.status.name }}</td>
+                            <td>
+                                {% if comand.status.name = 'payed' %}
+                                Payement effectué, en cours de livraison
+                                {% elseif comand.status.name = 'error' %}
+                                Erreur de paiement
+                                {% elseif comand.status.name = 'payProg' %}
+                                Paiement en cours
+                                {% else %}
+                                Comande en attente de paiement
+                                {% endif %}
+                                 {% if comand.status.name = 'error' OR comand.status.name = 'wait' %}
+                                <a href="{{ path('we_crea_payement', {'id': command.id}) }}">aller vers la page de paiement</a>
+                                {% endif %}
+
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
