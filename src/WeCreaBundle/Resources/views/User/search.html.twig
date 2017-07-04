@@ -4,7 +4,9 @@
     <main>
         <div class="container container-custom-search">
             <div class="row">
-                Résultats pour : <b>{{ exp|upper }}</b>
+                {% if artists is defined or works is defined %}
+                    Résultats pour : <b>{{ exp|upper }}</b>
+                {% endif %}
                 {% if works is defined %}
                     <h4>Oeuvres correspondantes</h4>
                     <div class="cards">
