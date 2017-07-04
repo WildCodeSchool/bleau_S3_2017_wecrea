@@ -23,7 +23,6 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
-
         $container = $this->container;
 
         $bCount = $container->get('app.basket')->countBasket($session);
@@ -464,25 +463,65 @@ class UserController extends Controller
             $resultsWorks = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpWorks($exp);
             $resultsArtists = $em->getRepository('WeCreaBundle:Work')->myFindByRegExpArtists($exp);
 
-            if (!empty($resultsWorks || !empty($resultsArtists))) {
+            /* If suggestion clicked & received as new request,
+               count($expExploded) equals 3
+               name, firstname, (Artist)
+            */
+            $expExploded = explode(' ', $exp);
 
-                foreach ($resultsWorks as $result) {
+            /* If the array contains at least 2 keys */
+            count($expExploded) > 1 ?
+                [$expArtist = $expExploded,
+                 $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameAndFirstName($expArtist)] :
+                [$expArtist = $exp,
+                 $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameOrFirstname($expArtist)];
+
+            if (!empty($resultsWorks || !empty($resultsArtists)) || !empty($artists)) {
+
+                foreach ($resultsWorks as $result)
+                {
                     $matchingWorks[$result['id']] = $result['id'];
                 }
 
-                foreach ($resultsArtists as $result) {
+                foreach ($resultsArtists as $result)
+                {
                     $matchingWorks[$result['id']] = $result['id'];
+                }
+
+                foreach($artists as $artist)
+                {
+                    $matchingArtists[] = $artist['id'];
                 }
 
                 if ($request->isXmlHttpRequest()) {
                     $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksByIds($matchingWorks);
-                    return new JsonResponse($works);
-                } else {
-                    $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksAllFieldsByIds($matchingWorks);
-                    return $this->render('WeCreaBundle:User:search.html.twig', array(
-                        'works' => $works,
-                        'exp' => $exp
-                    ));
+                    $response = array($works, $artists);
+                    return new JsonResponse($response);
+                }
+                else{
+                    if(isset($artists) && !empty($artists) && isset($resultsWorks) && !empty($resultsWorks) || isset($resultsArtists) && !empty($resultsArtists)){
+                        $artists = $em->getRepository('WeCreaBundle:Artist')->myFindArtistsByIds($matchingArtists);
+                        $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksAllFieldsByIds($matchingWorks);
+                        return $this->render('WeCreaBundle:User:search.html.twig', array(
+                            'works' => $works,
+                            'artists' => $artists,
+                            'exp' => $exp
+                        ));
+                    }
+                    else if(isset($resultsWorks) && !empty($resultsWorks)){
+                        $works = $em->getRepository('WeCreaBundle:Work')->myFindWorksAllFieldsByIds($matchingWorks);
+                        return $this->render('WeCreaBundle:User:search.html.twig', array(
+                            'works' => $works,
+                            'exp' => $exp
+                        ));
+                    }
+                    else{
+                        $artists = $em->getRepository('WeCreaBundle:Artist')->myFindArtistsByIds($matchingArtists);
+                        return $this->render('WeCreaBundle:User:search.html.twig', array(
+                            'artists' => $artists,
+                            'exp' => $exp
+                        ));
+                    }
                 }
             } else {
                 if ($request->isXmlHttpRequest()) {

@@ -154,6 +154,7 @@ $(document).ready( function () {
                 $bodyElt.css("overflow" , "hidden");
                 $figureElt.addClass('figure-zoom');
                 $img.addClass('image-zoomed-in');
+
                 $img.css({
                     'cursor' : 'initial',
                     'transform' : 'scale(1)',

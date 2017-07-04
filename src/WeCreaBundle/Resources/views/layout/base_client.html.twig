@@ -211,9 +211,10 @@
 
                        cleanUp();
 
-                       results.length > 11 ? resultsLength = 12 : resultsLength = results.length;
+                       results[0].length > 8 ? resultsLength = 8 : resultsLength = results[0].length;
 
-                       for (var i = 0; i < resultsLength ; ++i) {
+                       for (var i = 0; i < resultsLength ; ++i)
+                       {
                            liElt = document.createElement('li');
                            liElt.style.width = "100%";
                            liElt.style.position = "relative";
@@ -222,12 +223,25 @@
                            liElt.style.color = "black";
                            liElt.style.backgroundColor = "#fff";
                            liElt.style.fontSize = ".9em";
-						   liElt.textContent = results[i].title;
+                           liElt.textContent = results[0][i].title;
                            suggestElt.appendChild(liElt);
-                           if(i === resultsLength - 1){
-                               styleSuggestions();
-                           }
                        }
+
+                       for(var i = 0; i <results[1].length; ++i)
+                       {
+                           liElt = document.createElement('li');
+                           liElt.style.width = "100%";
+                           liElt.style.position = "relative";
+                           liElt.style.textIndent = "10px";
+                           liElt.style.textAlign = "left";
+                           liElt.style.color = "black";
+                           liElt.style.backgroundColor = "#fff";
+                           liElt.style.fontSize = ".9em";
+                           liElt.textContent = results[1][i].name + " " + results[1][i].firstname + " " + "(Artiste)";
+
+                           suggestElt.appendChild(liElt);
+                       }
+                       styleSuggestions();
                    }
                    else {
 
