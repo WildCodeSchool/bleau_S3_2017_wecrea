@@ -118,8 +118,9 @@
                 <table id="works_table" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
+                        <th>Date</th>
                         <th>N° Commande</th>
-                        <th>Recap</th>
+                        <th>Résumé</th>
                         <th>Prix</th>
                         <th>Status</th>
                     </tr>
@@ -127,6 +128,7 @@
                     <tbody>
                     {% for comand in comands %}
                         <tr>
+                            <td>{{ comand.date|date("d/m/Y - H:i") }}</td>
                             <td>{{ comand.nb }}</td>
                             <td>
                                 {% set total = 0 %}
@@ -147,7 +149,7 @@
                                 Comande en attente de paiement
                                 {% endif %}
                                  {% if comand.status.name != 'payed' %}
-                                <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
+                                <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
                                 {% endif %}
 
                             </td>
