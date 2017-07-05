@@ -392,10 +392,17 @@ class UserController extends Controller
         $r = $request->request;
         $alls = $r->all();
 
-        var_dump($alls);
         ksort($alls);
-        var_dump($alls);
-
+        $sign = '';
+        foreach($alls as $key => $value) {
+            if ($key != 'signature') {
+                $sign .= $value . '+';
+            }
+        }
+        $sign .= $this->getParameter('certif_test');
+        $sign = utf8_encode($sign);
+        $signature = sha1($sign);
+        echo $sign .'<br>'.$signature;die();
         $sign = utf8_encode($r->get('vads_action_mode') . "+" . $r->get('vads_amount') . "+" . $r->get('vads_auth_mode') . "+" . $r->get('vads_auth_number') . "+" . $r->get('vads_auth_result') . "+" . $r->get('vads_bank_product') . "+" . $r->get('vads_capture_delay') . "+" . $r->get('vads_card_brand') . "+" . $r->get('vads_card_country') . "+" . $r->get('vads_card_number') . "+" . $r->get('vads_contract_used') . "+" . $r->get('vads_ctx_mode') . "+" . $r->get('vads_currency') . "+" . $r->get('vads_effective_amount') . "+" . $r->get('vads_effective_creation_date') . "+" . $r->get('vads_effective_currency') . "+" . $r->get('vads_expiry_month') . "+" . $r->get('vads_expiry_year') . "+" . $r->get('vads_extra_result') . "+" . $r->get('vads_hash') . "+" . $r->get('vads_language') . "+" . $r->get('vads_operation_type') . "+" . $r->get('vads_page_action') . "+" . $r->get('vads_payment_certificate') . "+" . $r->get('vads_payment_config') . "+" . $r->get('vads_payment_src') . "+" . $r->get('vads_pays_ip') . "+" . $r->get('vads_presentation_date') . "+" . $r->get('vads_result') . "+" . $r->get('vads_sequence_number') . "+" . $r->get('vads_site_id') . "+" . $r->get('vads_threeds_cavv') . "+" . $r->get('vads_threeds_cavvAlgorithm') . "+" . $r->get('vads_threeds_eci') . "+" . $r->get('vads_threeds_enrolled') . "+" . $r->get('vads_threeds_error_code') . "+" . $r->get('vads_threeds_exit_status') . "+" . $r->get('vads_threeds_sign_valid') . "+" . $r->get('vads_threeds_status') . "+" . $r->get('vads_threeds_xid') . "+" . $r->get('vads_trans_date') . "+" . $r->get('vads_trans_id') . "+" . $r->get('vads_trans_status') . "+" . $r->get('vads_trans_uuid') . "+" . $r->get('vads_url_check_src') . "+" . $r->get('vads_validation_mode') . "+" . $r->get('vads_version') . "+" . $r->get('vads_warranty_result')."+".$this->getParameter('certif_test'));
 
         $commandId = $r->get('vads_trans_id');
