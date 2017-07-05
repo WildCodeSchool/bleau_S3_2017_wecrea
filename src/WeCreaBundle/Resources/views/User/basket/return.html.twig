@@ -20,11 +20,11 @@
             <ul>
                 {% for work in comand.works %}
                     <li>
-                        {{ work.title }} par {{ work.artist }} - quantité : {{ work.quant }} - prix : {{ work.quant * work.price / 100 }}€
+                        {{ work.title }} par {{ work.artist }} - quantité : {{ work.quant }} - prix : {{ work.quant * work.price }}€
                     </li>
                 {% endfor %}
             </ul>
-            <p>Total : {{ total }}</p>
+            <p>Total : {{ total / 100 }}€</p>
         </div>
         {% if status == 'ERROR' or status == 'REFUSED' %}
             <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
