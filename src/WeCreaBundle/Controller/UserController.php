@@ -362,7 +362,7 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+5+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
         $signature = sha1($signature);
 
         $em->flush();
@@ -395,7 +395,6 @@ class UserController extends Controller
 
         $commandId = $r->get('vads_trans_id');
         $prevSign = $r->get('signature');
-        echo $sign .'<br>'.$signature.'<br>'.$prevSign;die();
 
 
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
