@@ -362,7 +362,7 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+POST+5+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://localhost/bleau_S3_2017_wecrea/web/app_dev.php/pay/+V2+'.$this->getParameter('certif_test'));
         $signature = sha1($signature);
 
         $em->flush();
@@ -391,12 +391,13 @@ class UserController extends Controller
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
 
         if($command != null) {
-            if ($signature == $prevSign){
-                $response = $r->get('vads_trans_status');
-            }
-            else{
-                $response = "Erreur lors du payment";
-            }
+//            if ($signature == $prevSign){
+//                $response = $r->get('vads_trans_status');
+//            }
+//            else{
+//                $response = "Erreur lors du payment";
+//            }
+            $response = $r->get('vads_trans_status');
 
             if ($response == 'AUTHORISED'){
                 $status = $Status->findOneById(4);
@@ -415,7 +416,9 @@ class UserController extends Controller
 
         $em->flush();
         $response ='ok';
-        return new Response($response) ;
+        return $this->render('@WeCrea/User/basket/return.html.twig', array(
+            'status' => $response,
+        ));
     }
 
     /* ----- Add Favs -----*/
