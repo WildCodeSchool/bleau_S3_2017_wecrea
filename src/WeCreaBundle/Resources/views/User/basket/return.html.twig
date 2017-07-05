@@ -4,8 +4,29 @@
 <main>
     <div class="row">
         <div class="col s12">
-            <p>Status commande : {{ status }}</p>
+            {% if status == 'AUTHORISED' %}
+                <h3>Votre paiement est acceptée</h3>
+                <p>Vous allez recevoir un mail contenant la date de livraison prévue ainsi qu'un résumé de votre commande.</p>
+                <p>Merci pour votre confiance et à bientôt sur les artistes d'abord!</p>
+            {% else %}
+                Votre paiement a échoué, merci de contacter votre établissement financier pour plus de précision.
+            {% endif %}
         </div>
+        <div class="col s12">
+            <h4>Résumé de votre commande :</h4>
+            <p>Date : {{ comand.date|date("d/m/Y - His") }}</p>
+            <ul>
+                {% for work in comand.works %}
+                    <li>
+                        {{ work.title }} {{ work.artist.name }} x {{ work.quant }} prix : {{ work.quant * work.price }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <p>Total : {{ total }}</p>
+        </div>
+        {% if status == 'ERROR' or status == 'REFUSED' %}
+            <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

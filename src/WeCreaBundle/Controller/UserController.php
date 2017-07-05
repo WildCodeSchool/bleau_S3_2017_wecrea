@@ -419,14 +419,15 @@ class UserController extends Controller
             }
         }
 
-        $em = $this->getDoctrine()->getManager();
-
         $command->setStatus($status);
-
         $em->flush();
+
+        $total = $r->get('vads_amount');
 
         return $this->render('@WeCrea/User/basket/return.html.twig', array(
             'status' => $response,
+            'comand' => $command,
+            'total' => $total
         ));
     }
 

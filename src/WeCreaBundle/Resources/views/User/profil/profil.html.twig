@@ -151,7 +151,6 @@
                                  {% if comand.status.name != 'payed' and comand.status.name != 'payProg' %}
                                 <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
                                 {% endif %}
-
                             </td>
                         </tr>
                     {% endfor %}
