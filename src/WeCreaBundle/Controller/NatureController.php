@@ -22,10 +22,11 @@ class NatureController extends Controller
 
 		foreach ($natures as $key => $nature)
 		{
-			$natures[strtolower($nature->getName())] = $nature;
+			$name = str_replace(str_split(" 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ"), '_', strtolower($nature->getName()));
+			$natures[$name] = $nature;
 			unset($natures[$key]);
 
-			$formBuilder = $this->get('form.factory')->createNamedBuilder(strtolower($nature->getName()), NatureType::class, $nature);
+			$formBuilder = $this->get('form.factory')->createNamedBuilder($name, NatureType::class, $nature);
 			$forms[$nature->getName()] = $formBuilder->getForm();
 
             $nature->previousImage = $nature->getImages()->getUrl();
