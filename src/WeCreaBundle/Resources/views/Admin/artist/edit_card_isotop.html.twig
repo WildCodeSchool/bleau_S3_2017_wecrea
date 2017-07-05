@@ -9,41 +9,41 @@
     <main>
         <div class="container container-custom-artists">
             <h4 style="background: rebeccapurple; color: #fff; padding: 10px;">Edition des natures</h4>
-                {% for nature, form in forms %}
-                <div class="row">
-                    <h4 class="center-align">{{ nature }}</h4>
-                    <div class="col m6 s12">
-                        {{ form_start(form) }}
+            {% for nature, form in forms %}
+            <div class="row">
+                <h4 class="center-align">{{ nature }}</h4>
+                <div class="col m6 s12">
+                    {{ form_start(form) }}
 
-                        <div class="col s12">
-                            {{ form_label(form.fontColor) }}
-                            {{ form_widget(form.fontColor, { 'attr': { 'style': "background-color:" ~ form.vars.value.fontColor } }) }}
-                            {{ form_errors(form.fontColor) }}
-                        </div>
-                        <div class="col s12">
-                            {{ form_widget(form.images.url) }}
-                            {{ form_errors(form.images.url) }}
-                        </div>
-
-                        <div class="center-align">
-                            {{ form_widget(form.submit) }}
-                        </div>
-
-                        {{ form_end(form) }}
+                    <div class="col s12">
+                        {{ form_label(form.fontColor) }}
+                        {{ form_widget(form.fontColor, { 'attr': { 'style': "background-color:" ~ form.vars.value.fontColor } }) }}
+                        {{ form_errors(form.fontColor) }}
                     </div>
-                    <div class="col m4 offset-m1 s12">
-                        <div>
-                            <button
-                                    style="
-                                            background: url('{{ asset('images/' ~ form.vars.value.images.url ) }}') center no-repeat;
-                                            background-size: cover;
-                                            color: {{ form.vars.value.fontColor }}
-                                            "
-                                    class="tous_btn resizer {{ nature|lower ~ '_button' }}">{{ nature }}
-                            </button>
-                        </div>
+                    <div class="col s12">
+                        {{ form_widget(form.images.url) }}
+                        {{ form_errors(form.images.url) }}
+                    </div>
+
+                    <div class="center-align">
+                        {{ form_widget(form.submit) }}
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+                <div class="col m4 offset-m1 s12">
+                    <div>
+                        <button
+                                style="
+                                        background: url('{{ asset('images/' ~ form.vars.value.images.url ) }}') center no-repeat;
+                                        background-size: cover;
+                                        color: {{ form.vars.value.fontColor }}
+                                        "
+                                class="tous_btn resizer {{ form.vars.name ~ '_button'}}">{{ nature }}
+                        </button>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </main>
@@ -87,7 +87,7 @@
                         Materialize.toast('<span class="toast_custom">La vignette a bien été modifiée !</span>', 4000); // 4000 is the duration of the toast
 
                         var button = $(document.createElement('button'));
-                        button.attr('class', 'tous_btn ' + response.name.toLowerCase() + '_button');
+                        button.attr('class', 'tous_btn ' + name + '_button');
                         button.css({
                             'background':  'url({{ asset("images/") }}' + response.images.url +') center no-repeat',
                             'background-size': 'cover',
