@@ -362,7 +362,7 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+POST+5+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+5+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
         $signature = sha1($signature);
 
         $em->flush();
