@@ -415,7 +415,7 @@ class UserController extends Controller
         $command->setStatus($status);
 
         $em->flush();
-        $response ='ok';
+
         return $this->render('@WeCrea/User/basket/return.html.twig', array(
             'status' => $response,
         ));
