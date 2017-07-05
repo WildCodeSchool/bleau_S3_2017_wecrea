@@ -18,7 +18,7 @@
             <ul>
                 {% for work in comand.works %}
                     <li>
-                        {{ work.title }} {{ work.artist.name }} x {{ work.quant }} prix : {{ work.quant * work.price }}
+                        {{ work.title }} {{ work.artist }} x {{ work.quant }} prix : {{ work.quant * work.price }}
                     </li>
                 {% endfor %}
             </ul>
