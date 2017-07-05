@@ -324,8 +324,6 @@ class UserController extends Controller
         $user->addCommand($command);
         $em->flush();
 
-        $session->remove('basket');
-
         $works = $command->getWorks();
         $total = 0;
 
@@ -378,6 +376,7 @@ class UserController extends Controller
     // --- API response --- //
     public function apiResponseAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
         $Status = $em->getRepository('WeCreaBundle:Status');
         $r = $request->request;
         $alls = $r->all();
@@ -400,16 +399,16 @@ class UserController extends Controller
         $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
 
         if($command != null) {
-//            if ($signature == $prevSign){
-//                $response = $r->get('vads_trans_status');
-//            }
-//            else{
-//                $response = "Erreur lors du payment";
-//            }
-            $response = $r->get('vads_trans_status');
+            if ($signature == $prevSign){
+                $response = $r->get('vads_trans_status');
+            }
+            else{
+                $response = "Erreur lors du payment";
+            }
 
             if ($response == 'AUTHORISED'){
                 $status = $Status->findOneById(4);
+                $session->remove('basket');
             }
             elseif ($response == 'REFUSED'){
                 $status = $Status->findOneById(3);
