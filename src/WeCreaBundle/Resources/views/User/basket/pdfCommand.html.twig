@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+
+        table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+        }
+
+        table, th, td{
+            border: 1px solid black;
+        }
+
+        td{
+            margin: 0;
+            height: 30px;
+            text-align: center;
+        }
+
+        #legal-mentions{
+            text-align: justify;
+        }
+    </style>
+</head>
+<h2> <b>Les artistes d'abord</b> vous remercie de votre commande. </h2>
+<h4><u>Récapitulatif de votre commande</u></h4>
+<p><b>Numéro de commande : </b> {{ command.nb }}</p>
+<p><b>Adresse de livraison : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressdel }}<br />
+    {{ command.zipCodedel }}<br />
+    {{ command.towndel }}<br />
+</p>
+
+<p><b>Adresse de facturation : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressfact }}<br />
+    {{ command.zipCodefact }}<br />
+    {{ command.townfact }}<br />
+</p>
+
+<p><b>Date de livraison éstimée :</b></p>
+
+<p><b>Date du règlement : {{ command.date|date('d/m/Y') }}</b></p>
+
+<table>
+    <thead>
+        <th><b>Titre de l'oeuvre</b></th>
+        <th><b>Caractéristiques</b></th>
+        <th><b>Quantité</b></th>
+        <th><b>Prix T.T.C.</b></th>
+    </thead>
+    <tbody>
+    {% set total = 0 %}
+    {% for work in command.works %}
+        {% set total = total + work.price * work.quant %}
+        <tr>
+            <td>{{ work.title }}</td>
+            <td>{{ work.caract }}</td>
+            <td>{{ work.quant }}</td>
+            <td>{{ work.price * work.quant}} €</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>Prix total hors taxes : {{ total }} €</p>
+<p>TVA :  €</p>
+<p>Prix toutes taxes comprises :  €</p>
+
+<b> Retrouvez votre facture dans votre espace personnel </b>
+
+<p id="legal-mentions">
+    <b>WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan
+        sous le numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST GERMAINMONT</b>
+</p>
+
+
+
+
+
+</html>

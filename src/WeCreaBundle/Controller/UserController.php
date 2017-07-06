@@ -729,4 +729,22 @@ class UserController extends Controller
            'form' => $form->createView()
         ]);
     }
+
+    public function commandPdfAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('id');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneById($id);
+
+        $pdfName = $command->getNb(). uniqid() . '.pdf';
+        $path = $this->getParameter('pdf'). '/' . $pdfName;
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView('@WeCrea/User/basket/pdfCommand.html.twig', array(
+                'command' => $command,
+            )),
+            $path
+        );
+
+        return new Response($pdfName);
+    }
 }
