@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Subscriber;
@@ -273,8 +274,11 @@ class UserController extends Controller
     public function commandAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
+
         $basket = $session->get('basket');
+
         $command = new Command();
+
         $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
@@ -328,15 +332,102 @@ class UserController extends Controller
             $total += $price;
         }
 
-
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
 
         $signature = sha1($signature);
+
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $command,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
+        ));
+    }
+
+    // --- Command payement --- //
+    public function payementAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($id);
+        $date = new \DateTime();
+        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+        $comand->setNb($id_trans);
+        $comand->setDate($date);
+
+        $works = $comand->getWorks();
+        $total=0;
+        foreach ($works as $work) {
+            $price = $work->getPrice() * $work->getQuant();
+            $total += $price;
+        }
+
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = sha1($signature);
+
+        $em->flush();
+
+        return $this->render('@WeCrea/User/basket/payement.html.twig', array(
+            'commands' => $comand,
+            'total' => $total,
+            'signature' => $signature,
+            'idTrans' => $id_trans,
+        ));
+    }
+
+    // --- API response --- //
+    public function apiResponseAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
+        $Status = $em->getRepository('WeCreaBundle:Status');
+        $r = $request->request;
+        $alls = $r->all();
+
+        ksort($alls);
+        $sign = '';
+        foreach($alls as $key => $value) {
+            if ($key != 'signature') {
+                $sign .= $value . '+';
+            }
+        }
+        $sign .= $this->getParameter('certif_test');
+        $sign = utf8_encode($sign);
+        $signature = sha1($sign);
+
+        $commandId = $r->get('vads_trans_id');
+        $prevSign = $r->get('signature');
+
+
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneByNb($commandId);
+
+        if($command != null) {
+            if ($signature == $prevSign){
+                $response = $r->get('vads_trans_status');
+            }
+            else{
+                $response = "Erreur lors du payment";
+            }
+
+            if ($response == 'AUTHORISED'){
+                $status = $Status->findOneById(4);
+                $session->remove('basket');
+            }
+            elseif ($response == 'REFUSED'){
+                $status = $Status->findOneById(3);
+            }
+            elseif ($response == 'WAITING_AUTHORISATION' || $response == 'AUTHORISED_TO_VALIDATE') {
+                $status = $Status->findOneById(2);
+            }
+        }
+
+        $command->setStatus($status);
+        $em->flush();
+
+        $total = $r->get('vads_amount');
+
+        return $this->render('@WeCrea/User/basket/return.html.twig', array(
+            'status' => $response,
+            'comand' => $command,
+            'total' => $total
         ));
     }
 
@@ -634,7 +725,7 @@ class UserController extends Controller
             return $this->redirectToRoute('we_crea_contact');
         }
 
-        return $this->render('WeCreaBundle:User:contact.html.twig', [
+        return $this->render('@WeCrea/User/contact.html.twig', [
            'form' => $form->createView()
         ]);
     }

@@ -5,7 +5,7 @@
         <div class="buttons filters-button-group nav_works nav_works_custom">
             <button class="waves-effect waves-light btn iso_button iso_link active_button" data-filter=".Tous">Tous</button>
             {% for nature in natures %}
-                <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".{{ nature.name }}">{{ nature.name }}</button>
+                <button class="waves-effect waves-light iso_button iso_link btn" data-filter=".{{ nature.name|replace({"'": '_', ' ': '_'}) }}">{{ nature.name }}</button>
             {% endfor %}
         </div>
 
@@ -15,15 +15,16 @@
                     <div class="col s6 m4 l4 iso_item iso_link Tous" data-filter=".Tous">
                         <button style="
                                 background: url('{{ asset('images/' ~ nature.images.url) }}') center no-repeat;
+                                color: {{ nature.fontColor }};
                                 background-size: cover;"
                                 class="tous_btn resizer"
-                                data-filter=".{{ nature.name }}">{{ nature.name }}
+                                data-filter=".{{ nature.name|replace({"'": '_', ' ': '_'}) }}">{{ nature.name }}
                         </button>
                     </div>
                 {% endfor %}
             </div>
             {% for work in works %}
-                <div class="card card_custom_work iso_item {{ work.nature.name }}" data-filter=".{{ work.nature.name }}">
+                <div class="card card_custom_work iso_item {{ work.nature.name|replace({"'": '_', ' ': '_'}) }}" data-filter=".{{ work.nature.name|replace({"'": '_', ' ': '_'}) }}">
 
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                         <div class="card-image waves-effect waves-block waves-light card-image_custom"
