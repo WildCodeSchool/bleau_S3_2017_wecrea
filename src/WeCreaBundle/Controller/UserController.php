@@ -15,6 +15,7 @@ use WeCreaBundle\Entity\Nature;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ContactType;
 use WeCreaBundle\Form\ProfilFormType;
+use WeCreaBundle\WeCreaBundle;
 
 class UserController extends Controller
 {
@@ -406,10 +407,34 @@ class UserController extends Controller
             else{
                 $response = "Erreur lors du payment";
             }
-
+            
             if ($response == 'AUTHORISED'){
                 $status = $Status->findOneById(4);
                 $session->remove('basket');
+
+                /* Total price calculation */
+                $price = NULL;
+                $works = $command->getWorks();
+
+                foreach($works as $work)
+                {
+                    $price += $work->getPrice() * $work->getQuant();
+                }
+
+                /* Let's send a command confirmation to the customer */
+                $message = new \Swift_Message();
+                $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
+                $message->setFrom('cotedesserts.info@gmail.com');
+                $message->setTo($command->getMail());
+                $message->setBody(
+                    $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
+                        array(
+                        'command' => $command,
+                        'total_price' => $price
+                    ))
+                    , 'text/html'
+                );
+                $this->get('mailer')->send($message);
             }
             elseif ($response == 'REFUSED'){
                 $status = $Status->findOneById(3);

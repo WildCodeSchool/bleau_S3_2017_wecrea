@@ -32,7 +32,6 @@ class WorkPurchased
      */
     private $price;
 
-
     /**
      * Get id
      *
