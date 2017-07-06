@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+
+        table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+        }
+
+        table, th, td{
+            border: 1px solid black;
+        }
+
+        td{
+            margin: 0;
+            height: 30px;
+            text-align: center;
+        }
+
+        #legal-mentions{
+            text-align: justify;
+            margin-top: 50px;
+        }
+        
+        #last-td{
+            text-align: right;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<h2> WeCrea vous remercie de votre commande. </h2>
+<h4><u>Récapitulatif de votre commande</u></h4>
+<p><b>Numéro de commande : </b> {{ command.nb }}</p>
+<p><b>Adresse de livraison : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressdel }}<br />
+    {{ command.zipCodedel }}<br />
+    {{ command.towndel }}<br />
+</p>
+
+<p><b>Adresse de facturation : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressfact }}<br />
+    {{ command.zipCodefact }}<br />
+    {{ command.townfact }}<br />
+</p>
+
+<table>
+    <thead>
+        <td><b>Titre de l'oeuvre</b></td>
+        <td><b>Caractéristiques</b></td>
+        <td><b>Quantité</b></td>
+        <td><b>Prix Unitaire T.T.C.</b></td>
+        <td><b>Prix total T.T.C</b></td>
+    </thead>
+    <tbody>
+        {% for work in command.works %}
+            <tr>
+                <td>{{ work.title }}</td>
+                <td>{{ work.caract }}</td>
+                <td>{{ work.quant }}</td>
+                <td>{{ work.price }} €</td>
+                <td>{{ work.quant * work.price }} €</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td colspan="4" id="last-td">
+                    <b>Montant total T.T.C</b>
+                </td>
+                <td>
+                    <b>{{ total_price }} € </b>
+                </td>
+            </tr>
+    </tbody>
+</table>
+
+<b> Retrouvez votre facture dans votre espace personnel </b>
+
+<p id="legal-mentions">
+    <b>WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan
+    sous le numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST GERMAINMONT</b>
+</p>
+
+
+</html>
