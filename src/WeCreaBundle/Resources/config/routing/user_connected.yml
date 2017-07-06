@@ -15,3 +15,7 @@ we_crea_payement:
     defaults: {_controller: "WeCreaBundle:User:payement"}
     requirements:
         id: '\d+'
+
+we_crea_command_pdf:
+    path: /pdfCommand
+    defaults : {_controller: "WeCreaBundle:User:commandPdf"}

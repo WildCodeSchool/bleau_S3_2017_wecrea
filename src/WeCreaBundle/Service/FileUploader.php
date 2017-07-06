@@ -3,7 +3,6 @@
 namespace WeCreaBundle\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use WeCreaBundle\Entity\Carrousel;
 
 class FileUploader
 {

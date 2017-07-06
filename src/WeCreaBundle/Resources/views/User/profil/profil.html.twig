@@ -140,7 +140,8 @@
                             <td>{{ total }}€</td>
                             <td>
                                 {% if comand.status.name == 'payed' %}
-                                Payement effectué, en cours de livraison
+                                Payement effectué, en cours de livraison<br>
+                                    <a class="pdfGen" href="#" id="{{ comand.id }}">Télécharger la facture</a>
                                 {% elseif comand.status.name == 'error' %}
                                 Erreur de paiement
                                 {% elseif comand.status.name == 'payProg' %}
@@ -214,5 +215,26 @@
                 }
             });
         });
+        
+        // --- PDF GENERATOR --- //
+        $('.pdfGen').on('click', function (e) {
+            e.preventDefault();
+            var data ={'id': $(this).attr('id')};
+            
+            $.ajax({
+                method: 'get',
+                url: '{{ path('we_crea_command_pdf') }}',
+                data: data,
+                
+                success: function (response) {
+                    console.log(response);
+                    var link=document.createElement('a');
+                    link.href='../../pdf/' + response;
+                    console.log(link.href);
+                    link.download=response;
+                    link.click();
+                }
+            })
+        })
     </script>
 {% endblock %}
