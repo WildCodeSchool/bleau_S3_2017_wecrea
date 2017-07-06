@@ -11,7 +11,7 @@
                     <h4>Oeuvres correspondantes</h4>
                     <div class="cards">
                         {% for work in works %}
-                            <div class="card card_custom iso_item">
+                            <div class="card card_custom_work iso_item">
                                 <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                                     <div class="card-image waves-effect waves-block waves-light card-image_custom"
                                             {% if work.images[0] is defined %}
