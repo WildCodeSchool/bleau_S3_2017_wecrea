@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use WeCreaBundle\Entity\Images;
+use WeCreaBundle\Entity\Legal;
 use WeCreaBundle\Entity\Nature;
 
 /**
@@ -61,6 +62,14 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
             $manager->persist($nature);
         }
 
+        $legal = new Legal();
+        $legal->setTva('20');
+        $legal->setMention('WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan sous le
+            numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST
+            GERMAINMONT');
+        $manager->persist($legal);
+
         $manager->flush();
+        
     }
 }

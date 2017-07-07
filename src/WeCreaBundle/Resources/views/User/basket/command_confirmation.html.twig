@@ -62,8 +62,8 @@
                 <td>{{ work.title }}</td>
                 <td>{{ work.caract }}</td>
                 <td>{{ work.quant }}</td>
-                <td>{{ work.price }} €</td>
-                <td>{{ work.quant * work.price }} €</td>
+                <td>{{ work.price + work.price * Tva }} €</td>
+                <td>{{ work.quant * work.price + work.quant * work.price * Tva }} €</td>
             </tr>
         {% endfor %}
             <tr>
@@ -71,7 +71,7 @@
                     <b>Montant total T.T.C</b>
                 </td>
                 <td>
-                    <b>{{ total_price }} € </b>
+                    <b>{{ ttc }} € </b>
                 </td>
             </tr>
     </tbody>
@@ -80,8 +80,7 @@
 <b> Retrouvez votre facture dans votre espace personnel </b>
 
 <p id="legal-mentions">
-    <b>WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan
-    sous le numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST GERMAINMONT</b>
+    <b>{{ legal }}</b>
 </p>
 
 
