@@ -407,7 +407,7 @@ class UserController extends Controller
             else{
                 $response = "Erreur lors du payment";
             }
-            
+
             if ($response == 'AUTHORISED'){
                 $status = $Status->findOneById(4);
                 $session->remove('basket');

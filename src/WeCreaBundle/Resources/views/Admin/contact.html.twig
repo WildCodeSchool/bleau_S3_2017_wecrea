@@ -9,14 +9,16 @@
                 <td><b>Email</b></td>
                 <td><b>Date </b></td>
                 <td><b>Message</b></td>
+                <td><b>Repondre</b></td>
                 </thead>
                 <tbody>
                 {% if contacts is defined and contacts is not empty %}
                     {% for contact in contacts %}
                     <tr style="border-bottom: 1px solid #c8c8c8;">
                         <td style="width: 30%">{{ contact.email }}</td>
-                        <td style="width: 20%;"> {{ contact.date|date }}</td>
+                        <td style="width: 20%;"> {{ contact.date|date('d/m/Y H:i') }}</td>
                         <td style="width: 50%; line-height: 18px;">{{ contact.content|nl2br }}</td>
+                        <td><a href="{{ path('we_crea_admin_send_message', {email : contact.email} ) }}">Repondre</a></td>
                     </tr>
                     </tbody>
                     {% endfor %}

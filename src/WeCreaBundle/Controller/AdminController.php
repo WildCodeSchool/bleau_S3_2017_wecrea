@@ -10,11 +10,14 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Artist;
+use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Images;
+use WeCreaBundle\Entity\SentMessage;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Form\ArtistType;
 use WeCreaBundle\Form\ImagesType;
+use WeCreaBundle\Form\SentMessageType;
 use WeCreaBundle\Form\WorkType;
 
 class AdminController extends Controller
@@ -403,5 +406,65 @@ class AdminController extends Controller
         return $this->render('WeCreaBundle:Admin:contact.html.twig', [
             'contacts' => $contacts
         ]);
+    }
+
+    public function commandStatusAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $commands = $em->getRepository(Command::class)->findAll();
+
+        return $this->render('WeCreaBundle:Admin:command_status.html.twig', [
+            'commands' => $commands
+        ]);
+    }
+
+    public function sendEmailToCustomerAction($email, Request $request)
+    {
+        $sentMessage = new SentMessage();
+
+        $form = $this->createForm(SentMessageType::class, $sentMessage);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sentMessage);
+            $em->flush();
+
+            if ($sentMessage->getId() != NULL) {
+                $message = new \Swift_Message();
+                $message->setSubject($sentMessage->getSubject());
+                $message->setFrom('##################################');
+                $message->setTo($sentMessage->getEmail());
+                $message->setBody(
+                    $this->renderView("WeCreaBundle:Admin:sent_message.html.twig", array(
+                        'message' => $sentMessage
+                    )),
+                    'text/html');
+                $this->get('mailer')->send($message);
+
+                $request->getSession()->getFlashbag()->add("notice", "Message bien envoyé à " . $sentMessage->getEmail());
+            } else {
+                $request->getSession()->getFlashbag()->add("notice", "Erreur lors de la création du message. Veuillez réessayer.");
+            }
+
+            return $this->redirectToRoute('we_crea_admin_command_status');
+        }
+
+        return $this->render('WeCreaBundle:Admin:new_message.html.twig', array(
+            'form' => $form->createView(),
+            'email' => $email
+        ));
+    }
+
+    public function sentEmailsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sentMessages = $em->getRepository("WeCreaBundle:SentMessage")->findBy([], ['date' => "DESC"]);
+
+        return $this->render('WeCreaBundle:Admin:all_messages_sent.html.twig', array(
+           'messages' => $sentMessages
+        ));
     }
 }
