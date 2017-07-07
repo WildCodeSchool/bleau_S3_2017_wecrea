@@ -299,10 +299,17 @@ class UserController extends Controller
 
         $command->setDate($date);
         $command->setNb($id_trans);
+        $delivery = 0;
 
         foreach ($basket as $prod=>$caract) {
             $workPurchased = new WorkPurchased();
             $work = $Works->findOneById($prod);
+            $time = $work->getTimelimit();
+
+            if($time > $delivery) {
+                $delivery = $time;
+            }
+
             foreach ($caract as $key => $quant) {
                 $wCaract = $Caracts->findOneById($key);
                 $quant = $quant;
@@ -320,6 +327,7 @@ class UserController extends Controller
         }
 
         $command->setStatus($status);
+        $command->setDelivery($delivery);
 
         $em->persist($command);
         $user->addCommand($command);
@@ -333,15 +341,24 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
 
         $signature = sha1($signature);
+
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($total + $tva, 2);
+
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $command,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
+            'tva' => $tva,
+            'ttc' => $ttc,
+            'Tva' => $Tva[0]->getTva()
         ));
     }
 
@@ -362,16 +379,23 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/app_dev.php/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
         $signature = sha1($signature);
 
         $em->flush();
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($total + $tva, 2);
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $comand,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
+            'tva' => $tva,
+            'ttc' => $ttc,
+            'Tva' => $Tva[0]->getTva()
         ));
     }
 
@@ -421,6 +445,13 @@ class UserController extends Controller
                     $price += $work->getPrice() * $work->getQuant();
                 }
 
+                $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+                $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+                $ttc = number_format($price + $tva, 2);
+
+                $legal = $Tva[0]->getMention();
+
                 /* Let's send a command confirmation to the customer */
                 $message = new \Swift_Message();
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
@@ -429,8 +460,11 @@ class UserController extends Controller
                 $message->setBody(
                     $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
                         array(
-                        'command' => $command,
-                        'total_price' => $price
+                            'command' => $command,
+                            'total_price' => $price,
+                            'Tva' => $Tva[0],
+                            'ttc' => $ttc,
+                            'legal' => $legal
                     ))
                     , 'text/html'
                 );
@@ -753,5 +787,42 @@ class UserController extends Controller
         return $this->render('@WeCrea/User/contact.html.twig', [
            'form' => $form->createView()
         ]);
+    }
+
+    public function commandPdfAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('id');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneById($id);
+
+        $pdfName = $command->getNb(). uniqid() . '.pdf';
+        $path = $this->getParameter('pdf'). '/' . $pdfName;
+
+        $price = NULL;
+        $works = $command->getWorks();
+
+        foreach($works as $work)
+        {
+            $price += $work->getPrice() * $work->getQuant();
+        }
+
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($price + $tva, 2);
+
+        $legal = $Tva[0]->getMention();
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView('@WeCrea/User/basket/pdfCommand.html.twig', array(
+                'command' => $command,
+                'Tva' => $Tva[0]->getTva(),
+                'tva' => $tva,
+                'ttc' => $ttc,
+                'legal' => $legal
+            )),
+            $path
+        );
+
+        return new Response($pdfName);
     }
 }

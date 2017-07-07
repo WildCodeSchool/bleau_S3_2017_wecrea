@@ -11,6 +11,7 @@ parameters:
     image_directory: '%kernel.root_dir%/../web/images'
     merchant_site_id: '%merchantsite_id%'
     certif_test: '%certiftest%'
+    pdf: '%kernel.root_dir%/../web/pdf'
 
 framework:
     #esi: ~
@@ -118,3 +119,13 @@ liip_imagine:
             # list of transformations to apply (the "filters")
             filters:
                  relative_resize: { widen: 105 }
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+
+    image:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltoimage
+        options:    []

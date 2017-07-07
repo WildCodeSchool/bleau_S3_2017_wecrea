@@ -63,6 +63,16 @@ class Command
     private $nb;
 
     /**
+     * @var integer
+     */
+    private $delivery;
+
+    /**
+     * @var \WeCreaBundle\Entity\Status
+     */
+    private $status;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $works;
@@ -326,6 +336,54 @@ class Command
     }
 
     /**
+     * Set delivery
+     *
+     * @param integer $delivery
+     *
+     * @return Command
+     */
+    public function setDelivery($delivery)
+    {
+        $this->delivery = $delivery;
+
+        return $this;
+    }
+
+    /**
+     * Get delivery
+     *
+     * @return integer
+     */
+    public function getDelivery()
+    {
+        return $this->delivery;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \WeCreaBundle\Entity\Status $status
+     *
+     * @return Command
+     */
+    public function setStatus(\WeCreaBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \WeCreaBundle\Entity\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * Add work
      *
      * @param \WeCreaBundle\Entity\WorkPurchased $work
@@ -357,34 +415,5 @@ class Command
     public function getWorks()
     {
         return $this->works;
-    }
-    /**
-     * @var \WeCreaBundle\Entity\Status
-     */
-    private $status;
-
-
-    /**
-     * Set status
-     *
-     * @param \WeCreaBundle\Entity\Status $status
-     *
-     * @return Command
-     */
-    public function setStatus(\WeCreaBundle\Entity\Status $status = null)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return \WeCreaBundle\Entity\Status
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 }

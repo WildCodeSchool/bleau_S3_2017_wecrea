@@ -1,0 +1,16 @@
+WeCreaBundle\Entity\Legal:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\LegalRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        mention:
+            type: text
+        tva:
+            type: float
+    lifecycleCallbacks: {  }

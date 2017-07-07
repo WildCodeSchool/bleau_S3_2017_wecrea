@@ -119,6 +119,7 @@
                     <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Livraison</th>
                         <th>N° Commande</th>
                         <th>Résumé</th>
                         <th>Prix</th>
@@ -129,6 +130,7 @@
                     {% for comand in comands %}
                         <tr>
                             <td>{{ comand.date|date("d/m/Y - H:i") }}</td>
+                            <td>{{ comand.date|date_modify( '+' ~ comand.delivery ~ ' day' )|date('d/m/Y') }}</td>
                             <td>{{ comand.nb }}</td>
                             <td>
                                 {% set total = 0 %}
@@ -140,7 +142,8 @@
                             <td>{{ total }}€</td>
                             <td>
                                 {% if comand.status.name == 'payed' %}
-                                Payement effectué, en cours de livraison
+                                Payement effectué, en cours de livraison<br>
+                                    <a class="pdfGen" href="#" id="{{ comand.id }}">Télécharger la facture</a>
                                 {% elseif comand.status.name == 'error' %}
                                 Erreur de paiement
                                 {% elseif comand.status.name == 'payProg' %}
@@ -214,5 +217,26 @@
                 }
             });
         });
+        
+        // --- PDF GENERATOR --- //
+        $('.pdfGen').on('click', function (e) {
+            e.preventDefault();
+            var data ={'id': $(this).attr('id')};
+            
+            $.ajax({
+                method: 'get',
+                url: '{{ path('we_crea_command_pdf') }}',
+                data: data,
+                
+                success: function (response) {
+                    console.log(response);
+                    var link=document.createElement('a');
+                    link.href='../../pdf/' + response;
+                    console.log(link.href);
+                    link.download=response;
+                    link.click();
+                }
+            })
+        })
     </script>
 {% endblock %}
