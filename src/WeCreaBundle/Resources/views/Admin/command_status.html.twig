@@ -1,0 +1,33 @@
+{% extends "WeCreaBundle:layout:base_admin.html.twig"%}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <table>
+            <thead>
+                <td><b>Numéro de commande</b></td>
+                <td><b>Date</b></td>
+                <td><b>Email</b></td>
+                <td><b>Status</b></td>
+                <td><b>Envoyer un email</b></td>
+            </thead>
+            <tbody>
+                {% if commands is defined and commands is not empty %}
+                    {% for command in commands %}
+                        <tr style="border-bottom: 1px solid #c8c8c8;">
+                            <td>{{ command.nb }}</td>
+                            <td>{{ command.date|date('d/m/Y H:i') }}</td>
+                            <td>{{ command.mail }}</td>
+                            <td>Formulaire à créer</td>
+                            <td><a href="{{ path('we_crea_admin_send_message', {email : command.mail} ) }}">Envoyer</a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    Vous n'avez pas encore reçu de commande(s).
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

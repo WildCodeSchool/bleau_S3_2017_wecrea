@@ -1,0 +1,19 @@
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        {{ form_start(form) }}
+            {{ form_row(form.email, {'attr' : {'value' : email }} ) }}
+
+            {{ form_label(form.subject, "Objet") }}
+            {{ form_widget(form.subject) }}
+            {{ form_errors(form.subject) }}
+
+            {{ form_label(form.content, "Message") }}
+            {{ form_widget(form.content) }}
+            {{ form_errors(form.content) }}
+
+            <input type="submit"/>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
