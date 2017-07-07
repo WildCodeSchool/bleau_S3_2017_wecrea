@@ -43,7 +43,7 @@
     {{ command.townfact }}<br />
 </p>
 
-<p><b>Date de livraison éstimée :</b></p>
+<p><b>Date de livraison éstimée : {{ command.date|date_modify('+' ~ command.delivery ~ ' day' )|date('d/m/Y') }}</b></p>
 
 <p><b>Date du règlement : {{ command.date|date('d/m/Y') }}</b></p>
 

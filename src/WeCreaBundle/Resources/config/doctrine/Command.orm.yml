@@ -39,6 +39,8 @@ WeCreaBundle\Entity\Command:
             type: string
             length: 255
             unique: true
+        delivery:
+            type: integer
 
     manyToMany:
         works:

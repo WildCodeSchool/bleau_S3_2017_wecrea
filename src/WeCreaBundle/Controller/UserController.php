@@ -299,10 +299,17 @@ class UserController extends Controller
 
         $command->setDate($date);
         $command->setNb($id_trans);
+        $delivery = 0;
 
         foreach ($basket as $prod=>$caract) {
             $workPurchased = new WorkPurchased();
             $work = $Works->findOneById($prod);
+            $time = $work->getTimelimit();
+
+            if($time > $delivery) {
+                $delivery = $time;
+            }
+
             foreach ($caract as $key => $quant) {
                 $wCaract = $Caracts->findOneById($key);
                 $quant = $quant;
@@ -320,6 +327,7 @@ class UserController extends Controller
         }
 
         $command->setStatus($status);
+        $command->setDelivery($delivery);
 
         $em->persist($command);
         $user->addCommand($command);
