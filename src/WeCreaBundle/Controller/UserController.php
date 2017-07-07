@@ -345,11 +345,20 @@ class UserController extends Controller
 
         $signature = sha1($signature);
 
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($total + $tva, 2);
+
+
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $command,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
+            'tva' => $tva,
+            'ttc' => $ttc,
+            'Tva' => $Tva[0]->getTva()
         ));
     }
 
@@ -374,12 +383,19 @@ class UserController extends Controller
         $signature = sha1($signature);
 
         $em->flush();
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($total + $tva, 2);
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $comand,
             'total' => $total,
             'signature' => $signature,
             'idTrans' => $id_trans,
+            'tva' => $tva,
+            'ttc' => $ttc,
+            'Tva' => $Tva[0]->getTva()
         ));
     }
 
@@ -429,6 +445,13 @@ class UserController extends Controller
                     $price += $work->getPrice() * $work->getQuant();
                 }
 
+                $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+                $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+                $ttc = number_format($price + $tva, 2);
+
+                $legal = $Tva[0]->getMention();
+
                 /* Let's send a command confirmation to the customer */
                 $message = new \Swift_Message();
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
@@ -437,8 +460,11 @@ class UserController extends Controller
                 $message->setBody(
                     $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
                         array(
-                        'command' => $command,
-                        'total_price' => $price
+                            'command' => $command,
+                            'total_price' => $price,
+                            'Tva' => $Tva[0],
+                            'ttc' => $ttc,
+                            'legal' => $legal
                     ))
                     , 'text/html'
                 );
@@ -771,9 +797,28 @@ class UserController extends Controller
         $pdfName = $command->getNb(). uniqid() . '.pdf';
         $path = $this->getParameter('pdf'). '/' . $pdfName;
 
+        $price = NULL;
+        $works = $command->getWorks();
+
+        foreach($works as $work)
+        {
+            $price += $work->getPrice() * $work->getQuant();
+        }
+
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+
+        $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format($price + $tva, 2);
+
+        $legal = $Tva[0]->getMention();
+
         $this->get('knp_snappy.pdf')->generateFromHtml(
             $this->renderView('@WeCrea/User/basket/pdfCommand.html.twig', array(
                 'command' => $command,
+                'Tva' => $Tva[0]->getTva(),
+                'tva' => $tva,
+                'ttc' => $ttc,
+                'legal' => $legal
             )),
             $path
         );

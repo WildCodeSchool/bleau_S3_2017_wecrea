@@ -52,7 +52,7 @@
         <th><b>Titre de l'oeuvre</b></th>
         <th><b>Caractéristiques</b></th>
         <th><b>Quantité</b></th>
-        <th><b>Prix T.T.C.</b></th>
+        <th><b>Prix H.T.</b></th>
     </thead>
     <tbody>
     {% set total = 0 %}
@@ -68,15 +68,13 @@
     </tbody>
 </table>
 
-<p>Prix total hors taxes : {{ total }} €</p>
-<p>TVA :  €</p>
-<p>Prix toutes taxes comprises :  €</p>
+<p>Prix total H.T. : {{ total }} €</p>
+<p>TVA ({{ Tva }}%) : {{ tva }} €</p>
+<p>Prix total T.T.C : {{ ttc }} €</p>
 
-<b> Retrouvez votre facture dans votre espace personnel </b>
 
 <p id="legal-mentions">
-    <b>WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan
-        sous le numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST GERMAINMONT</b>
+    <b>{{ legal }}</b>
 </p>
 
 

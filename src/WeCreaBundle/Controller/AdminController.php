@@ -404,4 +404,25 @@ class AdminController extends Controller
             'contacts' => $contacts
         ]);
     }
+
+    public function legalAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $legals = $em->getRepository('WeCreaBundle:Legal')->findAll();
+        $legal = $legals[0];
+
+        $form = $this->createForm('WeCreaBundle\Form\LegalType', $legal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->flush();
+
+            return $this->redirectToRoute('we_crea_admin_legal');
+        }
+
+        return $this->render('@WeCrea/Admin/legal.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 }
