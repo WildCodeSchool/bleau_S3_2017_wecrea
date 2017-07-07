@@ -7,8 +7,9 @@ namespace WeCreaBundle\Entity;
  */
 class Work
 {
+    
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -28,7 +29,7 @@ class Work
     private $technic;
 
     /**
-     * @var string
+     * @var integer
      */
     private $timelimit;
 
@@ -146,7 +147,7 @@ class Work
     /**
      * Set timelimit
      *
-     * @param string $timelimit
+     * @param integer $timelimit
      *
      * @return Work
      */
@@ -160,7 +161,7 @@ class Work
     /**
      * Get timelimit
      *
-     * @return string
+     * @return integer
      */
     public function getTimelimit()
     {

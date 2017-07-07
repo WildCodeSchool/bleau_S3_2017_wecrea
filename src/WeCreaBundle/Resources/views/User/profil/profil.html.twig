@@ -119,6 +119,7 @@
                     <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Livraison</th>
                         <th>N° Commande</th>
                         <th>Résumé</th>
                         <th>Prix</th>
@@ -129,6 +130,7 @@
                     {% for comand in comands %}
                         <tr>
                             <td>{{ comand.date|date("d/m/Y - H:i") }}</td>
+                            <td>{{ comand.date|date_modify( '+' ~ comand.delivery ~ ' day' )|date('d/m/Y') }}</td>
                             <td>{{ comand.nb }}</td>
                             <td>
                                 {% set total = 0 %}

@@ -18,8 +18,7 @@ WeCreaBundle\Entity\Work:
             type: string
             length: 255
         timelimit:
-            type: string
-            length: 255
+            type: integer
     manyToOne:
         artist:
             targetEntity: WeCreaBundle\Entity\Artist
