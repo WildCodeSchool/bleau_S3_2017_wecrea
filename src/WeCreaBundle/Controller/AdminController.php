@@ -465,6 +465,8 @@ class AdminController extends Controller
 
         return $this->render('WeCreaBundle:Admin:all_messages_sent.html.twig', array(
            'messages' => $sentMessages
+        ));
+    }
 
     public function legalAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
