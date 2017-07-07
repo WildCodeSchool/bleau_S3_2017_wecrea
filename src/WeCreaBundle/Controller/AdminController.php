@@ -413,7 +413,8 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $commands = $em->getRepository(Command::class)->findAll();
+        $commands = $em->getRepository(Command::class)
+                       ->findBy([], ['date' => 'DESC']);
 
         return $this->render('WeCreaBundle:Admin:command_status.html.twig', [
             'commands' => $commands
@@ -462,7 +463,8 @@ class AdminController extends Controller
     public function sentEmailsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $sentMessages = $em->getRepository("WeCreaBundle:SentMessage")->findBy([], ['date' => "DESC"]);
+        $sentMessages = $em->getRepository("WeCreaBundle:SentMessage")
+                           ->findBy([], ['date' => "DESC"]);
 
         return $this->render('WeCreaBundle:Admin:all_messages_sent.html.twig', array(
            'messages' => $sentMessages

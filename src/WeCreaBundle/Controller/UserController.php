@@ -763,7 +763,8 @@ class UserController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            $phone = $contact->getPhonenumber() != NULL ? $contact->getPhonenumber() : "Non renseigné";
+            $phone = $contact->getPhonenumber() != NULL ?
+                     $contact->getPhonenumber() : "Non renseigné";
 
             $message = new \Swift_Message();
             $message

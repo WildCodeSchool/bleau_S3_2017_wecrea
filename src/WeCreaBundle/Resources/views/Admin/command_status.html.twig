@@ -2,6 +2,7 @@
 
 {% block body %}
     <div class="container container-custom-artists">
+        <h4 style="background: deeppink; color: #fff; padding: 10px;">Liste des commandes reçues</h4>
         <table>
             <thead>
                 <td><b>Numéro de commande</b></td>
@@ -14,21 +15,23 @@
             <tbody>
                 {% if commands is defined and commands is not empty %}
                     {% for command in commands %}
-                        <tr style="border-bottom: 1px solid #c8c8c8;">
-                            <td>{{ command.nb }}</td>
-                            <td>{{ command.name }}</td>
-                            <td>{{ command.date|date('d/m/Y H:i') }}</td>
-                            <td>{{ command.mail }}</td>
-                            <td>
-                                <select id="{{ command.id }}">
-                                    <option {% if command.status.id == 3 %}selected{% endif %} value="3">En cours de paiement</option>
-                                    <option {% if command.status.id == 4 %}selected{% endif %} value="4">Payé</option>
-                                    <option {% if command.status.id == 5 %}selected{% endif %} value="5">En cours de livraison</option>
-                                    <option {% if command.status.id == 6 %}selected{% endif %} value="6">Livrée</option>
-                                </select>
-                            </td>
-                            <td><a href="{{ path('we_crea_admin_send_message', {email : command.mail} ) }}">Envoyer</a></td>
-                        </tr>
+                        {% if command.status.id != 1 %}
+                            <tr style="border-bottom: 1px solid #c8c8c8;">
+                                <td>{{ command.nb }}</td>
+                                <td>{{ command.name }}</td>
+                                <td>{{ command.date|date('d/m/Y H:i') }}</td>
+                                <td>{{ command.mail }}</td>
+                                <td>
+                                    <select id="{{ command.id }}">
+                                        <option {% if command.status.id == 3 %}selected{% endif %} value="3">En cours de paiement</option>
+                                        <option {% if command.status.id == 4 %}selected{% endif %} value="4">Payée</option>
+                                        <option {% if command.status.id == 5 %}selected{% endif %} value="5">En cours de livraison</option>
+                                        <option {% if command.status.id == 6 %}selected{% endif %} value="6">Livrée</option>
+                                    </select>
+                                </td>
+                                <td><a href="{{ path('we_crea_admin_send_message', {email : command.mail} ) }}">Envoyer</a></td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                     Vous n'avez pas encore reçu de commande(s).
