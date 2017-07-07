@@ -13,6 +13,7 @@ use WeCreaBundle\Entity\Artist;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Entity\SentMessage;
+use WeCreaBundle\Entity\Status;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Form\ArtistType;
@@ -487,5 +488,24 @@ class AdminController extends Controller
         return $this->render('@WeCrea/Admin/legal.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    public function changeStatusAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $request->request->get('id');
+        $command = $em->getRepository(Command::class)->findOneById($id);
+
+        if($request->isXmlHttpRequest())
+        {
+            $idStatus = $request->request->get('status');
+            $status = $em->getRepository(Status::class)->findOneById($idStatus);
+
+            $command->setStatus($status);
+            $em->flush();
+
+            return new Response("La mise à jour a bien été effectuée");
+        }
     }
 }
