@@ -484,7 +484,7 @@ class UserController extends Controller
                         array(
                             'command' => $command,
                             'total_price' => $price,
-                            'Tva' => $Tva[0],
+                            'Tva' => $Tva[0]->getTva(),
                             'ttc' => $ttc,
                             'legal' => $legal
                     ))
