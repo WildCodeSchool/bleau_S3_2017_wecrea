@@ -1,6 +1,6 @@
-<form method="POST" action="https://secure.payzen.eu/vads-payment/">
+<form method="POST" name="formPay" action="https://secure.payzen.eu/vads-payment/">
     <input type="hidden" name="vads_action_mode" value="INTERACTIVE" />
-    <input type="hidden" name="vads_amount" value="{{ ttc }}00" />
+    <input type="hidden" name="vads_amount" value="{{ totalForm }}" />
     <input type="hidden" name="vads_ctx_mode" value="TEST" />
     <input type="hidden" name="vads_currency" value="978" />
     <input type="hidden" name="vads_page_action" value="PAYMENT" />
@@ -13,9 +13,8 @@
     <input type="hidden" name="vads_trans_id" value="{{ idTrans }}" />
     <input type="hidden" name="vads_version" value="V2" />
     <input type="hidden" name="vads_url_cancel" value="http://wecrea.wcs-fontainebleau.fr/basket" />
-    <input type="hidden" name="vads_url_error" value="http://wecrea.wcs-fontainebleau.fr/pay" />
-    <input type="hidden" name="vads_url_refused" value="http://wecrea.wcs-fontainebleau.fr/pay" />
-    <input type="hidden" name="vads_url_success" value="http://wecrea.wcs-fontainebleau.fr/pay" />
+    <input type="hidden" name="vads_url_error" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
+    <input type="hidden" name="vads_url_refused" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
+    <input type="hidden" name="vads_url_success" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
     <input type="hidden" name="signature" value="{{ signature }}"/>
-    <input type="submit" name="payer" value="Payer"/>
 </form>

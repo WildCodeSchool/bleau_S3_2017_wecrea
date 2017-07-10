@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
+use WeCreaBundle\Entity\Caract;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Contact;
 use WeCreaBundle\Entity\Nature;
+use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ContactType;
 use WeCreaBundle\Form\ProfilFormType;
@@ -341,15 +343,17 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
-
-        $signature = sha1($signature);
-
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
-        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format($total + $tva, 2);
+        $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price))
+            + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
+        $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
+
+        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+
+        $signature = sha1($signature);
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $command,
@@ -358,6 +362,7 @@ class UserController extends Controller
             'idTrans' => $id_trans,
             'tva' => $tva,
             'ttc' => $ttc,
+            'totalForm' => $totalForm,
             'Tva' => $Tva[0]->getTva()
         ));
     }
@@ -371,6 +376,7 @@ class UserController extends Controller
         $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
         $comand->setNb($id_trans);
         $comand->setDate($date);
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
         $works = $comand->getWorks();
         $total=0;
@@ -379,14 +385,14 @@ class UserController extends Controller
             $total += $price;
         }
 
-        $signature = utf8_encode('INTERACTIVE+'.$total.'00+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
+        $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
+        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price))
+            + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
+        $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
+
+        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+
         $signature = sha1($signature);
-
-        $em->flush();
-        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
-
-        $tva = number_format($total * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format($total + $tva, 2);
 
         return $this->render('@WeCrea/User/basket/payement.html.twig', array(
             'commands' => $comand,
@@ -395,7 +401,8 @@ class UserController extends Controller
             'idTrans' => $id_trans,
             'tva' => $tva,
             'ttc' => $ttc,
-            'Tva' => $Tva[0]->getTva()
+            'Tva' => $Tva[0]->getTva(),
+            'totalForm' => $totalForm
         ));
     }
 
@@ -435,10 +442,25 @@ class UserController extends Controller
             if ($response == 'AUTHORISED'){
                 $status = $Status->findOneById(4);
                 $session->remove('basket');
+                $works = $command->getWorks();
+
+                foreach ($works as $work) {
+
+                    $title = $work->getTitle();
+                    $artist = $work->getArtist();
+                    $car = $work->getCaract();
+                    $quant = $work->getQuant();
+                    $caractId = $em->getRepository(Work::class)->myFindCaract($artist, $title, $car);
+
+                    $caract = $em->getRepository(Caract::class)->findOneById($caractId);
+                    $quantity = $caract->getQuantity();
+                    $caract->setQuantity($quantity - $quant);
+
+                    $em->flush();
+                }
 
                 /* Total price calculation */
                 $price = NULL;
-                $works = $command->getWorks();
 
                 foreach($works as $work)
                 {
@@ -448,8 +470,8 @@ class UserController extends Controller
                 $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
                 $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
-                $ttc = number_format($price + $tva, 2);
-
+                $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price))
+                    + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
                 $legal = $Tva[0]->getMention();
 
                 /* Let's send a command confirmation to the customer */
@@ -462,7 +484,7 @@ class UserController extends Controller
                         array(
                             'command' => $command,
                             'total_price' => $price,
-                            'Tva' => $Tva[0],
+                            'Tva' => $Tva[0]->getTva(),
                             'ttc' => $ttc,
                             'legal' => $legal
                     ))
@@ -809,7 +831,7 @@ class UserController extends Controller
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
         $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format($price + $tva, 2);
+        $ttc = number_format(intval($price) + intval($tva), 2);
 
         $legal = $Tva[0]->getMention();
 
@@ -825,5 +847,53 @@ class UserController extends Controller
         );
 
         return new Response($pdfName);
+    }
+
+    // --- check if work quant is > command quant --- //
+    public function checkAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $request->request->get('id');
+        $command = $em->getRepository('WeCreaBundle:Command')->findOneById($id);
+
+        $workPs = $command->getWorks();
+        $sellout = false;
+
+        foreach ($workPs as $workP) {
+            $quantP = $workP->getQuant();
+            $artistName = $workP->getArtist();
+            $workPTitle = $workP->getTitle();
+            $workCaract = $workP->getCaract();
+
+            $quant = $em->getRepository(Work::class)->myFindWorkQuant($artistName, $workPTitle,  $workCaract);
+
+            if($quant - $quantP < 0) {
+                $workOuts[]= $workPTitle;
+                $sellout = true;
+            }
+        }
+
+        if($sellout == true) {
+            if (count($workOuts) > 1){
+                $str = 'Les articles ';
+                foreach ($workOuts as $w) {
+                    $str .= $w . ', ';
+                };
+                $str .= 'sont épuisés.';
+            } else {
+                $str = "L'article " . $workOuts[1] . "est épuisé.";
+            }
+
+            return new Response($str);
+        }
+
+        return new Response('ok');
+
+    }
+
+    public function apiNotifAction(Request $request) {
+        $response = $request;
+
+        return new Response($response);
     }
 }

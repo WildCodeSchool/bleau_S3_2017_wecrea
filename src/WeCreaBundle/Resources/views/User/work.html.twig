@@ -50,7 +50,7 @@
                                 </select>
                             </p>
                         </div>
-                        {% if caracts[0].quantity == 0 %}
+                        {% if caracts[0].quantity <= 0 %}
                             <input type="submit" class="btn black disabled" value="Épuisé">
                         {% else %}
                             <input type="submit" class="btn black" value="Ajouter au panier">

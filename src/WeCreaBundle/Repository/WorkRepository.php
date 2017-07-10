@@ -68,4 +68,53 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function myFindWork($artist, $title) {
+        $qb = $this->createQueryBuilder('w');
+        $qb
+            ->where('w.title = :title')
+            ->setParameter('title', $title)
+
+            ->join('w.artist','a')
+            ->andWhere('a.name = :artist')
+            ->setParameter('artist', $artist);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    public function myFindWorkQuant($artist, $title, $caract) {
+        $qb = $this->createQueryBuilder('w');
+        $qb
+            ->where('w.title = :title')
+            ->setParameter('title', $title)
+
+            ->join('w.artist','a')
+            ->andWhere('a.name = :artist')
+            ->setParameter('artist', $artist);
+
+            $qb->join('w.caracts', 'c')
+            ->select('c.quantity')
+            ->andWhere('c.dimension = :caract')
+            ->setParameter('caract', $caract);
+
+        $result = $qb->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    public function myFindCaract($artist, $title, $caract) {
+        $qb = $this->createQueryBuilder('w');
+        $qb
+            ->where('w.title = :title')
+            ->setParameter('title', $title)
+
+            ->join('w.artist','a')
+            ->andWhere('a.name = :artist')
+            ->setParameter('artist', $artist);
+
+        $qb->join('w.caracts', 'c')
+            ->select('c.id')
+            ->andWhere('c.dimension = :caract')
+            ->setParameter('caract', $caract);
+        return $qb->getQuery()->getSingleResult();
+    }
 }
