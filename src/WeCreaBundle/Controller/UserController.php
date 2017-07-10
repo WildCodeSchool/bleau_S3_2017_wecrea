@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
+use WeCreaBundle\Entity\Caract;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Subscriber;
@@ -349,7 +350,7 @@ class UserController extends Controller
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
 
         $signature = sha1($signature);
 
@@ -387,7 +388,7 @@ class UserController extends Controller
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+http://wecrea.wcs-fontainebleau.fr/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
 
         $signature = sha1($signature);
 
@@ -863,7 +864,7 @@ class UserController extends Controller
 
             $quant = $em->getRepository(Work::class)->myFindWorkQuant($artistName, $workPTitle,  $workCaract);
 
-            if($quant - $quantP <= 0) {
+            if($quant - $quantP < 0) {
                 $workOuts[]= $workPTitle;
                 $sellout = true;
             }
