@@ -16,7 +16,7 @@
                           {% for prod in works %}
                               <div class="prod col s12 row" id="{{ prod.work.id }}">
                                   <div class="col m3">
-                                      <img class="prod_img" src="{{ asset("images/") }}{{ prod.work.images[0].url }}" alt="">
+                                      <img class="prod_img" src="{{ asset("images/" ~ prod.work.images|first.url|default('../bundles/wecrea/pics/no_picture.png')) }}" alt="Image de l'oeuvre">
                                   </div>
                                   <div class="col m9 row">
                                       <div class="prod_title col s12">

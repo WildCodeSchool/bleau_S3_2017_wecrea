@@ -37,8 +37,35 @@
                     {{ commands.towndel }}
                 </div>
             </div>
+            <button class="pay" id="{{ commands.id }}">PAYER</button>
         </div>
         {% include '@WeCrea/User/basket/formPayzen.html.twig' %}
     </div>
 </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('.pay').on('click', function (e) {
+                e.preventDefault();
+                var data = {'id': $(this).attr('id')};
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_check_quant') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(response);
+                        if(response == 'ok') {
+                            $('form[name="formPay"]').submit();
+                        }else{
+                            alert(response);
+                        }
+                    }
+                })
+            })
+        })
+
+    </script>
 {% endblock %}
