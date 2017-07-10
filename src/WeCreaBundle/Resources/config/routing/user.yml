@@ -86,3 +86,7 @@ we_crea_contact:
 we_crea_api_response:
     path: /pay
     defaults: {_controller: "WeCreaBundle:User:apiResponse"}
+
+we_crea_notification:
+    path: /notif
+    defaults: {_controller: "WeCreaBundle:User:apiNotif"}
