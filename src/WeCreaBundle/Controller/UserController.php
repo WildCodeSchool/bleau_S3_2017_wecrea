@@ -350,7 +350,6 @@ class UserController extends Controller
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-        $Tva = $Tva[0]->getTva();
 
         $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
 
@@ -377,6 +376,7 @@ class UserController extends Controller
         $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
         $comand->setNb($id_trans);
         $comand->setDate($date);
+        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
         $works = $comand->getWorks();
         $total=0;
