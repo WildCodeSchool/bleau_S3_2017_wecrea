@@ -48,7 +48,7 @@
                         {% for caract in work.caracts %}
                             {% set quantity = quantity + caract.quantity %}
                         {% endfor %}
-                        {% if quantity == 0 %}
+                        {% if quantity <= 0 %}
                             <span class="sold">
                                 <img src="{{ asset('bundles/wecrea/pics/vendu.png') }}" alt="vendu">
                             </span>
