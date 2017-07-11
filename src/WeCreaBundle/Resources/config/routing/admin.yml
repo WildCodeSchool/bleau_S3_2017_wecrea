@@ -135,7 +135,7 @@ we_crea_admin_messages_sent:
         _controller: "WeCreaBundle:Admin:sentEmails"
 
 # Command status change
-we_crea_admin_change_status:
+we_crea_admin_change_statuswe_crea_admin_change_status:
     path: /command/change
     defaults:
         _controller: "WeCreaBundle:Admin:changeStatus"
