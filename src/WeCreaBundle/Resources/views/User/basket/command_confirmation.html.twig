@@ -34,14 +34,14 @@
 <h2> WeCrea vous remercie de votre commande. </h2>
 <h4><u>Récapitulatif de votre commande</u></h4>
 <p><b>Numéro de commande : </b> {{ command.nb }}</p>
-<p><b>Adresse de livraison : </b><br />
+<p class="title_list_profil"><b>Adresse de livraison : </b><br />
     {{ command.name }}<br />
     {{ command.addressdel }}<br />
     {{ command.zipCodedel }}<br />
     {{ command.towndel }}<br />
 </p>
 
-<p><b>Adresse de facturation : </b><br />
+<p class="title_list_profil"><b>Adresse de facturation : </b><br />
     {{ command.name }}<br />
     {{ command.addressfact }}<br />
     {{ command.zipCodefact }}<br />

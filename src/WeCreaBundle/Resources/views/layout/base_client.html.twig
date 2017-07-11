@@ -4,8 +4,12 @@
         <div class="navbar-fixed nav_custom_cont">
             <nav class="nav_custom">
                 <div class="nav-wrapper">
-                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo logo_container"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse button-collapse-custom"><i class="material-icons">menu</i></a>
+                    <a href="{{ path('we_crea_homepage') }}" class="brand-logo logo_container">
+                        <img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo">
+                    </a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse button-collapse-custom">
+                        <i class="material-icons">menu</i>
+                    </a>
 
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ path('we_crea_homepage') }}">Accueil</a></li>
@@ -39,17 +43,6 @@
                     </ul>
 
                     <ul id="mobile-demo" class="side-nav side-nav-custom">
-						<li>
-                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
-                                <input type="search" name="search" class="search" placeholder="Recherche"/>
-                                <input type="submit" value="OK" id="validation-search"/>
-                            </form>
-                        </li>
-                        <li><a href="{{ path('we_crea_homepage') }}">Accueil</a></li>
-                        <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
-                        <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
-                        <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
-                        <li><a href="{{ path('we_crea_actu') }}">Actualités</a></li>
                         <li id="profil_icon">
                             <a href="{{ path('we_crea_user_profil') }}">
                                 <i class="material-icons">person</i>
@@ -61,6 +54,17 @@
                                 <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="">
                             </a>
                         </li>
+						<li>
+                            <form name="search" method="post" action="{{ path('we_crea_search') }}">
+                                <input type="search" name="search" class="search" placeholder="Recherche"/>
+                                <input type="submit" value="OK" id="validation-search"/>
+                            </form>
+                        </li>
+                        <li><a href="{{ path('we_crea_homepage') }}">Accueil</a></li>
+                        <li><a href="{{ path('we_crea_concept') }}">Concept</a></li>
+                        <li><a href="{{ path('we_crea_works') }}">Oeuvres</a></li>
+                        <li><a href="{{ path('we_crea_artists_list') }}">Artistes</a></li>
+                        <li><a href="{{ path('we_crea_actu') }}">Actualités</a></li>
                     </ul>
                 </div>
             </nav>
@@ -110,7 +114,7 @@
         <div class="footer-copyright bar_footer">
             <div class="container">
                 © 2017 Copyright WCS
-                <a class="right" id="moreLink">More Links</a>
+                <a class="right" id="moreLink">Contactez-nous</a>
             </div>
         </div>
     </footer>

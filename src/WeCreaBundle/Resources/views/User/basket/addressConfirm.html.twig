@@ -6,8 +6,14 @@
             <div class="row row_top addressCont">
                 {% include '@WeCrea/User/basket/addressUser.html.twig' %}
             </div>
-            <a class="waves-effect waves-light btn black" href="#modal1">Changer d'adresses</a>
-            <a class="waves-effect waves-light btn black" href="{{ path('we_crea_basket_command') }}">Passer au payment</a>
+            <div class="row">
+                <div class="col m6 s12 center-align">
+                    <a class="waves-effect waves-light btn black " href="#modal1">Changer d'adresses</a>
+                </div>
+                <div class="col m6 s12 center-align">
+                    <a class="waves-effect waves-light btn black center-align" href="{{ path('we_crea_basket_command') }}">Passer au payment</a>
+                </div>
+            </div>
 
             <div id="modal1" class="modal modal-fixed-footer">
                 <div class="modal-content">

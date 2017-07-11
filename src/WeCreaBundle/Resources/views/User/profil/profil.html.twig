@@ -7,11 +7,11 @@
 {% block body %}
 <main>
     <div class="container">
-        <div class="row">
+        <div class="row row_top">
             <div class="col s12">
                 <ul class="tabs ">
-                    <li class="tab col s6"><a class="active" href="#profil">Mon profile</a></li>
-                    <li class="tab col s6"><a href="#commandes">Mes commandes</a></li>
+                    <li class="tab col s6" style="color: black!important; border-bottom-color: black!important;"><a class="active" href="#profil">Mon profile</a></li>
+                    <li class="tab col s6" style="color: black; border-bottom-color: black"><a href="#commandes">Mes commandes</a></li>
                 </ul>
             </div>
             <div id="profil" class="col s12">
@@ -142,14 +142,15 @@
                             <td>{{ total }}€</td>
                             <td>
                                 {% if comand.status.name == 'payed' %}
-                                Payement effectué, en cours de livraison<br>
+                                    <p style="color: green;">Payement effectué, en cours de livraison<br></p>
                                     <a class="pdfGen" href="#" id="{{ comand.id }}">Télécharger la facture</a>
                                 {% elseif comand.status.name == 'error' %}
-                                Erreur de paiement
+                                    <p style="color: red;">Erreur de paiement</p>
                                 {% elseif comand.status.name == 'payProg' %}
-                                Paiement en cours
+                                <p style="color: yellow;">Paiement en cours</p>
                                 {% else %}
-                                Comande en attente de paiement
+                                    <p style="color: lightgreen;">Comande en attente de paiement</p>
+
                                 {% endif %}
                                  {% if comand.status.name != 'payed' and comand.status.name != 'payProg' %}
                                 <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
