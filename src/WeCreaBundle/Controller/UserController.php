@@ -373,7 +373,7 @@ class UserController extends Controller
 
         $comand = $em ->getRepository('WeCreaBundle:Command')->findOneById($id);
         $date = new \DateTime();
-        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+        $id_trans = intval(str_pad(rand(1,899999),6, "0", STR_PAD_LEFT));
         $comand->setNb($id_trans);
         $comand->setDate($date);
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
