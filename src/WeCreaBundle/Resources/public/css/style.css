@@ -15,6 +15,24 @@ main {
     flex: 1 0 auto;
 }
 
+h2{
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+@media screen and (max-width: 900px){
+    h2 {
+        font-size: 3rem;
+    }
+}
+@media screen and (max-width: 600px){
+    h2 {
+        font-size: 2.56rem;
+    }
+}
+
 /* Overide Materialize Hover button */
 .btn:hover, .btn-large:hover {
     background-color: transparent;
@@ -142,7 +160,7 @@ header {
 
 nav {
     height: 80px;
-    border-bottom: 15px solid transparent!important;
+    border-bottom: 10px solid transparent!important;
     border-image: url(../pics/Bandeau.png) 10 round!important;
     padding-bottom: 10px;
 }
@@ -167,7 +185,7 @@ nav ul li:nth-child(6){
 }
 
 .nav_custom ul{
-    top: 108px;
+    top: 101px;
 }
 
 nav ul a:hover {
@@ -202,15 +220,39 @@ nav ul a:hover {
     width: 24px;
 }
 
+@media screen and (min-width: 992px) {
+    .fav_icon,
+    .bask_icon {
+        padding-top: 12px;
+    }
+    .fav_icon{
+        padding-top: 16px;
+    }
+}
+
+
 @media screen and (max-width: 600px){
     .fav_icon,
     .bask_icon {
+        padding-top: 12px;
         float: left;
+    }
+    .fav_icon{
+        padding-top: 16px;
     }
 }
 
 .brand-logo img {
-    height: 80px !important;
+    max-height: 60px !important;
+    max-width: 100%;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px){
+    .brand-logo img {
+        max-height: 60px !important;
+        max-width: 224px;
+        padding-top: 23px;
+    }
 }
 
 #sidenav-overlay {
@@ -290,7 +332,7 @@ textarea{
     min-width: 100%!important;
     align-content: center;
     color: black!important;
-    background-color: rgba(90, 90, 90, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .container_footer a {
@@ -326,7 +368,7 @@ textarea{
 footer {
     z-index:100;
     padding-top: 0 !important;
-    background: white!important;
+    background: transparent!important;
     color: black!important;
 }
 
@@ -340,7 +382,7 @@ footer {
 }
 
 .slider {
-    margin-top: 115px;
+    margin-top: 112px;
     height: calc(100% - 178px) !important;
 }
 .slider .indicators .indicator-item.active {
@@ -700,7 +742,7 @@ form[name="basket"] {
 }
 
 .prod_caract {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .prod_price {
@@ -753,6 +795,7 @@ form[name="basket"] {
     margin: 0;
     padding: 0;
     width: 100%;
+    height: 300px;
     overflow: hidden;
 }
 
@@ -765,6 +808,7 @@ form[name="basket"] {
     right: 0;
     left: 0;
     width: 100vw;
+    height: 100vh!important;
     background: rgba(0,0,0,.7);
 }
 
@@ -838,9 +882,10 @@ form[name='search'] input{
     color: black;
 }
 
-form[name="search"] input[type='search']{
+form[name="search"] {
     width: 12vw;
     margin-left: 40px;
+    margin-right: 20px;
 }
 
 .button-search{
@@ -854,7 +899,7 @@ form[name="search"] input[type='search']{
     color: #fff;
 }
 
-@media all and (max-width: 1024px){
+@media all and (max-width: 992px){
 	.button-collapse-custom{
 		 display: flex!important;
 		 align-items: center!important;
@@ -890,7 +935,7 @@ nav ul li .suggest li{
 	line-height: 35px;
 }
 
-#mobile-demo li:last-child{
+#mobile-demo li:first-child{
     display: flex;
 }
 
@@ -899,23 +944,49 @@ nav ul li .suggest li{
     margin-left: 10%;
     padding: 0;
 }
+#profil_icon a {
+    margin: 0 auto;
+}
+@media screen and (max-width: 992px) {
+    #profil_icon a {
+        width: 20%;
+    }
+}
+#mobile-demo #profil_icon a:nth-child(1) i{
+    margin: 0;
+}
 
 #mobile-demo #profil_icon a:nth-child(2){
 
-     margin: 0;
-     padding-top: 10px;
+     padding-top: 5px;
      height: auto!important;
 }
 
 #mobile-demo li:last-child a:nth-child(3){
 
-    margin: 0;
-    padding-top: 10px;
+    padding-top: 5px;
     height: auto!important;
+}
+.tab a{
+    font-size: 1.2rem!important;
+}
+.tabs .tab a:hover,
+.tabs .tab a.active,
+.tab a.active,
+.tabs .tab a {
+    color: black;
+    border-bottom-color: black;
+}
+
+.indicator {
+    background-color: black!important;
+    height: 1px;
 }
 
 .title_list_profil{
     text-decoration: underline;
+    font-size: 1.7rem;
+    font-weight: 400;
 }
 
 /* Newsletter */
