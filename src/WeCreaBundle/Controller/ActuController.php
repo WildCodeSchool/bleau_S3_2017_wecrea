@@ -79,12 +79,7 @@ class ActuController extends Controller {
                 );
                 $this->get('mailer')->send($message);
             }
-
-            $content = $this->renderView('@WeCrea/Admin/actu_show.html.twig', array(
-                'actu' => $actu,
-            ));
-
-
+            
             $encoders = new JsonEncoder();
             $normalizer = new ObjectNormalizer();
             $serializer = new Serializer(array($normalizer), array($encoders));
