@@ -81,22 +81,6 @@ h4 {
     margin: 0 auto;
 }
 
-#images-artist-check img,
-#images-work-check img,
-#add-image-work-check img{
-    width: 30%;
-    display: block;
-    margin: 10px auto 0 auto;
-}
-
-#images-artist-check button,
-#images-work-check button,
-#add-image-work-check button,
-.add-image-work-check-delete{
-    display: block;
-    margin: 0 auto;
-}
-
 .artist_menu{
     text-align: center;
     margin-top: 30px;
@@ -1004,4 +988,95 @@ nav ul li .suggest li{
     align-items: center;
     text-align: center;
     width: 30%;
+}
+
+#menu_admin_button{
+    position: fixed;
+    left: 0;
+    background: black;
+    height: 35px;
+    border: none;
+    outline: none;
+    width: 100px;
+    line-height: 35px;
+    color: #fff;
+    margin-top: 20px;
+    display: none;
+    z-index: 2;
+}
+
+#sidenav_admin{
+    width: 150px;
+    position: fixed;
+    left: 0;
+    text-indent: 10px;
+    margin-top: 75px;
+    z-index: 2;
+}
+
+@media all and (max-width: 1024px){
+    #menu_admin_button{
+        display: block;
+    }
+
+    #sidenav_admin{
+        left: -150px;
+        transition: 400ms;
+    }
+}
+
+/* Admin sections titles */
+h4{
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Admin verification images */
+#conceptImg{
+    width: 100%;
+    margin-top: 20px;
+}
+
+#images-check{
+    margin: 30px auto;
+    width: 100%;
+}
+
+#images-check img{
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+#images-check button{
+    cursor: pointer;
+}
+
+@media all and(max-width: 768px){
+    label{
+        font-size: 1em;
+    }
+}
+
+.actu{
+    height: 250px;
+    text-align: center;
+}
+
+
+.actu-content{
+    background: rgba(255,255,255,.7);
+    background: #fcfcfc;
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.actu-number{
+    height: 50px;
+    line-height: 50px;
+    background: black;
+    text-align: center;
+    color: #fff;
 }

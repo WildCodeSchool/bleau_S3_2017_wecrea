@@ -192,5 +192,20 @@ $(document).ready( function () {
     }
 
     $('#alert-newsletter-subscription').delay(2000).fadeOut(2000);
+
+    $("input:file").on("change", function(){
+        $("#images-check").children().remove();
+
+        $img = new Image();
+        $img.src = window.URL.createObjectURL($(this)[0].files[0]);
+
+        $buttonElt = $("<button class='btn waves-effect black'>Supprimer</button>");
+
+        $("#images-check").append($img, $buttonElt);
+
+        $buttonElt.on("click", function(){
+            $("#images-check").children().remove();
+        });
+    });
 });
 

@@ -22,7 +22,7 @@ class ActuController extends Controller {
      */
     public function actuAction() {
         $em = $this->getDoctrine()->getManager();
-        $actus = $em->getRepository('WeCreaBundle:Actu')->findAll();
+        $actus = $em->getRepository('WeCreaBundle:Actu')->findBy([], ["date" => "DESC"]);
 
         $actu = new Actu();
         $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
@@ -79,15 +79,17 @@ class ActuController extends Controller {
                 );
                 $this->get('mailer')->send($message);
             }
+            
+            $encoders = new JsonEncoder();
+            $normalizer = new ObjectNormalizer();
+            $serializer = new Serializer(array($normalizer), array($encoders));
+            $jsonActu = $serializer->serialize($actu, "json");
 
-            $content= $this->renderView('@WeCrea/Admin/actu_show.html.twig', array(
-                'actu' => $actu,
-            ));
+            $response = new Response($jsonActu);
+            $response->headers->set('Content-Type', 'application/json');
 
-            $response= new JsonResponse($content);
-
+            return $response;
         }
-        return $response;
     }
 
     /**

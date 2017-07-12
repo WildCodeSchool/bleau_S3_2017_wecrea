@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-
     {{ parent() }}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 {% endblock %}
@@ -28,8 +27,9 @@
 {% endblock %}
 {% block sidenav %}
     {% if app.request.attributes.get('_route') != "we_crea_admin_homepage" %}
-    <ul style="width: 150px; position: fixed; left: 0; text-indent: 10px; margin-top: 75px;">
-        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Menu</a></li>
+    <button id="menu_admin_button">Menu</button>
+    <ul id="sidenav_admin">
+        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Accueil</a></li>
         <li style="background: dodgerblue;"><a href="{{ path('we_crea_admin_carrousel_edition') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Carrousel</a></li>
         <li style="background: green;"><a href="{{ path('we_crea_admin_artist_list') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Artistes</a></li>
         <li style="background: tomato;"><a href="{{ path('we_crea_admin_concept_edit') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Concept</a></li>
@@ -61,6 +61,12 @@
             $(this).css({
                 'width': '150px'
             });
-        })
+        });
+
+        $('#menu_admin_button').on("click", function(){
+            $("#sidenav_admin").css("left") == '-150px' ?
+                $("#sidenav_admin").css("left" , '0'):
+                $("#sidenav_admin").css("left" , "-150px");
+        });
     </script>
 {% endblock %}
