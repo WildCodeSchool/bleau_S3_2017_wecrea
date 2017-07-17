@@ -79,7 +79,7 @@ class ActuController extends Controller {
                 );
                 $this->get('mailer')->send($message);
             }
-            
+
             $encoders = new JsonEncoder();
             $normalizer = new ObjectNormalizer();
             $serializer = new Serializer(array($normalizer), array($encoders));
