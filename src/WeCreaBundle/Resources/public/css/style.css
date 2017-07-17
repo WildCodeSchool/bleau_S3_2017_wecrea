@@ -411,6 +411,11 @@ footer {
 }
 
 /** For works **/
+
+.data-zoom-image{
+    width: 100%;
+}
+
 .cardz{
     width:80%;
     margin: 0 auto 50px auto;
@@ -423,7 +428,7 @@ footer {
 
 .card_custom_work{
     width: 25%;
-    margin: 1% 4.16666667%;
+    margin: 2% 4.16666667%;
     padding: 0 5px 15px 5px;
 }
 

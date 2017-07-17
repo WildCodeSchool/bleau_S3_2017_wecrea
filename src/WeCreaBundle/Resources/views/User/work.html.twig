@@ -13,9 +13,9 @@
         <div class="container">
             <div class="row row_top">
                 <div class="col s12 m12 l7 img_basket">
-                    <div class="center-align">
+                    <div class="center-align center-align_custom">
                         {% if images|first.url is defined %}
-                            <img id="zoom_03" height="350" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
+                            <img id="zoom_03" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
                         {% endif %}
                     </div>
                     <div id="gallery_01">
