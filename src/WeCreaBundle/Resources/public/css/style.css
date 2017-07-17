@@ -316,7 +316,7 @@ textarea{
     min-width: 100%!important;
     align-content: center;
     color: black!important;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.85);
 }
 
 .container_footer a {
@@ -418,12 +418,13 @@ footer {
 
 .card_custom_artist {
     width: 30%;
-    padding: 0 0.5%;
+    padding: 2px 2px 5px 2px;
 }
 
 .card_custom_work{
-    width: 31.33%;
-    margin: 5vh 1%;
+    width: 25%;
+    margin: 1% 4.16666667%;
+    padding: 0 5px 15px 5px;
 }
 
 .sold{

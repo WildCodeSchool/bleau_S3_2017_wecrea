@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col s10 offset-s1">
             {% if status == 'AUTHORISED' %}
-                <h3>Votre paiement est acceptée</h3>
-                <p>Vous allez recevoir un mail contenant la date de livraison prévue ainsi qu'un résumé de votre commande.</p>
-                <p>Merci pour votre confiance et à bientôt sur les artistes d'abord!</p>
+                <h3>Votre paiement a été accepté.</h3>
+                <p>Vous allez recevoir un e-mail indiquant la date de livraison prévue ainsi qu'un résumé de votre commande.</p>
+                <p>Merci de votre confiance et à bientôt sur les artistes d'abord!</p>
             {% elseif status == 'ERROR' or status == 'REFUSED' %}
-                <h3>Votre paiement a échoué, merci de contacter votre établissement financier pour plus de précision.</h3>
+                <h3>Votre paiement a échoué. Merci de contacter votre établissement financier pour plus de précisions.</h3>
             {% else %}
-                <h3>Votre commande n'a pas aboutie, vous pouvez la retrouver dans votre <a href="{{ path('we_crea_basket') }}">Panier</a></h3>
+                <h3>Votre commande n'a pas abouti. Vous pouvez la retrouver dans votre <a href="{{ path('we_crea_basket') }}">Panier</a></h3>
             {% endif %}
         </div>
         <div class="col s10 offset-s1">

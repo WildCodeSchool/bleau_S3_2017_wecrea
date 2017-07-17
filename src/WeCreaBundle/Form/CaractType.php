@@ -16,10 +16,18 @@ class CaractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dimension', TextType::class)
-            ->add('weigth', TextType::class)
-            ->add('price', IntegerType::class)
-            ->add('quantity', IntegerType::class)
+            ->add('dimension', TextType::class, array(
+                "label" => "Dimensions (préciser l'unité)"
+            ))
+            ->add('weigth', TextType::class, array(
+                "label" => "Poids (préciser l'unité)"
+            ))
+            ->add('price', IntegerType::class, array(
+                "label" => "Prix (sans sigle)"
+            ))
+            ->add('quantity', IntegerType::class, array(
+                "label" => "Quantité disponible"
+            ))
             ;
     }
     
