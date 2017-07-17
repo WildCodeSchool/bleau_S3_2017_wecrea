@@ -446,6 +446,21 @@ footer {
     max-height: 50px;
 }
 
+.work_desc{
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    background: #fefefe;
+}
+
+.work_desc .row{
+    width: 98%;
+    margin: 0 auto;
+}
+
+.work_desc input[type="submit"]{
+    margin-bottom: 15px;
+}
+
 @media all and (max-width: 992px){
     .cardz{
         width: 100%;

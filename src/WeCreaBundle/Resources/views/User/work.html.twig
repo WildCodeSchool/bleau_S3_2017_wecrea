@@ -28,21 +28,21 @@
                 </div>
 
                 <div class="col s12 m12 l5 work_desc">
-                    <h2>{{ work.title }}</h2>
-                    <p>{{ work.artist.name }}</p>
+                    <h3>{{ work.title }}</h3>
+                    <p>{{ work.artist.firstname }} {{ work.artist.name }}</p>
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <div class="row">
-                            <p class="col m3">
+                            <p>
                                 Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %} {{ caracts[0].quantity }} {% endif %}">
                                 <input type="hidden" name="work_id" value="{{ work.id }}">
                             </p>
-                            <p class="col m7 offset-m2 right-align">
-                                Prix : <span id="price">{% if caracts is defined %} {{ caracts[0].price }} €{% endif%}</span>
+                            <p class="right-align">
+                                <b>Prix total T.T.C. : </b> <span id="price">{% if caracts is defined %} {{ caracts[0].price }} {% endif%}</span> €
                             </p>
                         </div>
                         <div class="row">
                             <p>
-                                Dimensions :
+                                Caractéristiques :
                                 <select name="caract">
                                     {% for key, caract in caracts %}
                                         <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} - prix : {{ caract.price }}€</option>
@@ -60,10 +60,10 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <p><u>Technique :</u> {{ work.technic }}</p>
+                        <p><b>Technique mise en oeuvre</b> : <br />{{ work.technic }}</p>
                     </div>
                     <div class="col s12">
-                        <p><u>Description :</u> {{ work.description }}</p>
+                        <p><b>Description</b> : <br />{{ work.description }}</p>
                     </div>
                 </div>
             </div>
@@ -96,12 +96,15 @@
             });
 
             $('select[name="caract"]').on('change', function () {
+
+                priceIndexed = false;
+
                 var selected = $(this).find('option:selected');
                 var quant = selected.attr('quant');
                 var price = selected.attr('price');
                 console.log(quant);
                 $('input[name="quantity"]').attr('max', quant);
-                $('#price').text(price + ' €');
+                $('#price').text(price);
 
                 var submit = $('input[type="submit"]');
                 if(quant == 0) {
@@ -113,6 +116,30 @@
                     submit.attr('value', 'Ajouter au panier');
                 }
             });
+
+            var inputNumberElt = document.querySelector("input[name='quantity'");
+            var priceElt = document.getElementById("price");
+
+            inputNumberElt.addEventListener("click", incrementPrice);
+            inputNumberElt.addEventListener("keyup", incrementPrice);
+
+            var price;
+            var priceIndexed = false;
+            function incrementPrice(e){
+                if(priceIndexed === false){
+                    price = priceElt.textContent;
+                    priceIndexed = true;
+                }
+
+                priceElt.textContent = price * this.value;
+
+                inputNumberElt.addEventListener("mouseleave", function(){
+                    if(inputNumberElt.value === ""){
+                        inputNumberElt.value = 1;
+                        priceElt.textContent = price * 1;
+                    }
+                });
+            }
         });
     </script>
 {% endblock %}
