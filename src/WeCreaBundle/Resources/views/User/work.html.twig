@@ -33,7 +33,8 @@
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <div class="row">
                             <p>
-                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %} {{ caracts[0].quantity }} {% endif %}">
+                                <b id="alert-quantity-max"></b>
+                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %}{{ caracts[0].quantity }}{% endif %}">
                                 <input type="hidden" name="work_id" value="{{ work.id }}">
                             </p>
                             <p class="right-align">
@@ -76,6 +77,9 @@
     <script>
         $(document).ready( function () {
 
+            var quantityMaxAlertElt = document.getElementById("alert-quantity-max");
+            quantityMaxAlertElt.style.display = "none";
+
             $("#zoom_03").elevateZoom({
                 constrainType:"height",
                 constrainSize:350,
@@ -102,12 +106,13 @@
                 var selected = $(this).find('option:selected');
                 var quant = selected.attr('quant');
                 var price = selected.attr('price');
-                console.log(quant);
+
                 $('input[name="quantity"]').attr('max', quant);
                 $('#price').text(price);
 
                 var submit = $('input[type="submit"]');
-                if(quant == 0) {
+
+                if(quant === 0) {
                     submit.addClass('disabled');
                     submit.attr('value', 'Épuisé');
                 }
@@ -117,28 +122,57 @@
                 }
             });
 
+            function alertQuantity(){
+                alert("Merci d'indiquer une quantité.");
+            }
+
             var inputNumberElt = document.querySelector("input[name='quantity'");
             var priceElt = document.getElementById("price");
+            var inputSubmitToPanierElt = document.querySelector("input[value='Ajouter au panier']");
 
             inputNumberElt.addEventListener("click", incrementPrice);
             inputNumberElt.addEventListener("keyup", incrementPrice);
 
-            var price;
+            var price, max;
             var priceIndexed = false;
             function incrementPrice(e){
+
+                var value = e.target.valueAsNumber;
+
                 if(priceIndexed === false){
                     price = priceElt.textContent;
+                    max = inputNumberElt.getAttribute("max");
                     priceIndexed = true;
                 }
 
-                priceElt.textContent = price * this.value;
-
-                inputNumberElt.addEventListener("mouseleave", function(){
-                    if(inputNumberElt.value === ""){
-                        inputNumberElt.value = 1;
-                        priceElt.textContent = price * 1;
-                    }
-                });
+                if (value > max) {
+                    quantityMaxAlertElt.textContent = "La quantité maximale disponible est de " + max + " exemplaires.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * max;
+                    this.value = max;
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
+                else if(value === 0){
+                    quantityMaxAlertElt.textContent = "La valeur \"0\" n'est pas valide.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * 1;
+                    this.value = 1;
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
+                else if(this.value === ""){
+                    quantityMaxAlertElt.textContent = "Merci d'indiquer une valeur.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * 1;
+                    inputSubmitToPanierElt.addEventListener("mouseover", alertQuantity);
+                }
+                else{
+                    priceElt.textContent = price * value;
+                    quantityMaxAlertElt.style.display = "none";
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
             }
         });
     </script>
