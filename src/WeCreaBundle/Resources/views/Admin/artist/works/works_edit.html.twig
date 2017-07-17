@@ -369,11 +369,12 @@
             });
 
             $('form[name="wecreabundle_caract"]').submit(function(e){
+                console.log(this);
                 e.preventDefault();
                 var data = new FormData($(this)[0]);
 
                 var url = "{{ path('we_crea_admin_works_edit', {id : 0}) }}";
-                url = url.replace('0', idWork);
+                url = url.replace(/0/, idWork);
 
                 $(this).trigger('reset');
                 $.ajax({
@@ -429,7 +430,6 @@
                     }
                 });
             });
-
         });
 
     </script>

@@ -411,6 +411,11 @@ footer {
 }
 
 /** For works **/
+
+.data-zoom-image{
+    width: 100%;
+}
+
 .cardz{
     width:80%;
     margin: 0 auto 50px auto;
@@ -423,7 +428,7 @@ footer {
 
 .card_custom_work{
     width: 25%;
-    margin: 1% 4.16666667%;
+    margin: 2% 4.16666667%;
     padding: 0 5px 15px 5px;
 }
 
@@ -439,6 +444,21 @@ footer {
 .sold img {
     max-width: 50px;
     max-height: 50px;
+}
+
+.work_desc{
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    background: #fefefe;
+}
+
+.work_desc .row{
+    width: 98%;
+    margin: 0 auto;
+}
+
+.work_desc input[type="submit"]{
+    margin-bottom: 15px;
 }
 
 @media all and (max-width: 992px){

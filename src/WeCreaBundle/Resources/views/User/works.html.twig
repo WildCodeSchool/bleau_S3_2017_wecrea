@@ -49,8 +49,8 @@
                             {% set quantity = quantity + caract.quantity %}
                         {% endfor %}
                         {% if quantity <= 0 %}
-                            <span class="sold">
-                                <img src="{{ asset('bundles/wecrea/pics/vendu.png') }}" alt="vendu">
+                            <span class="sold" style="transform: rotate(10deg); position: absolute; bottom: 5px; right: 5px">
+                                <img src="{{ asset('bundles/wecrea/pics/vendu.jpg') }}" alt="vendu">
                             </span>
                         {% endif %}
 
