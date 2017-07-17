@@ -4,7 +4,7 @@ namespace WeCreaBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class WorkType extends AbstractType
             ->add('technic', TextType::class, array(
                 'label'=>'Technique'
             ))
-            ->add('timelimit', NumberType::class)
+            ->add('timelimit', IntegerType::class)
             ->add('nature', EntityType::class, array(
                 'class' => Nature::class,
                 'choice_label' => 'name',

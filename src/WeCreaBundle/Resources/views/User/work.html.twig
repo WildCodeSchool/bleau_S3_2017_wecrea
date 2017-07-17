@@ -12,7 +12,7 @@
     <main>
         <div class="container">
             <div class="row row_top">
-                <div class="col m7 img_basket">
+                <div class="col s12 m12 l7 img_basket">
                     <div class="center-align">
                         {% if images|first.url is defined %}
                             <img id="zoom_03" height="350" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="col m5 work_desc">
+                <div class="col s12 m12 l5 work_desc">
                     <h2>{{ work.title }}</h2>
                     <p>{{ work.artist.name }}</p>
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
@@ -36,7 +36,7 @@
                                 Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %} {{ caracts[0].quantity }} {% endif %}">
                                 <input type="hidden" name="work_id" value="{{ work.id }}">
                             </p>
-                            <p class="col m7 offset-m2">
+                            <p class="col m7 offset-m2 right-align">
                                 Prix : <span id="price">{% if caracts is defined %} {{ caracts[0].price }} €{% endif%}</span>
                             </p>
                         </div>
@@ -50,7 +50,7 @@
                                 </select>
                             </p>
                         </div>
-                        {% if caracts[0].quantity == 0 %}
+                        {% if caracts[0].quantity <= 0 %}
                             <input type="submit" class="btn black disabled" value="Épuisé">
                         {% else %}
                             <input type="submit" class="btn black" value="Ajouter au panier">
@@ -59,10 +59,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col m12">
+                    <div class="col s12">
                         <p><u>Technique :</u> {{ work.technic }}</p>
                     </div>
-                    <div class="col m12">
+                    <div class="col s12">
                         <p><u>Description :</u> {{ work.description }}</p>
                     </div>
                 </div>

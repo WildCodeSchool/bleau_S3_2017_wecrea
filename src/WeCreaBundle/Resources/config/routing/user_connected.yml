@@ -19,3 +19,7 @@ we_crea_payement:
 we_crea_command_pdf:
     path: /pdfCommand
     defaults : {_controller: "WeCreaBundle:User:commandPdf"}
+
+we_crea_check_quant:
+    path: /check/quant
+    defaults: {_controller: "WeCreaBundle:User:check"}

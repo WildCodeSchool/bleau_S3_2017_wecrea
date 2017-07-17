@@ -5,7 +5,7 @@
         <h2>Les artistes</h2>
         <div class="cards">
             {% for artist in artists %}
-                <div class="card card_custom_artist iso_item ">
+                <div class="card card_custom_work iso_item ">
                         {% if artist.images|first != false %}
                             <a href="{{ path('we_crea_artist', {id : artist.id} ) }}">
                                 <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~artist.images|first.url ) }} ') center / cover ">
