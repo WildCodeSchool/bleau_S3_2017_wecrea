@@ -15,7 +15,7 @@
     {% for artist in artists %}
     <div class="row">
         <div class="col s12 col-custom-artist">
-            <h4> {{ artist.name }} {{ artist.firstname }}</h4>
+            <h4 style="color: black;"> {{ artist.name }} {{ artist.firstname }}</h4>
             {% if artist.images is not empty %}
                 <img src="{{ asset('images/'~artist.images|first.url) }}" class="list-artists-img"/>
             {% else %}
