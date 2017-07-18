@@ -19,9 +19,8 @@
                                 color: {{ nature.fontColor }};
                                 background-size: cover;"
                                 class="tous_btn resizer"
-                                data-filter=".{{ nature.name|replace({"'": '_', ' ': '_'}) }}">
+                                data-filter=".{{ nature.name|replace({"'": '_', ' ': '_'}) }}">{{ nature.name }}
                         </button>
-                        <div style="width: 70%; padding: 5px; margin: 0 auto; text-align: center; border: 1px solid #c8c8c8;">{{ nature.name|replace({"'": '_', ' ': '_'}) }}</div>
                     </div>
                 {% endfor %}
             </div>
@@ -51,7 +50,7 @@
                             {% set quantity = quantity + caract.quantity %}
                         {% endfor %}
                         {% if quantity <= 0 %}
-                            <span class="sold" style="transform: rotate(10deg); position: absolute; bottom: 5px; right: 5px">
+                            <span class="sold" style="position: absolute; bottom: 5px; right: 5px">
                                 <img src="{{ asset('bundles/wecrea/pics/Vendu.jpg') }}" alt="vendu">
                             </span>
                         {% endif %}

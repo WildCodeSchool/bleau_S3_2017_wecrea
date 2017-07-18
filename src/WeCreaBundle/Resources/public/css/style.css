@@ -427,9 +427,9 @@ footer {
 }
 
 .card_custom_work{
-    width: 25%;
-    margin: 2% 4.16666667%;
-    padding: 0 5px 15px 5px;
+    width: 20%;
+    margin: 2% 6.66666666666667%;
+    padding: 0 5px 40px 5px;
 }
 
 .sold{
@@ -684,6 +684,11 @@ footer {
     .artist-img{
         width: 100%;
     }
+
+    .card_custom_work{
+        width: 40%;
+        margin: 2% 5%;
+    }
 }
 
 .artist-img img{
@@ -860,6 +865,11 @@ form[name="basket"] {
 @media all and (max-width: 768px){
     .actu-user {
         width: 100%;
+    }
+
+    .card_custom_work{
+        width: 95%;
+        margin: 2% 2.5%;
     }
 }
 

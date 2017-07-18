@@ -46,7 +46,7 @@
                                 Caractéristiques :
                                 <select name="caract">
                                     {% for key, caract in caracts %}
-                                        <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} - prix : {{ caract.price }}€</option>
+                                        <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} </option>
                                     {% endfor %}
                                 </select>
                             </p>
