@@ -11,7 +11,7 @@ class Command
      * @var integer
      */
     private $id;
-
+    
     /**
      * @var \DateTime
      */
@@ -35,6 +35,11 @@ class Command
     /**
      * @var string
      */
+    private $countryfact;
+
+    /**
+     * @var string
+     */
     private $addressdel;
 
     /**
@@ -50,12 +55,22 @@ class Command
     /**
      * @var string
      */
+    private $countrydel;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
      * @var string
      */
     private $mail;
+
+    /**
+     * @var string
+     */
+    private $phone;
 
     /**
      * @var string
@@ -192,6 +207,30 @@ class Command
     }
 
     /**
+     * Set countryfact
+     *
+     * @param string $countryfact
+     *
+     * @return Command
+     */
+    public function setCountryfact($countryfact)
+    {
+        $this->countryfact = $countryfact;
+
+        return $this;
+    }
+
+    /**
+     * Get countryfact
+     *
+     * @return string
+     */
+    public function getCountryfact()
+    {
+        return $this->countryfact;
+    }
+
+    /**
      * Set addressdel
      *
      * @param string $addressdel
@@ -264,6 +303,30 @@ class Command
     }
 
     /**
+     * Set countrydel
+     *
+     * @param string $countrydel
+     *
+     * @return Command
+     */
+    public function setCountrydel($countrydel)
+    {
+        $this->countrydel = $countrydel;
+
+        return $this;
+    }
+
+    /**
+     * Get countrydel
+     *
+     * @return string
+     */
+    public function getCountrydel()
+    {
+        return $this->countrydel;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -309,6 +372,30 @@ class Command
     public function getMail()
     {
         return $this->mail;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return Command
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**

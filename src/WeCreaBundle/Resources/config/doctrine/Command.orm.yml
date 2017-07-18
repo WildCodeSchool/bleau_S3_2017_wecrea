@@ -20,6 +20,9 @@ WeCreaBundle\Entity\Command:
         townfact:
             type: string
             length: 255
+        countryfact:
+            type: string
+            length: 255
         addressdel:
             type: string
             length: 255
@@ -29,10 +32,16 @@ WeCreaBundle\Entity\Command:
         towndel:
             type: string
             length: 255
+        countrydel:
+            type: string
+            length: 255
         name:
             type: string
             length: 255
         mail:
+            type: string
+            length: 255
+        phone:
             type: string
             length: 255
         nb:

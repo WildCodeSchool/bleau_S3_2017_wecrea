@@ -295,6 +295,9 @@ class UserController extends Controller
         $command->setTownfact($user->getTown1());
         $command->setTowndel($user->getTown2());
         $command->setMail($user->getEmail());
+        $command->setCountryfact($user->getCountry1());
+        $command->setCountrydel($user->getCountry2());
+        $command->setPhone($user->getUsername());
 
         $date = new \DateTime();
         $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
