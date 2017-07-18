@@ -19,7 +19,7 @@
                     <tbody>
                     {% for work in artist.works %}
                         <tr id="{{ work.id }}">
-                            <td>{{ work.title ~ work.id}}</td>
+                            <td>{{ work.title }}</td>
                             {% if work.images|first.url is defined %}
                                 <td><img class="thumbsindex img_works" src="{{ asset("images/" ~ work.images|first.url) }}" alt="{{ work.images|first.alt }}"></td>
                             {% else %}
