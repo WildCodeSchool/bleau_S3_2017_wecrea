@@ -167,12 +167,13 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready( function () {
             $('.artist_menu').show();
 
-//            Datatable Init
+            // Datatable Init
             $('#works_table').DataTable({
                 "dom": '<lf<t>ip>',
                 "pageLength": 10,
