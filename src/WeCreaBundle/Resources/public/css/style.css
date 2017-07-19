@@ -616,6 +616,15 @@ footer {
     }
 }
 
+@media screen and (max-width: 1240px) and (min-width: 992px) {
+    .card a {
+        font-size: 0.8em;
+    }
+    .card-title {
+        margin-bottom: 0!important;
+    }
+}
+
 /* WORK CLIENT */
 .images_content {
     margin-top: 50px;
