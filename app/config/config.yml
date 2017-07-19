@@ -108,6 +108,12 @@ liip_imagine:
         cache: ~
         # the name of the "filter set"
 
+        xLarge:
+            # adjust the image quality to 75%
+            quality: 100
+            # list of transformations to apply (the "filters")
+            filters:
+                 relative_resize: { widen: 1000 }
         large:
             # adjust the image quality to 75%
             quality: 100

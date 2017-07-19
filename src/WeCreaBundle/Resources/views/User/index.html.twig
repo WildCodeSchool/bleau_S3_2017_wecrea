@@ -6,9 +6,9 @@
             <div class="slider fullscreen slider_custom">
                 <ul class="slides">
                     {% for carrousel in carrousels %}
-                        <li>
+                        <li>{{ work.images[0].url | imagine_filter('large') }}
                             <a href="{{ carrousel.rout }}" target="_blank">
-                                <img src="{{ asset("images/") }}{{ carrousel.images.url }}" alt="{{ carrousel.images.alt }}">
+                                <img src="{{ carrousel.images.url | imagine_filter('xLarge') }}" alt="{{ carrousel.images.alt }}">
                                 <div class="caption left-align caption_custom">
                                     <h2>{{ carrousel.title }}</h2>
                                     <p>{{ carrousel.content }}</p>
