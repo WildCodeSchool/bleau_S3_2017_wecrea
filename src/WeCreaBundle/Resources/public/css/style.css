@@ -407,7 +407,6 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    min-height: calc(100vh - 195px);
 }
 
 /** For works **/
@@ -560,7 +559,7 @@ footer {
     margin-top: 2%;
 }
 .card_custom_artist .card-image_custom {
-    height: 85%;
+    height: 70%;
 }
 
 .card-content_custom {
@@ -684,7 +683,6 @@ footer {
 }
 
 .container-custom-search .cards{
-    min-height: 25vh;
     margin: 0;
 }
 
