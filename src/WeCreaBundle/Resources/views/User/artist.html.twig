@@ -1,7 +1,7 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="container base_client">
         <h2>{{ artist.name }} {{ artist.firstname }}</h2>
         {% for image in artist.images %}
         <div class="row">
@@ -43,13 +43,13 @@
                             <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
                                 <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
                             </span>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
-                                <b>{{ work.title }}</b>
-                                <p>{{ work.description[0:50] }}</p>
-                                <p></p>
-                                <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
-                            </div>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                            <b>{{ work.title }}</b>
+                            <p>{{ work.description[0:50] }}</p>
+                            <p></p>
+                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
                         </div>
                     </div>
                 {% endfor %}
@@ -57,4 +57,6 @@
             </div>
         {% endif %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
 {% endblock %}

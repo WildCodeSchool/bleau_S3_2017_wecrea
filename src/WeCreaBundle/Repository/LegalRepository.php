@@ -10,4 +10,15 @@ namespace WeCreaBundle\Repository;
  */
 class LegalRepository extends \Doctrine\ORM\EntityRepository
 {
+	/**
+	 * Get text defiscalisation
+	 * @return mixed
+	 */
+	public function getDefiscalisation()
+	{
+		return $this->createQueryBuilder('l')
+			->select('l.defiscalisation')
+			->getQuery()
+			->getSingleScalarResult();
+	}
 }

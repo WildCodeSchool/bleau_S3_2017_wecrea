@@ -2,6 +2,7 @@
 
 namespace WeCreaBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -18,8 +19,13 @@ class LegalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mention', TextareaType::class, array(
+            ->add('mention', CKEditorType::class, array(
+	            'config_name' => 'my_config',
                 'label' => 'Mentions légales'
+            ))
+            ->add('defiscalisation', CKEditorType::class, array(
+	            'config_name' => 'my_config',
+                'label' => 'Défiscalisation'
             ))
             ->add('tva', NumberType::class, array(
                 'label' => 'TVA ( en % ) : ',

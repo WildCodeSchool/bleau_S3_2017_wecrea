@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
 use WeCreaBundle\Entity\Caract;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
+use WeCreaBundle\Entity\Legal;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Contact;
 use WeCreaBundle\Entity\Nature;
@@ -17,7 +17,6 @@ use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ContactType;
 use WeCreaBundle\Form\ProfilFormType;
-use WeCreaBundle\WeCreaBundle;
 
 class UserController extends Controller
 {
@@ -37,6 +36,15 @@ class UserController extends Controller
             'bCount' => $bCount,
             'fCount' =>$fCount,
         ));
+    }
+
+    public function renderFooterAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$defiscalisation = $em->getRepository(Legal::class)->getDefiscalisation();
+
+    	return new Response($defiscalisation);
+
     }
 
     public function conceptAction() {
