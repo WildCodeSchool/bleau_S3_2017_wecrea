@@ -10,15 +10,16 @@
         </div>
 
         <div class="cardz" style="height: 700px!important;">
-            <div class="buttons filters-button-group row">
+            <div class="buttons btn_card filters-button-group row">
                 {% for nature in natures %}
-                    <div class="col s12 m6 l4 iso_item iso_link Tous" data-filter=".Tous">
+                    <div class="col s12 m6 l4 iso_item iso_link Tous resizer" data-filter=".Tous">
                         <button style="
                                 margin-bottom: 0;
+                                height: 70%;
                                 background: url('{{ asset('images/' ~ nature.images.url) }}') center no-repeat;
                                 color: {{ nature.fontColor }};
                                 background-size: cover;"
-                                class="tous_btn resizer"
+                                class="tous_btn"
                                 data-filter=".{{ nature.name|replace({"'": '_', ' ': '_'}) }}">{{ nature.name }}
                         </button>
                     </div>
