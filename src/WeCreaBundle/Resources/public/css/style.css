@@ -427,14 +427,14 @@ footer {
 }
 
 .card_custom_work{
-    width: 20%;
-    margin: 2% 8%;
+    width: 25%;
+    margin: 2% 0 2% 7%;
     padding: 0 5px 40px 5px;
 }
 
 .card-title{
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 20px !important;
+    line-height: 20px !important;
 }
 
 .sold{
