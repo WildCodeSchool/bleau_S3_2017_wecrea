@@ -15,7 +15,10 @@ $(document).ready( function () {
     });
 
 
-    $('.slider').slider();
+    $('.slider').slider({
+        'transition': 300,
+        'interval' : 3500
+    });
     $('#moreLink').click( function () {
         $('.container_footer').slideToggle(500);
     });
