@@ -308,8 +308,9 @@ textarea{
 
 /* CLIENT LAYOUT */
 
-.base_client h4{
-    color: black;
+.base_client h4,
+#defiscalisation h4{
+    color: black !important;
 }
 
 .container_footer {

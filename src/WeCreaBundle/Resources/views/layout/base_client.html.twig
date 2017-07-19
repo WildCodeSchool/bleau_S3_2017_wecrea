@@ -128,9 +128,9 @@
     <div id="defiscalisation" class="modal">
         <div class="modal-content">
             <h4>Fiscalité entreprises</h4>
-            <p>
+            {% autoescape %}
                 {{ render(controller('WeCreaBundle:User:renderFooter')) | raw }}
-            </p>
+            {% endautoescape %}
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
