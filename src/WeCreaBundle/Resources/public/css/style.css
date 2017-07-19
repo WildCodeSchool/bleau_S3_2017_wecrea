@@ -417,7 +417,7 @@ footer {
 }
 
 .cardz{
-    width:80%;
+    width:90%;
     margin: 0 auto 50px auto;
 }
 
@@ -428,8 +428,13 @@ footer {
 
 .card_custom_work{
     width: 20%;
-    margin: 2% 6.66666666666667%;
+    margin: 2% 8%;
     padding: 0 5px 40px 5px;
+}
+
+.card-title{
+    font-size: 20px;
+    line-height: 20px;
 }
 
 .sold{
