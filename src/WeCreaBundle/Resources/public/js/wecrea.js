@@ -17,7 +17,7 @@ $(document).ready( function () {
 
     $('.slider').slider({
         'transition': 300,
-        'interval' : 3500
+        'interval' : 3000
     });
 
     $('#moreLink').click( function () {

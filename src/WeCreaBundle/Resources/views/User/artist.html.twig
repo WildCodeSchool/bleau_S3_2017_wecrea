@@ -39,15 +39,17 @@
                                 </div>
                             </a>
                         {% endif %}
-                        <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
-                        </span>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
-                            <b>{{ work.title }}</b>
-                            <p>{{ work.description[0:50] }}</p>
-                            <p></p>
-                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
+                        <div class="card-content card-content_custom">
+                            <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                                <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
+                            </span>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                                <b>{{ work.title }}</b>
+                                <p>{{ work.description[0:50] }}</p>
+                                <p></p>
+                                <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
