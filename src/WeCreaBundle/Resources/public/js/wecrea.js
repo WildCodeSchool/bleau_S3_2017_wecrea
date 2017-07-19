@@ -19,6 +19,7 @@ $(document).ready( function () {
         'transition': 300,
         'interval' : 3500
     });
+
     $('#moreLink').click( function () {
         $('.container_footer').slideToggle(500);
     });
@@ -43,6 +44,7 @@ $(document).ready( function () {
         var filterValue = $( this ).attr('data-filter');
         // use filterFn if matches value
         filterValue = filterFns[ filterValue ] || filterValue;
+        cardResize();
         $grid.isotope({ filter: filterValue });
     });
 
@@ -52,9 +54,8 @@ $(document).ready( function () {
         $buttonGroup.on( 'click', 'button', function() {
             $('.active_button').removeClass('active_button');
             var btnClass = $(this).attr('data-filter');
-            cardResize();
             $('button[data-filter="' + btnClass + '"]').addClass('active_button');
-        });
+        })
     });
 
     // carousel SLICK -- Work's page

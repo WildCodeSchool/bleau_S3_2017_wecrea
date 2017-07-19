@@ -511,7 +511,11 @@ footer {
     background-color: white;
     border: none;
     box-shadow: none;
-    margin: 30px auto;
+    margin: 0 auto;
+}
+
+.btn_card {
+    margin-top: 40px;
 }
 
 .iso_link button:active{
