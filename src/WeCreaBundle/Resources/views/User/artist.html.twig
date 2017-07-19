@@ -19,7 +19,7 @@
             </div>
             <div class="col s12 col-description-artist">
                 <p><b>À propos </b></p>
-                <p>{{ artist.biography }}</p>
+                <p>{{ artist.biography|nl2br }}</p>
             </div>
         </div>
         {% if artist.works is not empty %}
