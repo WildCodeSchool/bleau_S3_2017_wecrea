@@ -17,6 +17,7 @@ class ActuType extends AbstractType
         $builder->add('title')
             ->add('content', CKEditorType::class, array(
                 'config_name' => 'my_config',
+                'required' => true
             ))
             ->add('images', ImagesType::class)
         ;
