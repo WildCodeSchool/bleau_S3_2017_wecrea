@@ -80,4 +80,33 @@ class Legal
     {
         return $this->tva;
     }
+    /**
+     * @var string
+     */
+    private $defiscalisation;
+
+
+    /**
+     * Set defiscalisation
+     *
+     * @param string $defiscalisation
+     *
+     * @return Legal
+     */
+    public function setDefiscalisation($defiscalisation)
+    {
+        $this->defiscalisation = $defiscalisation;
+
+        return $this;
+    }
+
+    /**
+     * Get defiscalisation
+     *
+     * @return string
+     */
+    public function getDefiscalisation()
+    {
+        return $this->defiscalisation;
+    }
 }

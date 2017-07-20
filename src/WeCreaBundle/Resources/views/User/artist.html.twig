@@ -1,7 +1,7 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="container base_client">
         <h2>{{ artist.name }} {{ artist.firstname }}</h2>
         {% for image in artist.images %}
         <div class="row">
@@ -44,7 +44,6 @@
                                 <p style="margin-right: 20px">{{ work.title }}</p>
                                 <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
                             </span>
-
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
@@ -59,4 +58,6 @@
             </div>
         {% endif %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
 {% endblock %}

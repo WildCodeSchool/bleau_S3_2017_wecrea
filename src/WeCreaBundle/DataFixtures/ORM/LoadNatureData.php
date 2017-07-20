@@ -67,6 +67,7 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
         $legal->setMention('WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan sous le
             numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST
             GERMAINMONT');
+        $legal->setDefiscalisation('Your text here');
         $manager->persist($legal);
 
         $manager->flush();

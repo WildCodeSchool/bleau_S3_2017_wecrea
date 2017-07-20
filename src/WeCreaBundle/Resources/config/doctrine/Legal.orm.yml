@@ -13,4 +13,6 @@ WeCreaBundle\Entity\Legal:
             type: text
         tva:
             type: float
+        defiscalisation:
+            type: text
     lifecycleCallbacks: {  }

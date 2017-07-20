@@ -91,7 +91,7 @@ fos_user:
 ivory_ck_editor:
     configs:
         my_config:
-            toolbar: [ [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript' ], [ 'NumberedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink' ] ]
+            toolbar: [ [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript' ], [ 'NumberedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink' ], ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'] ]
             language: %locale%
 
 liip_imagine:

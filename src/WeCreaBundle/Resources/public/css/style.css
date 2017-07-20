@@ -9,6 +9,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 main {
@@ -19,9 +20,6 @@ h2{
     text-align: center;
 }
 
-h4 {
-    text-align: center;
-}
 @media screen and (max-width: 900px){
     h2 {
         font-size: 3rem;
@@ -311,12 +309,19 @@ textarea{
 
 /* CLIENT LAYOUT */
 
+.base_client h4,
+#defiscalisation h4{
+    color: black !important;
+}
+
 .container_footer {
     display: none;
     min-width: 100%!important;
     align-content: center;
     color: black!important;
     background-color: rgba(255, 255, 255, 0.85);
+    position: absolute;
+    bottom: 55px;
 }
 
 .container_footer a {
@@ -354,6 +359,7 @@ footer {
     padding-top: 0 !important;
     background: transparent!important;
     color: black!important;
+    position: relative;
 }
 
 .row_custom {
@@ -420,12 +426,7 @@ footer {
     margin: 0 auto 50px auto;
 }
 
-.card_custom_artist {
-    width: 30%;
-    padding: 2px 2px 5px 2px;
-}
-
-.card_custom_work{
+.card_custom_work, .card_custom_artist{
     width: 25%;
     margin: 2% 0 2% 7%;
     padding: 0 5px 40px 5px;
@@ -470,14 +471,14 @@ footer {
         width: 100%;
     }
 
-    .card_custom_work{
+    .card_custom_work, .card_custom_artist{
         width: 48%;
         margin: 2vh .5%;
     }
 }
 
 @media all and (max-width: 768px){
-    .card_custom_work{
+    .card_custom_work, .card_custom_artist{
         width: 96%;
         margin: 2vh 2%;
     }
@@ -786,10 +787,6 @@ form[name="basket"] {
     cursor: pointer;
 }
 /* ----- Concept page ----- */
-
-#concept h2 {
-    text-align: center;
-}
 
 #concept img {
     margin-right: 5%;
