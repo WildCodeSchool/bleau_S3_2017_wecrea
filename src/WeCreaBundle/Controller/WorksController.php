@@ -193,8 +193,10 @@ class WorksController extends Controller
 
             if (isset($newCaract)){
                 $formCaract->handleRequest($request);
-
+                dump($caract);
                 $caract->setWork($work);
+                $work->addCaract($caract);
+
                 $em->persist($caract);
                 $em->flush();
 

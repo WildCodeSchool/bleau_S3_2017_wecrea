@@ -145,7 +145,7 @@
 {% block javascripts %}
     <script>
         $(document).ready(function(){
-            idWork = {{ work.id }}
+            var idWork = {{ work.id }};
 
             /* Enables the select input in materialize */
             $('select').material_select();
@@ -372,9 +372,10 @@
                 console.log(this);
                 e.preventDefault();
                 var data = new FormData($(this)[0]);
+                console.log(idWork);
+                var url = location.href;
 
-                var url = "{{ path('we_crea_admin_works_edit', {id : 0}) }}";
-                url = url.replace(/0/, idWork);
+                console.log(url)
 
                 $(this).trigger('reset');
                 $.ajax({
@@ -385,6 +386,8 @@
                     contentType: false,
                     success: function(response){
                         var $id = response.idCaract;
+
+                        console.log(response);
 
                         $('#specificity-work-confirmed').show();
 
