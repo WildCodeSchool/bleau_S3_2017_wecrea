@@ -798,7 +798,7 @@ form[name="basket"] {
 }
 
 .txt_concept p{
-    margin: 0;
+    margin: 0 !important;
 }
 /********** ACTU PAGE ***********/
 
