@@ -372,14 +372,10 @@
                 console.log(this);
                 e.preventDefault();
                 var data = new FormData($(this)[0]);
-                console.log(idWork);
-                var url = location.href;
-
-                console.log(url)
 
                 $(this).trigger('reset');
                 $.ajax({
-                    url: url,
+                    url: location.href,
                     method: "post",
                     data: data,
                     processData: false,
