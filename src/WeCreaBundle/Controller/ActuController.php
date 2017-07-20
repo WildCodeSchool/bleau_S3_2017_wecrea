@@ -45,6 +45,7 @@ class ActuController extends Controller {
         $form = $this->createForm(ActuType::class, $actu);
 
         $form->handleRequest($request);
+
         if($request->isXmlHttpRequest()) {
 
             $file = $actu->getImages()->getUrl();

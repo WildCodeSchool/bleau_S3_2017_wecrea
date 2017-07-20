@@ -317,6 +317,8 @@ textarea{
     align-content: center;
     color: black!important;
     background-color: rgba(255, 255, 255, 0.85);
+    position: absolute;
+    bottom: 50px;
 }
 
 .container_footer a {
@@ -354,6 +356,7 @@ footer {
     padding-top: 0 !important;
     background: transparent!important;
     color: black!important;
+    position: relative;
 }
 
 .row_custom {
