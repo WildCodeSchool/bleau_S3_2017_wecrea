@@ -512,6 +512,7 @@ footer {
     border: none;
     box-shadow: none;
     margin: 0 auto;
+    font-size: 1.5em;
 }
 
 .btn_card {
