@@ -6,8 +6,18 @@ function cardResize() {
     $('.resizer').css('height', width);
 }
 
+function showFormUserProfil() {
+    // Show Form User on profil's user page
+    $('#showFormUser').click( function (e) {
+        e.preventDefault();
+        var form = $(this).attr('href');
+        $(form).slideToggle(200);
+    });
+}
+
 $(document).ready( function () {
 
+    showFormUserProfil();
     cardResize();
 
     $(window).resize(function () {
@@ -83,13 +93,6 @@ $(document).ready( function () {
     }, function () {
         $(this).find('.fav_btn, .fav_btn_delete').slideUp(200);
 
-    });
-
-    // Show Form User on profil's user page
-    $('#showFormUser').click( function (e) {
-        e.preventDefault();
-        var form = $(this).attr('href');
-        $(form).slideToggle(200);
     });
 
     // Materialize Modal

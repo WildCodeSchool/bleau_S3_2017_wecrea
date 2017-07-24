@@ -25,12 +25,12 @@
                         <div class="input-field">
                             <div class="row">
                                 <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.firstname, 'Prénom') }}
+                                    {{ form_label(formUser.firstname) }}
                                     {{ form_widget(formUser.firstname) }}
                                     {{ form_errors(formUser.firstname) }}
                                 </div>
                                 <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.name, 'Nom') }}
+                                    {{ form_label(formUser.name) }}
                                     {{ form_widget(formUser.name) }}
                                     {{ form_errors(formUser.name) }}
                                 </div>
@@ -50,46 +50,54 @@
                             <div class="row">
                                 <p>Adresse de livraison</p>
                                 <div class="col s12 input-field">
-                                    {{ form_label(formUser.address1, 'Adresse') }}
+                                    {{ form_label(formUser.address1) }}
                                     {{ form_widget(formUser.address1) }}
                                     {{ form_errors(formUser.address1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.zipCode1, 'Code postal') }}
+                                    {{ form_label(formUser.zipCode1) }}
                                     {{ form_widget(formUser.zipCode1) }}
                                     {{ form_errors(formUser.zipCode1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.town1, 'Ville') }}
+                                    {{ form_label(formUser.town1) }}
                                     {{ form_widget(formUser.town1) }}
                                     {{ form_errors(formUser.town1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.country1, 'Pays') }}
+                                    {{ form_label(formUser.country1) }}
                                     {{ form_widget(formUser.country1) }}
                                     {{ form_errors(formUser.country1) }}
                                 </div>
                             </div>
 
                             <div class="row">
+                                <div class="col s12 input-field">
+                                    {{ form_widget(formUser.sameadress, { 'attr': { 'class': 'sameAdress' } }) }}
+                                    {{ form_label(formUser.sameadress) }}
+                                    {{ form_errors(formUser.sameadress) }}
+                                </div>
+                            </div>
+
+                            <div id="adressFacturration" class="row">
                                 <p>Adresse de facturation</p>
                                 <div class="col s12 input-field">
-                                    {{ form_label(formUser.address2, 'Adresse') }}
+                                    {{ form_label(formUser.address2) }}
                                     {{ form_widget(formUser.address2) }}
                                     {{ form_errors(formUser.address2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.zipCode2, 'Code postale') }}
+                                    {{ form_label(formUser.zipCode2) }}
                                     {{ form_widget(formUser.zipCode2) }}
                                     {{ form_errors(formUser.zipCode2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.town2, 'Ville') }}
+                                    {{ form_label(formUser.town2) }}
                                     {{ form_widget(formUser.town2) }}
                                     {{ form_errors(formUser.town2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.country2, 'Pays') }}
+                                    {{ form_label(formUser.country2) }}
                                     {{ form_widget(formUser.country2) }}
                                     {{ form_errors(formUser.country2) }}
                                 </div>
@@ -173,6 +181,9 @@
         $(document).ready( function () {
             $('.artist_menu').show();
 
+            /////////////////////////////
+            //// Commande Tab
+            /////////////////////////////
             // Datatable Init
             $('#works_table').DataTable({
                 "dom": '<lf<t>ip>',
@@ -203,33 +214,16 @@
             );
         });
 
-        $('form[name="app_user_profil"]').submit( function (e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            $.ajax({
-                method: 'post',
-                url: '{{ path('we_crea_user_profil') }}',
-                data: data,
-
-                success: function (response) {
-                    console.log(response);
-                    $('#userProfil').remove();
-                    $('#profilCont').append(response);
-                    $('#formUser').slideUp(200);
-                }
-            });
-        });
-        
         // --- PDF GENERATOR --- //
         $('.pdfGen').on('click', function (e) {
             e.preventDefault();
             var data ={'id': $(this).attr('id')};
-            
+
             $.ajax({
                 method: 'get',
                 url: '{{ path('we_crea_command_pdf') }}',
                 data: data,
-                
+
                 success: function (response) {
                     console.log(response);
                     var link=document.createElement('a');
@@ -239,6 +233,55 @@
                     link.click();
                 }
             })
-        })
+        });
+
+        /////////////////////////////
+        //// Profil Tab
+        /////////////////////////////
+        function checkIfSameAdress(){
+            if( $('#app_user_profil_sameadress').is(':checked') ){
+                $('#adressFacturration').show();
+            } else {
+                $('#adressFacturration').hide();
+            }
+        }
+
+        checkIfSameAdress();
+
+        $('#app_user_profil_sameadress').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                $('#adressFacturration').slideDown();
+                $('#fos_user_registration_form_address2').prop('required',true);
+                $('#fos_user_registration_form_zipCode2').prop('required',true);
+                $('#fos_user_registration_form_town2').prop('required',true);
+                $('#fos_user_registration_form_country2').prop('required',true);
+            } else {
+                $('#adressFacturration').slideUp();
+                $('#fos_user_registration_form_address2').prop('required',false);
+                $('#fos_user_registration_form_zipCode2').prop('required',false);
+                $('#fos_user_registration_form_town2').prop('required',false);
+                $('#fos_user_registration_form_country2').prop('required',false);
+            }
+        });
+
+        $('form[name="app_user_profil"]').submit( function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_user_profil') }}',
+                data: data,
+
+                success: function (response) {
+                    $('#userProfil').remove();
+                    $('#profilCont').append(response);
+                    $('#formUser').slideUp(200);
+                    showFormUserProfil();
+                    checkIfSameAdress();
+                }
+            });
+        });
+
     </script>
 {% endblock %}

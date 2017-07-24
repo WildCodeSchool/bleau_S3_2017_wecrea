@@ -13,6 +13,7 @@ use WeCreaBundle\Entity\Legal;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Contact;
 use WeCreaBundle\Entity\Nature;
+use WeCreaBundle\Entity\User;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ContactType;
@@ -290,6 +291,7 @@ class UserController extends Controller
 
         $command = new Command();
 
+        // TODO: How status work ??
         $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
@@ -613,6 +615,7 @@ class UserController extends Controller
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
         $comands = $user->getCommands();
+
         $formUser = $this->createForm(ProfilFormType::class, $user);
 
         $formUser->handleRequest($request);
