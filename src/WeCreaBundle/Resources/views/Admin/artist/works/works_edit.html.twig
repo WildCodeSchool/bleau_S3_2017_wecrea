@@ -39,27 +39,23 @@
             {{ form_end(edit_form) }}
         </div>
 
-        <div style="display: flex; margin: 20px auto;" >
+        <div class="row" id="specificity-work-confirmed-edit">
+            <h5>Spécificité(s) de l'oeuvre validées</h5>
             {% for caract in caracts %}
-                <div class="col m4 s12 new-specificity-work" style="width: 30%;">
-                    <p style="color: blue;"><b>Modèle {{ loop.index }}</b></p>
-                    <p style="display: none" class="id">{{ caract.id }}</p>
-                    <p><b>Dimensions : </b> {{ caract.dimension }}</p>
-                    <p><b>Poids :</b>{{ caract.weigth}}</p>
-                    <p><b>Prix : </b>{{ caract.price }}</p>
-                    <p><b>Quantité(s) : </b>{{ caract.quantity }}</p>
-                    <button class="btn waves-effect waves-light red delete-work-caract">
-                        Supprimer
-                        <i class="material-icons left">delete</i>
-                    </button>
+                <div class="col m3 s12 new-specificity-work">
+                    <p>
+                        <br>Dimensions : {{ caract.dimension }}
+                        <br>Poids :{{ caract.weigth }}
+                        <br>Prix : {{ caract.price }}
+                        <br>Quantité(s) : {{ caract.quantity }}
+                        <br>
+                        <button class="btn waves-effect waves-light left red delete-work-caract" data-idcaract="{{ caract.id }}">
+                            Supprimer
+                            <i class="material-icons left">delete</i>
+                        </button>
+                    </p>
                 </div>
             {% endfor %}
-        </div>
-
-        <div class="row">
-            <div class="col s12" id="specificity-work-confirmed">
-                <h5>Spécificité(s) de l'oeuvre validées</h5>
-            </div>
         </div>
 
     {{ form_start(formCaract) }}
@@ -319,8 +315,6 @@
                     success: function(response){
                         var $id = response.idCaract;
 
-                        $('#specificity-work-confirmed').show();
-
                         var $newSpecificity = $(document.createElement('div'));
                         $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
 
@@ -344,7 +338,7 @@
                         $newSpecificity.append($cancel);
 
                         $("#specificity-work-confirmed").append($newSpecificity);
-                        $("#specificity-work-confirmed").fadeIn(2000);
+                        $("#new-specificity-work").fadeIn(2000);
 
                         $("#work-picture").fadeIn(2000);
                     }
@@ -354,13 +348,12 @@
             /* When deleting a model caracteristics */
             $('.delete-work-caract').click(function(e){
                 e.preventDefault();
-                var idCaract = $(this).parent().find('.id')[0].innerHTML;
-                $(this).parent().remove();
-                url = "{{ path('we_crea_admin_delete_work_caract', {id : 0} ) }}";
-                url = url.replace('0', idCaract);
+                var idCaract = $(this).data('idcaract');
+                console.log(idCaract);
+                $(this).parent().parent().remove();
                 $.ajax({
                     method : "POST",
-                    url : url,
+                    url : "{{ path('we_crea_admin_delete_work_caract') }}",
                     data: {'idCaract' : idCaract, 'idWork' : idWork},
                     success: function(response){
                         alert(response.msg);
@@ -383,12 +376,8 @@
                     success: function(response){
                         var $id = response.idCaract;
 
-                        console.log(response);
-
-                        $('#specificity-work-confirmed').show();
-
                         var $newSpecificity = $(document.createElement('div'));
-                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+                        $newSpecificity.attr('class', 'col m3 s12 new-specificity-work');
 
                         /* Creation of the image with the data returned */
                         var $p = $(document.createElement('p'));
@@ -409,8 +398,7 @@
                         $newSpecificity.append($p);
                         $newSpecificity.append($cancel);
 
-                        $("#specificity-work-confirmed").append($newSpecificity);
-                        $("#specificity-work-confirmed").fadeIn(2000);
+                        $("#specificity-work-confirmed-edit").append($newSpecificity);
 
                         $cancel.click(function(e){
                             e.preventDefault();

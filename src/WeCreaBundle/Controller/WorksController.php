@@ -158,7 +158,6 @@ class WorksController extends Controller
 
         if ($request->isXmlHttpRequest()) {
 
-            dump($request);
             $workForm = $request->request->get('wecreabundle_work');
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $newImg = $request->request->get('wecreabundle_images');
@@ -193,7 +192,6 @@ class WorksController extends Controller
 
             if (isset($newCaract)){
                 $formCaract->handleRequest($request);
-                dump($caract);
                 $caract->setWork($work);
                 $work->addCaract($caract);
 
