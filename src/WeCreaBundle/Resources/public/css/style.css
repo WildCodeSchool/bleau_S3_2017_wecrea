@@ -1,0 +1,1129 @@
+@import url('https://fonts.googleapis.com/css?family=Pompiere');
+
+
+/* BASE */
+html,
+body {
+    font-family: 'Pompiere', cursive;
+    font-size: 1.2em;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+h2{
+    text-align: center;
+}
+
+@media screen and (max-width: 900px){
+    h2 {
+        font-size: 3rem;
+    }
+}
+@media screen and (max-width: 600px){
+    h2 {
+        font-size: 2.56rem;
+    }
+}
+
+/* Overide Materialize Hover button */
+.btn:hover, .btn-large:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.container_custom {
+    width: 99%;
+    margin: 0;
+    padding: 0;
+}
+.connect_button{
+    width: 100%;
+}
+/* ADMIN */
+
+#images-artist-confirmed img,
+#images-work-confirmed img,
+.existent-images img{
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Artist list page */
+
+.row-artist-work-custom{
+    margin-top: 50px;
+    background: #fdfdfd;
+    padding: 10px;
+}
+
+.col-custom-artist{
+    background: #fcfcfc;
+    border: 1px solid #c8c8c8;
+}
+
+.col-custom-artist button{
+    margin: 10px 0 20px 0;
+}
+
+.list-artists-img{
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+
+.artist_menu{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display: none;
+}
+
+/* First three -> forms */
+#artist-picture,
+#edit-work-caracteristics,
+#specificity-work-confirmed,
+#work-specificity,
+#work-picture,
+#work-confirmed,
+#images-work-confirmed,
+.add-work,
+#edit-work-picture,
+.end-work-creation,
+.idWork,
+.idProfile{
+    display: none;
+}
+
+/* Artist biography & work description textarea fields*/
+.biography,
+.description{
+    height: 200px;
+}
+
+.new-artist-image,
+.new-work-image,
+.new-work,
+.row-custom-edit-work-image,
+.existent-images{
+    border: 1px solid #c8c8c8;
+    min-height:200px;
+}
+
+.new-work-image img{
+    width: 50%;
+}
+
+.row-custom-edit-artist-image img,
+.row-custom-edit-work-image img {
+    width: 50%;
+}
+
+/* partie fabien */
+
+header {
+    height: 95px;
+}
+
+.nav_custom_cont {
+    box-sizing: unset;
+}
+
+.nav_custom {
+    background-color: white;
+}
+
+nav {
+    height: 80px;
+    border-bottom: 10px solid transparent!important;
+    border-image: url(../pics/Bandeau.png) 10 round!important;
+    padding-bottom: 10px;
+}
+
+nav a {
+    color: #313131!important;
+}
+
+nav ul li {
+    height: 80px!important;
+}
+
+nav ul li a {
+    padding-top: 25px;
+    font-size: 1.1em!important;
+    height: 55px!important;
+}
+
+nav ul li:nth-child(6){
+    line-height: 100px;
+    color: black;
+}
+
+.nav_custom ul{
+    top: 101px;
+}
+
+nav ul a:hover {
+    background-color: white!important;
+    color: #313131!important;
+    text-decoration: underline;
+}
+
+.side-nav-custom{
+	height: 100%;
+}
+
+.side-nav-custom li{
+	height: 60px!important;
+	margin: 0;
+}
+
+.side-nav-custom li:first-child{
+	margin: 30px 0 0 0;
+}
+
+#profil_iconprofil_icon {
+    margin-left: 40px;
+}
+
+#favs {
+    margin-left: -10px;
+}
+
+.fav_icon,
+.bask_icon {
+    width: 24px;
+}
+
+@media screen and (min-width: 992px) {
+    .fav_icon,
+    .bask_icon {
+        padding-top: 12px;
+    }
+    .fav_icon{
+        padding-top: 16px;
+    }
+}
+
+
+@media screen and (max-width: 600px){
+    .fav_icon,
+    .bask_icon {
+        padding-top: 12px;
+        float: left;
+    }
+    .fav_icon{
+        padding-top: 16px;
+    }
+}
+
+.brand-logo img {
+    max-height: 60px !important;
+    max-width: 100%;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px){
+    .brand-logo img {
+        max-height: 60px !important;
+        max-width: 224px;
+        padding-top: 23px;
+    }
+}
+
+#sidenav-overlay {
+    z-index: 996;
+}
+
+@media screen and (max-width: 600px) {
+    .brand-logo img {
+        max-width: 120% !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .brand-logo img {
+        max-width: 120% !important;
+    }
+}
+
+/* ADMIN ALL PAGES */
+
+.input-field label,
+label{
+    color: black;
+    font-size: 1em;
+}
+
+textarea{
+    min-height: 150px;
+}
+
+/* ADMIN CARROUSEL*/
+
+#formCarr {
+    display: none;
+}
+
+.card {
+    width: 100%;
+    height: 400px;
+}
+
+/* ADMIN ACTU */
+
+#formActu {
+    display: none;
+}
+
+/* ADMIN WORKS list */
+
+.img_works {
+    max-width: 100%;
+    max-height: 150px;
+}
+
+/* ADMIN HOME */
+
+.link-box {
+    height: 250px;
+    line-height: 250px;
+    margin: 5px 0;
+    width: 100%;
+    color: #fff;
+}
+
+.link-box:hover {
+    box-shadow: 0 0 4px #313131;
+}
+
+.ad_home {
+    margin-top: 20px;
+}
+
+/* CLIENT LAYOUT */
+
+.base_client h4,
+#defiscalisation h4{
+    color: black !important;
+}
+
+.container_footer {
+    display: none;
+    min-width: 100%!important;
+    align-content: center;
+    color: black!important;
+    background-color: rgba(255, 255, 255, 0.85);
+    position: absolute;
+    bottom: 55px;
+}
+
+.container_footer a {
+    color: black!important;
+}
+
+.footer-copyright {
+    color: black!important;
+}
+
+#moreLink {
+    color: black!important;
+    cursor: pointer;
+}
+
+.logo_container{
+    height: 100%!important;
+    display: flex!important;
+    align-items: center!important;
+}
+
+.button-collapse-custom{
+	display: none;
+}
+
+.bar_footer {
+    background-color: white!important;
+    min-height: 50px;
+    z-index: 100;
+    border-top: 1px solid rgba(90, 90, 90, 0.7);
+}
+
+footer {
+    z-index:100;
+    padding-top: 0 !important;
+    background: transparent!important;
+    color: black!important;
+    position: relative;
+}
+
+.row_custom {
+    margin-left: 0!important;
+    margin-right: 0!important;
+}
+
+.row_top {
+    margin-top: 20px;
+}
+
+.slider {
+    margin-top: 112px;
+    height: calc(100% - 178px) !important;
+}
+.slider .indicators .indicator-item.active {
+    background-color: #313131!important;
+
+}
+
+.slider .indicators .indicator-item {
+    width: 11px;
+    height: 11px;
+    margin: 0 9px;
+}
+
+.indicators {
+    bottom: 10px!important;
+}
+
+.caption_custom {
+    text-shadow: -1px 0 #080808, 0 1px #080808, 1px 0 #080808, 0 -1px #080808;
+    top: 75% !important;
+    left: 5% !important;
+    width: 40% !important;
+}
+
+@media (max-width: 600px) {
+    .caption_custom{
+        top: 7% !important;
+        width: 95% !important;
+    }
+}
+
+/* WORKS CLIENT */
+
+/** For artist **/
+.cards{
+    width:80%;
+    margin: 0 auto 100px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/** For works **/
+
+.data-zoom-image{
+    width: 100%;
+}
+
+.cardz{
+    width:90%;
+    margin: 0 auto 50px auto;
+}
+
+.card_custom_work, .card_custom_artist{
+    width: 25%;
+    margin: 2% 0 2% 7%;
+    padding: 0 5px 40px 5px;
+}
+
+.card-title{
+    font-size: 20px !important;
+    line-height: 20px !important;
+}
+
+.sold{
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    right: 5px;
+    width: 50px;
+    max-height: 50px;
+
+}
+.sold img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.work_desc{
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    background: #fefefe;
+}
+
+.work_desc .row{
+    width: 98%;
+    margin: 0 auto;
+}
+
+.work_desc input[type="submit"]{
+    margin-bottom: 15px;
+}
+
+@media all and (max-width: 992px){
+    .cardz{
+        width: 100%;
+    }
+
+    .card_custom_work, .card_custom_artist{
+        width: 48%;
+        margin: 2vh .5%;
+    }
+}
+
+@media all and (max-width: 768px){
+    .card_custom_work, .card_custom_artist{
+        width: 96%;
+        margin: 2vh 2%;
+    }
+}
+
+.iso_button {
+    background-color: transparent;
+    color: #313131!important;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.nav_works{
+    margin-top: 20px;
+    padding-bottom: 3px;
+    background-color: rgb(234, 235, 237);
+}
+
+@media all and (max-width: 1024px){
+    .nav_works {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.tous_btn {
+    display: block;
+    position: relative;
+    width: 70%;
+    background-color: white;
+    border: none;
+    box-shadow: none;
+    margin: 0 auto;
+}
+
+.btn_card {
+    margin-top: 40px;
+}
+
+.iso_link button:active{
+    background-color: white!important;
+    color: black!important;
+}
+
+.active_button {
+    background-color: #313131!important;
+    color: white!important;
+}
+
+.card-title {
+    display: block;
+    position: relative;
+}
+
+.show_more {
+    display: block;
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    width: 24px;
+    align-self: right;
+}
+
+@media (max-width: 600px) {
+    .card_custom {
+        width: 33%;
+    }
+}
+
+@media (max-width: 450px) {
+    .card_custom {
+        width: 50%;
+    }
+}
+
+.card-image_custom {
+    position: relative;
+    height: 70%;
+    margin-top: 2%;
+}
+.card_custom_artist .card-image_custom {
+    height: 70%;
+}
+
+.card-content_custom {
+    padding: 10px!important;
+}
+
+.card-content_custom p{
+    margin: 0;
+}
+
+.fav_btn,
+.fav_btn_delete {
+    display: none;
+    position: absolute;
+    right: 7px;
+    top: 2px;
+    cursor: pointer;
+}
+    .fav_btn button,
+    .fav_btn_delete button {
+        color: red;
+        background-color: white;
+        font-size: 0.65em;
+        padding: 0 10px;
+        height: 20px;
+        line-height: 20px;
+        text-transform: none;
+    }
+
+    .fav_btn button:hover {
+        color: red!important;
+        background-color: white!important;
+    }
+
+.fav_btn_delete button,
+.fav_btn_delete button:hover {
+    color: white;
+    background-color: red;
+}
+
+@media (max-width: 500px) {
+    .card-content_custom{
+        font-size: 0.7em!important;
+    }
+
+    .card-content_custom .card-title{
+        font-size: 19px!important;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-content_custom .card-title {
+        font-size: 18px!important;
+        line-height: 19px!important;
+    }
+}
+
+@media (max-width: 350px) {
+    .card-content_custom .card-title {
+        font-size: 15px!important;
+        line-height: 17px!important;
+    }
+}
+
+@media screen and (max-width: 1240px) and (min-width: 992px) {
+    .card a {
+        font-size: 0.8em;
+    }
+    .card-title {
+        margin-bottom: 0!important;
+    }
+}
+
+/* WORK CLIENT */
+.images_content {
+    margin-top: 50px;
+    height: 60vh;
+}
+
+.images_content_show{
+    height:60%;
+}
+
+.images_content_nav {
+    height:30%;
+}
+
+.image_work {
+    width: 100%;
+    height:100%;
+}
+
+.item-nav {
+    padding-top: 15px;
+    width: 100px;
+    height: 100px;
+}
+
+.item-nav:focus {
+    outline: none;
+}
+
+.image_work img{
+    max-width: 100%;
+    height: calc(60vh * 60 /100);
+    margin: 0 auto;
+}
+
+.item-nav img {
+    max-width:100px;
+    max-height: 100px;
+    margin: auto;
+}
+
+/* Artist list pages */
+
+.container-custom-artists,
+.container-custom-search{
+    margin-top: 75px;
+    min-height: calc(100vh - 195px);
+}
+
+.container-custom-search .cards{
+    margin: 0;
+}
+
+/* Artist page */
+
+.artist-img{
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #c8c8c8;
+}
+
+@media all and (max-width: 992px){
+    .artist-img{
+        width: 100%;
+    }
+
+    .card_custom_work{
+        width: 40%;
+        margin: 2% 5%;
+    }
+}
+
+.artist-img img{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.col-description-artist{
+    background: #fafafa;
+    margin: 10px 0;
+}
+
+/* ----- Basket ----- */
+form[name="basket"] {
+    display: block;
+    position: relative;
+}
+
+.prods {
+    display: block;
+    position: relative;
+    height:100%;
+}
+
+.prod {
+    display: block;
+    position: relative;
+    height:100%;
+    border-bottom: 1px solid lightgray;
+    margin-top: 10px;
+}
+
+.prod:nth-child(1) {
+    margin-top: 0;
+}
+
+.prod_img {
+    max-width: 100%;
+    max-height: 100%;
+    padding-right: 20px;
+}
+
+.prod_content {
+    width: 30px!important;
+    border-bottom: none!important;
+}
+
+.prod_quant input{
+    height: 20px;
+    margin-bottom: 0;
+}
+
+.prod_title {
+    font-weight: bold;
+    font-size: 1.5em
+}
+
+.prod_title p {
+    margin-top: 0;
+}
+
+.prod_caract {
+    margin-bottom: 10px;
+}
+
+.prod_price {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding-top: 10px;
+}
+
+.delete_basket {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+/* ----- Concept page ----- */
+
+#concept img {
+    margin-right: 5%;
+}
+
+.concept_pic {
+    float: left;
+    width: 25%;
+}
+
+.txt_concept p{
+    margin: 0 !important;
+}
+/********** ACTU PAGE ***********/
+
+.actu-user{
+    width: 70%;
+    margin: 0 auto 15px auto;
+    padding: 5px;
+    border: 1px solid #c8c8c8;
+}
+
+#title-actu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0088CC;
+    height: 80px;
+}
+
+.figure-no-zoom{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.figure-zoom{
+    position: fixed;
+    /* Must be > 997 for nav menu zIndex = 997 !! */
+    z-index: 1000!important;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh!important;
+    background: rgba(0,0,0,.7);
+}
+
+.image-no-zoom{
+    width: 100%
+}
+
+.image-zoomed-in{
+    width: auto;
+    height: 75vh;
+    display: block;
+    margin: 12.5vh auto;
+}
+
+.dezoom{
+    background: url('../pics/dezoom.png') no-repeat center;
+    background-size: cover;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 4vw;
+    width: 4vw;
+    cursor: pointer;
+}
+
+.actu-user .content{
+    margin-bottom: 20px;
+}
+
+.actu-user i{
+    background: #eee;
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+@media all and (max-width: 1024px){
+    .actu-user {
+        width: 80%;
+    }
+}
+
+@media all and (max-width: 768px){
+    .actu-user {
+        width: 100%;
+    }
+
+    .card_custom_work{
+        width: 95%;
+        margin: 2% 2.5%;
+    }
+}
+
+/* ----- Profil Page ----- */
+#formUser {
+    display: none;
+}
+
+/* Search Bar */
+
+form[name='search']{
+    position: relative;
+    bottom: 0;
+}
+
+form[name='search'] i{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+form[name='search'] input{
+    height: 30px;
+    color: black;
+}
+
+form[name="search"] {
+    width: 12vw;
+    margin-left: 40px;
+    margin-right: 20px;
+}
+
+.button-search{
+    background: transparent;
+    border: none;
+}
+
+#validation-search{
+    background: black;
+    border: none;
+    color: #fff;
+}
+
+@media all and (max-width: 992px){
+	.button-collapse-custom{
+		 display: flex!important;
+		 align-items: center!important;
+	}
+
+    form[name="search"]{
+        display: flex;
+        width: 85%;
+        margin: 0 auto;
+        justify-content:flex-start;
+    }
+
+    form[name="search"] input[type="search"]{
+        width: calc(95% - 20px);
+        margin: 0 5px 0 0;
+    }
+}
+
+/* Menu moteur de recherche */
+
+nav ul li .suggest {
+    color: #fff;
+    position: absolute;
+    top: 70px;
+    width: 15vw;
+    text-align: left;
+    height: auto;
+    box-shadow: 0 0 5px #a8a8a8;
+}
+
+nav ul li .suggest li{
+	height: 35px!important;
+	line-height: 35px;
+}
+
+#mobile-demo li:first-child{
+    display: flex;
+}
+
+#mobile-demo li:last-child a:first-child{
+
+    margin-left: 10%;
+    padding: 0;
+}
+#profil_icon a {
+    margin: 0 auto;
+}
+@media screen and (max-width: 992px) {
+    #profil_icon a {
+        width: 20%;
+    }
+}
+#mobile-demo #profil_icon a:nth-child(1) i{
+    margin: 0;
+}
+
+#mobile-demo #profil_icon a:nth-child(2){
+
+     padding-top: 5px;
+     height: auto!important;
+}
+
+#mobile-demo li:last-child a:nth-child(3){
+
+    padding-top: 5px;
+    height: auto!important;
+}
+.tab a{
+    font-size: 1.2rem!important;
+}
+.tabs .tab a:hover,
+.tabs .tab a.active,
+.tab a.active,
+.tabs .tab a {
+    color: black;
+    border-bottom-color: black;
+}
+
+.indicator {
+    background-color: black!important;
+    height: 1px;
+}
+
+.title_list_profil{
+    text-decoration: underline;
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+/* Newsletter */
+
+#alert-newsletter-subscription{
+    height: 50px;
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    z-index: 50;
+    background: black;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 30%;
+}
+
+#menu_admin_button{
+    position: fixed;
+    left: 0;
+    background: black;
+    height: 35px;
+    border: none;
+    outline: none;
+    width: 100px;
+    line-height: 35px;
+    color: #fff;
+    margin-top: 20px;
+    display: none;
+    z-index: 2;
+}
+
+#sidenav_admin{
+    width: 150px;
+    position: fixed;
+    left: 0;
+    text-indent: 10px;
+    margin-top: 150px;
+    z-index: 2;
+}
+
+@media all and (max-width: 1024px){
+    #menu_admin_button{
+        display: block;
+    }
+
+    #sidenav_admin{
+        left: -150px;
+        transition: 400ms;
+    }
+}
+
+/* Admin sections titles */
+h4{
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Admin verification images */
+#conceptImg{
+    width: 100%;
+    margin-top: 20px;
+}
+
+#images-check{
+    margin: 30px auto;
+    width: 100%;
+}
+
+#images-check img{
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+#images-check button{
+    cursor: pointer;
+}
+
+@media all and(max-width: 768px){
+    label{
+        font-size: 1em;
+    }
+}
+
+.actu{
+    height: 250px;
+    text-align: center;
+}
+
+
+.actu-content{
+    background: rgba(255,255,255,.7);
+    background: #fcfcfc;
+    border: 1px solid #c8c8c8;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.actu-number{
+    height: 50px;
+    line-height: 50px;
+    background: black;
+    text-align: center;
+    color: #fff;
+}

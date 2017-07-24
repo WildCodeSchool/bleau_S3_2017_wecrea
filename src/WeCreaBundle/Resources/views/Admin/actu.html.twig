@@ -1,0 +1,184 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <h4 style="text-align: center; background: #b22222; color: #fff; padding: 10px;">Édition des actualités</h4>
+        <div class="row">
+            <div class="col m10 offset-m1">
+                {{ form_start(formActu) }}
+                <div class="input-field">
+                    {{ form_label(formActu.title, 'Titre') }}
+                    {{ form_widget(formActu.title) }}
+                    {{ form_errors(formActu.title) }}
+                </div>
+                {{ form_label(formActu.content, 'Contenu') }}
+                <div class="input-field">
+                    {{ form_widget(formActu.content) }}
+                    {{ form_errors(formActu.content) }}
+                </div>
+
+                {{ form_label(formActu.images.url, "Image") }}
+                <div class="file-field input-field col s12">
+                    <div class="btn btn-file">
+                        <span>Choisissez un fichier</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        {{ form_widget(formActu.images.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                    </div>
+                    {{ form_errors(formActu.images.url) }}
+                </div>
+
+                <div id="images-check"></div>
+
+                <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                    Ajouter l'actualité
+                    <i class="material-icons left">add</i>
+                </button>
+                {{ form_end(formActu) }}
+            </div>
+        </div>
+        <div class="row row_custom show_actu">
+            {% for actu in actus %}
+                <div>
+                    <p class="actu-number"> Actualité n° {{ loop.index }} </p>
+                    <div class="actu" style="background:  url({{ asset("images/") }}{{ actu.images.url }}) center; background-size: cover;">
+                        <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
+                    </div>
+                    <div class="actu-content">
+                        <h3>Titre : {{ actu.title|raw }}</h3>
+                        <p>Contenu : {{ actu.content|raw }}</p>
+                        <p>Date de publication : {{ actu.date|date("m/d/Y") }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            var showActuElt = document.getElementsByClassName("show_actu")[0];
+
+            $('form[name="wecreabundle_actu"]').submit( function (e) {
+                e.preventDefault();
+                var $data = new FormData($(this)[0]);
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_actu_add') }}",
+                    data: $data,
+                    processData: false,
+                    contentType: false,
+
+                    success: function (response) {
+                        Materialize.toast('<span class="toast_custom">la vignette a bien été ajoutée</span>', 4000) // 4000 is the duration of the toast
+                        $('form[name="wecreabundle_actu"]').trigger('reset');
+
+                        /* PROTOTYPE */
+                        var newContent = {
+                            init: function(name, id, picture, title, content, date){
+                                this.name = name;
+                                this.id = id;
+                                this.picture = picture;
+                                this.title = title;
+                                this.content = content;
+                                this.date = date;
+                            },
+
+                            insertNewContent: function(){
+                                var divElt = document.createElement("div");
+
+                                var pActuElt = document.createElement("p");
+                                pActuElt.setAttribute("class", "actu-number");
+                                pActuElt.textContent = this.name;
+
+                                var pictureElt = document.createElement("div");
+                                pictureElt.setAttribute("class", "actu");
+                                pictureElt.style.background = "url({{ asset('images/') }}"+this.picture+")";
+                                pictureElt.style.backgroundSize = "cover";
+                                pictureElt.style.backgroundPosition = "center";
+                                pictureElt.style.backgroundRepeat = "no-repeat";
+
+                                var deleteElt = document.createElement("a");
+                                deleteElt.setAttribute("id", this.id);
+                                deleteElt.setAttribute("class", "waves-effect waves-light btn black delete_btn");
+                                deleteElt.textContent = "supprimer";
+
+                                pictureElt.appendChild(deleteElt);
+
+                                var divContentElt = document.createElement("div");
+                                divContentElt.setAttribute("class", "actu-content");
+
+                                var h3Elt = document.createElement("h3");
+                                h3Elt.textContent = "Titre : " + this.title;
+
+                                var contentElt = document.createElement("p");
+                                contentElt.textContent = "Contenu : " + this.content;
+
+                                var dateElement = document.createElement("p");
+                                dateElement.textContent = "Date de publication : " + this.date;
+
+                                divContentElt.appendChild(h3Elt);
+                                divContentElt.appendChild(contentElt);
+                                divContentElt.appendChild(dateElement);
+
+                                divElt.appendChild(pActuElt);
+                                divElt.appendChild(pictureElt);
+                                divElt.appendChild(divContentElt);
+
+                                showActuElt.insertBefore(divElt, showActuElt.firstElementChild);
+
+                                $(deleteElt).on("click", function (e) {
+                                    var id = $(this).attr('id');
+                                    e.preventDefault();
+
+                                    $.ajax({
+                                        method: 'get',
+                                        url:  "{{ path('we_crea_admin_actu_delete') }}",
+                                        data: {'id': id},
+
+                                        success: function (response) {
+                                            Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                                            $('#' + id).parent().parent().slideUp(800).remove();
+                                        }
+                                    });
+                                });
+                            }
+                        };
+
+                        var actu = Object.create(newContent);
+                        actu.init(
+                            "Nouvelle actualité",
+                            response.id,
+                            response.images.url,
+                            response.title,
+                            response.content.replace(/<p>|<\/p>|&nbsp;/g, ""),
+                            new Date(response.date.timestamp*1000).toLocaleDateString()
+                        );
+
+                        actu.insertNewContent();
+                    }
+                })
+            });
+
+            $('.delete_btn').on('click', function (e) {
+                var id = $(this).attr('id');
+                e.preventDefault();
+
+                $.ajax({
+                    method: 'get',
+                    url:  "{{ path('we_crea_admin_actu_delete') }}",
+                    data: {'id': id},
+
+                    success: function (response) {
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                        $('#' + id).parent().parent().slideUp(800).remove();
+                    }
+                });
+            });
+        });
+    </script>
+{%  endblock %}

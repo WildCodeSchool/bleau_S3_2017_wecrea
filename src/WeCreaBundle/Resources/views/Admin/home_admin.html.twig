@@ -1,0 +1,38 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+<div class="container ad_home">
+    <div class="row">
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: #1E90FF;" href="{{ path('we_crea_admin_carrousel_edition') }}">Édition du Carrousel</a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: green;"href="{{ path('we_crea_admin_artist_list') }}">Édition des Artistes</a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: tomato;" href="{{ path('we_crea_admin_concept_edit') }}">Édition de la section concept</a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: #b22222;" href="{{ path('we_crea_admin_actu') }}">Édition des Actualités</a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: rebeccapurple;" href="{{ path('we_crea_admin_edit_isotop') }}">Édition des natures</a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: darkslategrey;" href="{{ path('we_crea_admin_subscribers_info') }}"> Inscriptions Newsletter </a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: deeppink;" href="{{ path('we_crea_admin_command_status') }}"> Commandes </a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: darkorange;" href="{{ path('we_crea_admin_contact') }}"> Messages reçus </a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: brown;" href="{{ path('we_crea_admin_messages_sent') }}"> Messages envoyés </a>
+        </div>
+        <div class="col l4 m6 s12 valign-wrapper">
+            <a class="center-align link-box" style="background: #1E90FF;" href="{{ path('we_crea_admin_legal') }}">TVA / Mentions légales </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

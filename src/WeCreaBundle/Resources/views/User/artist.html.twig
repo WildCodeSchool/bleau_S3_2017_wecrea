@@ -1,0 +1,63 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <div class="container base_client">
+        <h2>{{ artist.name }} {{ artist.firstname }}</h2>
+        {% for image in artist.images %}
+        <div class="row">
+            <div class="col s12">
+                <div class="artist-img">
+                    <img src="{{ asset('images/'~image.url) }}" alt="{{ image.alt }}"/>
+                    <i>{{ artist.firstname }} {{ artist.name }}</i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col s12 col-description-artist">
+                <p><b>Qualité : </b> {{ artist.expertise }}</p>
+            </div>
+            <div class="col s12 col-description-artist">
+                <p><b>À propos </b></p>
+                <p>{{ artist.biography|nl2br }}</p>
+            </div>
+        </div>
+        {% if artist.works is not empty %}
+            <div class="row">
+                <h4> Les oeuvres de l'artiste </h4>
+                <div class="cards">
+                {% for work in artist.works %}
+                    <div class="card card_custom_artist cardResizer">
+                        {% if work.images|first != false %}
+                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
+                                <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~work.images|first.url ) }} ') center / cover ">
+                                </div>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
+                                <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/soap.jpg' ) }} ') center / cover ">
+                                </div>
+                            </a>
+                        {% endif %}
+                        <div class="card-content card-content_custom">
+                            <span class="card-title activator grey-text text-darken-4 title">
+                                <p style="margin-right: 20px">{{ work.title }}</p>
+                                <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
+                            </span>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                            <b>{{ work.title }}</b>
+                            <p>{{ work.description[0:50] }}</p>
+                            <p></p>
+                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+{% endblock %}

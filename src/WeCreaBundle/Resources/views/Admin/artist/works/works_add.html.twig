@@ -1,0 +1,301 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container">
+            <h4> Création d'une oeuvre </h4>
+            <div class="row artist_menu">
+                <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une nouvelle oeuvre</a>
+                <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_artist', { 'id': artist.id }) }}">Retour à la liste</a>
+            </div>
+            <div class="row">
+                <h4 class="center-align; background: green;">Création d'une nouvelle oeuvre</h4>
+                {{ form_start(formWork, {'attr' : {'id' : 'work-caracteristics' }} ) }}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.title, 'Titre de l\'oeuvre') }}
+                        {{ form_widget(formWork.title) }}
+                        {{ form_errors(formWork.title) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.description, "Description de l'oeuvre") }}
+                        {{ form_widget(formWork.description, {'attr': {'class':'description materialize-textarea'}} ) }}
+                        {{ form_errors(formWork.description) }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form_label(formWork.technic, 'Technique utilisée') }}
+                        {{ form_widget(formWork.technic) }}
+                        {{ form_errors(formWork.technic) }}
+                    </div>
+                    <div class="input-field col s12 m6">
+                        {{ form_label(formWork.timelimit, 'Délai de livraison de l\'oeuvre (en jours)') }}
+                        {{ form_widget(formWork.timelimit) }}
+                        {{ form_errors(formWork.timelimit) }}
+                    </div>
+                    <div class="input-field col s12 m6">
+                        {{ form_widget(formWork.nature) }}
+                        {{ form_errors(formWork.nature) }}
+                        {{ form_label(formWork.nature, "Nature de l'oeuvre") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light left create-work black" type="submit" name="action">
+                        Créer l'oeuvre
+                        <i class="material-icons left">send</i>
+                    </button>
+                </div>
+                {{ form_end(formWork) }}
+
+                {{ form_start(formCaract, {'attr' : {'id' : 'work-specificity' }} ) }}
+                <div class="row">
+                    <h4 class="center-align">Ajout des spécificités de l'oeuvre</h4>
+                    <div class="input-field col s12 m3">
+                        {{ form_label(formCaract.dimension) }}
+                        {{ form_widget(formCaract.dimension) }}
+                        {{ form_errors(formCaract.dimension) }}
+                    </div>
+                    <div class="input-field col s12 m3">
+                        {{ form_label(formCaract.weigth) }}
+                        {{ form_widget(formCaract.weigth) }}
+                        {{ form_errors(formCaract.weigth) }}
+                    </div>
+                    <div class="input-field col s12 m3">
+                        {{ form_label(formCaract.price) }}
+                        {{ form_widget(formCaract.price) }}
+                        {{ form_errors(formCaract.price) }}
+                    </div>
+                    <div class="input-field col s6 m3">
+                        {{ form_label(formCaract.quantity) }}
+                        {{ form_widget(formCaract.quantity) }}
+                        {{ form_errors(formCaract.quantity) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light left create-work black" type="submit" name="action">
+                        Valider la spécificité
+                        <i class="material-icons left">send</i>
+                    </button>
+                </div>
+                {{ form_end(formCaract) }}
+
+                <div class="row">
+                    <div class="col s12" id="specificity-work-confirmed">
+                        <h5>Spécificité(s) de l'oeuvre validées</h5>
+                    </div>
+                </div>
+
+                {{ form_start(formImage, {'attr' : {'id' : 'work-picture'}} ) }}
+                <div class="row">
+                    <h4 class="center-align">Ajout des images de l'oeuvre</h4>
+                    {{ form_label(formImage.url, "Photo de l'oeuvre") }}
+                    <div class="file-field input-field col s12">
+                        <div class="btn btn-file">
+                            <span>Choisissez un fichier</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            {{ form_widget(formImage.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                        </div>
+                        {{ form_errors(formImage.url) }}
+                    </div>
+
+                    <div id="images-check"></div>
+
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                            Ajouter l'image
+                            <i class="material-icons left">add</i>
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(formImage) }}
+
+                <div class="row">
+                    <div class="col s12" id="images-work-confirmed">
+                        <h4>Images de l'oeuvre validées</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+            var $idWork;
+
+//            Add work caract
+            $('form[id="work-caracteristics"]').submit(function(e){
+                e.preventDefault();
+                $(this).find('button').hide();
+                var $form = new FormData($(this)[0]);
+
+                $("#work-specificity").fadeIn(2000);
+                $(".artist_menu").fadeIn(2000);
+                $(this).find('input').prop('disabled', true);
+                $(this).find('textarea').prop('disabled', true);
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}",
+                    data: $form,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $idWork = response.idWork;
+
+                        /* Add the artist id into the image form (for profile) */
+                        var $formImgArtLastChild = $('form[id="work-picture"] input[id="wecreabundle_images__token"]');
+                        $inputElt = $(document.createElement('input'));
+                        $inputElt.attr("value", $idWork);
+                        $inputElt.attr("type", "hidden");
+                        $inputElt.attr("name", "idWork");
+                        $inputElt.insertBefore($formImgArtLastChild);
+
+                        /* Add the artist id into the image form (for profile) */
+                        var $formSpeArtLastChild = $('form[id="work-specificity"] input[id="wecreabundle_caract__token"]');
+                        $inputElt = $(document.createElement('input'));
+                        $inputElt.attr("value", $idWork);
+                        $inputElt.attr("type", "hidden");
+                        $inputElt.attr("name", "idWork");
+                        $inputElt.insertBefore($formSpeArtLastChild);
+                    }
+                });
+            });
+
+//            Add specificity
+            /* If the artist image form is submitted */
+            $('form[id="work-specificity"]').submit(function(e){
+                e.preventDefault();
+                var data = new FormData($(this)[0]);
+
+                $(this).trigger('reset');
+                $.ajax({
+                    url: "{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}",
+                    method: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        var $id = response.idCaract;
+
+                        $('#specificity-work-confirmed').show();
+
+                        var $newSpecificity = $(document.createElement('div'));
+                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+
+                        /* Creation of the image with the data returned */
+                        var $p = $(document.createElement('p'));
+                        $p.html(
+                            'Dimension: ' + response.caract.dimension +
+                            '<br>Poid: ' + response.caract.weight +
+                            '<br>Quantitée: ' + response.caract.quantity +
+                            '<br>Prix: ' + response.caract.price
+                        );
+
+                        $p.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newSpecificity.append($p);
+                        $newSpecificity.append($cancel);
+
+                        $("#specificity-work-confirmed").append($newSpecificity);
+                        $("#specificity-work-confirmed").fadeIn(2000);
+
+                        $("#work-picture").fadeIn(2000);
+
+                        $cancel.click(function(e){
+                            e.preventDefault();
+                            $(this).parent().remove();
+                            idCaract = $id;
+
+                            $.ajax({
+                                method : "POST",
+                                url : "{{ path('we_crea_admin_delete_work_caract') }}",
+                                data : {'idCaract' : idCaract},
+                                success : function(response){
+                                    alert(response.msg);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            /* If the artist image form is submitted */
+            $('form[id="work-picture"]').submit(function(e){
+                e.preventDefault();
+                var data = new FormData($(this)[0]);
+                /* We remove the preview image and reset the
+                 * form to enable the submission of new pictures
+                 */
+
+                $("#images-check").children().remove();
+
+                $(this).trigger('reset');
+
+                /* We store the image into the database then we send it back to the client
+                 * We now have its id, that will be useful if the client changes its mind and
+                 * wants to delete it.
+                 */
+
+                $.ajax({
+                    url: "{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}",
+                    method: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        var $id = response.url;
+                        console.log(response);
+                        var $newArtImg = $(document.createElement('div'));
+                        $newArtImg.attr('class', 'col m4 s12 new-work-image');
+
+                        /* Creation of the image with the data returned */
+                        var $img = $(document.createElement('img'));
+                        $img.attr("src", "{{ asset('images/')}}"+response.url+"");
+                        $img.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newArtImg.append($img);
+                        $newArtImg.append($cancel);
+
+                        $("#images-work-confirmed").append($newArtImg);
+
+                        $("#images-work-confirmed").fadeIn(2000);
+
+                        $cancel.click(function(e){
+                            console.log($(this));
+                            e.preventDefault();
+                            $idImgToDelete = $(this).prev().attr('id');
+                            console.log($idImgToDelete);
+                            var $data = {'idImg' : $idImgToDelete, 'idWork' :  $idWork}
+
+                            /* Let's remove the delete button & the image deleted */
+                            $(this).parent().remove();
+
+                            $.ajax({
+                                method: 'post',
+                                url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
+                                data : $data,
+                                success: function (response){
+                                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

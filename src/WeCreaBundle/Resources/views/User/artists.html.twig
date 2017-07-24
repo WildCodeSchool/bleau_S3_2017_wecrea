@@ -1,0 +1,35 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main>
+        <h2>Les artistes</h2>
+        <div class="cards">
+            {% for artist in artists %}
+                <div class="card card_custom_work iso_item ">
+                        {% if artist.images|first != false %}
+                            <a href="{{ path('we_crea_artist', {id : artist.id} ) }}">
+                                <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/'~artist.images|first.url ) }} ') center / cover ">
+                                </div>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('we_crea_artist', {id : artist.id} ) }}">
+                                <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url(' {{ asset('images/soap.jpg' ) }} ') center / cover ">
+                                </div>
+                            </a>
+                        {% endif %}
+                    <div class="card-content card-content_custom">
+                        <span class="card-title activator grey-text text-darken-4 title">
+                            <p style="margin-right: 20px">{{ artist.firstname }} {{ artist.name }}</p>
+                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                        <p>{{ artist.biography[0:50] }}... </p>
+                        <a href="{{ path('we_crea_artist', {'id' : artist.id} ) }}"> Accéder au profil </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

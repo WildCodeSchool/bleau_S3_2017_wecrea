@@ -1,0 +1,22 @@
+WeCreaBundle\Entity\SentMessage:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\SentMessageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string
+            length: 255
+        date:
+            type: datetimetz
+        subject:
+            type: string
+            length: 255
+        content:
+            type: text
+    lifecycleCallbacks: {  }

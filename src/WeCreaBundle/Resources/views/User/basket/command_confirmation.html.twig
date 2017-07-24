@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+
+        table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+        }
+
+        table, th, td{
+            border: 1px solid black;
+        }
+
+        td{
+            margin: 0;
+            height: 30px;
+            text-align: center;
+        }
+
+        #legal-mentions{
+            text-align: justify;
+            margin-top: 50px;
+        }
+        
+        #last-td{
+            text-align: right;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<h2> WeCrea vous remercie de votre commande. </h2>
+<h4><u>Récapitulatif de votre commande</u></h4>
+<p><b>Numéro de commande : </b> {{ command.nb }}</p>
+<p class="title_list_profil"><b>Adresse de livraison : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressdel }}<br />
+    {{ command.zipCodedel }}<br />
+    {{ command.towndel }}<br />
+</p>
+
+<p class="title_list_profil"><b>Adresse de facturation : </b><br />
+    {{ command.name }}<br />
+    {{ command.addressfact }}<br />
+    {{ command.zipCodefact }}<br />
+    {{ command.townfact }}<br />
+</p>
+
+<table>
+    <thead>
+        <td><b>Titre de l'oeuvre</b></td>
+        <td><b>Caractéristiques</b></td>
+        <td><b>Quantité</b></td>
+        <td><b>Prix Unitaire T.T.C.</b></td>
+        <td><b>Prix total T.T.C</b></td>
+    </thead>
+    <tbody>
+        {% for work in command.works %}
+            <tr>
+                <td>{{ work.title }}</td>
+                <td>{{ work.caract }}</td>
+                <td>{{ work.quant }}</td>
+                <td>{{ work.price + work.price * Tva }} €</td>
+                <td>{{ work.quant * work.price + work.quant * work.price * Tva }} €</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td colspan="4" id="last-td">
+                    <b>Montant total T.T.C</b>
+                </td>
+                <td>
+                    <b>{{ ttc }} € </b>
+                </td>
+            </tr>
+    </tbody>
+</table>
+
+<b> Retrouvez votre facture dans votre espace personnel </b>
+
+<p id="legal-mentions">
+    <b>{{ legal }}</b>
+</p>
+
+
+</html>

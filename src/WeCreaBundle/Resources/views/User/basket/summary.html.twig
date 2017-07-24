@@ -1,0 +1,135 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="row">
+              <div class="col m10 offset-m1">
+                  <h2>Résumé de votre panier :</h2>
+                  {% if works == null %}
+                  <div class="col s10 offset s1">
+                      <p>Votre panier est vide.</p>
+                  </div>
+                    {% else %}
+                  <form name="basket" method="post" action="{{ path('we_crea_basket_address') }}">
+                      <div class="prods row">
+                          {% for prod in works %}
+                              <div class="prod col s12 row" id="{{ prod.work.id }}">
+                                  <div class="col m3">
+                                      <img class="prod_img" src="{{ asset("images/" ~ prod.work.images|first.url|default('../bundles/wecrea/pics/no_picture.png')) }}" alt="Image de l'oeuvre">
+                                  </div>
+                                  <div class="col m9 row">
+                                      <div class="prod_title col s12">
+                                          <p>{{ prod.work.title }}</p>
+                                      </div>
+                                      <div class="prod_quant col s12">
+                                          <p class="col m3">
+                                              Quantité :
+                                              <input class="quant_input"
+                                                     type="number"
+                                                     name="{{ prod.work.id }}[{{ prod.caract.id }}]"
+                                                     min="1"
+                                                     max="{{ prod.caract.quantity }}"
+                                                     value="{{ prod.quant }}"
+                                                     class="prod_content"
+                                                     price="{{ prod.caract.price }}"
+                                                     caract="{{ prod.caract.id }}"
+                                                     work="{{ prod.work.id }}"
+                                              />
+                                          </p>
+                                          <p class="col m3 offset-m6">
+                                              Restants : <span class="quant_max">{{ prod.caract.quantity }}</span>
+                                          </p>
+                                      </div>
+                                      <div class="prod_caract col s12">
+                                          <p>Informations : {{ prod.caract.dimension }} - {{ prod.caract.weigth }} - {{ prod.caract.price }}€</p>
+                                      </div>
+                                  </div>
+                                  <i title="Enlever cet article" class="material-icons delete_basket" data="{{ prod.work.id }}">clear</i>
+                                  <p class="prod_price">Prix : <span class="price">{{ prod.quant * prod.caract.price }}</span>€</p>
+                              </div>
+                          {% endfor %}
+                      </div>
+                      {% if is_granted('ROLE_USER') == true or is_granted('ROLE_ADMIN') == true %}
+                          <input type="submit" class="btn black" value="confirmer">
+                      {% else %}
+                          <p>Pour continuer :
+                              <a href="{{ path('fos_user_registration_register') }}" class="btn black">Enregistrez-vous</a>
+                              ou
+                              <a href="{{ path('fos_user_security_login') }}" class="btn black">Connectez-vous</a>
+                          </p>
+
+                      {% endif %}
+                  </form>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready( function () {
+            // --- AJAX DELETE ---//
+            $('.delete_basket').click( function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data');
+                var data = {'id' : id};
+                $.ajax({
+                    method: 'get',
+                    url: '{{ path('we_crea_delete_basket') }}',
+                    data: data,
+
+                    success: function (response) {
+                        console.log(id);
+                        alert(response.name + ' a été retiré du panier !');
+                        $('#' + id).remove();
+                    }
+                })
+            });
+
+        // --- Update quantity by caract --- //
+            $('select[name="caract"]').on('change', function () {
+                var selected = $(this).find('option:selected');
+                var container = $(this).closest('.prod');
+
+                var quant = container.find('.quant_input').val();
+                var max = selected.attr('quant');
+                var price = selected.attr('price');
+                var priceTot = quant * price;
+
+                container.find('.quant_input').attr('max', max);
+                container.find('.quant_max').text(max);
+                container.find('.price').text(priceTot);
+            });
+
+            $('input[type="number"]').on('change', function (e) {
+                e.preventDefault();
+
+                var val = $(this).val();
+                console.log(val);
+
+                var container = $(this).closest('.prod');
+                var price = $(this).attr('price');
+                console.log(price);
+
+                var priceTot = val * price;
+                console.log(priceTot);
+                container.find('.price').text(priceTot);
+
+                var work = $(this).attr('work');
+                var caract = $(this).attr('caract');
+                var data = {'work': work, 'caract': caract, 'quant': val }
+                console.log(data);
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_basket') }}',
+                    data: data
+                })
+            });
+        });
+
+    </script>
+{% endblock %}

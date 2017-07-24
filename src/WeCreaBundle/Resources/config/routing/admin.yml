@@ -1,0 +1,151 @@
+# Panel admin
+we_crea_admin_homepage:
+    path: /
+    defaults: {_controller: "WeCreaBundle:Admin:adminHome"}
+
+# Artist route
+we_crea_admin_artist_list:
+    path: /artists
+    defaults: {_controller: "WeCreaBundle:Artist:artistList"}
+
+we_crea_admin_artist_creation:
+    path: /artist/creation
+    defaults: {_controller: "WeCreaBundle:Artist:addArtist"}
+
+we_crea_admin_edit_artist:
+    path: artist/edit/{id}
+    defaults: {_controller: "WeCreaBundle:Artist:editArtist"}
+    requirements:
+        id: '\d+'
+
+we_crea_admin_delete_artist:
+    path: /artist/delete/{id}
+    defaults: {_controller: "WeCreaBundle:Artist:deleteArtist"}
+    requirements:
+        id: '\d+'
+
+we_crea_admin_delete_artist_image_ajax:
+    path: /deleteArtistImage
+    defaults: {_controller: "WeCreaBundle:Artist:deleteArtistImageAjax"}
+
+# Works rout
+we_crea_admin_works_artist:
+    path: /{id}/works
+    defaults: {_controller: "WeCreaBundle:Works:listAllArtistWorks"}
+
+we_crea_admin_works_add:
+    path: /{id}/works/add
+    defaults: {_controller: "WeCreaBundle:Works:addWork"}
+    requirements:
+        id: '\d+'
+
+we_crea_admin_delete_work_caract:
+    path: /caract/delete
+    defaults: {_controller: "WeCreaBundle:Works:deleteCaract"}
+    requirements:
+        id: '\d+'
+
+we_crea_admin_works_delete:
+    path: /work/delete
+    defaults: {_controller: "WeCreaBundle:Works:deleteWork"}
+
+we_crea_admin_delete_work_image_ajax:
+    path: /deleteWorkImage
+    defaults: {_controller: "WeCreaBundle:Works:deleteWorkImageAjax"}
+
+we_crea_admin_works_edit:
+    path: /{id}/works/edit
+    defaults: {_controller: "WeCreaBundle:Works:editWork"}
+
+# ------ Carrousel ROUT
+we_crea_admin_carrousel_edition:
+    path: /carrousel/edition
+    defaults: {_controller: "WeCreaBundle:Carrousel:editCarrousel"}
+
+we_crea_admin_add_carrousel:
+    path: /carrousel/add
+    defaults: {_controller: "WeCreaBundle:Carrousel:addCarrousel"}
+
+we_crea_admin_delete_carrousel:
+    path: /carrousel/delete
+    defaults: {_controller: "WeCreaBundle:Carrousel:deleteCarrousel"}
+
+# ------ Actu ROUT
+we_crea_admin_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:Actu:actu"}
+
+# Ajax treatment
+we_crea_admin_actu_add:
+    path: /actu/add
+    defaults: {_controller: "WeCreaBundle:Actu:addActu"}
+
+# Ajax treatment
+we_crea_admin_actu_delete:
+    path: /actu/delete
+    defaults: {_controller: "WeCreaBundle:Actu:deleteActu"}
+
+# -------- Edit Concept -----
+we_crea_admin_concept_edit:
+    path:     /concept/edit
+    defaults: { _controller: "WeCreaBundle:Concept:edit" }
+
+we_crea_admin_delete_work_ajax:
+    path: /deleteWork
+    defaults: {_controller: "WeCreaBundle:Admin:deleteWorkAjax"}
+
+we_crea_admin_artist_work_edition:
+    path: /artist/edition/{id}
+    defaults: {_controller: "WeCreaBundle:Admin:editArtistWork"}
+
+# Manage subscribers to the newsletter
+we_crea_admin_subscribers_info:
+    path: /subscribers
+    defaults: {_controller: "WeCreaBundle:Admin:subscribe"}
+
+we_crea_admin_unsubscribe:
+    path: /unsubscribe/{token}
+    defaults: {_controller: "WeCreaBundle:Admin:unsubscribe"}
+
+we_crea_admin_actu_newsletter:
+    path: /actu/newsletter
+    defaults: {_controller: "WeCreaBundle:Admin:actuNewsletter"}
+
+# Contact list in case of problem with email box
+we_crea_admin_contact:
+    path: /contacts
+    defaults:
+        _controller: "WeCreaBundle:Admin:contact"
+
+# Command list
+we_crea_admin_command_status:
+    path: /command/status
+    defaults:
+        _controller: "WeCreaBundle:Admin:commandStatus"
+
+# To send a message to the customer who ordered something
+we_crea_admin_send_message:
+    path: /contact/send/{email}
+    defaults:
+        _controller: "WeCreaBundle:Admin:sendEmailToCustomer"
+
+we_crea_admin_messages_sent:
+    path: /contact/sent/messages
+    defaults:
+        _controller: "WeCreaBundle:Admin:sentEmails"
+
+# Command status change
+we_crea_admin_change_status:
+    path: /command/change
+    defaults:
+        _controller: "WeCreaBundle:Admin:changeStatus"
+
+# -------- Edit card Isotop -----
+we_crea_admin_edit_isotop:
+    path: /nature/edit
+    defaults: { _controller: WeCreaBundle:Nature:edit }
+
+# -------- TVA / Mentions légales ----
+we_crea_admin_legal:
+    path: /legal
+    defaults: {_controller: "WeCreaBundle:Admin:legal"}

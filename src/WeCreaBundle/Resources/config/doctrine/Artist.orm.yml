@@ -1,0 +1,33 @@
+WeCreaBundle\Entity\Artist:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\ArtistRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        firstname:
+            type: string
+            length: 255
+        expertise:
+            type: string
+            length: 255
+        biography:
+            type: text
+
+    manyToMany:
+        images:
+            targetEntity: WeCreaBundle\Entity\Images
+            cascade: ['all']
+
+    oneToMany:
+        works:
+            targetEntity: WeCreaBundle\Entity\Work
+            mappedBy: artist
+            cascade: ['all']

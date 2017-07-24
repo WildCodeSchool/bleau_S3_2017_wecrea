@@ -1,0 +1,435 @@
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
+
+{% block body %}
+<div class="container">
+    <h4 style="background: grey;">Edition de l'oeuvre {{ work.title }} </h4>
+        <div class="row row-artist-work-custom">
+            {{ form_start(edit_form) }}
+                <div class="input-field col s12">
+                    {{ form_label(edit_form.title, "Titre") }}
+                    {{ form_errors(edit_form.title) }}
+                    {{ form_widget(edit_form.title) }}
+                </div>
+                <div class="col s12">
+                    {{ form_label(edit_form.description, "Description") }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_errors(edit_form.description) }}
+                    {{ form_widget(edit_form.description ) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(edit_form.technic, 'Technique utilisée') }}
+                    {{ form_errors(edit_form.technic) }}
+                    {{ form_widget(edit_form.technic ) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(edit_form.timelimit, "Délai de livraison") }}
+                    {{ form_errors(edit_form.timelimit) }}
+                    {{ form_widget(edit_form.timelimit) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_errors(edit_form.nature) }}
+                    {{ form_widget(edit_form.nature) }}
+                    {{ form_label(edit_form.nature, "Nature de l'oeuvre") }}
+                </div>
+                <button class="btn waves-effect waves-light right black update-work" type="submit" name="action">
+                    Éditer l'oeuvre
+                    <i class="material-icons left">mode_edit</i>
+                </button>
+            {{ form_end(edit_form) }}
+        </div>
+
+        <div style="display: flex; margin: 20px auto;" >
+            {% for caract in caracts %}
+                <div class="col m4 s12 new-specificity-work" style="width: 30%;">
+                    <p style="color: blue;"><b>Modèle {{ loop.index }}</b></p>
+                    <p style="display: none" class="id">{{ caract.id }}</p>
+                    <p><b>Dimensions : </b> {{ caract.dimension }}</p>
+                    <p><b>Poids :</b>{{ caract.weigth}}</p>
+                    <p><b>Prix : </b>{{ caract.price }}</p>
+                    <p><b>Quantité(s) : </b>{{ caract.quantity }}</p>
+                    <button class="btn waves-effect waves-light red delete-work-caract">
+                        Supprimer
+                        <i class="material-icons left">delete</i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col s12" id="specificity-work-confirmed">
+                <h5>Spécificité(s) de l'oeuvre validées</h5>
+            </div>
+        </div>
+
+    {{ form_start(formCaract) }}
+        <div class="row">
+            <h4 class="center-align">Ajout des spécificités de l'oeuvre</h4>
+            <div class="input-field col s12 m3">
+                {{ form_label(formCaract.dimension) }}
+                {{ form_widget(formCaract.dimension) }}
+                {{ form_errors(formCaract.dimension) }}
+            </div>
+            <div class="input-field col s12 m3">
+                {{ form_label(formCaract.weigth) }}
+                {{ form_widget(formCaract.weigth) }}
+                {{ form_errors(formCaract.weigth) }}
+            </div>
+            <div class="input-field col s12 m3">
+                {{ form_label(formCaract.price) }}
+                {{ form_widget(formCaract.price) }}
+                {{ form_errors(formCaract.price) }}
+            </div>
+            <div class="input-field col s6 m3">
+                {{ form_label(formCaract.quantity) }}
+                {{ form_widget(formCaract.quantity) }}
+                {{ form_errors(formCaract.quantity) }}
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn waves-effect waves-light left black create-work" type="submit" name="action">
+                Valider la spécificité
+                <i class="material-icons left">send</i>
+            </button>
+        </div>
+    {{ form_end(formCaract) }}
+
+        <div class="row row-custom-edit-work-image">
+            <input type="hidden" class="idWork" value="{{ work.id }}"/>
+            <h5>Image(s) de l'oeuvre {{ work.title }}</h5>
+            {% for image in work.images %}
+                <div class="input-field col s12">
+                    <img src="{{ asset('images/'~image.url) }}"/>
+                    <input type="hidden" class="idImg" value="{{ image.url }}"/>
+                </div>
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light red delete-work-image" type="submit" name="action">
+                        Supprimer l'image
+                        <i class="material-icons left">delete</i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        {{ form_start(image_form, {'attr' : {'id' : 'add-image-form'}} ) }}
+            <div class="row">
+                <div class="file-field file-field-custom input-field col s12">
+                    <div class="btn">
+                        <span>Choisissez un fichier</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        {{ form_widget(image_form.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                    </div>
+                    {{ form_errors(image_form.url) }}
+                </div>
+
+                <div id="images-check"></div>
+
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light right green" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">done</i>
+                    </button>
+                </div>
+            </div>
+        {{ form_end(image_form) }}
+
+        <div class="row">
+            <h4>Nouvelles images de l'oeuvre validées</h4>
+            <div class="col s12" id="images-work-confirmed">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            var idWork = {{ work.id }};
+
+            /* Enables the select input in materialize */
+            $('select').material_select();
+
+            /******** EDITION ********/
+
+            $('form[name="wecreabundle_work"] .update-work').click(function(e){
+                e.preventDefault();
+                var $data = $(this).parent().serialize();
+
+                var url = "{{ path('we_crea_admin_works_edit', {id : 0} ) }}";
+                url = url.replace('0', idWork);
+
+                $.ajax({
+                    method: "post",
+                    url: url,
+                    data: $data,
+                    success: function(response){
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                    }
+                });
+            });
+
+            /******** DELETE AN IMAGE ********/
+
+            $('.delete-work-image').click(function(){
+                var $idImg = $(this).parent().prev().find('input[class="idImg"]').attr('value');
+
+                var $data = {idImg : $idImg, idWork : idWork};
+
+                /* Let's remove the image that would otherwise still be on the page without refresh */
+                $(this).parent().prev().remove();
+                $(this).remove();
+
+                $.ajax({
+                    method: "post",
+                    url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
+                    data: $data,
+                    success: function(response){
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                    }
+                });
+            });
+
+            /* Image form linked to already existing works */
+            $('form[id="add-image-form"]').submit(function(e){
+                e.preventDefault();
+                var $idWork = $(this).find('input[name="idWork"]').attr('value');
+                var $data = new FormData($(this)[0]);
+
+                /* We remove the preview image and reset the
+                 * form to enable the submission of new pictures
+                 */
+
+                $("#images-check").children().remove();
+
+                $(this).trigger('reset');
+
+                /* We store the image into the database then we send it back to the client
+                 * We now have its id, that will be useful if the client
+                 * changes its mind and wants to delete it.
+                 * Moreover, it will serve to associate the images to the artist
+                 * as they are created separately
+                 */
+
+                $.ajax({
+                    method: 'post',
+                    data: $data,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        var $url = response.url;
+
+                        $place = $('#images-work-confirmed');
+                        console.log($url);
+                        var $newWorkImg = $(document.createElement('div'));
+                        $newWorkImg.attr('class', 'input-field col s12');
+
+                        /* Creation of the image with the data returned */
+                        var $img = $("<img/>");
+                        $img.css('width', '100%');
+                        $img.attr("src", "{{ asset('images/')}}"+response.url+"");
+                        $img.attr('id', ''+ $url +'');
+
+                        var $inputHiddenImg = $(document.createElement('input'));
+                        $inputHiddenImg.attr({
+                            'type' : 'hidden',
+                            'class' : 'idImg',
+                            'value' : '' + response.url + ''
+                        });
+
+                        /* Creation of an hidden input containing the work id */
+                        var $inputHiddenWork = $(document.createElement('input'));
+                        $inputHiddenWork.attr({
+                            'type' : 'hidden',
+                            'class' : 'idWork',
+                            'value' : '' + idWork + ''
+                        });
+
+                        $newWorkImg.append($img, $inputHiddenImg, $inputHiddenWork);
+
+                        var $newDeleteImgButton = $(document.createElement('div'));
+                        $newDeleteImgButton.attr('class', 'col s12');
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.attr({
+                            'class': 'btn waves-effect waves-light red delete-work-image',
+                            'name' : 'action',
+                            'type' : 'submit'
+                        });
+                        $cancel.text("Supprimer L'image");
+
+                        var $iElt = $(document.createElement('i'));
+                        $iElt.attr({
+                            'class' : 'material-icons left'
+                        });
+                        $iElt.text('delete');
+
+                        $cancel.append($iElt);
+                        $newDeleteImgButton.append($cancel);
+
+                        /* We append the new image to the div containing all the images
+                         * linked to the work
+                         * We need to get the id of the work which is in the div
+                         */
+
+                        $newWorkImg.insertBefore($place);
+                        $newDeleteImgButton.insertBefore($place);
+                        $newWorkImg.hide().fadeIn(2000);
+                        $newDeleteImgButton.hide().fadeIn(2000);
+
+
+                        $('.delete-work-image').click(function(e){
+                            e.preventDefault();
+                            var $idImg = $(this).parent().prev().find('input[class="idImg"]').attr('value');
+                            var $idWork = $(this).parent().prev().find('input[class="idWork"]').attr('value');
+
+                            var $data = {idImg : $idImg, idWork : $idWork};
+
+                            /* Let's remove the image that would otherwise still be on the page without refresh */
+                            $(this).parent().prev().remove();
+                            $(this).remove();
+
+                            $.ajax({
+                                method: "post",
+                                url: "{{ path('we_crea_admin_delete_work_image_ajax') }}",
+                                data: $data,
+                                success: function(response){
+                                    Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            $('.edit-caract').click(function(e){
+                e.preventDefault();
+                var name = $(this).parent().parent().attr('name');
+                var form = new FormData($(this).parent().parent());
+                url = "{{ path('we_crea_admin_works_edit', {id : 0} ) }}";
+                url = url.replace('0', idWork);
+
+                $.ajax({
+                    method: "post",
+                    url: url,
+                    processData: false,
+                    contentType: false,
+                    data: {'form' : form, 'name' : name},
+                    success: function(response){
+                        var $id = response.idCaract;
+
+                        $('#specificity-work-confirmed').show();
+
+                        var $newSpecificity = $(document.createElement('div'));
+                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+
+                        /* Creation of the image with the data returned */
+                        var $p = $(document.createElement('p'));
+                        $p.html(
+                            'Dimension: ' + response.caract.dimension +
+                            '<br>Poid: ' + response.caract.weight +
+                            '<br>Quantitée: ' + response.caract.quantity +
+                            '<br>Prix: ' + response.caract.price
+                        );
+
+                        $p.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newSpecificity.append($p);
+                        $newSpecificity.append($cancel);
+
+                        $("#specificity-work-confirmed").append($newSpecificity);
+                        $("#specificity-work-confirmed").fadeIn(2000);
+
+                        $("#work-picture").fadeIn(2000);
+                    }
+                });
+            });
+
+            /* When deleting a model caracteristics */
+            $('.delete-work-caract').click(function(e){
+                e.preventDefault();
+                var idCaract = $(this).parent().find('.id')[0].innerHTML;
+                $(this).parent().remove();
+                url = "{{ path('we_crea_admin_delete_work_caract', {id : 0} ) }}";
+                url = url.replace('0', idCaract);
+                $.ajax({
+                    method : "POST",
+                    url : url,
+                    data: {'idCaract' : idCaract, 'idWork' : idWork},
+                    success: function(response){
+                        alert(response.msg);
+                    }
+                });
+            });
+
+            $('form[name="wecreabundle_caract"]').submit(function(e){
+                console.log(this);
+                e.preventDefault();
+                var data = new FormData($(this)[0]);
+
+                $(this).trigger('reset');
+                $.ajax({
+                    url: location.href,
+                    method: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        var $id = response.idCaract;
+
+                        console.log(response);
+
+                        $('#specificity-work-confirmed').show();
+
+                        var $newSpecificity = $(document.createElement('div'));
+                        $newSpecificity.attr('class', 'col m4 s12 new-specificity-work');
+
+                        /* Creation of the image with the data returned */
+                        var $p = $(document.createElement('p'));
+                        $p.html(
+                            'Dimension: ' + response.caract.dimension +
+                            '<br>Poid: ' + response.caract.weight +
+                            '<br>Quantitée: ' + response.caract.quantity +
+                            '<br>Prix: ' + response.caract.price
+                        );
+
+                        $p.attr('id', $id);
+
+                        /* Creation of a button to delete the image */
+                        var $cancel = $(document.createElement('button'));
+                        $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-work');
+                        $cancel.text("Supprimer");
+
+                        $newSpecificity.append($p);
+                        $newSpecificity.append($cancel);
+
+                        $("#specificity-work-confirmed").append($newSpecificity);
+                        $("#specificity-work-confirmed").fadeIn(2000);
+
+                        $cancel.click(function(e){
+                            e.preventDefault();
+                            $(this).parent().remove();
+                            idCaract = $id;
+
+                            $.ajax({
+                                method : "POST",
+                                url : "{{ path('we_crea_admin_delete_work_caract') }}",
+                                data : {'idCaract' : idCaract},
+                                success : function(response){
+                                    alert(response.msg);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

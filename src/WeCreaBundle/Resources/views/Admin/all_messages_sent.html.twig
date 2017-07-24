@@ -1,0 +1,25 @@
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <h4 style="text-align: center; background: brown;">Liste des messages envoyés</h4>
+        <table>
+            <thead>
+                <td><b>Destinataire</b></td>
+                <td><b>Date</b></td>
+                <td><b>Sujet</b></td>
+                <td><b>Message</b></td>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <tr style="border-bottom: 1px solid #c8c8c8;">
+                        <td>{{ message.email }}</td>
+                        <td>{{ message.date|date('d/m/Y H:i') }}</td>
+                        <td>{{ message.subject }}</td>
+                        <td>{{ message.content|nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

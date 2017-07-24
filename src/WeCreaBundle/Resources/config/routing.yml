@@ -1,3 +1,7 @@
 we_crea_homepage:
-    path:     /
-    defaults: { _controller: WeCreaBundle:Default:index }
+    resource: "@WeCreaBundle/Resources/config/routing/user.yml"
+    prefix:   /
+
+we_crea_admin:
+    resource: "@WeCreaBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin

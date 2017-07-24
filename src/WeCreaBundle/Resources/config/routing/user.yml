@@ -1,0 +1,92 @@
+we_crea_user_connected:
+    resource: "@WeCreaBundle/Resources/config/routing/user_connected.yml"
+    prefix: /user
+
+we_crea_homepage:
+    path:    /
+    defaults: {_controller: "WeCreaBundle:User:index"}
+
+we_crea_concept:
+    path: /concept
+    defaults: {_controller: "WeCreaBundle:User:concept"}
+
+we_crea_actu:
+    path: /actu
+    defaults: {_controller: "WeCreaBundle:User:actu"}
+
+we_crea_works:
+    path: /works
+    defaults: {_controller: "WeCreaBundle:User:worksShow"}
+
+we_crea_work:
+    path: /work/{id}
+    defaults: {_controller: "WeCreaBundle:User:workShow"}
+    requirements:
+        id: \d+
+
+we_crea_artists_list:
+    path: /artists
+    defaults: {_controller: "WeCreaBundle:User:artistsShow"}
+
+we_crea_artist:
+    path: /artist/{id}
+    defaults: {_controller: "WeCreaBundle:User:artistShow"}
+    requirements:
+        id: \d+
+
+we_crea_basket:
+    path: /basket
+    defaults: {_controller: "WeCreaBundle:User:showBasket"}
+
+we_crea_add_basket:
+    path: /work/basket/add
+    defaults: {_controller: "WeCreaBundle:User:addBasket"}
+    methods: 'POST'
+
+we_crea_delete_basket:
+    path: /work/basket/delete
+    defaults: {_controller: "WeCreaBundle:User:deleteBasket"}
+
+we_crea_add_fav:
+    path: /fav/add
+    defaults: {_controller: "WeCreaBundle:User:addFav"}
+    methods: 'POST'
+
+we_crea_delete_fav:
+    path: /fav/delete
+    defaults: {_controller: "WeCreaBundle:User:deleteFav"}
+    methods: 'POST'
+
+we_crea_favs:
+    path: /favs
+    defaults: {_controller: "WeCreaBundle:User:showFavs"}
+
+we_crea_search:
+    path: /search
+    defaults:
+        _controller: "WeCreaBundle:User:search"
+
+# Subscription to the newsletter
+we_crea_newsletter:
+    path: /newsletter
+    defaults:
+        _controller: "WeCreaBundle:User:Newsletter"
+
+we_crea_unsubscribe:
+    path: /unsubscribe/{token}
+    defaults:
+        _controller: "WeCreaBundle:User:unsubscribe"
+
+# Contact page
+we_crea_contact:
+    path: /contact
+    defaults:
+        _controller: "WeCreaBundle:User:contact"
+
+we_crea_api_response:
+    path: /pay
+    defaults: {_controller: "WeCreaBundle:User:apiResponse"}
+
+we_crea_notification:
+    path: /notif
+    defaults: {_controller: "WeCreaBundle:User:apiNotif"}

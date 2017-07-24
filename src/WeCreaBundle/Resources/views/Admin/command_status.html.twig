@@ -1,0 +1,82 @@
+{% extends "WeCreaBundle:layout:base_admin.html.twig"%}
+
+{% block body %}
+    <div class="container container-custom-artists">
+        <h4 style="background: deeppink; color: #fff; padding: 10px;">Liste des commandes reçues</h4>
+        <table style="font-size: .8em;">
+            <thead>
+                <td><b>Numéro de commande</b></td>
+                <td><b>Destinataire</b></td>
+                <td><b>Adresse de livraison</b></td>
+                <td><b>Adresse de facturation</b></td>
+                <td><b>Téléphone</b></td>
+                <td><b>Date</b></td>
+                <td><b>Email</b></td>
+                <td><b>Status</b></td>
+                <td><b>Envoyer un email</b></td>
+            </thead>
+            <tbody>
+                {% if commands is defined and commands is not empty %}
+                    {% for command in commands %}
+                        {% if command.status.id != 1 %}
+                            <tr style="border-bottom: 1px solid #c8c8c8;">
+                                <td>{{ command.nb }}</td>
+                                <td>{{ command.name }}</td>
+                                <td>
+                                    {{ command.addressdel }} <br />
+                                    {{ command.zipCodedel }}
+                                    {{ command.towndel }} <br />
+                                    {{ command.countrydel }}
+                                </td>
+                                <td>
+                                    {{ command.addressfact }} <br />
+                                    {{ command.zipCodefact }}
+                                    {{ command.townfact }} <br />
+                                    {{ command.countryfact }}
+                                </td>
+                                <td>{{ command.phone }}</td>
+                                <td>{{ command.date|date('d/m/Y H:i') }}</td>
+                                <td>{{ command.mail }}</td>
+                                <td>
+                                    <select id="{{ command.id }}">
+                                        <option {% if command.status.id == 3 %}selected{% endif %} value="3">En cours de paiement</option>
+                                        <option {% if command.status.id == 4 %}selected{% endif %} value="4">Payée</option>
+                                        <option {% if command.status.id == 5 %}selected{% endif %} value="5">En cours de livraison</option>
+                                        <option {% if command.status.id == 6 %}selected{% endif %} value="6">Livrée</option>
+                                    </select>
+                                </td>
+                                <td><a href="{{ path('we_crea_admin_send_message', {email : command.mail} ) }}">Envoyer</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    Vous n'avez pas encore reçu de commande(s).
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').on('change', function () {
+
+                var $value = $(this).val();
+                var $id = $(this).attr('id');
+
+                var $data = {'id': $id, 'status': $value};
+
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_admin_change_status') }}',
+                    data: $data,
+                    success: function (response) {
+                        Materialize.toast('<span class="toast_custom">' + response + '</span>');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block header %}
+    <header>
+        <div class="navbar-fixed nav_custom_cont">
+            <nav class="nav_custom">
+                <div class="nav-wrapper">
+                    <a href="{{ path('we_crea_admin_homepage') }}" class="brand-logo"><img class="logo" src="{{ asset('bundles/wecrea/pics/Les-Artistes-d\'abord.png') }}" alt="logo"></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+{% block flash_notice %}
+    {% if app.session.flashBag.has('notice') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('notice') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+{% block sidenav %}
+    {% if app.request.attributes.get('_route') != "we_crea_admin_homepage" %}
+    <button id="menu_admin_button">Menu</button>
+    <ul id="sidenav_admin">
+        <li style="background: black;"><a href="{{ path('we_crea_admin_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Accueil</a></li>
+        <li style="background: dodgerblue;"><a href="{{ path('we_crea_admin_carrousel_edition') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Carrousel</a></li>
+        <li style="background: green;"><a href="{{ path('we_crea_admin_artist_list') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Artistes</a></li>
+        <li style="background: tomato;"><a href="{{ path('we_crea_admin_concept_edit') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Concept</a></li>
+        <li style="background: #b22222;"><a href="{{ path('we_crea_admin_actu') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Actualités</a></li>
+        <li style="background: rebeccapurple;"><a href="{{ path('we_crea_admin_edit_isotop') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Natures</a></li>
+        <li style="background: darkslategrey;"><a href="{{ path('we_crea_admin_subscribers_info') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Newsletter</a>
+        <li style="background: deeppink;"><a href="{{ path('we_crea_admin_command_status') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Commandes</a>
+        <li style="background: darkorange;"><a href="{{ path('we_crea_admin_contact') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Messages reçus</a>
+        <li style="background: brown;"><a href="{{ path('we_crea_admin_messages_sent') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Messages envoyés</a>
+        <li style="background: #f2da00;"><a href="{{ path('we_crea_admin_legal') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">TVA / Mentions </a>
+        <li style="background: black;"><a href="{{ path('we_crea_homepage') }}" style="display: block; width: 100%; color: #fff; text-decoration: none;">Site web</a></li>
+    </ul>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% block js_admin %}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $('li').on("mouseover", function(){
+            $(this).css({
+               'width' : '180px'
+            });
+        });
+
+        $('li').on("mouseleave", function(){
+            $(this).css({
+                'width': '150px'
+            });
+        });
+
+        $('#menu_admin_button').on("click", function(){
+            $("#sidenav_admin").css("left") == '-150px' ?
+                $("#sidenav_admin").css("left" , '0'):
+                $("#sidenav_admin").css("left" , "-150px");
+        });
+    </script>
+{% endblock %}

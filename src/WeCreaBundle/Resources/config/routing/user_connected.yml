@@ -1,0 +1,25 @@
+we_crea_user_profil:
+    path: /profil
+    defaults: {_controller: "WeCreaBundle:User:showProfil"}
+
+we_crea_basket_address:
+    path: /basket/address
+    defaults: {_controller: "WeCreaBundle:User:basketAddress"}
+
+we_crea_basket_command:
+    path: /basket/command
+    defaults: {_controller: "WeCreaBundle:User:command"}
+
+we_crea_payement:
+    path: /payement/{id}
+    defaults: {_controller: "WeCreaBundle:User:payement"}
+    requirements:
+        id: '\d+'
+
+we_crea_command_pdf:
+    path: /pdfCommand
+    defaults : {_controller: "WeCreaBundle:User:commandPdf"}
+
+we_crea_check_quant:
+    path: /check/quant
+    defaults: {_controller: "WeCreaBundle:User:check"}

@@ -1,0 +1,21 @@
+WeCreaBundle\Entity\Subscriber:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\SubscriberRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string
+            length: 255
+            unique: true
+        date:
+            type: datetimetz
+        token:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

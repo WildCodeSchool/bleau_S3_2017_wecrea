@@ -1,0 +1,41 @@
+{% extends "@WeCrea/layout/base_admin.html.twig" %}
+
+{% block body %}
+
+<div class="container container-custom-artists">
+    <h4 style="background: green; color: #fff; padding: 10px;"> Édition des artistes </h4>
+    <div class="row row-artist-work-custom">
+        <div class="col s12">
+            <a class="btn waves-effect waves-light black btn-custom-artist" href="{{ path('we_crea_admin_artist_creation') }}">
+                Créer un nouvel artiste
+                <i class="material-icons left">add</i>
+            </a>
+        </div>
+    </div>
+    {% for artist in artists %}
+    <div class="row">
+        <div class="col s12 col-custom-artist">
+            <h4 style="color: black;"> {{ artist.name }} {{ artist.firstname }}</h4>
+            {% if artist.images is not empty %}
+                <img src="{{ asset('images/'~artist.images|first.url) }}" class="list-artists-img"/>
+            {% else %}
+                <p> Cet artiste n'a pas de photo </p>
+            {% endif %}
+            <a href="{{ path('we_crea_admin_delete_artist', {id : artist.id }) }}"><button class="btn waves-effect waves-light red">
+                Supprimer
+                <i class="material-icons left">delete</i>
+            </button></a>
+            <a href="{{ path('we_crea_admin_works_artist', {id : artist.id }) }}">
+                <button class="btn waves-effect waves-light red">Oeuvres de l'artiste<i class="material-icons left">pageview</i>
+                </button>
+            </a>
+            <a href="{{ path('we_crea_admin_edit_artist', {id : artist.id}) }}"><button class="btn waves-effect waves-light right black btn-custom-artist">
+                Éditer
+                <i class="material-icons left">mode_edit</i>
+            </button></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

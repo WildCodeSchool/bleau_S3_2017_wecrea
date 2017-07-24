@@ -1,0 +1,63 @@
+WeCreaBundle\Entity\Command:
+    type: entity
+    table: null
+    repositoryClass: WeCreaBundle\Repository\CommandRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: datetime
+        addressfact:
+            type: string
+            length: 255
+        zipCodefact:
+            type: integer
+            column: zip_codefact
+        townfact:
+            type: string
+            length: 255
+        countryfact:
+            type: string
+            length: 255
+        addressdel:
+            type: string
+            length: 255
+        zipCodedel:
+            type: integer
+            column: zip_codedel
+        towndel:
+            type: string
+            length: 255
+        countrydel:
+            type: string
+            length: 255
+        name:
+            type: string
+            length: 255
+        mail:
+            type: string
+            length: 255
+        phone:
+            type: string
+            length: 255
+        nb:
+            type: string
+            length: 255
+            unique: true
+        delivery:
+            type: integer
+
+    manyToMany:
+        works:
+            targetEntity: WeCreaBundle\Entity\WorkPurchased
+            cascade: ['all']
+
+    manyToOne:
+        status:
+            targetEntity: WeCreaBundle\Entity\Status
+
+    lifecycleCallbacks: {  }

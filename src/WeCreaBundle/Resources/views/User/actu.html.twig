@@ -1,0 +1,24 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h2 id="title-actu"> Nos actualités </h2>
+            {% for actu in actus %}
+                <div class="actu-user">
+                    <h4 style="color: black;"><b>{{ actu.title }}</b></h4>
+                    <figure class="figure-no-zoom">
+                        <div class="dezoom"></div>
+                        <img src="{{ asset('images/'~actu.images.url) }}" class="image-no-zoom"/>
+                    </figure>
+                    <div class="content">
+                    {% autoescape %}
+                        {{ actu.content|raw }}
+                    {% endautoescape %}
+                    </div>
+                    <i>Publié le {{ actu.date|date('d/m/Y') }}</i>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

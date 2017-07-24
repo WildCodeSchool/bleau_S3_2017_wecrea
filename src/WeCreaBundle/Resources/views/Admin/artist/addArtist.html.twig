@@ -1,0 +1,183 @@
+{% extends '@WeCrea/layout/base_admin.html.twig' %}
+
+{% block body %}
+<main>
+    <div class="container">
+        <h4 style="background: grey;">Création d'un nouvel artiste</h4>
+        <div class="row artist_menu">
+            <a class="waves-effect waves-light black btn" href="{{ path('we_crea_admin_artist_creation') }}">Ajouter un nouvel artiste</a>
+            <a class="waves-effect waves-light black btn" href="{{ path('we_crea_admin_homepage') }}">Retour au menu d'accueil</a>
+        </div>
+        <div class="row">
+
+            {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form_label(form.name, 'Nom de l\'artiste') }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(form.firstname, 'Prénom de l\'artiste') }}
+                    {{ form_widget(form.firstname) }}
+                    {{ form_errors(form.firstname) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(form.expertise, 'Qualité') }}
+                    {{ form_widget(form.expertise) }}
+                    {{ form_errors(form.expertise) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_label(form.biography, 'Biographie de l\'artiste') }}
+                    {{ form_errors(form.biography) }}
+                    {{ form_widget(form.biography, {'attr': {'class':'biography materialize-textarea'}} ) }}
+                </div>
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light black left" type="submit" name="action">
+                        Créer le profil
+                        <i class="material-icons left">send</i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+
+            {{ form_start(formImage, {'attr' : {'id' : 'artist-picture'}} ) }}
+            <div class="row">
+                {{ form_label(formImage.url, "Photo de l'artiste") }}
+                <div class="file-field input-field col s12">
+                    <div class="btn btn-file">
+                        <span>Choisissez un fichier</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        {{ form_widget(formImage.url, {'attr' : {'class' : 'file-path validate', 'type' : 'text'}} ) }}
+                    </div>
+                    {{ form_errors(formImage.url) }}
+                </div>
+
+                <div id="images-check"></div>
+
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light right black" type="submit" name="action">
+                        Ajouter l'image
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
+            </div>
+            {{ form_end(formImage) }}
+
+            <div class="row">
+                <div class="col s12" id="images-artist-confirmed">
+                    <h4>Images de l'artiste validées</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        var $idArt;
+
+//        Add artist action
+        $('form[id="artist-profil"]').submit(function(e){
+            e.preventDefault();
+            if(confirm("Vous allez créer le profil de l'artiste.")) {
+                $(this).find('button').hide();
+                var $form = $(this).serialize();
+
+                $("#artist-picture").fadeIn(2000);
+                $(".artist_menu").fadeIn(2000);
+
+                $.ajax({
+                    method: 'post',
+                    url: "{{ path('we_crea_admin_artist_creation') }}",
+                    data: $form,
+                    success: function (response) {
+                        console.log(response);
+                        $idArt = response.idArt;
+
+                        /* Add the artist id into the image form (for profile) */
+                        var $formImgArtLastChild = $('form[id="artist-picture"] input[id="wecreabundle_images__token"]');
+                        $inputElt = $(document.createElement('input'));
+                        $inputElt.attr("value", "" + $idArt + "");
+                        $inputElt.attr("type", "hidden");
+                        $inputElt.attr("name", "idArt");
+                        $inputElt.insertBefore($formImgArtLastChild);
+                    }
+                });
+            }
+        });
+
+        /* If the artist image form is submitted */
+        $('form[id="artist-picture"]').submit(function(e){
+            e.preventDefault();
+            var data = new FormData($(this)[0]);
+            /* We remove the preview image and reset the
+             * form to enable the submission of new pictures
+             */
+
+            $("#images-check").children().remove();
+
+            $(this).trigger('reset');
+
+            /* We store the image into the database then we send it back to the client
+             * We now have its id, that will be useful if the client changes its mind and
+             * wants to delete it.
+             */
+
+            $.ajax({
+                url: "{{ path('we_crea_admin_artist_creation') }}",
+                method: "post",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    var $id = response.url;
+                    console.log(response);
+                    var $newArtImg = $(document.createElement('div'));
+                    $newArtImg.attr('class', 'col m4 s12 new-artist-image');
+
+                    /* Creation of the image with the data returned */
+                    var $img = $(document.createElement('img'));
+                    $img.attr("src", "{{ asset('images/')}}"+response.url);
+                    $img.attr('id', $id);
+
+                    /* Creation of a button to delete the image */
+                    var $cancel = $(document.createElement('button'));
+                    $cancel.prop('class' , 'btn waves-effect waves-light left red delete-image-artist');
+                    $cancel.text("Supprimer");
+
+                    $newArtImg.append($img);
+                    $newArtImg.append($cancel);
+
+                    $("#images-artist-confirmed").append($newArtImg);
+
+                    $("#images-artist-confirmed").fadeIn(2000);
+
+                    $cancel.click(function(e){
+                        console.log($(this));
+                        e.preventDefault();
+                        $idImgToDelete = $(this).prev().attr('id');
+                        console.log($idImgToDelete);
+                        var $data = {'idImg' : $idImgToDelete, 'idArt' : $idArt};
+
+                        /* Let's remove the delete button & the image deleted */
+                        $(this).parent().remove();
+
+                        $.ajax({
+                            method: 'post',
+                            url: "{{ path('we_crea_admin_delete_artist_image_ajax') }}",
+                            data : $data,
+                            success: function (response){
+                                Materialize.toast('<span class="toast_custom">' + response + '</span>', 4000) // 4000 is the duration of the toast
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

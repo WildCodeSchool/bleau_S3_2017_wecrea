@@ -1,0 +1,179 @@
+{% extends '@WeCrea/layout/base_client.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/wecrea/vendor/fancybox/jquery.fancybox-1.3.4.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="row row_top">
+                <div class="col s12 m12 l7 img_basket">
+                    <div class="center-align center-align_custom">
+                        {% if images|first.url is defined %}
+                            <img id="zoom_03" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
+                        {% endif %}
+                    </div>
+                    <div id="gallery_01">
+                        {% for image in images %}
+                            <a href="#" data-image="{{ image.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ image.url) }}">
+                                <img src="{{ image.url | imagine_filter('thumb') }}" alt="{{ image.alt }}">
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col s12 m12 l5 work_desc">
+                    <h3>{{ work.title }}</h3>
+                    <p>{{ work.artist.firstname }} {{ work.artist.name }}</p>
+                    <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
+                        <div class="row">
+                            <p>
+                                <b id="alert-quantity-max"></b>
+                                Quantité : <input type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %}{{ caracts[0].quantity }}{% endif %}">
+                                <input type="hidden" name="work_id" value="{{ work.id }}">
+                            </p>
+                            <p class="right-align">
+                                <b>Prix total T.T.C. : </b> <span id="price">{% if caracts is defined %} {{ caracts[0].price }} {% endif%}</span> €
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p>
+                                Caractéristiques :
+                                <select name="caract">
+                                    {% for key, caract in caracts %}
+                                        <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} </option>
+                                    {% endfor %}
+                                </select>
+                            </p>
+                        </div>
+                        {% if caracts[0].quantity <= 0 %}
+                            <input type="submit" class="btn black disabled" value="Épuisé">
+                        {% else %}
+                            <input type="submit" class="btn black" value="Ajouter au panier">
+                        {% endif %}
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p><b>Technique mise en oeuvre</b> : <br />{{ work.technic }}</p>
+                    </div>
+                    <div class="col s12">
+                        <p><b>Description</b> : <br />{{ work.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+
+            var quantityMaxAlertElt = document.getElementById("alert-quantity-max");
+            quantityMaxAlertElt.style.display = "none";
+
+            $("#zoom_03").elevateZoom({
+                constrainType:"height",
+                constrainSize:350,
+                gallery:'gallery_01',
+                cursor: 'pointer',
+                galleryActiveClass: 'active',
+                lensSize : 100,
+                //scrollZoom : true,
+                responsive: true
+            }
+        );
+
+            //pass the images to Fancybox
+            $("#zoom_03").bind("click", function(e) {
+                var ez = $('#zoom_03').data('elevateZoom');
+                $.fancybox(ez.getGalleryList());
+                return false;
+            });
+
+            $('select[name="caract"]').on('change', function () {
+
+                priceIndexed = false;
+
+                var selected = $(this).find('option:selected');
+                var quant = selected.attr('quant');
+                var price = selected.attr('price');
+
+                $('input[name="quantity"]').attr('max', quant);
+                $('#price').text(price);
+
+                var submit = $('input[type="submit"]');
+
+                if(quant === 0) {
+                    submit.addClass('disabled');
+                    submit.attr('value', 'Épuisé');
+                }
+                else{
+                    submit.removeClass('disabled');
+                    submit.attr('value', 'Ajouter au panier');
+                }
+            });
+
+            function alertQuantity(){
+                alert("Merci d'indiquer une quantité.");
+            }
+
+            var inputNumberElt = document.querySelector("input[name='quantity'");
+            var priceElt = document.getElementById("price");
+            var inputSubmitToPanierElt = document.querySelector("input[value='Ajouter au panier']");
+
+            inputNumberElt.addEventListener("click", incrementPrice);
+            inputNumberElt.addEventListener("keyup", incrementPrice);
+
+            var price, max;
+            var priceIndexed = false;
+            function incrementPrice(e){
+
+                var value = e.target.valueAsNumber;
+
+                if(priceIndexed === false){
+                    price = priceElt.textContent;
+                    max = inputNumberElt.getAttribute("max");
+                    priceIndexed = true;
+                }
+
+                if (value > max) {
+                    quantityMaxAlertElt.textContent = "La quantité maximale disponible est de " + max + " exemplaires.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * max;
+                    this.value = max;
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
+                else if(value === 0){
+                    quantityMaxAlertElt.textContent = "La valeur \"0\" n'est pas valide.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * 1;
+                    this.value = 1;
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
+                else if(this.value === ""){
+                    quantityMaxAlertElt.textContent = "Merci d'indiquer une valeur.";
+                    quantityMaxAlertElt.style.display = "block";
+                    quantityMaxAlertElt.style.color = "red";
+                    priceElt.textContent = price * 1;
+                    inputSubmitToPanierElt.addEventListener("mouseover", alertQuantity);
+                }
+                else{
+                    priceElt.textContent = price * value;
+                    quantityMaxAlertElt.style.display = "none";
+                    inputSubmitToPanierElt.removeEventListener("mouseover", alertQuantity);
+                }
+            }
+        });
+    </script>
+{% endblock %}
