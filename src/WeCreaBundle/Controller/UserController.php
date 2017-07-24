@@ -291,7 +291,7 @@ class UserController extends Controller
 
         $command = new Command();
 
-        // TODO: How status work ??
+        // TODO: Modify get status
         $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
@@ -453,6 +453,7 @@ class UserController extends Controller
             }
 
             if ($response == 'AUTHORISED'){
+	            // TODO: Modify get status
                 $status = $Status->findOneById(4);
                 $session->remove('basket');
                 $works = $command->getWorks();
@@ -506,9 +507,11 @@ class UserController extends Controller
                 $this->get('mailer')->send($message);
             }
             elseif ($response == 'REFUSED'){
+	            // TODO: Modify get status
                 $status = $Status->findOneById(3);
             }
             elseif ($response == 'WAITING_AUTHORISATION' || $response == 'AUTHORISED_TO_VALIDATE') {
+	            // TODO: Modify get status
                 $status = $Status->findOneById(2);
             }
         }
