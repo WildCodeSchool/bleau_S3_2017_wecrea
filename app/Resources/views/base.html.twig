@@ -52,6 +52,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
+            @import url('https://fonts.googleapis.com/css?family=Pompiere');
+
+
+            /* BASE */
+            html,
+            body {
+                font-family: 'Pompiere', cursive;
+                font-style: italic;
+            }
             .wrapper {
                 display: flex;
                 align-items: center;
@@ -59,7 +68,7 @@
             }
 
             .item {
-                max-width: 50%;
+                max-width: 100%;
                 margin-top: 10%;
             }
         </style>
@@ -68,6 +77,9 @@
 
         <div class="wrapper">
             <img class="item" src="{{ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
+        </div>
+        <div class="center-align">
+            <h1>Coming soon...</h1>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
