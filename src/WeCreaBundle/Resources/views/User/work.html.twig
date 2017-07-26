@@ -69,12 +69,39 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Structure -->
+        <div id="successAddBasket" class="modal center-align">
+            <div class="modal-content">
+                <p>L'oeuvre a bien été ajouter au panier </p>
+            </div>
+            <div class="modal-content">
+                <a class="btn black" href="{{ path('we_crea_works') }}">Continuez mes achats</a>
+                <a class="btn black" href="{{ path('we_crea_basket') }}">Voir mon panier</a>
+            </div>
+        </div>
     </main>
 
 {% endblock %}
 
 {% block javascripts %}
     <script>
+        $("form[name=addBasket]").submit(function(e){
+            e.preventDefault();
+            var qt = $('input[name=quantity]').val();
+            var caract = $( "select[name=caract] option:selected" ).val();
+            var worksId = "{{ work.id }}";
+            var data = { 'work_id': worksId, 'caract': caract, 'quantity': qt };
+            $.ajax({
+                method: 'POST',
+                url: "{{ path('we_crea_add_basket') }}",
+                data: data,
+                success: function (response){
+                    $('#successAddBasket').modal('open');
+                }
+            })
+        });
+
         $(document).ready( function () {
 
             var quantityMaxAlertElt = document.getElementById("alert-quantity-max");

@@ -332,6 +332,11 @@ textarea{
     color: black!important;
 }
 
+.moreLink {
+    color: black!important;
+    cursor: pointer;
+}
+
 #moreLink {
     color: black!important;
     cursor: pointer;

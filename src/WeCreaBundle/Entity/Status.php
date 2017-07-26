@@ -7,16 +7,9 @@ namespace WeCreaBundle\Entity;
  */
 class Status
 {
-	// TODO: Modify name and value of constant
-	const NAME = 1;
-	const NAME2 = 2;
-	const NAME3 = 3;
-	const NAME4 = 4;
-
-	// Generated Code
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -29,7 +22,7 @@ class Status
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {

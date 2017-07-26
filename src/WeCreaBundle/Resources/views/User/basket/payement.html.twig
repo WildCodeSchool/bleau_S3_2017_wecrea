@@ -53,12 +53,48 @@
                 </div>
             </div>
         </div>
+        <form action="#">
+            <a class="moreLink" href="#cgv">Conditions générales de vente</a>
+            <p>
+                <input type="checkbox" id="cgv"/>
+                <label for="cgv">J'ai lu et accepté les conditions générales de vente</label>
+            </p>
+        </form>
         <div class="col row center-align">
             <a href="{{ path('we_crea_basket') }}" class="btn black">Modifier mon panier</a>
             <button class="pay btn black" id="{{ commands.id }}">PAYER</button>
         </div>
         {% include '@WeCrea/User/basket/formPayzen.html.twig' %}
     </div>
+
+    <!-- Modal Structure -->
+    <div id="cgv" class="modal">
+        <div class="modal-content">
+            <h4 style="color: black !important;">Conditions générales de vente</h4>
+            {% autoescape %}
+                {{ cgv | raw }}
+            {% endautoescape %}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="acceptCgv" class="modal">
+        <div class="modal-content">
+            <h5 style="color: black !important;">Veuillez lire et accepter les conditions générales de vente</h5>
+            <p>
+                {% autoescape %}
+                    {{ cgv | raw }}
+                {% endautoescape %}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+        </div>
+    </div>
+
 </main>
 {% endblock %}
 
@@ -67,21 +103,28 @@
         $(document).ready( function () {
             $('.pay').on('click', function (e) {
                 e.preventDefault();
-                var data = {'id': $(this).attr('id')};
-                $.ajax({
-                    method: 'post',
-                    url: '{{ path('we_crea_check_quant') }}',
-                    data: data,
+                if ($('#cgv').is(':checked'))
+                {
+                    var data = {'id': $(this).attr('id')};
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ path('we_crea_check_quant') }}',
+                        data: data,
 
-                    success: function (response) {
-                        console.log(response);
-                        if(response == 'ok') {
-                            $('form[name="formPay"]').submit();
-                        }else{
-                            alert(response);
+                        success: function (response) {
+                            console.log(response);
+                            if(response == 'ok') {
+                                $('form[name="formPay"]').submit();
+                            }else{
+                                alert(response);
+                            }
                         }
-                    }
-                })
+                    })
+                }
+                else{
+                    $('#acceptCgv').modal('open');
+                }
+
             })
         })
 

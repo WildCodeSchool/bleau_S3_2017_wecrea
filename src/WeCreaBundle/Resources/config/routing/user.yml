@@ -41,7 +41,7 @@ we_crea_basket:
 we_crea_add_basket:
     path: /work/basket/add
     defaults: {_controller: "WeCreaBundle:User:addBasket"}
-    methods: 'POST'
+    methods: ['POST', 'GET']
 
 we_crea_delete_basket:
     path: /work/basket/delete

@@ -88,60 +88,8 @@
 
 
 {% block footer %}
-    <footer class="page-footer">
-        <div class="container container_footer">
-            <div class="row row_custom" style="margin-bottom: 0">
-                <div class="col l6 s12">
-                    <a href="#defiscalisation"><h5>En savoir plus sur la fiscalité entreprises</h5></a>
-                    <form name="newsletter" method="post" id="form-newsletter" action="{{ path('we_crea_newsletter') }}">
-                        <div>
-                            <label for="newsletter" style="font-size: 1em; height: 30px;">Inscription Newsletter</label>
-                        </div>
-                        <div>
-                            <input type="email" name="email" placeholder="Saisissez votre email" required style="width: 60%; height: 30px; background: #fff; text-indent: 5px;">
-                            <input type="submit" style="background: black; height: 30px; width: 100px; border: none; color: #fff;">
-                        </div>
 
-                    </form>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5>Contacts</h5>
-                    <ul>
-                        <li><a href="{{ path('we_crea_contact') }}">Nous contacter</a></li>
-                        <li><a href="#!">Facebook</a></li>
-                        <li><a href="#!">Twitter</a></li>
-                        <li><a href="#!">Instagram</a></li>
-                        <li><a href="#!">Youtube</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright bar_footer">
-            <div class="container">
-                <div class="row center-align">
-                    <div class="col m6 s12">
-                        © 2017 Copyright WCS & We-Crea
-                    </div>
-                    <div class="col m6 s12">
-                        <a id="moreLink">Contactez-nous</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal Structure -->
-    <div id="defiscalisation" class="modal">
-        <div class="modal-content">
-            <h4>Fiscalité entreprises</h4>
-            {% autoescape %}
-                {{ render(controller('WeCreaBundle:User:renderFooter')) | raw }}
-            {% endautoescape %}
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
-        </div>
-    </div>
+    {{ render(controller('WeCreaBundle:User:renderFooter')) }}
 
 {% endblock %}
 {% block javascripts %}
