@@ -219,6 +219,27 @@ class WorksController extends Controller
         ));
     }
 
+    public function editCaractAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$idCaract = $request->request->get('idcaract');
+    	$qt = $request->request->get('qt');
+    	$dimension = $request->request->get('dimension');
+    	$price = $request->request->get('price');
+    	$wheight = $request->request->get('wheight');
+
+    	$caract = $em->getRepository(Caract::class)->findOneBy(array('id' => $idCaract));
+
+    	$caract->setDimension($dimension);
+    	$caract->setQuantity($qt);
+    	$caract->setPrice($price);
+    	$caract->setWeigth($wheight);
+
+    	$em->flush();
+
+    	return new Response('ok');
+    }
+
     public function deleteWorkImageAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
 
