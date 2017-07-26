@@ -15,4 +15,24 @@ WeCreaBundle\Entity\Legal:
             type: float
         defiscalisation:
             type: text
+        cgv:
+            type: text
+        cgu:
+            type: text
+        facebook:
+            type: string
+            length: 255
+            nullable: true
+        twitter:
+            type: string
+            length: 255
+            nullable: true
+        instagram:
+            type: string
+            length: 255
+            nullable: true
+        youtube:
+            type: string
+            length: 255
+            nullable: true
     lifecycleCallbacks: {  }

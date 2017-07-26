@@ -10,12 +10,13 @@ class LoadStatusData implements FixtureInterface
 {
 	public function load(ObjectManager $manager)
 	{
-		// TODO: Modify name of constant
 		$allStatus = array(
-			Status::NAME,
-			Status::NAME2,
-			Status::NAME3,
-			Status::NAME4
+			'waitSend',
+			'send',
+			'processingPayment',
+			'payed',
+			'processingDelivery',
+			'send'
 		);
 
 		foreach ($allStatus as $status)

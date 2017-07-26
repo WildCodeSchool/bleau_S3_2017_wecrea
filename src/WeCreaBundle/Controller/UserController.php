@@ -41,11 +41,12 @@ class UserController extends Controller
 
     public function renderFooterAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$defiscalisation = $em->getRepository(Legal::class)->getDefiscalisation();
+	    $em = $this->getDoctrine()->getManager();
+	    $data = $em->getRepository(Legal::class)->getFooter();
 
-    	return new Response($defiscalisation);
-
+	    return $this->render('@WeCrea/layout/footer.html.twig', array(
+	    	'footer' => $data
+	    ));
     }
 
     public function conceptAction() {
@@ -158,7 +159,7 @@ class UserController extends Controller
     /* Method for add a product in basket */
     public function addBasketAction(Request $request) {
         $session = $this->get('session');
-        $req = $request->request;
+        $req = $request->query;
         $idWork = $req->get('work_id');
         $carWork = $req->get('caract');
         $quant = $req->get('quantity');
@@ -168,7 +169,7 @@ class UserController extends Controller
 
         $session->set('basket', $pBasket);
 
-        return $this->redirectToRoute('we_crea_works');
+        return new Response('ok');
     }
 
     /* Method for delete an article from basket */
@@ -285,6 +286,9 @@ class UserController extends Controller
     /* ----- Create Command ----- */
     public function commandAction() {
         $em = $this->getDoctrine()->getManager();
+        $cgv = $em->getRepository(Legal::class)->getCGV();
+
+
         $session = $this->get('session');
 
         $basket = $session->get('basket');
@@ -376,7 +380,8 @@ class UserController extends Controller
             'tva' => $tva,
             'ttc' => $ttc,
             'totalForm' => $totalForm,
-            'Tva' => $Tva[0]->getTva()
+            'Tva' => $Tva[0]->getTva(),
+	        'cgv' => $cgv
         ));
     }
 
