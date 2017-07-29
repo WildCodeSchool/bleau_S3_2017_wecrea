@@ -319,9 +319,9 @@ textarea{
     min-width: 100%!important;
     align-content: center;
     color: black!important;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 1);
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
 }
 
 .container_footer a {
