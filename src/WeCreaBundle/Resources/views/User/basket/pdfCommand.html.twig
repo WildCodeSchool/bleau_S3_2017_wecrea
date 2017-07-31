@@ -51,7 +51,7 @@
 <body>
     <div class="container-fluid">
         <div class="text-center row thanks">
-            <img src="{{ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
+            <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
             <h2>vous remercient de votre commande.</h2>
         </div>
         <div class="row">
