@@ -67,7 +67,7 @@ class ActuController extends Controller {
                 $message = new \Swift_Message();
                 $message
                     ->setSubject('We-Crea - Nouvelle actualité')
-                    ->setFrom('cotedesserts.info@gmail.com')
+                    ->setFrom($this->getParameter('mailer_user'))
                     ->setTo($destination);
                 $image = $message->embed(\Swift_Image::fromPath('images/'.$actu->getImages()->getUrl()));
                 $message->setBody(

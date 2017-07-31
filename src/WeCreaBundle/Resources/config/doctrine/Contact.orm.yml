@@ -25,5 +25,6 @@ WeCreaBundle\Entity\Contact:
         content:
             type: text
         date:
-            type: datetimetz
+            type: datetime
+
     lifecycleCallbacks: {  }

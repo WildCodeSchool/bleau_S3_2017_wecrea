@@ -13,7 +13,7 @@ WeCreaBundle\Entity\SentMessage:
             type: string
             length: 255
         date:
-            type: datetimetz
+            type: datetime
         subject:
             type: string
             length: 255

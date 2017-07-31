@@ -437,7 +437,7 @@ class AdminController extends Controller
             if ($sentMessage->getId() != NULL) {
                 $message = new \Swift_Message();
                 $message->setSubject($sentMessage->getSubject());
-                $message->setFrom('##################################');
+                $message->setFrom($this->getParameter('mailer_user'));
                 $message->setTo($sentMessage->getEmail());
                 $message->setBody(
                     $this->renderView("WeCreaBundle:Admin:sent_message.html.twig", array(

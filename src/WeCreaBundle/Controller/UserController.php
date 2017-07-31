@@ -288,14 +288,12 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $cgv = $em->getRepository(Legal::class)->getCGV();
 
-
         $session = $this->get('session');
 
         $basket = $session->get('basket');
 
         $command = new Command();
 
-        // TODO: Modify get status
         $status = $em->getRepository("WeCreaBundle:Status")->findOneById(1);
         $Works = $em->getRepository('WeCreaBundle:Work');
         $Caracts = $em->getRepository('WeCreaBundle:Caract');
@@ -312,6 +310,7 @@ class UserController extends Controller
         $command->setCountryfact($user->getCountry1());
         $command->setCountrydel($user->getCountry2());
         $command->setPhone($user->getUsername());
+        $command->setIduser($user->getId());
 
         $date = new \DateTime();
         $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
@@ -395,6 +394,7 @@ class UserController extends Controller
         $comand->setNb($id_trans);
         $comand->setDate($date);
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+	    $cgv = $em->getRepository(Legal::class)->getCGV();
 
         $works = $comand->getWorks();
         $total=0;
@@ -420,7 +420,8 @@ class UserController extends Controller
             'tva' => $tva,
             'ttc' => $ttc,
             'Tva' => $Tva[0]->getTva(),
-            'totalForm' => $totalForm
+            'totalForm' => $totalForm,
+	        'cgv' => $cgv
         ));
     }
 
@@ -458,7 +459,6 @@ class UserController extends Controller
             }
 
             if ($response == 'AUTHORISED'){
-	            // TODO: Modify get status
                 $status = $Status->findOneById(4);
                 $session->remove('basket');
                 $works = $command->getWorks();
@@ -496,7 +496,7 @@ class UserController extends Controller
                 /* Let's send a command confirmation to the customer */
                 $message = new \Swift_Message();
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
-                $message->setFrom('cotedesserts.info@gmail.com');
+                $message->setFrom($this->getParameter('mailer_user'));
                 $message->setTo($command->getMail());
                 $message->setBody(
                     $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
@@ -512,11 +512,9 @@ class UserController extends Controller
                 $this->get('mailer')->send($message);
             }
             elseif ($response == 'REFUSED'){
-	            // TODO: Modify get status
                 $status = $Status->findOneById(3);
             }
             elseif ($response == 'WAITING_AUTHORISATION' || $response == 'AUTHORISED_TO_VALIDATE') {
-	            // TODO: Modify get status
                 $status = $Status->findOneById(2);
             }
         }
@@ -813,8 +811,8 @@ class UserController extends Controller
             $message = new \Swift_Message();
             $message
                     ->setSubject('Nouveau message de '. $contact->getFirstName() . ' ' . $contact->getName())
-                    ->setFrom('contact@wecrea.fr')
-                    ->setTo('contact@wecrea.fr')
+                    ->setFrom($this->getParameter('mailer_user'))
+                    ->setTo($this->getParameter('mailer_user'))
                     ->setBody(
                         '<p><b> Coordonnées du contact : </b><br /><br />
                             <b>Email : </b> '. $contact->getEmail() . '<br />
