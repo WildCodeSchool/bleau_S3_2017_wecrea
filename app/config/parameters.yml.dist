@@ -21,5 +21,5 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     # API Payzen
-    merchantsite_id: ~
-    certiftest: ~
+    merchantsite_id: Id of your Payzen Application
+    certiftest: Certificat prod or test of you Payzen application
