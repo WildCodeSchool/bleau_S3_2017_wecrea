@@ -503,4 +503,33 @@ class Command
     {
         return $this->works;
     }
+    /**
+     * @var integer
+     */
+    private $iduser;
+
+
+    /**
+     * Set iduser
+     *
+     * @param integer $iduser
+     *
+     * @return Command
+     */
+    public function setIduser($iduser)
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    /**
+     * Get iduser
+     *
+     * @return integer
+     */
+    public function getIduser()
+    {
+        return $this->iduser;
+    }
 }

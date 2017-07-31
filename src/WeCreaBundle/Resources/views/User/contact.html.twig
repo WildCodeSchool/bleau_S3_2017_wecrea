@@ -27,11 +27,19 @@
             </div>
             <div class="input-field">
                 {{ form_label(form.content, 'Message') }}
-                {{ form_widget(form.content, {'attr' : {'style' : 'min-height: 200px;'}}) }}
+                {{ form_widget(form.content, {'attr' : {'class': 'materialize-textarea' }}) }}
                 {{ form_errors(form.content) }}
             </div>
             <input type="submit" value="Envoyer" style="border: none; background: black; color: #fff; padding: 7px; display: block; margin: 0 auto;"/>
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $('textarea').trigger('autoresize');
+    </script>
+
 {% endblock %}

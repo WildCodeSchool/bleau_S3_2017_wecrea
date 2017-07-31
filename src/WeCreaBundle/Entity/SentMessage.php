@@ -8,8 +8,9 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class SentMessage
 {
+
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -23,11 +24,21 @@ class SentMessage
      */
     private $date;
 
+    /**
+     * @var string
+     */
+    private $subject;
+
+    /**
+     * @var string
+     */
+    private $content;
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -59,58 +70,6 @@ class SentMessage
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-    /**
-     * @var string
-     */
-    private $content;
-
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     *
-     * @return SentMessage
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * SentMessage constructor.
-     */
-    public function __construct()
-    {
-        $this->date = new \DateTime();
-    }
-    /**
-     * @var string
-     */
-    private $subject;
-
-
-    /**
      * Set date
      *
      * @param \DateTime $date
@@ -122,6 +81,16 @@ class SentMessage
         $this->date = $date;
 
         return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
     /**
@@ -146,5 +115,29 @@ class SentMessage
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return SentMessage
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

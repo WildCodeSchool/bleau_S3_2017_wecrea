@@ -7,8 +7,9 @@ namespace WeCreaBundle\Entity;
  */
 class Subscriber
 {
+   
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -22,11 +23,16 @@ class Subscriber
      */
     private $date;
 
+    /**
+     * @var string
+     */
+    private $token;
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -80,11 +86,6 @@ class Subscriber
     {
         return $this->date;
     }
-    /**
-     * @var string
-     */
-    private $token;
-
 
     /**
      * Set token

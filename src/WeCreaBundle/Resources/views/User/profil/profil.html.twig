@@ -151,7 +151,9 @@
                             <td>
                                 {% if comand.status.name == 'payed' %}
                                     <p style="color: green;">Paiement effectué, en cours de livraison<br></p>
+
                                     <a class="pdfGen" href="#" id="{{ comand.id }}">Télécharger la facture</a>
+
                                 {% elseif comand.status.name == 'error' %}
                                     <p style="color: red;">Erreur de paiement</p>
                                 {% elseif comand.status.name == 'payProg' %}
@@ -161,7 +163,7 @@
 
                                 {% endif %}
                                  {% if comand.status.name != 'payed' and comand.status.name != 'payProg' %}
-                                <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
+                                <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">Aller vers la page de paiement</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -213,6 +215,7 @@
                 }}
             );
         });
+
 
         // --- PDF GENERATOR --- //
         $('.pdfGen').on('click', function (e) {
