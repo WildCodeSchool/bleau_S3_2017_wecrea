@@ -367,7 +367,17 @@ class UserController extends Controller
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode(
+        	'INTERACTIVE+'.
+	        $totalForm.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        $this->getParameter('merchant_site_id') .
+	        '+'.
+	        $date->format('YmdHis').
+	        '+'.
+	        $id_trans.
+	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+	        $this->getParameter('certif_test'));
 
         $signature = sha1($signature);
 
@@ -408,7 +418,17 @@ class UserController extends Controller
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode(
+        	'INTERACTIVE+'.
+	        $totalForm.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        $this->getParameter('merchant_site_id') .
+	        '+'.
+	        $date->format('YmdHis').
+	        '+'.$id_trans.
+	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+	        $this->getParameter('certif_test')
+        );
 
         $signature = sha1($signature);
 
