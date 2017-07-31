@@ -72,13 +72,15 @@ class ProfilFormType extends AbstractType
 		    $builder->add('sameadress', CheckboxType::class, array(
 			    'label' => 'Mon adresse de facturation est différente de mon adresse de livraison',
 			    'attr' => array(
-				    'checked' => 'checked'
-			    )
+				    'checked' => 'checked',
+			    ),
+			    'required' => false
 		    ));
 	    }
 	    elseif ($status == false){
 		    $builder->add('sameadress', CheckboxType::class, array(
-		    	'label' => 'Mon adresse de facturation est différente de mon adresse de livraison'
+		    	'label' => 'Mon adresse de facturation est différente de mon adresse de livraison',
+			    'required' => false
 		    ));
 	    }
 

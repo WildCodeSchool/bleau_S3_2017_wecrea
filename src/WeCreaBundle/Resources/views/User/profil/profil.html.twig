@@ -110,8 +110,8 @@
                                     {{ form_errors(formUser.current_password) }}
                                 </div>
                             </div>
-                            <div class="input-field row">
-                                <button class="btn waves-effect waves-light connect_button" id="_submit" type="submit" name="_submit">
+                            <div class="input-field row center-align">
+                                <button class="btn black" id="_submit" type="submit" name="_submit">
                                     Valider
                                     <i class="material-icons left">send</i>
                                 </button>
@@ -251,20 +251,30 @@
 
         checkIfSameAdress();
 
+        $('.tabs').click(function () {
+            var form = $('#showFormUser').attr('href');
+            $(form).slideUp();
+        });
+
         $('#app_user_profil_sameadress').change(function() {
             // this will contain a reference to the checkbox
             if (this.checked) {
                 $('#adressFacturration').slideDown();
-                $('#fos_user_registration_form_address2').prop('required',true);
-                $('#fos_user_registration_form_zipCode2').prop('required',true);
-                $('#fos_user_registration_form_town2').prop('required',true);
-                $('#fos_user_registration_form_country2').prop('required',true);
+                $('#app_user_profil_address2').prop('required',true);
+                $('#app_user_profil_zipCode2').prop('required',true);
+                $('#app_user_profil_town2').prop('required',true);
+                $('#app_user_profil_country2').prop('required',true);
             } else {
                 $('#adressFacturration').slideUp();
-                $('#fos_user_registration_form_address2').prop('required',false);
-                $('#fos_user_registration_form_zipCode2').prop('required',false);
-                $('#fos_user_registration_form_town2').prop('required',false);
-                $('#fos_user_registration_form_country2').prop('required',false);
+                $('#app_user_profil_address2').prop('required',false);
+                $('#app_user_profil_zipCode2').prop('required',false);
+                $('#app_user_profil_town2').prop('required',false);
+                $('#app_user_profil_country2').prop('required',false);
+
+                $('#app_user_profil_address2').val($('#app_user_profil_address1').val());
+                $('#app_user_profil_zipCode2').val($('#app_user_profil_zipCode1').val());
+                $('#app_user_profil_town2').val($('#app_user_profil_town1').val());
+                $('#app_user_profil_country2').val($('#app_user_profil_country1').val());
             }
         });
 
