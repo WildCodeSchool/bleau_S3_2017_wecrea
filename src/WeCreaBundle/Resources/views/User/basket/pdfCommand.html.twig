@@ -98,9 +98,15 @@
 
         <div class="col-xs-12">
             <div class="row">
-                <h3><b>N° Commande: </b>{{ command.nb }}</h3>
-                <h3><b>N° Client: {{ command.iduser }}</b></h3>
-                <h3><b><u>Facture N°: {{ command.id }}</u></b></h3>
+                <div class="col-xs-6">
+                    <h3><b>N° Commande: </b>{{ command.nb }}</h3>
+                </div>
+                <div class="col-xs-6">
+                    <div class="pull-right">
+                        <h3><b>N° Client: {{ command.iduser }}</b></h3>
+                    </div>
+                </div>
+                <h3 class="text-center"><b><u>Facture N°: {{ command.id }}</u></b></h3>
                 <p><b>Date de livraison estimée : {{ command.date|date_modify('+' ~ command.delivery ~ ' day' )|date('d/m/Y') }}</b></p>
                 <p><b>Date du règlement : {{ command.date|date('d/m/Y') }}</b></p>
             </div>
@@ -143,8 +149,8 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>{{ total }} €</td>
                         <td>{{ tva }} €</td>
+                        <td>{{ total }} €</td>
                         <td>{{ ttc }} €</td>
                     </tr>
                     </tfoot>
