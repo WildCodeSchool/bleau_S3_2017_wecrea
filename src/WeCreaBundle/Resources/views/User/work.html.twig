@@ -15,7 +15,13 @@
                 <div class="col s12 m12 l7 img_basket">
                     <div class="center-align center-align_custom">
                         {% if images|first.url is defined %}
-                            <img id="zoom_03" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
+                            <img
+                                    id="zoom_03"
+                                    src="{{ images|first.url | imagine_filter('small') }}"
+                                    data-zoom-image="{{ asset('images/' ~ images|first.url) }}"
+                                    {% if work.zoom == 1 %}data-zoom="on"{% else %}data-zoom="off"{% endif %}
+                                    alt="{{ images|first.alt }}"
+                            >
                         {% endif %}
                     </div>
                     <div id="gallery_01">
@@ -107,7 +113,7 @@
             var quantityMaxAlertElt = document.getElementById("alert-quantity-max");
             quantityMaxAlertElt.style.display = "none";
 
-            $("#zoom_03").elevateZoom({
+            $("#zoom_03[data-zoom=on]").elevateZoom({
                 constrainType:"height",
                 constrainSize:350,
                 gallery:'gallery_01',

@@ -7,7 +7,6 @@ namespace WeCreaBundle\Entity;
  */
 class Work
 {
-    
     /**
      * @var integer
      */
@@ -32,6 +31,11 @@ class Work
      * @var integer
      */
     private $timelimit;
+
+	/**
+	 * @var string
+	 */
+	private $zoom;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -282,5 +286,29 @@ class Work
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set zoom
+     *
+     * @param boolean $zoom
+     *
+     * @return Work
+     */
+    public function setZoom($zoom)
+    {
+        $this->zoom = $zoom;
+
+        return $this;
+    }
+
+    /**
+     * Get zoom
+     *
+     * @return boolean
+     */
+    public function getZoom()
+    {
+        return $this->zoom;
     }
 }

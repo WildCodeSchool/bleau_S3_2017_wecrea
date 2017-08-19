@@ -19,6 +19,8 @@ WeCreaBundle\Entity\Work:
             length: 255
         timelimit:
             type: integer
+        zoom:
+            type: boolean
     manyToOne:
         artist:
             targetEntity: WeCreaBundle\Entity\Artist
