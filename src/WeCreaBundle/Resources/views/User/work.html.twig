@@ -26,8 +26,15 @@
                     </div>
                     <div id="gallery_01">
                         {% for image in images %}
-                            <a href="#" data-image="{{ image.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ image.url) }}">
-                                <img src="{{ image.url | imagine_filter('thumb') }}" alt="{{ image.alt }}">
+                            <a
+                                    href="#"
+                                    data-image="{{ image.url | imagine_filter('small') }}"
+                                    data-zoom-image="{{ asset('images/' ~ image.url) }}"
+                            >
+                                <img
+                                        src="{{ image.url | imagine_filter('thumb') }}"
+                                        alt="{{ image.alt }}"
+                                >
                             </a>
                         {% endfor %}
                     </div>
@@ -122,8 +129,13 @@
                 lensSize : 100,
                 //scrollZoom : true,
                 responsive: true
-            }
-        );
+            });
+            $("#zoom_03[data-zoom=off]").elevateZoom({
+                zoomEnabled: false,
+                gallery:'gallery_01',
+                cursor: 'pointer',
+                galleryActiveClass: 'active'
+            });
 
             //pass the images to Fancybox
             $("#zoom_03").bind("click", function(e) {
