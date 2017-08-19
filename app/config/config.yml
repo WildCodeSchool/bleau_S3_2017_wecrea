@@ -12,6 +12,7 @@ parameters:
     merchant_site_id: '%merchantsite_id%'
     certif_test: '%certiftest%'
     pdf: '%kernel.root_dir%/../web/pdf'
+    http_protocol: http
 
 framework:
     #esi: ~
