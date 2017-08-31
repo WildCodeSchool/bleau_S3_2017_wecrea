@@ -27,7 +27,7 @@
             </div>
             {% for work in works %}
                 {% if work.images[0] is defined %}
-                    <div class="card card_custom_work iso_item {{ work.nature.name|replace({"'": '_', ' ': '_'}) }}" data-filter=".{{ work.nature.name|replace({"'": '_', ' ': '_'}) }}">
+                    <div style="word-wrap: break-word; overflow: scroll;" class="card card_custom_work iso_item {{ work.nature.name|replace({"'": '_', ' ': '_'}) }}" data-filter=".{{ work.nature.name|replace({"'": '_', ' ': '_'}) }}">
 
                         <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
                             <div class="card-image waves-effect waves-block waves-light card-image_custom"
