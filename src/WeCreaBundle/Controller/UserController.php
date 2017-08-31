@@ -460,6 +460,7 @@ class UserController extends Controller
                 $sign .= $value . '+';
             }
         }
+
         $sign .= $this->getParameter('certif_test');
         $sign = utf8_encode($sign);
         $signature = sha1($sign);

@@ -44,8 +44,13 @@
                             </div>
                             {% endif %}
                         </div>
+
                     </a>
+
                     <div class="card-content card-content_custom">
+                        <div class="fav_btn" data="{{ work.id }}" style="display: block;">
+                            <button class="btn">Ajouter aux favoris</button>
+                        </div>
                         {% set quantity = 0 %}
                         {% for caract in work.caracts %}
                             {% set quantity = quantity + caract.quantity %}
@@ -65,6 +70,9 @@
                         </p>
                     </div>
                     <div class="card-reveal">
+                        <div class="fav_btn" data="{{ work.id }}" style="display: block; bottom: 0; z-index: 9999999">
+                            <button class="btn">Ajouter aux favoris</button>
+                        </div>
                         <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
                         <p> <b>Description : </b>{{ work.description }} </p>
                     </div>
@@ -78,29 +86,27 @@
     {{ parent() }}
     <script>
         $(document).ready( function () {
+
             $('.fav_btn').on('click', function (e) {
+                e.preventDefault();
+                var data = {'idWork': $(this).attr('data')};
+                var btn = $(this);
+                console.log(data);
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('we_crea_add_fav') }}',
+                    data: data,
 
-                function addFav() {
-                    e.preventDefault();
-                    var data = {'idWork': $(this).attr('data')};
-                    var btn = $(this);
-                    console.log(data);
-                    $.ajax({
-                        method: 'post',
-                        url: '{{ path('we_crea_add_fav') }}',
-                        data: data,
+                    success: function (response) {
+                        Materialize.toast('<span class="toast_custom">' + response.name + ' a été ajouté(e) à vos favoris</span>', 4000) // 4000 is the duration of the toast
 
-                        success: function (response) {
-                            Materialize.toast('<span class="toast_custom">' + response.name + ' a été ajouté(e) à vos favoris</span>', 4000) // 4000 is the duration of the toast
-
-                            $('.fCount').text(response.fCount);
-                            btn.find('button').text('Retirer des favoris');
-                            btn.removeClass('fav_btn');
-                            btn.addClass('fav_btn_delete');
-                            deleteFav();
-                        }
-                    })
-                };
+                        $('.fCount').text(response.fCount);
+                        btn.find('button').text('Retirer des favoris');
+                        btn.removeClass('fav_btn');
+                        btn.addClass('fav_btn_delete');
+                        deleteFav();
+                    }
+                })
             });
 
             $('.fav_btn_delete').on('click', function (e) {

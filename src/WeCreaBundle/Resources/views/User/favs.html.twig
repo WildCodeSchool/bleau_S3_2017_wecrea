@@ -4,7 +4,7 @@
     <main>
         {% include '@WeCrea/layout/nav_works.html.twig' %}
 
-        <div class="cards">
+        <div class="cardz">
             {% for work in favs %}
                 <div class="card card_custom  cardResizer iso_item {{ work.nature.name }} Tous" data-filter=".{{ work.nature.name }}">
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
