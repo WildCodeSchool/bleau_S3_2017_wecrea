@@ -29,22 +29,14 @@
                 <h4> Les oeuvres de l'artiste </h4>
                 <div class="cards">
                 {% for work in artist.works %}
+                    {% if work.images|first != false %}
                     <div class="card card_custom_artist cardResizer">
-                        {% if work.images|first != false %}
-                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
-                                <div
-                                        class="card-image waves-effect waves-block waves-light card-image_custom"
-                                        style="background: url(' {{ work.images|first.url | imagine_filter('large') }} ') center / cover ">
-                                </div>
-                            </a>
-                        {% else %}
-                            <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
-                                <div
-                                        class="card-image waves-effect waves-block waves-light card-image_custom"
-                                        style="background: url(' {{ asset('images/soap.jpg' ) }} ') center / cover ">
-                                </div>
-                            </a>
-                        {% endif %}
+                        <a href="{{ path('we_crea_work', {'id' : work.id} ) }}">
+                            <div
+                                    class="card-image waves-effect waves-block waves-light card-image_custom"
+                                    style="background: url(' {{ work.images|first.url | imagine_filter('large') }} ') center / cover ">
+                            </div>
+                        </a>
                         <div
                                 style="
                                     padding: 10px 10px 0 10px;
@@ -64,6 +56,7 @@
                             <a href="{{ path('we_crea_work', {'id' : work.id} ) }}"> En savoir plus </a>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
                 </div>
             </div>

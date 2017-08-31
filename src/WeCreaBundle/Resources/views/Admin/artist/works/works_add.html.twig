@@ -3,13 +3,13 @@
 {% block body %}
     <main>
         <div class="container">
-            <h4> Création d'une oeuvre </h4>
             <div class="row artist_menu">
+                <h4 style="color: black;"> Création d'une oeuvre </h4>
                 <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une nouvelle oeuvre</a>
                 <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_artist', { 'id': artist.id }) }}">Retour à la liste</a>
             </div>
             <div class="row">
-                <h4 class="center-align; background: green;">Création d'une nouvelle oeuvre</h4>
+                <h4 style="color: black;" class="center-align; background: green;">Création d'une nouvelle oeuvre</h4>
                 {{ form_start(formWork, {'attr' : {'id' : 'work-caracteristics' }} ) }}
                 <div class="row">
                     <div class="input-field col s12">

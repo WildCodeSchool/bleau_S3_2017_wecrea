@@ -32,7 +32,13 @@ class WorkType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => false
             ))
-	        ->add('zoom', CheckboxType::class)
+	        ->add('zoom', CheckboxType::class, array(
+	        	'required' => false,
+		        'attr' => array(
+			        'checked' => true
+		        )
+
+	        ))
         ;
     }
     
