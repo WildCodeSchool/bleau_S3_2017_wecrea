@@ -28,15 +28,20 @@
                     {{ form_errors(edit_form.technic) }}
                     {{ form_widget(edit_form.technic ) }}
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 m6">
                     {{ form_label(edit_form.timelimit, "Délai de livraison") }}
                     {{ form_errors(edit_form.timelimit) }}
                     {{ form_widget(edit_form.timelimit) }}
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 m6">
                     {{ form_errors(edit_form.nature) }}
                     {{ form_widget(edit_form.nature) }}
                     {{ form_label(edit_form.nature, "Nature de l'oeuvre") }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_widget(edit_form.zoom) }}
+                    {{ form_errors(edit_form.zoom) }}
+                    {{ form_label(edit_form.zoom, "Activer le zoom") }}
                 </div>
                 <button class="btn waves-effect waves-light right black update-work" type="submit" name="action">
                     Éditer l'oeuvre

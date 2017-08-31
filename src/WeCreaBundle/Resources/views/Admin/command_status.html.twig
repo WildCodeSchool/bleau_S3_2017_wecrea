@@ -14,6 +14,7 @@
                 <td><b>Email</b></td>
                 <td><b>Status</b></td>
                 <td><b>Envoyer un email</b></td>
+                <td><b>Action</b></td>
             </thead>
             <tbody>
                 {% if commands is defined and commands is not empty %}
@@ -46,6 +47,7 @@
                                     </select>
                                 </td>
                                 <td><a href="{{ path('we_crea_admin_send_message', {email : command.mail} ) }}">Envoyer</a></td>
+                                <td><a href="#" class="deleteCommande" data-target="#confirmationModal" data-idcommand="{{ command.id }}"><i class="material-icons">delete</i></a></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -77,6 +79,24 @@
                     }
                 });
             });
+            $('.deleteCommande').on('click', function (e) {
+                e.preventDefault();
+                $('.deleteCommande').hide();
+                var idCommand = $(this).data('idcommand');
+                var eleme = $(this).parent().parent();
+                $.ajax({
+                    method: 'post',
+                    url: '{{ path('delete_command') }}',
+                    data: {'id': idCommand},
+                    success: function () {
+                        eleme.fadeOut();
+                        $('.deleteCommande').show();
+                    }
+                })
+            });
         });
+
+
+
     </script>
 {% endblock %}

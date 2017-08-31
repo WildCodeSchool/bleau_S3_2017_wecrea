@@ -421,6 +421,21 @@ class AdminController extends Controller
         ]);
     }
 
+    public function deleteCommandAction(Request $request)
+    {
+    	if ($request->isXmlHttpRequest())
+	    {
+		    $idCommand = $request->request->get('id');
+
+		    $em = $this->getDoctrine()->getManager();
+		    $command = $em->getRepository(Command::class)->findOneById($idCommand);
+		    $em->remove($command);
+		    $em->flush();
+
+		    return new JsonResponse(array('msg' => 'ok'));
+	    }
+    }
+
     public function sendEmailToCustomerAction($email, Request $request)
     {
         $sentMessage = new SentMessage();

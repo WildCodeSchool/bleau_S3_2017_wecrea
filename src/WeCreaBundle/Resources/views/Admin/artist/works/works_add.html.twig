@@ -37,6 +37,11 @@
                         {{ form_errors(formWork.nature) }}
                         {{ form_label(formWork.nature, "Nature de l'oeuvre") }}
                     </div>
+                    <div class="input-field col s12">
+                        {{ form_widget(formWork.zoom) }}
+                        {{ form_errors(formWork.zoom) }}
+                        {{ form_label(formWork.zoom, "Activer le zoom") }}
+                    </div>
                 </div>
                 <div class="row">
                     <button class="btn waves-effect waves-light left create-work black" type="submit" name="action">
