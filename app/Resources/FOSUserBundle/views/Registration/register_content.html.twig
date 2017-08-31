@@ -54,6 +54,13 @@
             </div>
 
             <div class="row">
+                <div class="col s12 input-field">
+                    {{ form_widget(form.sameadress, { 'attr': { 'class': 'sameAdress' } }) }}
+                    {{ form_errors(form.sameadress) }}
+                </div>
+            </div>
+
+            <div id="adressFacturration" class="row">
                 <p>Adresse de facturation</p>
                 <div class="col s12 input-field">
                     {{ form_label(form.address2, 'Adresse') }}
@@ -99,3 +106,26 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+</script>
+<script>
+    $('#adressFacturration').hide();
+    $('.sameAdress input').change(function() {
+        // this will contain a reference to the checkbox
+        if (this.checked) {
+            $('#adressFacturration').slideDown();
+            $('#fos_user_registration_form_address2').prop('required',true);
+            $('#fos_user_registration_form_zipCode2').prop('required',true);
+            $('#fos_user_registration_form_town2').prop('required',true);
+            $('#fos_user_registration_form_country2').prop('required',true);
+        } else {
+            $('#adressFacturration').slideUp();
+            $('#fos_user_registration_form_address2').prop('required',false);
+            $('#fos_user_registration_form_zipCode2').prop('required',false);
+            $('#fos_user_registration_form_town2').prop('required',false);
+            $('#fos_user_registration_form_country2').prop('required',false);
+        }
+    });
+
+</script>

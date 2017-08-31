@@ -13,6 +13,7 @@ use WeCreaBundle\Entity\Legal;
 use WeCreaBundle\Entity\Subscriber;
 use WeCreaBundle\Entity\Contact;
 use WeCreaBundle\Entity\Nature;
+use WeCreaBundle\Entity\User;
 use WeCreaBundle\Entity\Work;
 use WeCreaBundle\Entity\WorkPurchased;
 use WeCreaBundle\Form\ContactType;
@@ -40,11 +41,12 @@ class UserController extends Controller
 
     public function renderFooterAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$defiscalisation = $em->getRepository(Legal::class)->getDefiscalisation();
+	    $em = $this->getDoctrine()->getManager();
+	    $data = $em->getRepository(Legal::class)->getFooter();
 
-    	return new Response($defiscalisation);
-
+	    return $this->render('@WeCrea/layout/footer.html.twig', array(
+	    	'footer' => $data
+	    ));
     }
 
     public function conceptAction() {
@@ -157,7 +159,7 @@ class UserController extends Controller
     /* Method for add a product in basket */
     public function addBasketAction(Request $request) {
         $session = $this->get('session');
-        $req = $request->request;
+        $req = $request->query;
         $idWork = $req->get('work_id');
         $carWork = $req->get('caract');
         $quant = $req->get('quantity');
@@ -167,7 +169,7 @@ class UserController extends Controller
 
         $session->set('basket', $pBasket);
 
-        return $this->redirectToRoute('we_crea_works');
+        return new Response('ok');
     }
 
     /* Method for delete an article from basket */
@@ -284,6 +286,8 @@ class UserController extends Controller
     /* ----- Create Command ----- */
     public function commandAction() {
         $em = $this->getDoctrine()->getManager();
+        $cgv = $em->getRepository(Legal::class)->getCGV();
+
         $session = $this->get('session');
 
         $basket = $session->get('basket');
@@ -306,6 +310,7 @@ class UserController extends Controller
         $command->setCountryfact($user->getCountry1());
         $command->setCountrydel($user->getCountry2());
         $command->setPhone($user->getUsername());
+        $command->setIduser($user->getId());
 
         $date = new \DateTime();
         $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
@@ -357,12 +362,22 @@ class UserController extends Controller
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
         $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price))
+        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $total))
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode(
+        	'INTERACTIVE+'.
+	        $totalForm.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        $this->getParameter('merchant_site_id') .
+	        '+'.
+	        $date->format('YmdHis').
+	        '+'.
+	        $id_trans.
+	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+	        $this->getParameter('certif_test'));
 
         $signature = sha1($signature);
 
@@ -374,7 +389,8 @@ class UserController extends Controller
             'tva' => $tva,
             'ttc' => $ttc,
             'totalForm' => $totalForm,
-            'Tva' => $Tva[0]->getTva()
+            'Tva' => $Tva[0]->getTva(),
+	        'cgv' => $cgv
         ));
     }
 
@@ -388,6 +404,7 @@ class UserController extends Controller
         $comand->setNb($id_trans);
         $comand->setDate($date);
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
+	    $cgv = $em->getRepository(Legal::class)->getCGV();
 
         $works = $comand->getWorks();
         $total=0;
@@ -397,11 +414,21 @@ class UserController extends Controller
         }
 
         $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price))
+        $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $total))
             + floatval(preg_replace('/[^\d.]/', '', $tva)), 2);
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-        $signature = utf8_encode('INTERACTIVE+'.$totalForm.'+TEST+978+PAYMENT+SINGLE+3+3+POST+'. $this->getParameter('merchant_site_id') .'+'.$date->format('YmdHis').'+'.$id_trans.'+http://wecrea.wcs-fontainebleau.fr/basket+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay+V2+'.$this->getParameter('certif_test'));
+        $signature = utf8_encode(
+        	'INTERACTIVE+'.
+	        $totalForm.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        $this->getParameter('merchant_site_id') .
+	        '+'.
+	        $date->format('YmdHis').
+	        '+'.$id_trans.
+	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+	        $this->getParameter('certif_test')
+        );
 
         $signature = sha1($signature);
 
@@ -413,7 +440,8 @@ class UserController extends Controller
             'tva' => $tva,
             'ttc' => $ttc,
             'Tva' => $Tva[0]->getTva(),
-            'totalForm' => $totalForm
+            'totalForm' => $totalForm,
+	        'cgv' => $cgv
         ));
     }
 
@@ -489,7 +517,7 @@ class UserController extends Controller
                 /* Let's send a command confirmation to the customer */
                 $message = new \Swift_Message();
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
-                $message->setFrom('cotedesserts.info@gmail.com');
+                $message->setFrom($this->getParameter('mailer_user'));
                 $message->setTo($command->getMail());
                 $message->setBody(
                     $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
@@ -614,6 +642,7 @@ class UserController extends Controller
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
         $comands = $user->getCommands();
+
         $formUser = $this->createForm(ProfilFormType::class, $user);
 
         $formUser->handleRequest($request);
@@ -803,8 +832,8 @@ class UserController extends Controller
             $message = new \Swift_Message();
             $message
                     ->setSubject('Nouveau message de '. $contact->getFirstName() . ' ' . $contact->getName())
-                    ->setFrom('contact@wecrea.fr')
-                    ->setTo('contact@wecrea.fr')
+                    ->setFrom($this->getParameter('mailer_user'))
+                    ->setTo($this->getParameter('mailer_user'))
                     ->setBody(
                         '<p><b> Coordonnées du contact : </b><br /><br />
                             <b>Email : </b> '. $contact->getEmail() . '<br />

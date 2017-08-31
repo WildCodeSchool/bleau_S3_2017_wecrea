@@ -68,6 +68,8 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
             numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST
             GERMAINMONT');
         $legal->setDefiscalisation('Your text here');
+        $legal->setCgu('Your CGU');
+        $legal->setCgv('Your CGV');
         $manager->persist($legal);
 
         $manager->flush();

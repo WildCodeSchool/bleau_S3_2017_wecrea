@@ -1,7 +1,7 @@
 <form method="POST" name="formPay" action="https://secure.payzen.eu/vads-payment/">
     <input type="hidden" name="vads_action_mode" value="INTERACTIVE" />
     <input type="hidden" name="vads_amount" value="{{ totalForm }}" />
-    <input type="hidden" name="vads_ctx_mode" value="TEST" />
+    <input type="hidden" name="vads_ctx_mode" value="PRODUCTION" />
     <input type="hidden" name="vads_currency" value="978" />
     <input type="hidden" name="vads_page_action" value="PAYMENT" />
     <input type="hidden" name="vads_payment_config" value="SINGLE" />
@@ -12,9 +12,9 @@
     <input type="hidden" name="vads_trans_date" value="{{ commands.date|date("YmdHis") }}" />
     <input type="hidden" name="vads_trans_id" value="{{ idTrans }}" />
     <input type="hidden" name="vads_version" value="V2" />
-    <input type="hidden" name="vads_url_cancel" value="http://wecrea.wcs-fontainebleau.fr/basket" />
-    <input type="hidden" name="vads_url_error" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
-    <input type="hidden" name="vads_url_refused" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
-    <input type="hidden" name="vads_url_success" value="http://wecrea.wcs-fontainebleau.fr/app_dev.php/pay" />
+    <input type="hidden" name="vads_url_cancel" value="https://www.lesartistesdabord.fr/basket" />
+    <input type="hidden" name="vads_url_error" value="https://www.lesartistesdabord.fr/pay" />
+    <input type="hidden" name="vads_url_refused" value="https://www.lesartistesdabord.fr/pay" />
+    <input type="hidden" name="vads_url_success" value="https://www.lesartistesdabord.fr/pay" />
     <input type="hidden" name="signature" value="{{ signature }}"/>
 </form>

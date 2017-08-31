@@ -12,6 +12,7 @@ parameters:
     merchant_site_id: '%merchantsite_id%'
     certif_test: '%certiftest%'
     pdf: '%kernel.root_dir%/../web/pdf'
+    http_protocol: http
 
 framework:
     #esi: ~
@@ -73,6 +74,8 @@ doctrine:
 swiftmailer:
     transport: '%mailer_transport%'
     host: '%mailer_host%'
+    port: '%mailer_port%'
+    auth_mode: '%mailer_auth_mode%'
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }

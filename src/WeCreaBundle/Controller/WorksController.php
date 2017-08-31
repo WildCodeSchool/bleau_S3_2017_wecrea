@@ -158,7 +158,6 @@ class WorksController extends Controller
 
         if ($request->isXmlHttpRequest()) {
 
-            dump($request);
             $workForm = $request->request->get('wecreabundle_work');
             $natureId = $request->request->get('wecreabundle_work')['nature'];
             $newImg = $request->request->get('wecreabundle_images');
@@ -193,8 +192,9 @@ class WorksController extends Controller
 
             if (isset($newCaract)){
                 $formCaract->handleRequest($request);
-
                 $caract->setWork($work);
+                $work->addCaract($caract);
+
                 $em->persist($caract);
                 $em->flush();
 
@@ -217,6 +217,27 @@ class WorksController extends Controller
             'image_form' => $imageForm->createView(),
             'work' => $work,
         ));
+    }
+
+    public function editCaractAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$idCaract = $request->request->get('idcaract');
+    	$qt = $request->request->get('qt');
+    	$dimension = $request->request->get('dimension');
+    	$price = $request->request->get('price');
+    	$wheight = $request->request->get('wheight');
+
+    	$caract = $em->getRepository(Caract::class)->findOneBy(array('id' => $idCaract));
+
+    	$caract->setDimension($dimension);
+    	$caract->setQuantity($qt);
+    	$caract->setPrice($price);
+    	$caract->setWeigth($wheight);
+
+    	$em->flush();
+
+    	return new Response('ok');
     }
 
     public function deleteWorkImageAjaxAction(Request $request){

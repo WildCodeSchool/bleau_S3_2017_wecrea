@@ -57,6 +57,10 @@ we_crea_admin_works_edit:
     path: /{id}/works/edit
     defaults: {_controller: "WeCreaBundle:Works:editWork"}
 
+we_crea_admin_caract_edit:
+    path: /caract/edit
+    defaults: {_controller: "WeCreaBundle:Works:editCaract"}
+
 # ------ Carrousel ROUT
 we_crea_admin_carrousel_edition:
     path: /carrousel/edition
@@ -109,13 +113,17 @@ we_crea_admin_unsubscribe:
 
 we_crea_admin_actu_newsletter:
     path: /actu/newsletter
-    defaults: {_controller: "WeCreaBundle:Admin:actuNewsletter"}
+    defaults: {_controller: "WeCreaBundle:Admin:actuNewslett"}
 
 # Contact list in case of problem with email box
-we_crea_admin_contact:
-    path: /contacts
-    defaults:
-        _controller: "WeCreaBundle:Admin:contact"
+#we_crea_admin_contact:
+#    path: /contacts
+#    defaults:
+#        _controller: "WeCreaBundle:Admin:contact"
+#we_crea_admin_messages_sent:
+#    path: /contact/sent/messages
+#    defaults:
+#        _controller: "WeCreaBundle:Admin:sentEmails"
 
 # Command list
 we_crea_admin_command_status:
@@ -129,16 +137,16 @@ we_crea_admin_send_message:
     defaults:
         _controller: "WeCreaBundle:Admin:sendEmailToCustomer"
 
-we_crea_admin_messages_sent:
-    path: /contact/sent/messages
-    defaults:
-        _controller: "WeCreaBundle:Admin:sentEmails"
-
 # Command status change
 we_crea_admin_change_status:
     path: /command/change
     defaults:
         _controller: "WeCreaBundle:Admin:changeStatus"
+
+delete_command:
+    path: /command/delete
+    defaults:
+        _controller: "WeCreaBundle:Admin:deleteCommand"
 
 # -------- Edit card Isotop -----
 we_crea_admin_edit_isotop:

@@ -14,10 +14,18 @@ class LegalRepository extends \Doctrine\ORM\EntityRepository
 	 * Get text defiscalisation
 	 * @return mixed
 	 */
-	public function getDefiscalisation()
+	public function getFooter()
 	{
 		return $this->createQueryBuilder('l')
-			->select('l.defiscalisation')
+			->select('l.defiscalisation', 'l.cgu', 'l.mention', 'l.facebook', 'l.instagram', 'l.tva', 'l.twitter', 'l.youtube')
+			->getQuery()
+			->getSingleResult();
+	}
+
+	public function getCGV()
+	{
+		return $this->createQueryBuilder('l')
+			->select('l.cgv')
 			->getQuery()
 			->getSingleScalarResult();
 	}

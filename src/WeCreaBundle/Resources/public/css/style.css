@@ -243,13 +243,13 @@ nav ul a:hover {
 
 @media screen and (max-width: 600px) {
     .brand-logo img {
-        height: 50px !important;
+        max-width: 120% !important;
     }
 }
 
 @media screen and (max-width: 480px) {
     .brand-logo img {
-        height: 40px !important;
+        max-width: 120% !important;
     }
 }
 
@@ -319,9 +319,9 @@ textarea{
     min-width: 100%!important;
     align-content: center;
     color: black!important;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 1);
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
 }
 
 .container_footer a {
@@ -330,6 +330,11 @@ textarea{
 
 .footer-copyright {
     color: black!important;
+}
+
+.moreLink {
+    color: black!important;
+    cursor: pointer;
 }
 
 #moreLink {
@@ -798,6 +803,9 @@ form[name="basket"] {
     width: 25%;
 }
 
+.txt_concept p{
+    margin: 0 !important;
+}
 /********** ACTU PAGE ***********/
 
 .actu-user{

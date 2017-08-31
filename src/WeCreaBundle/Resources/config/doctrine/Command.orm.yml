@@ -44,6 +44,8 @@ WeCreaBundle\Entity\Command:
         phone:
             type: string
             length: 255
+        iduser:
+            type: integer
         nb:
             type: string
             length: 255

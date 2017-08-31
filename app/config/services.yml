@@ -15,3 +15,9 @@ services:
     uploader:
         class: WeCreaBundle\Service\FileUploader
         arguments: ['%image_directory%']
+
+    wecrea_user.registration:
+        class: WeCreaBundle\EventListener\RegistrationListener
+        arguments: ['@router']
+        tags:
+            - { name: kernel.event_subscriber }

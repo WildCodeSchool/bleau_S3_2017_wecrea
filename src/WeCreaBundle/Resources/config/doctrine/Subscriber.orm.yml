@@ -14,7 +14,7 @@ WeCreaBundle\Entity\Subscriber:
             length: 255
             unique: true
         date:
-            type: datetimetz
+            type: datetime
         token:
             type: string
             length: 255

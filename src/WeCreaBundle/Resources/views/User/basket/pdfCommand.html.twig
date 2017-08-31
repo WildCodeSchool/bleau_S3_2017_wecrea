@@ -3,80 +3,164 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <style type="text/css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Pompiere');
+
+        .thanks h2{
+            margin-top: -25px;
+            margin-bottom: 25px;
+            font-family: 'Pompiere', cursive;
+        }
+        .thanks img{
+            width: 100%;
+        }
         table {
             width: 100%;
             margin: 30px 0;
-            border-collapse: collapse;
-        }
-
-        table, th, td{
-            border: 1px solid black;
+            text-align: center;
         }
 
         td{
             margin: 0;
             height: 30px;
-            text-align: center;
         }
 
-        #legal-mentions{
-            text-align: justify;
+        .gap{
+            border: none !important;
+            padding-top: 45px !important;
+        }
+
+        .legal-mentions{
+            margin-top: 50px;
         }
     </style>
 </head>
-<h2> <b><i>Les @rtistes d'@bord</i></b> <span style="font-weight: normal">vous remercie de votre commande.</span> </h2>
-<h4><u>Récapitulatif de votre commande</u></h4>
-<p><b>Numéro de commande : </b> {{ command.nb }}</p>
-<p><b>Adresse de livraison : </b><br />
-    {{ command.name }}<br />
-    {{ command.addressdel }}<br />
-    {{ command.zipCodedel }}<br />
-    {{ command.towndel }}<br />
-</p>
 
-<p><b>Adresse de facturation : </b><br />
-    {{ command.name }}<br />
-    {{ command.addressfact }}<br />
-    {{ command.zipCodefact }}<br />
-    {{ command.townfact }}<br />
-</p>
+<body>
+    <div class="container-fluid">
+        <div class="text-center row thanks">
+            <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
+            <h2>vous remercient de votre commande.</h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>
+                    <b>WE-CREA Sarl</b><br>
+                    8, rue Basse<br>
+                    08190 ST Germainmont<br>
+                    FRANCE<br>
+                    06.31.08.82.49 / 06.08.89.45.60<br>
+                    Siret: 79914649300017 – Ape 3299Z<br>
+                    TVA: FR 47799146493
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <div class="pull-right">
+                    <p><b>Le {{ command.date|date('d/m/Y') }}</b></p>
+                    <p><b>M. Mme {{ command.name }}</b></p>
+                    {% if command.addressdel == command.addressfact and
+                    command.zipCodedel == command.zipCodefact and
+                    command.towndel == command.townfact
+                    %}
+                        <p><b>Adresse de facturation / livraison : </b><br />
+                            {{ command.addressdel }}<br />
+                            {{ command.zipCodedel }}<br />
+                            {{ command.towndel }}<br />
+                        </p>
+                    {% else %}
+                        <p><b>Adresse de livraison : </b><br />
+                            {{ command.addressdel }}<br />
+                            {{ command.zipCodedel }}<br />
+                            {{ command.towndel }}<br />
+                        </p><br>
+                        <p><b>Adresse de facturation : </b><br />
+                            {{ command.addressfact }}<br />
+                            {{ command.zipCodefact }}<br />
+                            {{ command.townfact }}<br />
+                        </p>
+                    {% endif %}
+                </div>
 
-<p><b>Date de livraison estimée : {{ command.date|date_modify('+' ~ command.delivery ~ ' day' )|date('d/m/Y') }}</b></p>
+            </div>
+        </div>
 
-<p><b>Date du règlement : {{ command.date|date('d/m/Y') }}</b></p>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3><b>N° Commande: </b>{{ command.nb }}</h3>
+                </div>
+                <div class="col-xs-6">
+                    <div class="pull-right">
+                        <h3><b>N° Client: {{ command.iduser }}</b></h3>
+                    </div>
+                </div>
+                <h3 class="text-center"><b><u>Facture N°: {{ command.id }}</u></b></h3>
+                <p><b>Date de livraison estimée : {{ command.date|date_modify('+' ~ command.delivery ~ ' day' )|date('d/m/Y') }}</b></p>
+                <p><b>Date du règlement : {{ command.date|date('d/m/Y') }}</b></p>
+            </div>
 
-<table>
-    <thead>
-        <th><b>Titre de l'oeuvre</b></th>
-        <th><b>Caractéristiques</b></th>
-        <th><b>Quantité(s)</b></th>
-        <th><b>Prix H.T.</b></th>
-    </thead>
-    <tbody>
-    {% set total = 0 %}
-    {% for work in command.works %}
-        {% set total = total + work.price * work.quant %}
-        <tr>
-            <td>{{ work.title }}</td>
-            <td>{{ work.caract }}</td>
-            <td>{{ work.quant }}</td>
-            <td>{{ work.price * work.quant}} €</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th><b>Titre de l'oeuvre</b></th>
+                        <th><b>Caractéristiques</b></th>
+                        <th><b>Quantité(s)</b></th>
+                        <th><b>Prix Unitaire H.T.</b></th>
+                    </tr>
 
-<p>Prix total T.T.C : {{ ttc }} €</p>
+                    </thead>
+                    <tbody>
+                    {% set total = 0 %}
+                    {% for work in command.works %}
+                        {% set total = total + work.price * work.quant %}
+                        <tr>
+                            <td>{{ work.title }}</td>
+                            <td>{{ work.caract }}</td>
+                            <td>{{ work.quant }}</td>
+                            <td>{{ work.price * work.quant}} €</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot> <!-- Pied de tableau -->
 
+                    <tr>
+                        <td class="gap">
 
-<p id="legal-mentions">
-    <b>{{ legal }}</b>
-</p>
-
-
-
-
-
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>T.V.A ({{ Tva }}%)</th>
+                        <th>Total H.T</th>
+                        <th>Total T.T.C</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{ tva }} €</td>
+                        <td>{{ total }} €</td>
+                        <td>{{ ttc }} €</td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="row legal-mentions text-center">
+                <b>{{ legal | raw }}</b>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

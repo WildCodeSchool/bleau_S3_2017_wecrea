@@ -12,7 +12,9 @@
 namespace WeCreaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,11 +31,27 @@ class RegistrationFormType extends AbstractType
             ->add('zipCode1', NumberType::class)
             ->add('town1', TextType::class)
             ->add('country1', TextType::class)
-            ->add('address2', TextType::class)
-            ->add('zipCode2', NumberType::class)
-            ->add('town2', TextType::class)
-            ->add('country2', TextType::class)
-        ;
+            ->add('address2', TextType::class, array(
+            	'required' => false,
+            ))
+            ->add('zipCode2', NumberType::class, array(
+            	'required' => false,
+            ))
+            ->add('town2', TextType::class, array(
+            	'required' => false,
+            ))
+            ->add('country2', TextType::class, array(
+            	'required' => false,
+            ))
+	        ->add('sameadress', ChoiceType::class, array(
+		        'choices'  => array(
+			        'Mon adresse de facturation est différente de mon adresse de livraison' => true),
+		        'expanded' => true,
+		        'multiple' => true
+	        ));
+
+
+
     }
 
     public function getParent()

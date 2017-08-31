@@ -421,6 +421,21 @@ class AdminController extends Controller
         ]);
     }
 
+    public function deleteCommandAction(Request $request)
+    {
+    	if ($request->isXmlHttpRequest())
+	    {
+		    $idCommand = $request->request->get('id');
+
+		    $em = $this->getDoctrine()->getManager();
+		    $command = $em->getRepository(Command::class)->findOneById($idCommand);
+		    $em->remove($command);
+		    $em->flush();
+
+		    return new JsonResponse(array('msg' => 'ok'));
+	    }
+    }
+
     public function sendEmailToCustomerAction($email, Request $request)
     {
         $sentMessage = new SentMessage();
@@ -437,7 +452,7 @@ class AdminController extends Controller
             if ($sentMessage->getId() != NULL) {
                 $message = new \Swift_Message();
                 $message->setSubject($sentMessage->getSubject());
-                $message->setFrom('##################################');
+                $message->setFrom($this->getParameter('mailer_user'));
                 $message->setTo($sentMessage->getEmail());
                 $message->setBody(
                     $this->renderView("WeCreaBundle:Admin:sent_message.html.twig", array(

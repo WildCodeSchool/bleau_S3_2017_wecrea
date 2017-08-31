@@ -7,8 +7,9 @@ namespace WeCreaBundle\Entity;
  */
 class Contact
 {
+
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -33,6 +34,11 @@ class Contact
     private $phonenumber;
 
     /**
+     * @var string
+     */
+    private $content;
+
+    /**
      * @var \DateTime
      */
     private $date;
@@ -41,7 +47,7 @@ class Contact
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -145,35 +151,6 @@ class Contact
     }
 
     /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Contact
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-    /**
-     * @var string
-     */
-    private $content;
-
-
-    /**
      * Set content
      *
      * @param string $content
@@ -195,5 +172,29 @@ class Contact
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Contact
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

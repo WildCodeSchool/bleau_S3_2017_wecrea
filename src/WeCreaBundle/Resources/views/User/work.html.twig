@@ -15,13 +15,26 @@
                 <div class="col s12 m12 l7 img_basket">
                     <div class="center-align center-align_custom">
                         {% if images|first.url is defined %}
-                            <img id="zoom_03" src="{{ images|first.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ images|first.url) }}" alt="{{ images|first.alt }}">
+                            <img
+                                    id="zoom_03"
+                                    src="{{ images|first.url | imagine_filter('small') }}"
+                                    data-zoom-image="{{ asset('images/' ~ images|first.url) }}"
+                                    {% if work.zoom == 1 %}data-zoom="on"{% else %}data-zoom="off"{% endif %}
+                                    alt="{{ images|first.alt }}"
+                            >
                         {% endif %}
                     </div>
                     <div id="gallery_01">
                         {% for image in images %}
-                            <a href="#" data-image="{{ image.url | imagine_filter('small') }}" data-zoom-image="{{ asset('images/' ~ image.url) }}">
-                                <img src="{{ image.url | imagine_filter('thumb') }}" alt="{{ image.alt }}">
+                            <a
+                                    href="#"
+                                    data-image="{{ image.url | imagine_filter('small') }}"
+                                    data-zoom-image="{{ asset('images/' ~ image.url) }}"
+                            >
+                                <img
+                                        src="{{ image.url | imagine_filter('thumb') }}"
+                                        alt="{{ image.alt }}"
+                                >
                             </a>
                         {% endfor %}
                     </div>
@@ -61,12 +74,23 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <p><b>Technique mise en oeuvre</b> : <br />{{ work.technic }}</p>
+                        <p><b>Technique mise en oeuvre</b> : <br />{{ work.technic|nl2br }}</p>
                     </div>
                     <div class="col s12">
-                        <p><b>Description</b> : <br />{{ work.description }}</p>
+                        <p><b>Description</b> : <br />{{ work.description|nl2br }}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="successAddBasket" class="modal center-align">
+            <div class="modal-content">
+                <p>L'oeuvre a bien été ajouter au panier </p>
+            </div>
+            <div class="modal-content">
+                <a class="btn black" href="{{ path('we_crea_works') }}">Continuez mes achats</a>
+                <a class="btn black" href="{{ path('we_crea_basket') }}">Voir mon panier</a>
             </div>
         </div>
     </main>
@@ -75,12 +99,28 @@
 
 {% block javascripts %}
     <script>
+        $("form[name=addBasket]").submit(function(e){
+            e.preventDefault();
+            var qt = $('input[name=quantity]').val();
+            var caract = $( "select[name=caract] option:selected" ).val();
+            var worksId = "{{ work.id }}";
+            var data = { 'work_id': worksId, 'caract': caract, 'quantity': qt };
+            $.ajax({
+                method: 'POST',
+                url: "{{ path('we_crea_add_basket') }}",
+                data: data,
+                success: function (response){
+                    $('#successAddBasket').modal('open');
+                }
+            })
+        });
+
         $(document).ready( function () {
 
             var quantityMaxAlertElt = document.getElementById("alert-quantity-max");
             quantityMaxAlertElt.style.display = "none";
 
-            $("#zoom_03").elevateZoom({
+            $("#zoom_03[data-zoom=on]").elevateZoom({
                 constrainType:"height",
                 constrainSize:350,
                 gallery:'gallery_01',
@@ -89,8 +129,13 @@
                 lensSize : 100,
                 //scrollZoom : true,
                 responsive: true
-            }
-        );
+            });
+            $("#zoom_03[data-zoom=off]").elevateZoom({
+                zoomEnabled: false,
+                gallery:'gallery_01',
+                cursor: 'pointer',
+                galleryActiveClass: 'active'
+            });
 
             //pass the images to Fancybox
             $("#zoom_03").bind("click", function(e) {

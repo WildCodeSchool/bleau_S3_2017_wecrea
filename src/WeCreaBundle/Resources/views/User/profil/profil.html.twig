@@ -25,12 +25,12 @@
                         <div class="input-field">
                             <div class="row">
                                 <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.firstname, 'Prénom') }}
+                                    {{ form_label(formUser.firstname) }}
                                     {{ form_widget(formUser.firstname) }}
                                     {{ form_errors(formUser.firstname) }}
                                 </div>
                                 <div class="col m6 s12 input-field">
-                                    {{ form_label(formUser.name, 'Nom') }}
+                                    {{ form_label(formUser.name) }}
                                     {{ form_widget(formUser.name) }}
                                     {{ form_errors(formUser.name) }}
                                 </div>
@@ -50,46 +50,54 @@
                             <div class="row">
                                 <p>Adresse de livraison</p>
                                 <div class="col s12 input-field">
-                                    {{ form_label(formUser.address1, 'Adresse') }}
+                                    {{ form_label(formUser.address1) }}
                                     {{ form_widget(formUser.address1) }}
                                     {{ form_errors(formUser.address1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.zipCode1, 'Code postal') }}
+                                    {{ form_label(formUser.zipCode1) }}
                                     {{ form_widget(formUser.zipCode1) }}
                                     {{ form_errors(formUser.zipCode1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.town1, 'Ville') }}
+                                    {{ form_label(formUser.town1) }}
                                     {{ form_widget(formUser.town1) }}
                                     {{ form_errors(formUser.town1) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.country1, 'Pays') }}
+                                    {{ form_label(formUser.country1) }}
                                     {{ form_widget(formUser.country1) }}
                                     {{ form_errors(formUser.country1) }}
                                 </div>
                             </div>
 
                             <div class="row">
+                                <div class="col s12 input-field">
+                                    {{ form_widget(formUser.sameadress, { 'attr': { 'class': 'sameAdress' } }) }}
+                                    {{ form_label(formUser.sameadress) }}
+                                    {{ form_errors(formUser.sameadress) }}
+                                </div>
+                            </div>
+
+                            <div id="adressFacturration" class="row">
                                 <p>Adresse de facturation</p>
                                 <div class="col s12 input-field">
-                                    {{ form_label(formUser.address2, 'Adresse') }}
+                                    {{ form_label(formUser.address2) }}
                                     {{ form_widget(formUser.address2) }}
                                     {{ form_errors(formUser.address2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.zipCode2, 'Code postale') }}
+                                    {{ form_label(formUser.zipCode2) }}
                                     {{ form_widget(formUser.zipCode2) }}
                                     {{ form_errors(formUser.zipCode2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.town2, 'Ville') }}
+                                    {{ form_label(formUser.town2) }}
                                     {{ form_widget(formUser.town2) }}
                                     {{ form_errors(formUser.town2) }}
                                 </div>
                                 <div class="col m4 s12 input-field">
-                                    {{ form_label(formUser.country2, 'Pays') }}
+                                    {{ form_label(formUser.country2) }}
                                     {{ form_widget(formUser.country2) }}
                                     {{ form_errors(formUser.country2) }}
                                 </div>
@@ -102,8 +110,8 @@
                                     {{ form_errors(formUser.current_password) }}
                                 </div>
                             </div>
-                            <div class="input-field row">
-                                <button class="btn waves-effect waves-light connect_button" id="_submit" type="submit" name="_submit">
+                            <div class="input-field row center-align">
+                                <button class="btn black" id="_submit" type="submit" name="_submit">
                                     Valider
                                     <i class="material-icons left">send</i>
                                 </button>
@@ -143,7 +151,9 @@
                             <td>
                                 {% if comand.status.name == 'payed' %}
                                     <p style="color: green;">Paiement effectué, en cours de livraison<br></p>
+
                                     <a class="pdfGen" href="#" id="{{ comand.id }}">Télécharger la facture</a>
+
                                 {% elseif comand.status.name == 'error' %}
                                     <p style="color: red;">Erreur de paiement</p>
                                 {% elseif comand.status.name == 'payProg' %}
@@ -153,7 +163,7 @@
 
                                 {% endif %}
                                  {% if comand.status.name != 'payed' and comand.status.name != 'payProg' %}
-                                <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
+                                <br><a href="{{ path('we_crea_payement', {'id': comand.id}) }}">Aller vers la page de paiement</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -173,6 +183,9 @@
         $(document).ready( function () {
             $('.artist_menu').show();
 
+            /////////////////////////////
+            //// Commande Tab
+            /////////////////////////////
             // Datatable Init
             $('#works_table').DataTable({
                 "dom": '<lf<t>ip>',
@@ -203,33 +216,17 @@
             );
         });
 
-        $('form[name="app_user_profil"]').submit( function (e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            $.ajax({
-                method: 'post',
-                url: '{{ path('we_crea_user_profil') }}',
-                data: data,
 
-                success: function (response) {
-                    console.log(response);
-                    $('#userProfil').remove();
-                    $('#profilCont').append(response);
-                    $('#formUser').slideUp(200);
-                }
-            });
-        });
-        
         // --- PDF GENERATOR --- //
         $('.pdfGen').on('click', function (e) {
             e.preventDefault();
             var data ={'id': $(this).attr('id')};
-            
+
             $.ajax({
                 method: 'get',
                 url: '{{ path('we_crea_command_pdf') }}',
                 data: data,
-                
+
                 success: function (response) {
                     console.log(response);
                     var link=document.createElement('a');
@@ -239,6 +236,65 @@
                     link.click();
                 }
             })
-        })
+        });
+
+        /////////////////////////////
+        //// Profil Tab
+        /////////////////////////////
+        function checkIfSameAdress(){
+            if( $('#app_user_profil_sameadress').is(':checked') ){
+                $('#adressFacturration').show();
+            } else {
+                $('#adressFacturration').hide();
+            }
+        }
+
+        checkIfSameAdress();
+
+        $('.tabs').click(function () {
+            var form = $('#showFormUser').attr('href');
+            $(form).slideUp();
+        });
+
+        $('#app_user_profil_sameadress').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                $('#adressFacturration').slideDown();
+                $('#app_user_profil_address2').prop('required',true);
+                $('#app_user_profil_zipCode2').prop('required',true);
+                $('#app_user_profil_town2').prop('required',true);
+                $('#app_user_profil_country2').prop('required',true);
+            } else {
+                $('#adressFacturration').slideUp();
+                $('#app_user_profil_address2').prop('required',false);
+                $('#app_user_profil_zipCode2').prop('required',false);
+                $('#app_user_profil_town2').prop('required',false);
+                $('#app_user_profil_country2').prop('required',false);
+
+                $('#app_user_profil_address2').val($('#app_user_profil_address1').val());
+                $('#app_user_profil_zipCode2').val($('#app_user_profil_zipCode1').val());
+                $('#app_user_profil_town2').val($('#app_user_profil_town1').val());
+                $('#app_user_profil_country2').val($('#app_user_profil_country1').val());
+            }
+        });
+
+        $('form[name="app_user_profil"]').submit( function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_user_profil') }}',
+                data: data,
+
+                success: function (response) {
+                    $('#userProfil').remove();
+                    $('#profilCont').append(response);
+                    $('#formUser').slideUp(200);
+                    showFormUserProfil();
+                    checkIfSameAdress();
+                }
+            });
+        });
+
     </script>
 {% endblock %}
