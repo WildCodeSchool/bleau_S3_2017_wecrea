@@ -119,7 +119,7 @@ liip_imagine:
                  relative_resize: { widen: 1000 }
         large:
             # adjust the image quality to 75%
-            quality: 100
+            quality: 30
             # list of transformations to apply (the "filters")
             filters:
                  relative_resize: { widen: 500 }

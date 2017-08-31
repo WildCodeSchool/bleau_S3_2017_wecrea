@@ -71,8 +71,9 @@ class UserController extends Controller
         $session = $this->get('session');
 
         $em = $this->getDoctrine()->getManager();
-        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('id'=>'desc'));
-		$natures = $em->getRepository(Nature::class)->findAll();
+//        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('artist'=>'desc'));
+        $works = $em->getRepository('WeCreaBundle:Work')->getAllWorks();
+		$natures = $em->getRepository(Nature::class)->getNatureName();
 
         $container = $this->container;
 

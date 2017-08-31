@@ -10,4 +10,16 @@ namespace WeCreaBundle\Repository;
  */
 class NatureRepository extends \Doctrine\ORM\EntityRepository
 {
+	/**
+	 * Get nature name, picture and fontColor
+	 * @return array
+	 */
+	public function getNatureName()
+	{
+		$qb = $this->createQueryBuilder('n');
+		$qb->select('n.name as name', 'n.fontColor as fontColor')
+			->join('n.images', 'i')
+			->addSelect('i.url as image_url');
+		return $qb->getQuery()->getResult();
+	}
 }
