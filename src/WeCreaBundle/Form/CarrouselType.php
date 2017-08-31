@@ -23,6 +23,12 @@ class CarrouselType extends AbstractType
             ->add('title', TextType::class)
             ->add('rout', TextType::class)
             ->add('images', ImagesType::class)
+	        ->add('fontColor', TextType::class, array(
+	        	'label' => 'Couleur de texte',
+		        'attr' => array(
+			        'class' => 'colorpicker'
+		        )
+	        ))
         ;
     }
     

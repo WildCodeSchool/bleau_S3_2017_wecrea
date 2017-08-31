@@ -27,6 +27,10 @@ class Carrousel
      */
     private $rout;
 
+	/**
+	 * @var string
+	 */
+	private $fontColor;
 
     /**
      * Get id
@@ -36,6 +40,26 @@ class Carrousel
     public function getId()
     {
         return $this->id;
+    }
+
+	/**
+	 * Set fontColor
+	 * @param $fontColor
+	 * @return $this
+	 */
+    public function setFontColor($fontColor)
+    {
+    	$this->fontColor = $fontColor;
+    	return $this;
+    }
+
+	/**
+	 * Return fontColor
+	 * @return string
+	 */
+    public function getFontColor()
+    {
+    	return $this->fontColor;
     }
 
     /**
