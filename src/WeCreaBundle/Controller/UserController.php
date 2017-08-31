@@ -313,7 +313,7 @@ class UserController extends Controller
         $command->setIduser($user->getId());
 
         $date = new \DateTime();
-        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+        $id_trans = intval(str_pad(rand(1,899999),6, "0", STR_PAD_LEFT));
 
         $command->setDate($date);
         $command->setNb($id_trans);
