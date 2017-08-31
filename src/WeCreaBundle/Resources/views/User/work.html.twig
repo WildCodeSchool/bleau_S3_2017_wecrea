@@ -42,7 +42,7 @@
 
                 <div class="col s12 m12 l5 work_desc">
                     <h3>{{ work.title }}</h3>
-                    <p>{{ work.artist.firstname }} {{ work.artist.name }}</p>
+                    <p style="word-wrap: break-word;">{{ work.artist.firstname }} {{ work.artist.name }}</p>
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <div class="row">
                             <p>
