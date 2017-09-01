@@ -11,19 +11,21 @@ use Doctrine\ORM\Query;
  */
 class WorkRepository extends \Doctrine\ORM\EntityRepository
 {
-    /*
-    public function myFindBy($title, $technic, $dimensions, $weight){
-        $query = $this->createQueryBuilder('w');
-        $query->select('w.id, w.title, w.technic, w.dimensions, w.weight, w.timelimit, w.quantity')
+	/**
+	 * Get all works and order by artist name
+	 */
+    public function getAllWorks()
+    {
+		$qb = $this->createQueryBuilder('w');
+		$qb->select('w')
+			->join('w.artist', 'a')
+			->orderBy('a.name', 'asc')
+		;
 
-        ->where('w.title = :title')->setParameter('title', $title)
-        ->Andwhere('w.technic = :technic')->setParameter('technic', $technic)
-        ->AndWhere('w.dimensions = :dimensions')->setParameter('dimensions', $dimensions)
-        ->AndWhere('w.weight = :weight')->setParameter('weight', $weight);
-        return $query->getQuery()->getResult();
+		return $qb->getQuery()->getResult();
+
 
     }
-    */
 
     public function myFindByRegExpWorks($exp){
         $qb = $this->createQueryBuilder('w')

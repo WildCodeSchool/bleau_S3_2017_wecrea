@@ -406,6 +406,10 @@ footer {
     .caption_custom{
         top: 7% !important;
         width: 95% !important;
+        text-align: center;
+    }
+    .caption_custom h3{
+        font-size: 2.5rem;
     }
 }
 
@@ -420,7 +424,19 @@ footer {
     justify-content: space-around;
 }
 
+/****************/
 /** For works **/
+/****************/
+
+/*Always show arrow*/
+#fancybox-left span {
+    left: 20px; !important;
+}
+
+#fancybox-right span {
+    left: auto;
+    right: 0px !important;
+}
 
 .data-zoom-image{
     width: 100%;
@@ -434,7 +450,7 @@ footer {
 .card_custom_work, .card_custom_artist{
     width: 25%;
     margin: 2% 0 2% 7%;
-    padding: 0 5px 40px 5px;
+    padding: 0 5px 0 5px;
 }
 
 .card-title{
@@ -517,6 +533,7 @@ footer {
     border: none;
     box-shadow: none;
     margin: 0 auto;
+    font-size: 1.5em;
 }
 
 .btn_card {

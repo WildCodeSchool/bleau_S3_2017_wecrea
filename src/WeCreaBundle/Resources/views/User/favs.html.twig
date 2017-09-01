@@ -4,7 +4,7 @@
     <main>
         {% include '@WeCrea/layout/nav_works.html.twig' %}
 
-        <div class="cards">
+        <div class="cardz">
             {% for work in favs %}
                 <div class="card card_custom  cardResizer iso_item {{ work.nature.name }} Tous" data-filter=".{{ work.nature.name }}">
                     <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
@@ -19,7 +19,7 @@
                             <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="favori">
                         </div>
                     </div>
-                    <div class="card-reveal">
+                    <div ha sheetclass="card-reveal">
                         <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
                         <p>{{ work.technic }} {{ work.nature.name }}</p>
                         <p>Description</p>

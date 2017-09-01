@@ -1,5 +1,9 @@
 {% extends '@WeCrea/layout/base_admin.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/wecrea/vendor/colorpicker/materialize-colorpicker.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container container-custom-artists">
         <h4 style="background: dodgerblue; color: #fff; padding: 10px;"> Édition du carrousel </h4>
@@ -15,6 +19,11 @@
                         {{ form_label(formCarrousel.content, "Contenu") }}
                         {{ form_widget(formCarrousel.content, {'attr' : {'class': 'materialize-textarea'}} ) }}
                         {{ form_errors(formCarrousel.content) }}
+                    </div>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.fontColor) }}
+                        {{ form_widget(formCarrousel.fontColor) }}
+                        {{ form_errors(formCarrousel.fontColor) }}
                     </div>
                     <div class="input-field">
                         {{ form_label(formCarrousel.rout, "Adresse de la page") }}
@@ -55,8 +64,21 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('bundles/wecrea/vendor/colorpicker/materialize-colorpicker.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready( function(){
+
+            $('.colorpicker').colorpicker({
+                format: 'rgb',
+                color: $('.colorpicker').css('background-color')
+            }).on('changeColor', function(ev) {
+                $(this).css('background-color',ev.color.toHex());
+
+                var form = $(this).parent().parent();
+                var name = form.attr('name');
+                $('.' + name + '_button').css('color',ev.color.toHex());
+            });
 
             $('input[type="file"]').on("change", function(){
                 var $file = $(this)[0].files[0];

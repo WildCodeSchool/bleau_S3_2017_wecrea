@@ -17,6 +17,9 @@ WeCreaBundle\Entity\Carrousel:
         rout:
             type: string
             length: 255
+        fontColor:
+            type: string
+            length: 255
 
     oneToOne:
         images:

@@ -71,8 +71,9 @@ class UserController extends Controller
         $session = $this->get('session');
 
         $em = $this->getDoctrine()->getManager();
-        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('id'=>'desc'));
-		$natures = $em->getRepository(Nature::class)->findAll();
+//        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('artist'=>'desc'));
+        $works = $em->getRepository('WeCreaBundle:Work')->getAllWorks();
+		$natures = $em->getRepository(Nature::class)->getNatureName();
 
         $container = $this->container;
 
@@ -313,7 +314,7 @@ class UserController extends Controller
         $command->setIduser($user->getId());
 
         $date = new \DateTime();
-        $id_trans = intval(str_pad(rand(0,899999),6, "0", STR_PAD_LEFT));
+        $id_trans = intval(str_pad(rand(1,899999),6, "0", STR_PAD_LEFT));
 
         $command->setDate($date);
         $command->setNb($id_trans);
@@ -460,6 +461,7 @@ class UserController extends Controller
                 $sign .= $value . '+';
             }
         }
+
         $sign .= $this->getParameter('certif_test');
         $sign = utf8_encode($sign);
         $signature = sha1($sign);
