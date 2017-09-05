@@ -1,30 +1,38 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
 {% block body %}
-    <main>
-        {% include '@WeCrea/layout/nav_works.html.twig' %}
+    <main class="container">
+        {#{% include '@WeCrea/layout/nav_works.html.twig' %}#}
 
-        <div class="cardz">
+        <div class="cardz row">
             {% for work in favs %}
-                <div class="card card_custom  cardResizer iso_item {{ work.nature.name }} Tous" data-filter=".{{ work.nature.name }}">
-                    <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
-                        <div class="card-image waves-effect waves-block waves-light card-image_custom" style="background: url('{{ asset('images/') }}{{ work.images[0].url }}') center / cover ">
+                <div class="col s4">
+                    <div class="card card_custom">
+                        <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                            <div
+                                    class="card-image waves-effect waves-block waves-light card-image_custom"
+                                    style="background: url('{{ work.images[0].url | imagine_filter('xLarge') }}') center / cover ">
+                            </div>
+                        </a>
+                        <div class="card-content card-content_custom">
+                        <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
+                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
+                        </span>
+                            <p>
+                                <a href="#" class="artist">{{ work.artist.name }}</a>
+                            </p>
+                            <div class="fav_btn" data="{{ work.id }}">
+                                <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="favori">
+                            </div>
                         </div>
-                    </a>
-                    <div class="card-content card-content_custom">
-                                    <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                                        <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus"></span>
-                        <p><a href="#" class="artist">{{ work.artist.name }}</a></p>
-                        <div class="fav_btn" data="{{ work.id }}">
-                            <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="favori">
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
+                            <p>{{ work.technic }} {{ work.nature.name }}</p>
+                            <p>Description</p>
                         </div>
-                    </div>
-                    <div ha sheetclass="card-reveal">
-                        <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                        <p>{{ work.technic }} {{ work.nature.name }}</p>
-                        <p>Description</p>
                     </div>
                 </div>
+
             {% endfor %}
         </div>
 

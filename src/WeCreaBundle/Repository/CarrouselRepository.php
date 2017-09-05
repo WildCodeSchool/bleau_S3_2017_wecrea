@@ -10,4 +10,16 @@ namespace WeCreaBundle\Repository;
  */
 class CarrouselRepository extends \Doctrine\ORM\EntityRepository
 {
+	/**
+	 * Get all picture and description for caroussel homepage
+	 * @return array
+	 */
+	public function getAllCarousselPicture()
+	{
+		$qb = $this->createQueryBuilder('c');
+		$qb->select('c.content', 'c.fontColor', 'c.rout', 'c.title')
+			->join('c.images', 'i')
+			->addSelect('i.url as image_url', 'i.alt as image_alt');
+		return $qb->getQuery()->getResult();
+	}
 }

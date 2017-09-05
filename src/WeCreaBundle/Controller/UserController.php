@@ -26,7 +26,7 @@ class UserController extends Controller
         $session = $this->get('session');
 
         $em = $this->getDoctrine()->getManager();
-        $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->findAll();
+        $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->getAllCarousselPicture();
         $container = $this->container;
 	    shuffle($carrousels);
         $bCount = $container->get('app.basket')->countBasket($session);

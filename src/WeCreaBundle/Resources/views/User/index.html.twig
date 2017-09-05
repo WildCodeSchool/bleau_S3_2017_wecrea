@@ -8,12 +8,10 @@
                     {% for carrousel in carrousels %}
                         <li>
                             <a href="{{ carrousel.rout }}" target="_blank">
-                                <img src="{{ carrousel.images.url | imagine_filter('xLarge') }}" alt="{{ carrousel.images.alt }}">
-                                <div
-                                        style="color: {% if carrousel.fontColor is not null %}{{ carrousel.fontColor }}{% endif %}"
-                                        class="caption left-align caption_custom">
-                                    <h3>{{ carrousel.title }}</h3>
-                                    <p>{{ carrousel.content }}</p>
+                                <img src="{{ carrousel.image_url | imagine_filter('xLarge') }}" alt="{{ carrousel.image_alt }}">
+                                <div class="caption left-align caption_custom">
+                                    <h3 style="color: {% if carrousel.fontColor is not null %}{{ carrousel.fontColor }}{% endif %}">{{ carrousel.title }}</h3>
+                                    <p style="color: {% if carrousel.fontColor is not null %}{{ carrousel.fontColor }}{% endif %}">{{ carrousel.content }}</p>
                                 </div>
                             </a>
                         </li>

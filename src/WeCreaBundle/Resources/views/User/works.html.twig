@@ -16,7 +16,7 @@
                         <button style="
                                 margin-bottom: 0;
                                 height: 70%;
-                                background: url('{{ asset('images/' ~ nature.image_url) }}') center no-repeat;
+                                background: url('{{ nature.image_url | imagine_filter('large') }}') center no-repeat;
                                 color: {{ nature.fontColor }};
                                 background-size: cover;"
                                 class="tous_btn"

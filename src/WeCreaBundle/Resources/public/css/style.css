@@ -359,6 +359,13 @@ textarea{
     border-top: 1px solid rgba(90, 90, 90, 0.7);
 }
 
+@media screen and (max-width: 600px) {
+    .bar_footer .row {
+        font-size: 16px;
+        line-height: 20px;
+    }
+}
+
 footer {
     z-index:100;
     padding-top: 0 !important;
@@ -397,9 +404,9 @@ footer {
 
 .caption_custom {
     text-shadow: -1px 0 #080808, 0 1px #080808, 1px 0 #080808, 0 -1px #080808;
-    top: 75% !important;
-    left: 5% !important;
-    width: 40% !important;
+    top: 50% !important;
+    left: 3% !important;
+    width: 30% !important;
 }
 
 @media (max-width: 600px) {
@@ -409,7 +416,7 @@ footer {
         text-align: center;
     }
     .caption_custom h3{
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 }
 
