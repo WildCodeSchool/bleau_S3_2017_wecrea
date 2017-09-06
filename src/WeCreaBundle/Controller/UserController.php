@@ -560,24 +560,29 @@ class UserController extends Controller
 
 
         $idWork = $request->request->get('idWork');
-        $workName =
-            $this->getDoctrine()->getManager()
-            ->getRepository('WeCreaBundle:Work')->findOneById($idWork)
-            ->getTitle()
-        ;
+        $workName = $this->getDoctrine()->getManager()->getRepository('WeCreaBundle:Work')->getWorkTitle($idWork);
 
         if (!isset($favs[$idWork])){
             $favs[$idWork] = $workName;
+	        $session->set('favs', $favs);
+	        $fCount = $this->container->get('favs')->countFavs($session);
+
+	        $content = array(
+		        'fCount' => $fCount,
+		        'name' => $workName,
+		        'status' => 'true'
+	        );
+
         }
+	    else{
+		    $fCount = $this->container->get('favs')->countFavs($session);
 
-        $session->set('favs', $favs);
-
-        $fCount = $this->container->get('favs')->countFavs($session);
-
-        $content = array(
-            'fCount' => $fCount,
-            'name' => $workName
-        );
+		    $content = array(
+			    'fCount' => $fCount,
+			    'name' => $workName,
+			    'status' => false
+		    );
+	    }
 
         $response = new Response(json_encode($content));
         $response->headers->set('Content-Type', 'application/json');

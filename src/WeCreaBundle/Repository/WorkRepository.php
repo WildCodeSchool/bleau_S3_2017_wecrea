@@ -12,6 +12,21 @@ use Doctrine\ORM\Query;
 class WorkRepository extends \Doctrine\ORM\EntityRepository
 {
 	/**
+	 * Get work title by workId
+	 * @return mixed
+	 */
+	public function getWorkTitle($workId)
+	{
+		return $this
+			->createQueryBuilder('w')
+			->select('w.title')
+			->where('w.id = :workId')
+			->setParameter('workId', $workId)
+			->getQuery()
+			->getSingleScalarResult();
+	}
+
+	/**
 	 * Get all works and order by artist name
 	 */
     public function getAllWorks()
@@ -23,8 +38,6 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
 		;
 
 		return $qb->getQuery()->getResult();
-
-
     }
 
     public function myFindByRegExpWorks($exp){
