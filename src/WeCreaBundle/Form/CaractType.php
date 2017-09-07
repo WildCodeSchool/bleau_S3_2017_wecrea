@@ -20,7 +20,8 @@ class CaractType extends AbstractType
                 "label" => "Dimensions (préciser l'unité)"
             ))
             ->add('weigth', TextType::class, array(
-                "label" => "Poids (préciser l'unité)"
+                "label" => "Poids (préciser l'unité)",
+	            'required' => false
             ))
             ->add('price', IntegerType::class, array(
                 "label" => "Prix (sans sigle)"

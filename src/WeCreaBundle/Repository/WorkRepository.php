@@ -40,6 +40,23 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
 		return $qb->getQuery()->getResult();
     }
 
+	/**
+	 *
+	 * @param $nature String
+	 * @return array
+	 */
+    public function getWorkByNature(String $nature)
+    {
+    	$qb = $this->createQueryBuilder('w');
+    	$qb->select('w')
+		    ->join('w.nature', 'n')
+		    ->where('n.name = :name')
+		    ->setParameter('name', $nature);
+
+    	return $qb->getQuery()->getResult();
+    }
+
+
     public function myFindByRegExpWorks($exp){
         $qb = $this->createQueryBuilder('w')
             ->select('w.id')

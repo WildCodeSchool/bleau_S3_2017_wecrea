@@ -273,7 +273,6 @@ textarea{
 
 .card {
     width: 100%;
-    height: 400px;
 }
 
 /* ADMIN ACTU */
@@ -463,6 +462,7 @@ footer {
 .card-title{
     font-size: 20px !important;
     line-height: 20px !important;
+    text-align: center !important;
 }
 
 .sold{
@@ -513,7 +513,7 @@ footer {
 }
 
 .iso_button {
-    background-color: transparent;
+    background-color: transparent !important;
     color: #313131!important;
     box-shadow: none;
     border-radius: 0;
@@ -535,11 +535,11 @@ footer {
 .tous_btn {
     display: block;
     position: relative;
-    width: 70%;
+    width: 100%;
     background-color: white;
     border: none;
     box-shadow: none;
-    margin: 0 auto;
+    margin: auto;
     font-size: 1.5em;
 }
 
@@ -566,7 +566,7 @@ footer {
     display: block;
     position: absolute;
     right: 3px;
-    top: 5px;
+    top: -6px;
     width: 24px;
     align-self: right;
 }
@@ -592,37 +592,29 @@ footer {
     height: 70%;
 }
 
-.card-content_custom {
-    padding: 10px!important;
-}
-
-.card-content_custom p{
-    margin: 0;
-}
 
 .fav_btn,
 .fav_btn_delete {
     display: none;
     position: absolute;
-    right: 7px;
-    top: 2px;
+    right: 1%;
+    top: 1%;
     cursor: pointer;
 }
-    .fav_btn button,
-    .fav_btn_delete button {
-        color: red;
-        background-color: white;
-        font-size: 0.65em;
-        padding: 0 10px;
-        height: 20px;
-        line-height: 20px;
-        text-transform: none;
-    }
-
-    .fav_btn button:hover {
-        color: red!important;
-        background-color: white!important;
-    }
+.fav_btn button,
+.fav_btn_delete button {
+    color: red;
+    background-color: white;
+    font-size: 0.65em;
+    padding: 0 10px;
+    height: 20px;
+    line-height: 20px;
+    text-transform: none;
+}
+.fav_btn button:hover {
+    color: red!important;
+    background-color: white!important;
+}
 
 .fav_btn_delete button,
 .fav_btn_delete button:hover {

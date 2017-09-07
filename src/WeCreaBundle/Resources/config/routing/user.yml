@@ -15,8 +15,8 @@ we_crea_actu:
     defaults: {_controller: "WeCreaBundle:User:actu"}
 
 we_crea_works:
-    path: /works
-    defaults: {_controller: "WeCreaBundle:User:worksShow"}
+    path: /works/{nature}
+    defaults: {_controller: "WeCreaBundle:User:worksShow", nature: NULL}
 
 we_crea_work:
     path: /work/{id}

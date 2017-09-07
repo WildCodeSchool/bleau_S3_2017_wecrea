@@ -22,4 +22,9 @@ WeCreaBundle\Entity\Nature:
             targetEntity: WeCreaBundle\Entity\Images
             cascade: ['all']
 
+    oneToMany:
+        works:
+            targetEntity: WeCreaBundle\Entity\Work
+            mappedBy: nature
+
     lifecycleCallbacks: {  }

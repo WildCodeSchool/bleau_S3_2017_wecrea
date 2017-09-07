@@ -35,38 +35,28 @@ $(document).ready( function () {
     });
 
 // init Isotope
-    var $grid = $('.cardz').isotope({
-        itemSelector: '.iso_item',
-        layoutMode: 'fitRows'
-    });
+//     var $grid = $('.cardz').isotope({
+//         itemSelector: '.iso_item',
+//         layoutMode: 'fitRows'
+//     });
 
 
 
-// filter functions
-    var filterFns = {};
-    //filter 'Tous' on load
-    var filterValue = '.Tous';
-    // use filterFn if matches value
-    filterValue = filterFns[ filterValue ] || filterValue;
-    $grid.isotope({ filter: filterValue });
-// bind filter button click
-    $('.filters-button-group').on( 'click', 'button', function() {
-        var filterValue = $( this ).attr('data-filter');
-        // use filterFn if matches value
-        filterValue = filterFns[ filterValue ] || filterValue;
-        cardResize();
-        $grid.isotope({ filter: filterValue });
-    });
-
-// change is-checked class on buttons
-    $('.buttons').each( function( i, buttonGroup ) {
-        var $buttonGroup = $(buttonGroup);
-        $buttonGroup.on( 'click', 'button', function() {
-            $('.active_button').removeClass('active_button');
-            var btnClass = $(this).attr('data-filter');
-            $('button[data-filter="' + btnClass + '"]').addClass('active_button');
-        })
-    });
+// // filter functions
+//     var filterFns = {};
+//     //filter 'Tous' on load
+//     var filterValue = '.Tous';
+//     // use filterFn if matches value
+//     filterValue = filterFns[ filterValue ] || filterValue;
+//     $grid.isotope({ filter: filterValue });
+// // bind filter button click
+//     $('.filters-button-group').on( 'click', 'button', function() {
+//         var filterValue = $( this ).attr('data-filter');
+//         // use filterFn if matches value
+//         filterValue = filterFns[ filterValue ] || filterValue;
+//         cardResize();
+//         $grid.isotope({ filter: filterValue });
+//     });
 
     // carousel SLICK -- Work's page
     $('.slider-for').slick({
@@ -85,14 +75,6 @@ $(document).ready( function () {
         centerMode: false,
         focusOnSelect: true,
         variableWidth: true
-    });
-
-    // Show "add favs" button on mouse hover card-image
-    $('.card-image').hover( function () {
-        $(this).find('.fav_btn, .fav_btn_delete').slideDown(200);
-    }, function () {
-        $(this).find('.fav_btn, .fav_btn_delete').slideUp(200);
-
     });
 
     // Materialize Modal

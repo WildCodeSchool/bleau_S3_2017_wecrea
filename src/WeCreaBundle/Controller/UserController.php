@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WeCreaBundle\Entity\Caract;
+use WeCreaBundle\Entity\Carrousel;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Concept;
 use WeCreaBundle\Entity\Legal;
@@ -21,12 +22,16 @@ use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
 {
+	/**
+	 * Render homepage
+	 * @return Response
+	 */
     public function indexAction()
     {
         $session = $this->get('session');
 
         $em = $this->getDoctrine()->getManager();
-        $carrousels = $em->getRepository('WeCreaBundle:Carrousel')->getAllCarousselPicture();
+        $carrousels = $em->getRepository(Carrousel::class)->getAllCarousselPicture();
         $container = $this->container;
 	    shuffle($carrousels);
         $bCount = $container->get('app.basket')->countBasket($session);
@@ -39,6 +44,10 @@ class UserController extends Controller
         ));
     }
 
+	/**
+	 * Render footer
+	 * @return Response
+	 */
     public function renderFooterAction()
     {
 	    $em = $this->getDoctrine()->getManager();
@@ -49,13 +58,15 @@ class UserController extends Controller
 	    ));
     }
 
+	/**
+	 * Render concept page
+	 * @return Response
+	 */
     public function conceptAction() {
         $session = $this->get('session');
 
-        $container = $this->container;
-
-        $bCount = $container->get('app.basket')->countBasket($session);
-        $fCount = $container->get('favs')->countFavs($session);
+        $bCount = $this->get('app.basket')->countBasket($session);
+        $fCount = $this->get('favs')->countFavs($session);
 
         $em = $this->getDoctrine()->getManager();
         $conceptPage = $em->getRepository(Concept::class)->getConceptPage();
@@ -67,29 +78,66 @@ class UserController extends Controller
 
         ));
     }
-    public function worksShowAction() {
+
+	/**
+	 * Render works page
+	 * @return Response
+	 */
+    public function worksShowAction($nature) {
         $session = $this->get('session');
+		$arg = array();
+	    $em = $this->getDoctrine()->getManager();
 
-        $em = $this->getDoctrine()->getManager();
-//        $works = $em->getRepository('WeCreaBundle:Work')->findBy(array(), array('artist'=>'desc'));
-        $works = $em->getRepository('WeCreaBundle:Work')->getAllWorks();
-		$natures = $em->getRepository(Nature::class)->getNatureName();
+	    $natures = $em->getRepository(Nature::class)->getNatureName();
+	    $arg['natures'] = $natures;
 
-        $container = $this->container;
+	    if ($nature !== 'Tous' && $nature !== null) {
+		    $works = $em->getRepository('WeCreaBundle:Work')->getWorkByNature($nature);
+		    $arg['works'] = $works;
+	    }
 
         $favs = $session->get('favs');
 
-        $bCount = $container->get('app.basket')->countBasket($session);
-        $fCount = $container->get('favs')->countFavs($session);
+        $bCount = $this->get('app.basket')->countBasket($session);
+        $fCount = $this->get('favs')->countFavs($session);
 
-        return $this->render('WeCreaBundle:User:works.html.twig', array(
-            'bCount' => $bCount,
-            'fCount' =>$fCount,
-            'works' => $works,
-            'favs' => $favs,
-	        'natures' => $natures
-        ));
+        $arg['bCount'] = $bCount;
+        $arg['fCount'] = $fCount;
+        $arg['favs'] = $favs;
+        $arg['requestNature'] = $nature;
+
+        return $this->render('WeCreaBundle:User:works.html.twig', $arg);
     }
+
+//    public function renderWorksTypeAction(Request $request){
+//    	if ($request->isXmlHttpRequest()){
+//    		$nature = $request->get('nature');
+//		    $em = $this->getDoctrine()->getManager();
+//
+//		    $response = new JsonResponse();
+//		    $content = array();
+//		    if ($nature == 'Tous'){
+//    			$natures = $em->getRepository(Nature::class)->getNatureName();
+//    			$content['view'] = $this->renderView('@WeCrea/User/works_includes/natures.html.twig', array(
+//    				'natures' => $natures
+//			    ));
+//		    }
+//		    else{
+//			    $works = $em->getRepository(Work::class)->getWorkByNature($nature);
+//				$content['view'] = $this->renderView('@WeCrea/User/works_includes/worksView.html.twig', array(
+//					'works' => $works
+//				));
+//		    }
+//		    $response->setData($content);
+//	    }
+//	    else{
+//    		$response = new Response();
+//    		$response->setStatusCode(500);
+//    		$response->setContent('Erreur');
+//	    }
+//
+//	    return $response;
+//    }
 
     public function workShowAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -100,10 +148,8 @@ class UserController extends Controller
         $images = $work->getImages();
         $caracts = $work->getCaracts();
 
-        $container = $this->container;
-
-        $bCount = $container->get('app.basket')->countBasket($session);
-        $fCount = $container->get('favs')->countFavs($session);
+        $bCount = $this->get('app.basket')->countBasket($session);
+        $fCount = $this->get('favs')->countFavs($session);
 
         return $this->render('WeCreaBundle:User:work.html.twig', array(
             'bCount' => $bCount,
@@ -120,10 +166,8 @@ class UserController extends Controller
 
         $session = $this->get('session');
 
-        $container = $this->container;
-
-        $bCount = $container->get('app.basket')->countBasket($session);
-        $fCount = $container->get('favs')->countFavs($session);
+        $bCount = $this->get('app.basket')->countBasket($session);
+        $fCount = $this->get('favs')->countFavs($session);
 
         $artists = $em->getRepository('WeCreaBundle:Artist')->findBy(array(),
             array(
@@ -143,10 +187,8 @@ class UserController extends Controller
 
         $session = $this->get('session');
 
-        $container = $this->container;
-
-        $bCount = $container->get('app.basket')->countBasket($session);
-        $fCount = $container->get('favs')->countFavs($session);
+        $bCount = $this->get('app.basket')->countBasket($session);
+        $fCount = $this->get('favs')->countFavs($session);
 
         $artist = $em->getRepository('WeCreaBundle:Artist')->findOneById($id);
 

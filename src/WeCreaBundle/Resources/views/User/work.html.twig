@@ -28,7 +28,7 @@
                             text-align: right;
                             margin-top: 0;
                         ">
-                    By {{ work.artist.firstname }} {{ work.artist.name }}</p>
+                    {{ work.artist.firstname }} {{ work.artist.name }}</p>
             </div>
             <div class="row">
                 <div class="col s12 m12 l8 img_basket">
@@ -77,7 +77,7 @@
                             <label for="karakct">Caractéristiques :</label>
                             <select id="karakct" name="caract">
                                 {% for key, caract in caracts %}
-                                    <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }} - poids : {{ caract.weigth }} </option>
+                                    <option value="{{ caract.id }}" price="{{ caract.price }}" quant="{{ caract.quantity }}" {% if key == 0 %}selected{% endif %}>{{ caract.dimension }}{% if caract.weigth is not null %} - poids : {{ caract.weigth }} {% endif %}</option>
                                 {% endfor %}
                             </select>
                         </div>

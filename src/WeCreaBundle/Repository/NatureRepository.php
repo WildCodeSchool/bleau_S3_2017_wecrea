@@ -19,7 +19,9 @@ class NatureRepository extends \Doctrine\ORM\EntityRepository
 		$qb = $this->createQueryBuilder('n');
 		$qb->select('n.name as name', 'n.fontColor as fontColor')
 			->join('n.images', 'i')
-			->addSelect('i.url as image_url');
+			->addSelect('i.url as image_url')
+			->where('SIZE(n.works) != 0')
+		;
 		return $qb->getQuery()->getResult();
 	}
 }

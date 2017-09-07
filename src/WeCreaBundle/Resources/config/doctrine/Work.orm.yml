@@ -27,6 +27,7 @@ WeCreaBundle\Entity\Work:
             inversedBy: works
         nature:
             targetEntity: WeCreaBundle\Entity\Nature
+            inversedBy: works
 
     oneToMany:
         caracts:

@@ -113,4 +113,50 @@ class Nature
     {
         return $this->images;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $works;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->works = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add work
+     *
+     * @param \WeCreaBundle\Entity\Work $work
+     *
+     * @return Nature
+     */
+    public function addWork(\WeCreaBundle\Entity\Work $work)
+    {
+        $this->works[] = $work;
+
+        return $this;
+    }
+
+    /**
+     * Remove work
+     *
+     * @param \WeCreaBundle\Entity\Work $work
+     */
+    public function removeWork(\WeCreaBundle\Entity\Work $work)
+    {
+        $this->works->removeElement($work);
+    }
+
+    /**
+     * Get works
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorks()
+    {
+        return $this->works;
+    }
 }

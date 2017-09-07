@@ -15,6 +15,7 @@ WeCreaBundle\Entity\Caract:
         weigth:
             type: string
             length: 255
+            nullable: true
         price:
             type: integer
         quantity:
