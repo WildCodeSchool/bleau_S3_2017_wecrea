@@ -46,17 +46,20 @@
 {% block javascripts %}
     {{ parent() }}
 
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="{{ asset('bundles/wecrea/vendor/masonry.pkgd.min.js') }}"></script>
 
     <script>
 
         $(document).ready( function () {
 
-            $('.grid').masonry({
-                // options
-                fitWidth: true,
-                columnWidth: 300,
-                gutter: 10
+            $('.grid').imagesLoaded( function() {
+                $('.grid').masonry({
+                    // options
+                    fitWidth: true,
+                    columnWidth: 300,
+                    gutter: 10
+                });
             });
 
 //            Add works to fav
