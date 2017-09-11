@@ -2,40 +2,84 @@
 
 {% block body %}
     <main class="container">
-        {#{% include '@WeCrea/layout/nav_works.html.twig' %}#}
 
-        <div class="cardz row">
-            {% for work in favs %}
-                <div class="col s4">
-                    <div class="card card_custom">
-                        <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
-                            <div
-                                    class="card-image waves-effect waves-block waves-light card-image_custom"
-                                    style="background: url('{{ work.images[0].url | imagine_filter('xLarge') }}') center / cover ">
+        <div class="row"
+             style="margin-top: 30px; display: none;"
+             id="favsShow"
+        >
+            {% if favs is empty %}
+                <h2>Vous n'avez aucune oeuvre dans vos favoris</h2>
+            {% else %}
+                {% for work in favs %}
+                    <div class="col s12 m6 l4" id="work_id_{{ work.id }}">
+                        <div class="card">
+                            <a href="{{ path('we_crea_work', {'id' : work.id}) }}">
+                                <div
+                                        class="card-image waves-effect waves-block waves-light card-image_custom"
+                                        style="background: url('{{ work.images[0].url | imagine_filter('xLarge') }}') center / cover ">
+                                    <div class="fav_btn_delete" data="{{ work.id }}">
+                                        <button class="btn">Retirer des favoris</button>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="card-content card-content_custom">
+                                <span class="card-title grey-text text-darken-4 title">
+                                    <p>
+                                        {{ work.title }}
+                                    </p>
+                                </span>
+                                <span class="card-artist">
+                                     <p>
+                                        <a href="{{ path('we_crea_artist', {id : work.artist.id} ) }}" class="artist">{{ work.artist.firstname }} {{ work.artist.name }}</a>
+                                    </p>
+                                </span>
+
                             </div>
-                        </a>
-                        <div class="card-content card-content_custom">
-                        <span class="card-title activator grey-text text-darken-4 title">{{ work.title }}
-                            <img class="show_more activator" src="{{ asset('bundles/wecrea/pics/Picto-4.png') }}" alt="voir plus">
-                        </span>
-                            <p>
-                                <a href="#" class="artist">{{ work.artist.name }}</a>
-                            </p>
-                            <div class="fav_btn" data="{{ work.id }}">
-                                <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="favori">
-                            </div>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">{{ work.title }}<i class="material-icons right">close</i></span>
-                            <p>{{ work.technic }} {{ work.nature.name }}</p>
-                            <p>Description</p>
                         </div>
                     </div>
-                </div>
 
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
         </div>
-
-
     </main>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+
+        $('#favsShow').imagesLoaded( function() {
+            $('#favsShow').fadeIn(900);
+            cardResize();
+        });
+
+        // Show "add favs" button on mouse hover card-image
+        $('.card-image').hover( function () {
+            $(this).find('.fav_btn_delete').slideDown(200);
+        }, function () {
+            $(this).find('.fav_btn_delete').slideUp(200);
+
+        });
+
+        $('.fav_btn_delete').on('click', function (e) {
+            e.preventDefault();
+
+            var data = {'idWork': $(this).attr('data')};
+            var btn = $(this);
+            $.ajax({
+                method: 'post',
+                url: '{{ path('we_crea_delete_fav') }}',
+                data: data,
+
+                success: function (response) {
+                    Materialize.toast('<span class="toast_custom">' + response.name + ' a été retiré(e) de vos favoris</span>', 4000) // 4000 is the duration of the toast
+                    $('#work_id_' + response.id).fadeOut();
+                    cardResize();
+                }
+            })
+        });
+    </script>
+
 {% endblock %}

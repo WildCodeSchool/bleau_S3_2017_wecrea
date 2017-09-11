@@ -62,13 +62,13 @@
                         <img width="100%" class="imageWorks" src="{{ work.images[0].url | imagine_filter('large') }}">
                         <div class="top">
                             <div class="lineFavWork">
-                                {% if favs[work.id] is not defined %}
-                                    <div class="fav_btn" data="{{ work.id }}">
-                                        <button class="btn">Ajouter aux favoris</button>
+                                {% if favs[work.id] is defined %}
+                                    <div class="fav_btn_delete" data="{{ work.id }}">
+                                        <button class="btn">L'oeuvre est dans vos favoris</button>
                                     </div>
                                 {% else %}
                                     <div class="fav_btn" data="{{ work.id }}">
-                                        <button class="btn">L'oeuvre est déjà dans vos favoris</button>
+                                        <button class="btn">Ajouter aux favoris</button>
                                     </div>
                                 {% endif %}
                             </div>

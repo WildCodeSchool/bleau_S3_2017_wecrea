@@ -651,7 +651,8 @@ class UserController extends Controller
 
         $content = array(
             'fCount' => $fCount,
-            'name' => $workName
+            'name' => $workName,
+	        'id' => $idFav
         );
 
         $response = new Response(json_encode($content));

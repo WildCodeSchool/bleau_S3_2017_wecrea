@@ -478,7 +478,6 @@ footer {
 .card-title{
     font-size: 20px !important;
     line-height: 20px !important;
-    text-align: center !important;
 }
 
 .sold{
@@ -603,7 +602,9 @@ footer {
     position: relative;
     height: 70%;
     margin-top: 2%;
+
 }
+
 .card_custom_artist .card-image_custom {
     height: 70%;
 }
@@ -638,27 +639,26 @@ footer {
     background-color: red;
 }
 
+.card-content_custom {
+    padding: 10px !important;
+}
+
+@media (max-width: 996px) {
+    .card-content_custom{
+        padding: 24px !important;
+    }
+}
+
+
+@media (max-width: 770px) {
+    .card-content_custom{
+        padding: 10px !important;
+    }
+}
+
 @media (max-width: 500px) {
     .card-content_custom{
-        font-size: 0.7em!important;
-    }
-
-    .card-content_custom .card-title{
-        font-size: 19px!important;
-    }
-}
-
-@media (max-width: 400px) {
-    .card-content_custom .card-title {
-        font-size: 18px!important;
-        line-height: 19px!important;
-    }
-}
-
-@media (max-width: 350px) {
-    .card-content_custom .card-title {
-        font-size: 15px!important;
-        line-height: 17px!important;
+        padding: 10px !important;
     }
 }
 

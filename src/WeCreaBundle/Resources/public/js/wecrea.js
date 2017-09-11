@@ -33,30 +33,6 @@ $(document).ready( function () {
         $('.container_footer').slideToggle(500);
     });
 
-// init Isotope
-//     var $grid = $('.cardz').isotope({
-//         itemSelector: '.iso_item',
-//         layoutMode: 'fitRows'
-//     });
-
-
-
-// // filter functions
-//     var filterFns = {};
-//     //filter 'Tous' on load
-//     var filterValue = '.Tous';
-//     // use filterFn if matches value
-//     filterValue = filterFns[ filterValue ] || filterValue;
-//     $grid.isotope({ filter: filterValue });
-// // bind filter button click
-//     $('.filters-button-group').on( 'click', 'button', function() {
-//         var filterValue = $( this ).attr('data-filter');
-//         // use filterFn if matches value
-//         filterValue = filterFns[ filterValue ] || filterValue;
-//         cardResize();
-//         $grid.isotope({ filter: filterValue });
-//     });
-
     // carousel SLICK -- Work's page
     $('.slider-for').slick({
         slidesToShow: 1,

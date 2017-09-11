@@ -46,7 +46,6 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="{{ asset('bundles/wecrea/vendor/masonry.pkgd.min.js') }}"></script>
 
     <script>
@@ -67,64 +66,31 @@
             $('#natureChoices').imagesLoaded( function() {
                 $('#natureChoices').fadeIn(400);
                 cardResize();
-
             });
 
 //            Add works to fav
-            $('.fav_btn').on('click', function (e) {
-                e.preventDefault();
-                var data = {'idWork': $(this).attr('data')};
-                var btn = $(this);
-                console.log(data);
-                $.ajax({
-                    method: 'post',
-                    url: '{{ path('we_crea_add_fav') }}',
-                    data: data,
+            $(document).ready( function () {
 
-                    success: function (response) {
-                        if (response.status === true) {
+                $('.fav_btn').on('click', function (e) {
+                    e.preventDefault();
+                    var data = {'idWork': $(this).attr('data')};
+                    var btn = $(this);
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ path('we_crea_add_fav') }}',
+                        data: data,
+
+                        success: function (response) {
                             Materialize.toast('<span class="toast_custom">' + response.name + ' a été ajouté(e) à vos favoris</span>', 4000) // 4000 is the duration of the toast
-                        }
-                        else if (response.status === false) {
-                            Materialize.toast('<span class="toast_custom">' + response.name + ' est déja présente dans vos favoris</span>', 4000) // 4000 is the duration of the toast
-                        }
 
-                        $('.fCount').text(response.fCount);
-
-//                        TODO: Si besoin de supprimer un favoris depuis la liste de toutes les oeuvres, décommenter les lignes ci dessous
-                        btn.find('button').text('Retirer des favoris');
-                        btn.removeClass('fav_btn');
-                        btn.addClass('fav_btn_delete');
-//                        deleteFav();
-                    }
-                })
+                            $('.fCount').text(response.fCount);
+                            btn.find('button').text("L'oeuvre est dans vos favoris");
+                            btn.removeClass('fav_btn');
+                            btn.addClass('fav_btn_delete');
+                        }
+                    })
+                });
             });
-
-//          TODO: Si besoin de supprimer un favoris depuis la liste de toutes les oeuvres, décommenter les lignes ci dessous
-
-            {#function deleteFav() {#}
-                {#$('.fav_btn_delete').on('click', function (e) {#}
-
-                    {#e.preventDefault();#}
-
-                    {#var data = {'idWork': $(this).attr('data')};#}
-                    {#var btn = $(this);#}
-                    {#$.ajax({#}
-                        {#method: 'post',#}
-                        {#url: '{{ path('we_crea_delete_fav') }}',#}
-                        {#data: data,#}
-
-                        {#success: function (response) {#}
-                            {#Materialize.toast('<span class="toast_custom">' + response.name + ' a été retiré(e) de vos favoris</span>', 4000) // 4000 is the duration of the toast#}
-                            {#$('.fCount').text(response.fCount);#}
-                            {#btn.find('button').text('Ajouter aux favoris');#}
-                            {#btn.removeClass('fav_btn_delete');#}
-                            {#btn.addClass('fav_btn');#}
-                            {#addFav();#}
-                        {#}#}
-                    {#});#}
-                {#});#}
-            {#}#}
         });
     </script>
 {% endblock %}
