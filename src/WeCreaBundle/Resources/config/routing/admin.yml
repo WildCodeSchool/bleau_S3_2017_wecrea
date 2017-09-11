@@ -70,6 +70,10 @@ we_crea_admin_add_carrousel:
     path: /carrousel/add
     defaults: {_controller: "WeCreaBundle:Carrousel:addCarrousel"}
 
+we_crea_admin_edit_work_carrousel:
+    path: /carrousel/{id}/edit
+    defaults: {_controller: "WeCreaBundle:Carrousel:editOneWorkCarrousel"}
+
 we_crea_admin_delete_carrousel:
     path: /carrousel/delete
     defaults: {_controller: "WeCreaBundle:Carrousel:deleteCarrousel"}

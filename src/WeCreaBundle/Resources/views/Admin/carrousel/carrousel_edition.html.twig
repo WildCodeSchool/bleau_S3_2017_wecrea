@@ -7,7 +7,11 @@
 {% block body %}
     <div class="container container-custom-artists">
         <h4 style="background: dodgerblue; color: #fff; padding: 10px;"> Édition du carrousel </h4>
-        <div class="row">
+        <button id="buttonAddVignette" class="btn waves-effect waves-light black">
+            Ajouter une vignette
+            <i class="material-icons left">add</i>
+        </button>
+        <div style="display: none;" id="formAddVignette" class="row">
             <div class="col m10 offset-m1">
                 {{ form_start(formCarrousel) }}
                     <div class="input-field">
@@ -54,9 +58,10 @@
             <div id="show_carrousel">
                 {% for carrousel in carrousels %}
                     <div class="card" style="background: url('{{ asset('images/') }}{{ carrousel.images.url }}') center / cover">
-                        <h2>{{ carrousel.title }}</h2>
-                        <p>{{ carrousel.content }}</p>
-                        <a class="waves-effect waves-light btn black delete_btn" id="{{ carrousel.id }}">supprimer</a>
+                        <h2 style="color: {{ carrousel.fontColor }}">{{ carrousel.title }}</h2>
+                        <p style="color: {{ carrousel.fontColor }}">{{ carrousel.content }}</p>
+                        <a href="{{ path('we_crea_admin_edit_work_carrousel', { 'id': carrousel.id }) }}" class="waves-effect waves-light btn black edit_btn">Editer</a>
+                        <a class="waves-effect waves-light btn black delete_btn right" id="{{ carrousel.id }}">Supprimer</a>
                     </div>
                 {% endfor %}
             </div>
@@ -68,6 +73,11 @@
 
     <script type="text/javascript">
         $(document).ready( function(){
+
+            $('#buttonAddVignette').on('click', function () {
+                $('#formAddVignette').slideDown(500);
+                $('#buttonAddVignette').hide();
+            });
 
             $('.colorpicker').colorpicker({
                 format: 'rgb',
@@ -161,7 +171,8 @@
                    complete: function () {
                        $('form[name="wecreabundle_images"]').trigger('reset');
                        $('form[name="wecreabundle_carrousel"]').trigger('reset');
-                       $('#formCarr').slideUp(800);
+                       $('#formAddVignette').slideUp(800);
+                       $('#buttonAddVignette').show();
                    }
                });
            });

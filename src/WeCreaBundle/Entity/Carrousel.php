@@ -7,6 +7,11 @@ namespace WeCreaBundle\Entity;
  */
 class Carrousel
 {
+
+	public $previousImage;
+
+	// Generated code
+
     /**
      * @var int
      */
