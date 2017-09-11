@@ -1,5 +1,5 @@
 {% if works is not defined %}
-    <div class="container">
+    <div class="container" id="natureChoices" style="display: none;">
         <div class="row">
             <div class="buttons btn_card filters-button-group row">
                 {% for nature in natures %}
@@ -55,7 +55,7 @@
         {% endfor %}
     </div>
     <div class="row">
-        <div class="grid">
+        <div style="display: none;" class="grid">
             {% for work in works %}
                 {% if work.images[0] is defined %}
                     <div class="grid-item">
@@ -75,7 +75,7 @@
                         </div>
                         <div class="middle">
                             <div class="row">
-                                <a id="moreLink" href="{{ path('we_crea_artist', {id : work.artist.id} ) }}">{{ work.artist.firstname }} {{ work.artist.name }}</a>
+                                <a class="moreLink" href="{{ path('we_crea_artist', {id : work.artist.id} ) }}">{{ work.artist.firstname }} {{ work.artist.name }}</a>
                                 <p style="margin: 0">{{ work.title }}</p>
                             </div>
                             <div class="row">

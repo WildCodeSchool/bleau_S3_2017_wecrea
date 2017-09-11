@@ -18,7 +18,6 @@ function showFormUserProfil() {
 $(document).ready( function () {
 
     showFormUserProfil();
-    cardResize();
 
     $(window).resize(function () {
         cardResize();

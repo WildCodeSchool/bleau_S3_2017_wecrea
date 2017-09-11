@@ -232,8 +232,11 @@ nav ul a:hover {
 @media screen and (min-width: 992px) and (max-width: 1200px){
     .brand-logo img {
         max-height: 60px !important;
-        max-width: 224px;
-        padding-top: 23px;
+        max-width: 330px;
+    }
+
+    #nav-mobile a {
+        padding: 25px 10px 0 0;
     }
 }
 
@@ -386,6 +389,19 @@ footer {
     margin-top: 112px;
     height: calc(100% - 178px) !important;
 }
+
+@media screen and (max-width: 992px) {
+    .slider {
+        height: calc(100% - 210px) !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .slider {
+        height: calc(100% - 200px) !important;
+    }
+}
+
 .slider .indicators .indicator-item.active {
     background-color: #313131!important;
 
@@ -405,7 +421,7 @@ footer {
     text-shadow: -1px 0 #080808, 0 1px #080808, 1px 0 #080808, 0 -1px #080808;
     top: 50% !important;
     left: 3% !important;
-    width: 30% !important;
+    width: 70% !important;
 }
 
 @media (max-width: 600px) {

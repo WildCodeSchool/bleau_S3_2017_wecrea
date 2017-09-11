@@ -54,12 +54,20 @@
         $(document).ready( function () {
 
             $('.grid').imagesLoaded( function() {
+                $('.grid').fadeIn(400);
                 $('.grid').masonry({
                     // options
                     fitWidth: true,
                     columnWidth: 300,
                     gutter: 10
                 });
+
+            });
+
+            $('#natureChoices').imagesLoaded( function() {
+                $('#natureChoices').fadeIn(400);
+                cardResize();
+
             });
 
 //            Add works to fav
