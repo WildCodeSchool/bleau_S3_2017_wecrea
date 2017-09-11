@@ -32,3 +32,15 @@
         </div>
     </main>
 {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+<script>
+
+    $('#favsShow').imagesLoaded( function() {
+        $('#favsShow').fadeIn(900);
+        cardResize();
+    });
+</script>
+{% endblock %}
