@@ -51,7 +51,9 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository
     	$qb->select('w')
 		    ->join('w.nature', 'n')
 		    ->where('n.name = :name')
-		    ->setParameter('name', $nature);
+		    ->setParameter('name', $nature)
+	        ->orderBy('w.id', 'DESC')
+	    ;
 
     	return $qb->getQuery()->getResult();
     }
