@@ -182,6 +182,10 @@
                     success: function (){
                         Materialize.toast('<span class="toast_custom">Caractéristique modifié avec succès</span>', 4000) // 4000 is the duration of the toast
                         $('.editCaractButton').fadeIn();
+                    },
+                    error: function () {
+                        alert('Une erreur s\'est produite, vérifier les champs et réessayer.'); // 4000 is the duration of the toast
+                        $('.editCaractButton').fadeIn();
                     }
                 })
             });

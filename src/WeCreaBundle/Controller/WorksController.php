@@ -192,6 +192,8 @@ class WorksController extends Controller
 
             if (isset($newCaract)){
                 $formCaract->handleRequest($request);
+	            if (!is_numeric($caract->getWeigth()))
+		            $caract->setWeigth(null);
                 $caract->setWork($work);
                 $work->addCaract($caract);
 
@@ -233,7 +235,7 @@ class WorksController extends Controller
     	$caract->setDimension($dimension);
     	$caract->setQuantity($qt);
     	$caract->setPrice($price);
-    	$caract->setWeigth($wheight);
+        $caract->setWeigth($wheight);
 
     	$em->flush();
 
