@@ -235,10 +235,7 @@ class WorksController extends Controller
     	$caract->setDimension($dimension);
     	$caract->setQuantity($qt);
     	$caract->setPrice($price);
-    	if (is_numeric($wheight))
-    	    $caract->setWeigth($wheight);
-    	else
-		    $caract->setWeigth(null);
+        $caract->setWeigth($wheight);
 
     	$em->flush();
 
