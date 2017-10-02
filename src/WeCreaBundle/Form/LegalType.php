@@ -42,6 +42,9 @@ class LegalType extends AbstractType
                     'style' => 'width:60px;'
                 )
             ))
+	        ->add('returnWorkText', TextType::class, array(
+		        'required' => true
+	        ))
 	        ->add('facebook', TextType::class, array(
 	        	'required' => false
 	        ))
