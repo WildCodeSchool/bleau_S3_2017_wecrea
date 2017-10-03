@@ -4,7 +4,7 @@
     <main>
         <div class="container">
             <div class="row artist_menu">
-                <h1>Oeuvre(s) de {{ artist.name ~ ' ' ~ artist.firstname }}</h1>
+                <h1>Oeuvre(s) de {{ artist.firstname ~ ' ' ~ artist.name }}</h1>
                 <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une oeuvre</a>
             </div>
             <div class="row">
