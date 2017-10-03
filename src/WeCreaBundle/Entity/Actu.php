@@ -7,6 +7,10 @@ namespace WeCreaBundle\Entity;
  */
 class Actu
 {
+	public $previousImage;
+
+//	GENERATED CODE
+
     /**
      * @var int
      */

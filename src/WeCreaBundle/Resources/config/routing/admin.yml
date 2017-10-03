@@ -93,6 +93,10 @@ we_crea_admin_actu_delete:
     path: /actu/delete
     defaults: {_controller: "WeCreaBundle:Actu:deleteActu"}
 
+we_crea_admin_actu_edit:
+    path: /actu/{id}/edit
+    defaults: {_controller: "WeCreaBundle:Actu:editExistingActu"}
+
 # -------- Edit Concept -----
 we_crea_admin_concept_edit:
     path:     /concept/edit

@@ -3,7 +3,11 @@
 {% block body %}
     <div class="container container-custom-artists">
         <h4 style="text-align: center; background: #b22222; color: #fff; padding: 10px;">Édition des actualités</h4>
-        <div class="row">
+        <button id="buttonAddActu" class="btn waves-effect waves-light black">
+            Ajouter une actu
+            <i class="material-icons left">add</i>
+        </button>
+        <div style="display: none;" class="row" id="formAddActu">
             <div class="col m10 offset-m1">
                 {{ form_start(formActu) }}
                 <div class="input-field">
@@ -11,9 +15,9 @@
                     {{ form_widget(formActu.title) }}
                     {{ form_errors(formActu.title) }}
                 </div>
-                {{ form_label(formActu.content, 'Contenu') }}
                 <div class="input-field">
-                    {{ form_widget(formActu.content) }}
+                    {{ form_label(formActu.content, "Contenu") }}
+                    {{ form_widget(formActu.content, {'attr' : {'class': 'materialize-textarea'}} ) }}
                     {{ form_errors(formActu.content) }}
                 </div>
 
@@ -43,7 +47,8 @@
                 <div>
                     <p class="actu-number"> Actualité n° {{ loop.index }} </p>
                     <div class="actu" style="background:  url({{ asset("images/") }}{{ actu.images.url }}) center; background-size: cover;">
-                        <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">supprimer</a>
+                        <a id="{{ actu.id }}" class="waves-effect waves-light btn black delete_btn">Supprimer</a>
+                        <a href="{{ path('we_crea_admin_actu_edit', { 'id': actu.id }) }}" class="waves-effect waves-light btn black">Modifier</a>
                     </div>
                     <div class="actu-content">
                         <h3>Titre : {{ actu.title|raw }}</h3>
@@ -60,6 +65,11 @@
     <script>
         $(document).ready(function () {
 
+            $('#buttonAddActu').on('click', function () {
+                $('#formAddActu').slideDown(500);
+                $('#buttonAddActu').hide();
+            });
+
             var showActuElt = document.getElementsByClassName("show_actu")[0];
 
             $('form[name="wecreabundle_actu"]').submit( function (e) {
@@ -74,7 +84,7 @@
                     contentType: false,
 
                     success: function (response) {
-                        Materialize.toast('<span class="toast_custom">la vignette a bien été ajoutée</span>', 4000) // 4000 is the duration of the toast
+                        Materialize.toast('<span class="toast_custom">L\'actualitée a bien été ajoutée</span>', 4000) // 4000 is the duration of the toast
                         $('form[name="wecreabundle_actu"]').trigger('reset');
 
                         /* PROTOTYPE */
@@ -160,6 +170,12 @@
                         );
 
                         actu.insertNewContent();
+                    },
+                    complete: function () {
+                        $('form[name="wecreabundle_images"]').trigger('reset');
+                        $('form[name="wecreabundle_actu"]').trigger('reset');
+                        $('#formAddActu').slideUp(800);
+                        $('#buttonAddActu').show();
                     }
                 })
             });
