@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <h4 style="background: grey;">Edition de l'artiste {{ artist.name ~ ' ' ~ artist.firstname }}</h4>
+            <h4 style="background: grey;">Edition de l'artiste {{ artist.firstname ~ ' ' ~ artist.name }}</h4>
             {{ form_start(form, {'attr': {'enctype' : 'multipart/form-data' , 'class' : 'col s12', 'id' : 'artist-profil'}} ) }}
             <div class="row">
                 <div class="input-field col s12">

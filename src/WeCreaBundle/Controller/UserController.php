@@ -145,6 +145,7 @@ class UserController extends Controller
         $session = $this->get('session');
 
         $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
+        $returnWorkText = $em->getRepository(Legal::class)->getReturnWorkText();
         $images = $work->getImages();
         $caracts = $work->getCaracts();
 
@@ -156,7 +157,8 @@ class UserController extends Controller
             'work' => $work,
             'images' => $images,
             'fCount' => $fCount,
-            'caracts' => $caracts
+            'caracts' => $caracts,
+            'returnWorkText' => $returnWorkText
         ));
     }
 

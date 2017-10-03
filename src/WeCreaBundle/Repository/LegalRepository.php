@@ -22,10 +22,23 @@ class LegalRepository extends \Doctrine\ORM\EntityRepository
 			->getSingleResult();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getCGV()
 	{
 		return $this->createQueryBuilder('l')
 			->select('l.cgv')
+			->getQuery()
+			->getSingleScalarResult();
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getReturnWorkText(){
+		return $this->createQueryBuilder('l')
+			->select('l.returnWorkText')
 			->getQuery()
 			->getSingleScalarResult();
 	}

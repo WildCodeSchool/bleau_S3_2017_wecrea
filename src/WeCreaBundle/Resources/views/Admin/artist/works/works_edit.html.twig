@@ -8,7 +8,8 @@
         }
     </style>
 <div class="container">
-    <h4 style="background: grey;">Edition de l'oeuvre {{ work.title }} </h4>
+    <h4 style="background: grey;">Edition de l'oeuvre "{{ work.title }}" </h4>
+        <a class="btn waves-effect waves-light right black" href="{{ path('we_crea_admin_works_artist', { 'id': work.artist.id }) }}">Retour aux oeuvres de l'artiste</a>
         <div class="row row-artist-work-custom">
             {{ form_start(edit_form) }}
                 <div class="input-field col s12">
