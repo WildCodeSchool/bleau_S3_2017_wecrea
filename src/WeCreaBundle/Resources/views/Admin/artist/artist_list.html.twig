@@ -17,7 +17,7 @@
         <div class="col s12 col-custom-artist">
             <h4 style="color: black;">{{ artist.firstname }} {{ artist.name }}</h4>
             {% if artist.images is not empty %}
-                <img src="{{ asset('images/'~artist.images|first.url) }}" class="list-artists-img"/>
+                <img src="{{ asset('images/'~artist.images|first.url|imagine_filter('large')) }}" class="list-artists-img"/>
             {% else %}
                 <p> Cet artiste n'a pas de photo </p>
             {% endif %}
