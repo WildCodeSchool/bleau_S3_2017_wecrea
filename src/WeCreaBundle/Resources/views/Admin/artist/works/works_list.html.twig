@@ -28,7 +28,7 @@
                             <td>
                                 <div class="boutons">
                                     <a href="{{ path('we_crea_admin_works_edit', {id : work.id } ) }}" title="Editer"><i class="material-icons contactme">edit</i></a>
-                                    <a title="Effacer" id="{{ work.id }}" style="cursor: pointer;"><i class="material-icons contactme">delete</i></a>
+                                    <a href="{{ path('we_crea_admin_works_delete', { 'id': work.id }) }}" id="{{ work.id }}" style="cursor: pointer;"><i class="material-icons contactme">delete</i></a>
                                 </div>
                             </td>
                         </tr>
@@ -73,24 +73,6 @@
                     }
                 }}
             );
-
-//            Delete ajax function
-            $('a[title="Effacer"]').click( function (e) {
-                e.preventDefault();
-                var idWork = $(this).attr('id');
-                var data = {'id': idWork};
-
-                $.ajax({
-                    method: 'get',
-                    url: '{{ path('we_crea_admin_works_delete') }}',
-                    data: data,
-
-                    success: function (response) {
-                        Materialize.toast('<span class="toast_custom">' + response.msg + '</span>', 4000); // 4000 is the duration of the toast
-                        $('#' + response.id).remove();
-                    }
-                })
-            });
         })
     </script>
 
