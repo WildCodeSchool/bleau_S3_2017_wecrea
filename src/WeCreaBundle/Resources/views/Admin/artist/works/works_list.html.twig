@@ -4,7 +4,7 @@
     <main>
         <div class="container">
             <div class="row artist_menu">
-                <h1>Oeuvre(s) de {{ artist.name ~ ' ' ~ artist.firstname }}</h1>
+                <h1>Oeuvre(s) de {{ artist.firstname ~ ' ' ~ artist.name }}</h1>
                 <a class="waves-effect waves-light btn black" href="{{ path('we_crea_admin_works_add', { 'id': artist.id }) }}">Ajouter une oeuvre</a>
             </div>
             <div class="row">
@@ -21,14 +21,14 @@
                         <tr id="{{ work.id }}">
                             <td>{{ work.title }}</td>
                             {% if work.images|first.url is defined %}
-                                <td><img class="thumbsindex img_works" src="{{ asset("images/" ~ work.images|first.url) }}" alt="{{ work.images|first.alt }}"></td>
+                                <td><img class="thumbsindex img_works" src="{{ asset( work.images|first.url|imagine_filter('large')) }}" alt="{{ work.images|first.alt }}"></td>
                             {% else %}
                                 <td><img class="thumbsindex img_works" src="{{ asset("bundles/wecrea/pics/no_picture.png") }}" alt="no picture"></td>
                             {% endif %}
                             <td>
                                 <div class="boutons">
                                     <a href="{{ path('we_crea_admin_works_edit', {id : work.id } ) }}" title="Editer"><i class="material-icons contactme">edit</i></a>
-                                    <a title="Effacer"id="{{ work.id }}" style="cursor: pointer;"><i class="material-icons contactme">delete</i></a>
+                                    <a href="{{ path('we_crea_admin_works_delete', { 'id': work.id }) }}" id="{{ work.id }}" style="cursor: pointer;"><i class="material-icons contactme">delete</i></a>
                                 </div>
                             </td>
                         </tr>
@@ -73,24 +73,6 @@
                     }
                 }}
             );
-
-//            Delete ajax function
-            $('a[title="Effacer"]').click( function (e) {
-                e.preventDefault();
-                var idWork = $(this).attr('id');
-                var data = {'id': idWork};
-
-                $.ajax({
-                    method: 'get',
-                    url: '{{ path('we_crea_admin_works_delete') }}',
-                    data: data,
-
-                    success: function (response) {
-                        Materialize.toast('<span class="toast_custom">' + response.msg + '</span>', 4000); // 4000 is the duration of the toast
-                        $('#' + response.id).remove();
-                    }
-                })
-            });
         })
     </script>
 

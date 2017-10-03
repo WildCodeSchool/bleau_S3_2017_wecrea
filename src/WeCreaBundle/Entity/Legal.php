@@ -283,4 +283,34 @@ class Legal
     {
         return $this->youtube;
     }
+
+    /**
+     * @var string
+     */
+    private $returnWorkText;
+
+
+    /**
+     * Set returnWorkText
+     *
+     * @param string $returnWorkText
+     *
+     * @return Legal
+     */
+    public function setReturnWorkText($returnWorkText)
+    {
+        $this->returnWorkText = $returnWorkText;
+
+        return $this;
+    }
+
+    /**
+     * Get returnWorkText
+     *
+     * @return string
+     */
+    public function getReturnWorkText()
+    {
+        return $this->returnWorkText;
+    }
 }

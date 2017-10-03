@@ -35,4 +35,7 @@ WeCreaBundle\Entity\Legal:
             type: string
             length: 255
             nullable: true
+        returnWorkText:
+            type: text
+            nullable: false
     lifecycleCallbacks: {  }

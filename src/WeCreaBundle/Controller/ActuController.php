@@ -3,14 +3,12 @@
 namespace WeCreaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Actu;
-use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Form\ActuType;
 
 class ActuController extends Controller {
@@ -124,17 +122,48 @@ class ActuController extends Controller {
      * @param Request $request
      * @return Response
      */
-    public function editActuAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $id = $request->query->get('id');
+//    public function editActuAction(Request $request) {
+//        $em = $this->getDoctrine()->getManager();
+//        $id = $request->query->get('id');
+//
+//        $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
+//
+//        $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
+//
+//        return $this->render('@WeCrea/Admin/actu.html.twig', array(
+//            'formActu' => $formActu->createView(),
+//        ));
 
-        $actu = $em->getRepository('WeCreaBundle:Actu')->findOneById($id);
+//    }
 
-        $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
+    public function editExistingActuAction(Actu $actu, Request $request){
 
-        return $this->render('@WeCrea/Admin/actu.html.twig', array(
-            'formActu' => $formActu->createView(),
-        ));
+	    $formActu = $this->createForm('WeCreaBundle\Form\ActuType', $actu);
 
+	    $actu->previousImage = $actu->getImages()->getUrl();
+
+	    $formActu->handleRequest($request);
+
+	    if ($formActu->isSubmitted()){
+
+		    $file = $actu->getImages()->getUrl();
+
+		    if ($file != null){
+			    $this->get('uploader')->upload($file, $actu);
+		    }
+		    else{
+			    $actu->getImages()->setUrl($actu->previousImage);
+		    }
+
+		    $em = $this->getDoctrine()->getManager();
+		    $em->flush();
+
+	    	return $this->redirectToRoute('we_crea_admin_actu');
+	    }
+
+	    return $this->render('@WeCrea/Admin/actu_edit.html.twig', array(
+	    	'form' => $formActu->createView(),
+		    'actu' => $actu
+	    ));
     }
 }

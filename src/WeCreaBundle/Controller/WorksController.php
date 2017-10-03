@@ -33,28 +33,23 @@ class WorksController extends Controller
     /**
      * Delete one work and there picture
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
-    public function deleteWorkAction(Request $request)
+    public function deleteWorkAction(Work $work, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $id = $request->query->get('id');
-        $work = $em->getRepository('WeCreaBundle:Work')->findOneById($id);
 
-        if ($work){
-
-            foreach ($work->getImages() as $img){
-                $this->get('uploader')->deleteImg($img);
-            }
-
-            $em->remove($work);
-            $em->flush();
-            $response = new JsonResponse(array(
-                'msg' => "L'oeuvre " . $work->getTitle() . " et ses images ont bien été supprimées",
-                'id' => $id
-            ));
-            return $response;
+        foreach ($work->getImages() as $img){
+            $this->get('uploader')->deleteImg($img);
         }
+
+        $em->remove($work);
+        $em->flush();
+
+        return $this->redirectToRoute('we_crea_admin_works_artist', array(
+            'id' => $work->getArtist()->getId()
+        ));
+
     }
 
     /**

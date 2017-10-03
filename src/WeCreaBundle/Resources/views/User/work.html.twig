@@ -41,6 +41,7 @@
                                     {% if work.zoom == 1 %}data-zoom="on"{% else %}data-zoom="off"{% endif %}
                                     alt="{{ images|first.alt }}"
                             >
+                            {% if work.zoom == 1 %}<p style="margin: 0; font-size: 14px;"><i>Cliquez pour agrandir</i></p>{% endif %}
                         {% endif %}
                     </div>
                     <div id="gallery_01">
@@ -51,8 +52,8 @@
                                     data-zoom-image="{{ asset('images/' ~ image.url) }}"
                             >
                                 <img
-                                        src="{{ image.url | imagine_filter('thumb') }}"
-                                        alt="{{ image.alt }}"
+                                    src="{{ image.url | imagine_filter('thumb') }}"
+                                    alt="{{ image.alt }}"
                                 >
                             </a>
                         {% endfor %}
@@ -96,7 +97,7 @@
                             {% endif %}
                         </div>
                     </form>
-                    <p><i>* En cas d'insatisfaction, le retour de l'œuvre sous 15 jours est gratuit.</i></p>
+                    <p><i>{{ returnWorkText }}</i></p>
 
                 </div>
 
