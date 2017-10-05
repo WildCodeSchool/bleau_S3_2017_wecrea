@@ -120,6 +120,7 @@
                         <th><b>Caractéristiques</b></th>
                         <th><b>Quantité(s)</b></th>
                         <th><b>Prix Unitaire H.T.</b></th>
+                        <th><b>Livraison</b></th>
                     </tr>
 
                     </thead>
@@ -132,6 +133,7 @@
                             <td>{{ work.caract }}</td>
                             <td>{{ work.quant }}</td>
                             <td>{{ work.price * work.quant}} €</td>
+                            <td>{{ work.timelimit }} jours ouvrés</td>
                         </tr>
                     {% endfor %}
                     </tbody>

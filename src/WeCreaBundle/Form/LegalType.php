@@ -43,7 +43,8 @@ class LegalType extends AbstractType
                 )
             ))
 	        ->add('returnWorkText', TextType::class, array(
-		        'required' => true
+		        'required' => true,
+		        'label' => 'Texte retour oeuvre'
 	        ))
 	        ->add('facebook', TextType::class, array(
 	        	'required' => false

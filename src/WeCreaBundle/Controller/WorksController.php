@@ -105,6 +105,10 @@ class WorksController extends Controller
                 $id = $request->request->get('idWork');
                 $work = $em->getRepository(Work::class)->findOneById($id);
 
+	            if ($caract->getWeigth() == '' || $caract->getWeigth() == 0){
+		            $caract->setWeigth(NULL);
+	            }
+
                 $caract->setWork($work);
                 $em->persist($caract);
                 $em->flush();
@@ -229,8 +233,15 @@ class WorksController extends Controller
 
     	$caract->setDimension($dimension);
     	$caract->setQuantity($qt);
-    	$caract->setPrice($price);
-        $caract->setWeigth($wheight);
+
+    	if ($wheight == '' || $wheight == 0){
+		    $caract->setWeigth(NULL);
+	    }
+	    else{
+		    $caract->setWeigth($wheight);
+	    }
+	    $caract->setPrice($price);
+
 
     	$em->flush();
 

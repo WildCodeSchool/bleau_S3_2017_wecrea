@@ -55,6 +55,7 @@
         <td><b>Quantité</b></td>
         <td><b>Prix Unitaire T.T.C.</b></td>
         <td><b>Prix total T.T.C</b></td>
+        <td><b>Livraison</b></td>
     </thead>
     <tbody>
         {% for work in command.works %}
@@ -64,6 +65,7 @@
                 <td>{{ work.quant }}</td>
                 <td>{{ work.price + work.price * Tva }} €</td>
                 <td>{{ work.quant * work.price + work.quant * work.price * Tva }} €</td>
+                <td>{{ work.timelimit }} jours ouvrés</td>
             </tr>
         {% endfor %}
             <tr>
