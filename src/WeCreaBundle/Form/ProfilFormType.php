@@ -46,7 +46,7 @@ class ProfilFormType extends AbstractType
             ->add('address1', TextType::class, array(
             	'label' => 'Adresse'
             ))
-            ->add('zipCode1', IntegerType::class, array(
+            ->add('zipCode1', TextType::class, array(
             	'label' => 'Code Postal'
             ))
             ->add('town1', TextType::class, array(
@@ -58,7 +58,7 @@ class ProfilFormType extends AbstractType
             ->add('address2', TextType::class, array(
             	'label' => 'Adresse'
             ))
-            ->add('zipCode2', IntegerType::class, array(
+            ->add('zipCode2', TextType::class, array(
             	'label' => 'Code Postal'
             ))
             ->add('town2', TextType::class, array(
