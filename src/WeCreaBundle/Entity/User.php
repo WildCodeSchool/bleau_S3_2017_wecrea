@@ -12,10 +12,6 @@ class User extends BaseUser
 
 	// Genrated code
 
-    /**
-     * @var integer
-     */
-    protected $id;
 
     /**
      * @var string
@@ -23,7 +19,7 @@ class User extends BaseUser
     private $address1;
 
     /**
-     * @var integer
+     * @var string
      */
     private $zipCode1;
 
@@ -43,7 +39,7 @@ class User extends BaseUser
     private $address2;
 
     /**
-     * @var integer
+     * @var string
      */
     private $zipCode2;
 
@@ -100,7 +96,7 @@ class User extends BaseUser
     /**
      * Set zipCode1
      *
-     * @param integer $zipCode1
+     * @param string $zipCode1
      *
      * @return User
      */
@@ -114,7 +110,7 @@ class User extends BaseUser
     /**
      * Get zipCode1
      *
-     * @return integer
+     * @return string
      */
     public function getZipCode1()
     {
@@ -196,7 +192,7 @@ class User extends BaseUser
     /**
      * Set zipCode2
      *
-     * @param integer $zipCode2
+     * @param string $zipCode2
      *
      * @return User
      */
@@ -210,7 +206,7 @@ class User extends BaseUser
     /**
      * Get zipCode2
      *
-     * @return integer
+     * @return string
      */
     public function getZipCode2()
     {

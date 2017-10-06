@@ -14,7 +14,7 @@ WeCreaBundle\Entity\User:
             nullable: true
 
         zipCode1:
-            type: integer
+            type: string
             length: 5
             nullable: true
 
@@ -34,7 +34,7 @@ WeCreaBundle\Entity\User:
             nullable: true
 
         zipCode2:
-            type: integer
+            type: string
             length: 5
             nullable: true
 

@@ -28,13 +28,13 @@ class RegistrationFormType extends AbstractType
             ->add('name', TextType::class)
             ->add('firstname', TextType::class)
             ->add('address1', TextType::class)
-            ->add('zipCode1', NumberType::class)
+            ->add('zipCode1', TextType::class)
             ->add('town1', TextType::class)
             ->add('country1', TextType::class)
             ->add('address2', TextType::class, array(
             	'required' => false,
             ))
-            ->add('zipCode2', NumberType::class, array(
+            ->add('zipCode2', TextType::class, array(
             	'required' => false,
             ))
             ->add('town2', TextType::class, array(
