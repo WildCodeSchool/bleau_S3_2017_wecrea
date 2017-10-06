@@ -383,6 +383,7 @@ class UserController extends Controller
             $workPurchased->setQuant($quant);
             $workPurchased->setPrice($wCaract->getPrice());
             $workPurchased->setArtist($work->getArtist()->getName());
+			$workPurchased->setTimeLimit($work->getTimeLimit());
 
             $em->persist($workPurchased);
 

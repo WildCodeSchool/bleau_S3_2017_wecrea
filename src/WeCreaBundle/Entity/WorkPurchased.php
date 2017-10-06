@@ -166,4 +166,33 @@ class WorkPurchased
     {
         return $this->artist;
     }
+    /**
+     * @var integer
+     */
+    private $timeLimit;
+
+
+    /**
+     * Set timeLimit
+     *
+     * @param integer $timeLimit
+     *
+     * @return WorkPurchased
+     */
+    public function setTimeLimit($timeLimit)
+    {
+        $this->timeLimit = $timeLimit;
+
+        return $this;
+    }
+
+    /**
+     * Get timeLimit
+     *
+     * @return integer
+     */
+    public function getTimeLimit()
+    {
+        return $this->timeLimit;
+    }
 }

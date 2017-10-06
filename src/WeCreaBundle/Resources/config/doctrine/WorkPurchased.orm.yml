@@ -22,4 +22,6 @@ WeCreaBundle\Entity\WorkPurchased:
         artist:
             type: string
             length: 255
+        timeLimit:
+            type: integer
     lifecycleCallbacks: {  }
