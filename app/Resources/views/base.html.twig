@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% if is_granted('ROLE_ADMIN') or app.request.attributes.get('_route') == "fos_user_security_login" %}
+    <!DOCTYPE html>
+    <html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -14,42 +15,104 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block header %}{% endblock %}
-        {% block flash_notice %}{% endblock %}
-        {% block sidenav %}{% endblock %}
-        {% block body %}{% endblock %}
-        {% block footer %}{% endblock %}
-        {% if app.request.attributes.get('_route') != "we_crea_work" %}
-            <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-            </script>
-        {% else %}
-            <script type="text/javascript" src='{{ asset('bundles/wecrea/vendor/jquery-1.8.3.min.js') }}'></script>
-            <script type="text/javascript" src="{{ asset('bundles/wecrea/vendor/fancybox/jquery.fancybox-1.3.4.js') }}"></script>
-            <script type="text/javascript" src='{{ asset('bundles/wecrea/vendor/jquery.elevateZoom-3.0.8.min.js') }}'></script>
-        {% endif %}
-        {#<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>#}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-        <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-        <script src="{{ asset('bundles/wecrea/js/wecrea.js') }}"></script>
-        <script>
-            $(document).ready(function() {
-                $("img").on("contextmenu",function(){
-                    return false;
-                });
+    {% block header %}{% endblock %}
+    {% block flash_notice %}{% endblock %}
+    {% block sidenav %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block footer %}{% endblock %}
+    {% if app.request.attributes.get('_route') != "we_crea_work" %}
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+    {% else %}
+        <script type="text/javascript" src='{{ asset('bundles/wecrea/vendor/jquery-1.8.3.min.js') }}'></script>
+        <script type="text/javascript" src="{{ asset('bundles/wecrea/vendor/fancybox/jquery.fancybox-1.3.4.js') }}"></script>
+        <script type="text/javascript" src='{{ asset('bundles/wecrea/vendor/jquery.elevateZoom-3.0.8.min.js') }}'></script>
+    {% endif %}
+    {#<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="{{ asset('bundles/wecrea/js/wecrea.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("img").on("contextmenu",function(){
+                return false;
             });
-        </script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        });
+    </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-102628575-1', 'auto');
-            ga('send', 'pageview');
+        ga('create', 'UA-102628575-1', 'auto');
+        ga('send', 'pageview');
 
-        </script>
-        {% block javascripts %}{% endblock %}
-        {% block js_admin %}{% endblock %}
+    </script>
+    {% block javascripts %}{% endblock %}
+    {% block js_admin %}{% endblock %}
     </body>
-</html>
+    </html>
+
+{% else %}
+
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="description" content="Les artistes d'abord">
+        <meta name="copyright" content="Fabien Dauvergne && Florent Alemany, Wild Code School Fontainebleau"/>
+        <title>Les Artistes d'abord</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/wecrea/pics/favicon.ico') }}" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Pompiere');
+
+
+            /* BASE */
+            html,
+            body {
+                font-family: 'Pompiere', cursive;
+                font-style: italic;
+            }
+            .wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .item {
+                max-width: 100%;
+                margin-top: 10%;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="wrapper">
+        <img class="item" src="{{ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
+    </div>
+    <div class="center-align">
+        <h1>Coming soon...</h1>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-102628575-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    </body>
+    </html>
+
+{% endif %}
