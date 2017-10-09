@@ -923,7 +923,7 @@ class UserController extends Controller
         $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
 
         $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
-        $ttc = number_format(intval($price) + intval($tva), 2);
+        $ttc = number_format(intval($price), 2);
 
         $legal = $Tva[0]->getMention();
 

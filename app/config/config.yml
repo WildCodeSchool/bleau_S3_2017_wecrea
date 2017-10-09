@@ -88,8 +88,8 @@ fos_user:
         form:
             type: WeCreaBundle\Form\RegistrationFormType
     from_email:
-        address: blabla@msn.com
-        sender_name: blabla
+        address: contact@lesartistesdabord.fr
+        sender_name: Les artistes d'abords
 
 ivory_ck_editor:
     configs:
