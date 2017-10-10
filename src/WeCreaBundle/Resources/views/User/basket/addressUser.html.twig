@@ -1,16 +1,16 @@
 <div class="col s12 m6 center-align">
     <span class="title_list_profil">Adresse de facturation</span>
     <ul>
-        <li>{{ user.name ~ ' ' ~ user.firstname }}</li>
-        <li>Adresse : {{ user.address1 }}</li>
-        <li>Ville : {{ user.zipCode1 }} {{ user.town1 }}</li>
+        <li>{{ user.name|capitalize ~ ' ' ~ user.firstname|capitalize }}</li>
+        <li>{{ user.address1 }}</li>
+        <li>{{ user.zipCode1 ~ ' ' ~ user.town1|capitalize }}</li>
     </ul>
 </div>
 <div class="col s12 m6 center-align">
     <span class="title_list_profil">Adresse de livraison</span>
     <ul>
-        <li>{{ user.name ~ ' ' ~ user.firstname }}</li>
-        <li>Adresse : {{ user.address2 }}</li>
-        <li>Ville : {{ user.zipcode2 }} {{ user.town2 }}</li>
+        <li>{{ user.name|capitalize ~ ' ' ~ user.firstname|capitalize }}</li>
+        <li>{{ user.address2 }}</li>
+        <li>{{ user.zipcode2 ~ ' ' ~ user.town2|capitalize }}</li>
     </ul>
 </div>

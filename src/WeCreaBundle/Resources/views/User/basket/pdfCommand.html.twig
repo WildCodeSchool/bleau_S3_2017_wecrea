@@ -16,6 +16,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     <style type="text/css">
         @import url('https://fonts.googleapis.com/css?family=Pompiere');
 
@@ -53,7 +54,6 @@
     <div class="container-fluid">
         <div class="text-center row thanks">
             <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('bundles/wecrea/pics/Logo.jpg') }}" alt="logo">
-            <h2>vous remercient de votre commande.</h2>
         </div>
         <div class="row">
             <div class="col-xs-6">
@@ -119,7 +119,7 @@
                         <th><b>Titre de l'oeuvre</b></th>
                         <th><b>Caractéristiques</b></th>
                         <th><b>Quantité(s)</b></th>
-                        <th><b>Prix Unitaire H.T.</b></th>
+                        <th><b>Prix Unitaire T.T.C</b></th>
                         <th><b>Livraison</b></th>
                     </tr>
 
@@ -146,21 +146,22 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <th>T.V.A ({{ Tva }}%)</th>
-                        <th>Total H.T</th>
+                        <th></th>
+                        <th></th>
                         <th>Total T.T.C</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>{{ tva }} €</td>
-                        <td>{{ total - tva }} €</td>
+                        <td></td>
+                        <td></td>
                         <td>{{ ttc }} €</td>
                     </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="row legal-mentions text-center">
-                <b>{{ legal | raw }}</b>
+                <p>* TVA/Marge appli selon art.297 CGI</p>
+                <p>WE-CREA SARL, au capital de 10 000 €, entreprise immatriculée au RCS de Sedan sous le numéro 799146493, dont le siège social est situé au 8, rue Basse, 08190 ST GERMAINMONT</p>
             </div>
         </div>
     </div>

@@ -89,8 +89,9 @@
                     url: '{{ path('delete_command') }}',
                     data: {'id': idCommand},
                     success: function () {
-                        eleme.fadeOut();
-                        $('.deleteCommande').show();
+                        eleme.fadeOut(400, function(){
+                            $('.deleteCommande').show();
+                        });
                     }
                 })
             });

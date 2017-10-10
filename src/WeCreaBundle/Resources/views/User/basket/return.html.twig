@@ -27,7 +27,7 @@
             <p>Total : {{ total / 100 }}€</p>
         </div>
         {% if status == 'ERROR' or status == 'REFUSED' %}
-            <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">aller vers la page de paiement</a>
+            <a href="{{ path('we_crea_payement', {'id': comand.id}) }}">Aller vers la page de paiement</a>
         {% endif %}
     </div>
 </main>

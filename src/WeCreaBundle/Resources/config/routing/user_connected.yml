@@ -16,6 +16,12 @@ we_crea_payement:
     requirements:
         id: '\d+'
 
+we_crea_delete_command:
+    path: /deleteCommande/{id}
+    defaults: {_controller: "WeCreaBundle:User:deleteCommand"}
+    requirements:
+        id: '\d+'
+
 we_crea_command_pdf:
     path: /pdfCommand
     defaults : {_controller: "WeCreaBundle:User:commandPdf"}

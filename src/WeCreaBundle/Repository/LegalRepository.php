@@ -36,6 +36,17 @@ class LegalRepository extends \Doctrine\ORM\EntityRepository
 	/**
 	 * @return mixed
 	 */
+	public function getMention()
+	{
+		return $this->createQueryBuilder('l')
+			->select('l.mention')
+			->getQuery()
+			->getSingleScalarResult();
+	}
+
+	/**
+	 * @return mixed
+	 */
 	public function getReturnWorkText(){
 		return $this->createQueryBuilder('l')
 			->select('l.returnWorkText')

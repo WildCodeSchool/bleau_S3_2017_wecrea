@@ -8,6 +8,13 @@ namespace WeCreaBundle\Entity;
 class Status
 {
 
+	const WAITING_PAYMENT = 1;
+	const REFUSED_PAYMENT = 3;
+	const WAITING_AUTHORISATION = 2;
+	const PAYED = 4;
+
+	// GENERATED CODE
+
     /**
      * @var integer
      */
