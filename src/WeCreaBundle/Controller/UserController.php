@@ -418,10 +418,10 @@ class UserController extends Controller
         $signature = utf8_encode(
         	'INTERACTIVE+'.
 	        $totalForm.
-	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
 	        $this->getParameter('merchant_site_id') .
 	        '+'.
-	        $date->format('YmdHis').
+	        $dateAPI->format('YmdHis').
 	        '+'.
 	        $id_trans.
 	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
@@ -444,7 +444,7 @@ class UserController extends Controller
     }
 
 	/**
-	 * Delete commande for user
+	 * Delete comm
 	 * @param Command $command
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
@@ -486,7 +486,7 @@ class UserController extends Controller
 	    $signature = utf8_encode(
         	'INTERACTIVE+'.
 	        $totalForm.
-	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
+	        '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
 	        $this->getParameter('merchant_site_id') .
 	        '+'.
 	        $dateAPI->format('YmdHis').
