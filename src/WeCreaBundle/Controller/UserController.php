@@ -421,7 +421,7 @@ class UserController extends Controller
 	        '+PRODUCTION+978+PAYMENT+SINGLE+3+3+POST+'.
 	        $this->getParameter('merchant_site_id') .
 	        '+'.
-	        $dateAPI->format('YmdHis').
+	        $date->format('YmdHis').
 	        '+'.
 	        $id_trans.
 	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
