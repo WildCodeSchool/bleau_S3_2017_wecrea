@@ -15,7 +15,8 @@ WeCreaBundle\Entity\Command:
             type: string
             length: 255
         zipCodefact:
-            type: integer
+            type: string
+            length: 255
             column: zip_codefact
         townfact:
             type: string
@@ -27,7 +28,8 @@ WeCreaBundle\Entity\Command:
             type: string
             length: 255
         zipCodedel:
-            type: integer
+            type: string
+            length: 255
             column: zip_codedel
         towndel:
             type: string

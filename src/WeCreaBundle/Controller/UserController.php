@@ -94,6 +94,13 @@ class UserController extends Controller
 
 	    if ($nature !== 'Tous' && $nature !== null) {
 		    $works = $em->getRepository('WeCreaBundle:Work')->getWorkByNature($nature);
+		    foreach ($works as $work){
+		    	$nb = 0;
+		    	foreach ($work->getCaracts() as $caract){
+		    		$nb += $caract->getQuantity();
+			    }
+			    $work->quantity = $nb;
+		    }
 		    $arg['works'] = $works;
 	    }
 
@@ -974,7 +981,7 @@ class UserController extends Controller
         $id = $request->query->get('id');
         $command = $em->getRepository('WeCreaBundle:Command')->findOneById($id);
 
-        $pdfName = 'wecrea_commande_' . $command->getNb(). '.pdf';
+        $pdfName = uniqid() . '.pdf';
         $path = $this->getParameter('pdf'). '/' . $pdfName;
 
         $price = NULL;

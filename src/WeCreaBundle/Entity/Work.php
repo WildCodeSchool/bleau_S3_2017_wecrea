@@ -7,6 +7,10 @@ namespace WeCreaBundle\Entity;
  */
 class Work
 {
+	public $quantity;
+
+	// GENERATED CODE
+
     /**
      * @var integer
      */

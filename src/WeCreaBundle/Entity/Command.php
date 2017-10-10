@@ -7,11 +7,12 @@ namespace WeCreaBundle\Entity;
  */
 class Command
 {
+
     /**
      * @var integer
      */
     private $id;
-    
+
     /**
      * @var \DateTime
      */
@@ -23,7 +24,7 @@ class Command
     private $addressfact;
 
     /**
-     * @var integer
+     * @var string
      */
     private $zipCodefact;
 
@@ -43,7 +44,7 @@ class Command
     private $addressdel;
 
     /**
-     * @var integer
+     * @var string
      */
     private $zipCodedel;
 
@@ -71,6 +72,11 @@ class Command
      * @var string
      */
     private $phone;
+
+    /**
+     * @var integer
+     */
+    private $iduser;
 
     /**
      * @var string
@@ -161,7 +167,7 @@ class Command
     /**
      * Set zipCodefact
      *
-     * @param integer $zipCodefact
+     * @param string $zipCodefact
      *
      * @return Command
      */
@@ -175,7 +181,7 @@ class Command
     /**
      * Get zipCodefact
      *
-     * @return integer
+     * @return string
      */
     public function getZipCodefact()
     {
@@ -257,7 +263,7 @@ class Command
     /**
      * Set zipCodedel
      *
-     * @param integer $zipCodedel
+     * @param string $zipCodedel
      *
      * @return Command
      */
@@ -271,7 +277,7 @@ class Command
     /**
      * Get zipCodedel
      *
-     * @return integer
+     * @return string
      */
     public function getZipCodedel()
     {
@@ -399,6 +405,30 @@ class Command
     }
 
     /**
+     * Set iduser
+     *
+     * @param integer $iduser
+     *
+     * @return Command
+     */
+    public function setIduser($iduser)
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    /**
+     * Get iduser
+     *
+     * @return integer
+     */
+    public function getIduser()
+    {
+        return $this->iduser;
+    }
+
+    /**
      * Set nb
      *
      * @param string $nb
@@ -502,34 +532,5 @@ class Command
     public function getWorks()
     {
         return $this->works;
-    }
-    /**
-     * @var integer
-     */
-    private $iduser;
-
-
-    /**
-     * Set iduser
-     *
-     * @param integer $iduser
-     *
-     * @return Command
-     */
-    public function setIduser($iduser)
-    {
-        $this->iduser = $iduser;
-
-        return $this;
-    }
-
-    /**
-     * Get iduser
-     *
-     * @return integer
-     */
-    public function getIduser()
-    {
-        return $this->iduser;
     }
 }
