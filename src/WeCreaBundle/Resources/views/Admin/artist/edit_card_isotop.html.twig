@@ -14,7 +14,11 @@
                 <h4 class="center-align">{{ nature }}</h4>
                 <div class="col m6 s12">
                     {{ form_start(form) }}
-
+                    <div class="col s12">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
                     <div class="col s12">
                         {{ form_label(form.fontColor) }}
                         {{ form_widget(form.fontColor, { 'attr': { 'style': "background-color:" ~ form.vars.value.fontColor } }) }}

@@ -21,6 +21,7 @@ class NatureType extends AbstractType
 	        		'class' => 'colorpicker'
 		        )
 	        ))
+	        ->add('name', TextType::class)
 	        ->add('images', ImagesType::class)
 	        ->add('submit', SubmitType::class, array(
 	        	'label' => 'Valider',

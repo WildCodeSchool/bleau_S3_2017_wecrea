@@ -49,9 +49,12 @@ class NatureController extends Controller
 			}
 			$em->flush();
 
-			$encoders = array(new JsonEncoder()) ;
-			$normalizer = array(new ObjectNormalizer()) ;
-			$serializer = new Serializer($normalizer, $encoders);
+			$encoders = new JsonEncoder() ;
+			$normalizer = new ObjectNormalizer() ;
+
+			$normalizer->setIgnoredAttributes(array('works'));
+
+			$serializer = new Serializer(array($normalizer), array($encoders));
 
 			$nature = $serializer->serialize($natures[$name], 'json');
 
