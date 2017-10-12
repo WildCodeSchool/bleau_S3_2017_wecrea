@@ -82,7 +82,7 @@
                                 <a class="btn black" href="{{ path('we_crea_work', {'id' : work.id}) }}">Voir l'oeuvre</a>
                             </div>
                         </div>
-                        {% if work.quantity == 0 %}
+                        {% if work.quantity <= 0 %}
                             <div class="vendu">
                                 <img width="50px" src="{{ asset('bundles/wecrea/pics/Vendu.jpg') }}" alt="vendu">
                             </div>

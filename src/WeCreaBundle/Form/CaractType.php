@@ -24,10 +24,12 @@ class CaractType extends AbstractType
 	            'required' => false
             ))
             ->add('price', IntegerType::class, array(
-                "label" => "Prix (sans sigle)"
+                "label" => "Prix (sans sigle)",
+	            'attr' => array('min' => 0)
             ))
             ->add('quantity', IntegerType::class, array(
-                "label" => "Quantité disponible"
+                "label" => "Quantité disponible",
+                'attr' => array('min' => 0)
             ))
             ;
     }

@@ -58,8 +58,8 @@
                     <p id="{{ caract.id }}">
                         Dimensions : <input class="editCaract" id="caractDm_{{ caract.id }}" type="text" value="{{ caract.dimension }}">
                         <br>Poids : <input class="editCaract" id="caractW_{{ caract.id }}" type="text" value="{{ caract.weigth }}">
-                        <br>Prix : <input class="editCaract" id="caractP_{{ caract.id }}" type="number" value="{{ caract.price }}">
-                        <br>Quantité(s) : <input class="editCaract" id="caractQt_{{ caract.id }}" type="number" value="{{ caract.quantity }}">
+                        <br>Prix : <input class="editCaract" id="caractP_{{ caract.id }}" type="number" value="{{ caract.price }}" min="0">
+                        <br>Quantité(s) : <input class="editCaract" id="caractQt_{{ caract.id }}" type="number" value="{{ caract.quantity }}" min="0">
                     </p>
                     <button class="btn waves-effect waves-light left red delete-work-caract" data-idcaract="{{ caract.id }}">
                         Supprimer

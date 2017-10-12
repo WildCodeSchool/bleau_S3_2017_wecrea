@@ -10,6 +10,7 @@
 
 {% block body %}
     <main>
+
         <div class="container">
             <div class="row row_top">
                 <h3
@@ -63,14 +64,16 @@
                 <div class="col s12 m12 l4 work_desc">
                     <form method="post" action="{{ path('we_crea_add_basket') }}" name="addBasket">
                         <div class="row">
-                            <div
-                                    style="padding-left: 0; !important; margin-top: 15px;"
-                                    class="col m5 s12">
-                                <label for="kwant">Quantité : </label>
-                            </div>
-                            <div class="col m7 s12">
-                                <input id="kwant" type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %}{{ caracts[0].quantity }}{% endif %}">
-                            </div>
+                            {% if quant > 0 %}
+                                <div
+                                        style="padding-left: 0; !important; margin-top: 15px;"
+                                        class="col m5 s12">
+                                    <label for="kwant">Quantité : </label>
+                                </div>
+                                <div class="col m7 s12">
+                                    <input id="kwant" type="number" name="quantity" value="1" min="1" max="{% if caracts is defined %}{{ caracts[0].quantity }}{% endif %}">
+                                </div>
+                            {% endif %}
                             <b id="alert-quantity-max"></b>
                             <input type="hidden" name="work_id" value="{{ work.id }}">
                         </div>
@@ -150,6 +153,11 @@
             var quantityMaxAlertElt = document.getElementById("alert-quantity-max");
             quantityMaxAlertElt.style.display = "none";
 
+            var screenWidth = $( window ).width();
+
+            if (screenWidth <= 768){
+                $('#zoom_03').css('width', '100%');
+            }
             $("#zoom_03[data-zoom=on]").elevateZoom({
                 constrainType:"height",
                 constrainSize:350,
@@ -187,7 +195,7 @@
 
                 var submit = $('input[type="submit"]');
 
-                if(quant === 0) {
+                if(quant <= 0) {
                     submit.addClass('disabled');
                     submit.attr('value', 'Épuisé');
                 }

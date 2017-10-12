@@ -131,6 +131,11 @@ class UserController extends Controller
         $images = $work->getImages();
         $caracts = $work->getCaracts();
 
+        $quant = 0;
+        foreach ($caracts as $caract){
+        	$quant += $caract->getQuantity();
+        }
+
         $bCount = $this->get('app.basket')->countBasket($session);
         $fCount = $this->get('favs')->countFavs($session);
 
@@ -140,7 +145,8 @@ class UserController extends Controller
             'images' => $images,
             'fCount' => $fCount,
             'caracts' => $caracts,
-            'returnWorkText' => $returnWorkText
+            'returnWorkText' => $returnWorkText,
+	        'quant' => $quant
         ));
     }
 
