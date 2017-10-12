@@ -11,7 +11,10 @@ function showFormUserProfil() {
     $('#showFormUser').click( function (e) {
         e.preventDefault();
         var form = $(this).attr('href');
-        $(form).slideToggle(200);
+        $(form).slideToggle();
+        $('html, body').animate({
+            scrollTop: $("#app_user_profil_address1").offset().top
+        }, 200);
     });
 }
 
