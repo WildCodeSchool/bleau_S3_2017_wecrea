@@ -21,3 +21,9 @@ services:
         arguments: ['@router']
         tags:
             - { name: kernel.event_subscriber }
+
+    wecrea_user.changepassword:
+        class: WeCreaBundle\EventListener\ChangePassWordListener
+        arguments: [ '@router' ]
+        tags:
+            - { name: kernel.event_subscriber }
