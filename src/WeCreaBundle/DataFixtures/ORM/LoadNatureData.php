@@ -70,9 +70,10 @@ class LoadNatureData implements FixtureInterface, ContainerAwareInterface
         $legal->setDefiscalisation('Your text here');
         $legal->setCgu('Your CGU');
         $legal->setCgv('Your CGV');
+        $legal->setReturnWorkText('plop');
         $manager->persist($legal);
 
         $manager->flush();
-        
+
     }
 }
