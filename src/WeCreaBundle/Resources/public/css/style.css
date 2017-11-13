@@ -1171,14 +1171,15 @@ h4{
 }
 
 .basket_badge {
-    background-color: #F8EA60;
-    border-radius: 10px;
-    color: black;
-    display: inline-block;
-    font-size: 12px;
-    line-height: 1;
-    padding: 3px 7px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
+    /*background-color: #F8EA60;*/
+    /*border-radius: 10px;*/
+    /*color: black;*/
+    /*display: inline-block;*/
+    font-size: 10px;
+    font-weight: bolder;
+    /*line-height: 1;*/
+    /*padding: 3px 7px;*/
+    /*text-align: center;*/
+    /*vertical-align: middle;*/
+    /*white-space: nowrap;*/
 }

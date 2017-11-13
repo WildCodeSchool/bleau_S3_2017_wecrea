@@ -15,15 +15,15 @@
             <div class="col l3 m6 s12">
                 <ul>
                     <li><a href="{{ path('we_crea_contact') }}">E-mail</a></li>
-                    {% if (footer.facebook != null) %}
-                        <li><a href="{{ footer.facebook }}" target="_blank">Facebook</a></li>
-                    {% endif %}
+                    {#{% if (footer.facebook != null) %}#}
+                        {#<li><a href="{{ footer.facebook }}" target="_blank">Facebook</a></li>#}
+                    {#{% endif %}#}
                     {% if (footer.twitter != null) %}
                         <li><a href="{{ footer.twitter }}" target="_blank">Twitter</a></li>
                     {% endif %}
-                    {% if (footer.instagram != null) %}
-                        <li><a href="{{ footer.instagram }}" target="_blank">Instagram</a></li>
-                    {% endif %}
+                    {#{% if (footer.instagram != null) %}#}
+                        {#<li><a href="{{ footer.instagram }}" target="_blank">Instagram</a></li>#}
+                    {#{% endif %}#}
                     {% if (footer.youtube != null) %}
                         <li><a href="{{ footer.youtube }}" target="_blank">Youtube</a></li>
                     {% endif %}
@@ -37,6 +37,9 @@
                     <li>
                         <a class="moreLink" href="#mentionsModal">Mentions légales</a>
                     </li>
+                    <li>
+                        <a class="moreLink" href="#defiscalisation">Déduction fiscale</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -48,13 +51,18 @@
                     style="margin-bottom: 0;"
             >
                 <div class="col l4 m12 s12" style="padding: 0;">
-                    <a href="https://wildcodeschool.fr/" class="moreLink">© 2017 Copyright WCS & We-Crea</a>
+                    <a href="https://wildcodeschool.fr/" class="moreLink" style="font-size: small">© 2017 Copyright WCS & We-Crea</a>
                 </div>
-                <div class="col l4 m4 s12" style="padding: 0;">
+                <div class="col l4 m3 s12" style="padding: 0;">
                     <a id="moreLink">Contactez-nous</a>
                 </div>
-                <div class="col l4 m4 s12" style="padding: 0;">
-                    <a class="moreLink" href="#defiscalisation">Déduction fiscale</a>
+                <div class="col l4 m3 s12" style="padding: 0;">
+                    {% if (footer.facebook != null) %}
+                    <a class="moreLink" href="{{ footer.facebook }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/facebook.png') }}" alt="Facebook" title="Facebook" style="width: 9%;"></a>
+                    {% endif %}
+                    {% if (footer.instagram != null) %}
+                    <a class="moreLink" href="{{ footer.instagram }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/instagram.png') }}" alt="Instagram" title="Instagram" style="width: 9%;"></a>
+                    {% endif %}
                 </div>
                 {#<div class="col l3 m4 s12" style="padding: 0;">#}
                     {#<a class="moreLink" href="http://www.lesjeuxdedames.com/">Les Jeux de Dames</a>#}
