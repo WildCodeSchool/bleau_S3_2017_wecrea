@@ -16,17 +16,17 @@
                 <ul>
                     <li><a href="{{ path('we_crea_contact') }}">E-mail</a></li>
                     {#{% if (footer.facebook != null) %}#}
-                        {#<li><a href="{{ footer.facebook }}" target="_blank">Facebook</a></li>#}
+                    {#<li><a href="{{ footer.facebook }}" target="_blank">Facebook</a></li>#}
                     {#{% endif %}#}
-                    {% if (footer.twitter != null) %}
-                        <li><a href="{{ footer.twitter }}" target="_blank">Twitter</a></li>
-                    {% endif %}
+                    {#{% if (footer.twitter != null) %}#}
+                    {#<li><a href="{{ footer.twitter }}" target="_blank">Twitter</a></li>#}
+                    {#{% endif %}#}
                     {#{% if (footer.instagram != null) %}#}
-                        {#<li><a href="{{ footer.instagram }}" target="_blank">Instagram</a></li>#}
+                    {#<li><a href="{{ footer.instagram }}" target="_blank">Instagram</a></li>#}
                     {#{% endif %}#}
-                    {% if (footer.youtube != null) %}
-                        <li><a href="{{ footer.youtube }}" target="_blank">Youtube</a></li>
-                    {% endif %}
+                    {#{% if (footer.youtube != null) %}#}
+                    {#<li><a href="{{ footer.youtube }}" target="_blank">Youtube</a></li>#}
+                    {#{% endif %}#}
                 </ul>
             </div>
             <div class="col l3 m6 s12">
@@ -58,14 +58,17 @@
                 </div>
                 <div class="col l4 m3 s12" style="padding: 0;">
                     {% if (footer.facebook != null) %}
-                    <a class="moreLink" href="{{ footer.facebook }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/facebook.png') }}" alt="Facebook" title="Facebook" style="width: 9%;"></a>
+                        <a class="moreLink" href="{{ footer.facebook }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/facebook.png') }}" alt="Facebook" title="Facebook" style="width: 9%;"></a>
                     {% endif %}
                     {% if (footer.instagram != null) %}
-                    <a class="moreLink" href="{{ footer.instagram }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/instagram.png') }}" alt="Instagram" title="Instagram" style="width: 9%;"></a>
+                        <a class="moreLink" href="{{ footer.instagram }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/instagram.png') }}" alt="Instagram" title="Instagram" style="width: 9%;"></a>
+                    {% endif %}
+                    {% if (footer.youtube != null) %}
+                        <a class="moreLink" href="{{ footer.youtube }}" target="_blank"><img src="{{ asset('bundles/wecrea/pics/youtube.png') }}" alt="Youtube" title="Youtube" style="width: 9%;"></a>
                     {% endif %}
                 </div>
                 {#<div class="col l3 m4 s12" style="padding: 0;">#}
-                    {#<a class="moreLink" href="http://www.lesjeuxdedames.com/">Les Jeux de Dames</a>#}
+                {#<a class="moreLink" href="http://www.lesjeuxdedames.com/">Les Jeux de Dames</a>#}
                 {#</div>#}
             </div>
         </div>
@@ -114,7 +117,7 @@
 <script type="text/javascript">
 
     {% if app.request.get('_route') == 'we_crea_homepage' or
-        app.request.get('_route') == 'we_crea_actu'
+    app.request.get('_route') == 'we_crea_actu'
     %}
     var $footer = $('footer');
 
