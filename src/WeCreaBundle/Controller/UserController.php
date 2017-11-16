@@ -383,6 +383,7 @@ class UserController extends Controller
         $command->setCountrydel($user->getCountry2());
         $command->setPhone($user->getUsername());
         $command->setIduser($user->getId());
+        $command->setStatus($status);
 
         $date = new \DateTime();
         $id_trans = intval(str_pad(rand(1,899999),6, "0", STR_PAD_LEFT));

@@ -32,7 +32,7 @@
                         </li>
                         <li>
                             <a href="{{ path('we_crea_basket') }}" class="valign-wrapper">
-                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">{% if bCount > 0 %}<span class="basket_badge">{{ bCount }}</span>{% endif %}
+                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">{% if bCount is defined and bCount > 0 %}<span class="basket_badge">{{ bCount }}</span>{% endif %}
                             </a>
                         </li>
                         <li>
