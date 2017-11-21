@@ -23,10 +23,10 @@ use WeCreaBundle\Form\ProfilFormType;
 
 class UserController extends Controller
 {
-	/**
-	 * Render homepage
-	 * @return Response
-	 */
+    /**
+     * Render homepage
+     * @return Response
+     */
     public function indexAction()
     {
         $session = $this->get('session');
@@ -34,7 +34,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $carrousels = $em->getRepository(Carrousel::class)->getAllCarousselPicture();
         $container = $this->container;
-	    shuffle($carrousels);
+        shuffle($carrousels);
         $bCount = $container->get('app.basket')->countBasket($session);
         $fCount = $container->get('favs')->countFavs($session);
 
@@ -45,24 +45,24 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Render footer
-	 * @return Response
-	 */
+    /**
+     * Render footer
+     * @return Response
+     */
     public function renderFooterAction()
     {
-	    $em = $this->getDoctrine()->getManager();
-	    $data = $em->getRepository(Legal::class)->getFooter();
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository(Legal::class)->getFooter();
 
-	    return $this->render('@WeCrea/layout/footer.html.twig', array(
-	    	'footer' => $data
-	    ));
+        return $this->render('@WeCrea/layout/footer.html.twig', array(
+            'footer' => $data
+        ));
     }
 
-	/**
-	 * Render concept page
-	 * @return Response
-	 */
+    /**
+     * Render concept page
+     * @return Response
+     */
     public function conceptAction() {
         $session = $this->get('session');
 
@@ -80,29 +80,29 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Render works page
-	 * @return Response
-	 */
+    /**
+     * Render works page
+     * @return Response
+     */
     public function worksShowAction($nature) {
         $session = $this->get('session');
-		$arg = array();
-	    $em = $this->getDoctrine()->getManager();
+        $arg = array();
+        $em = $this->getDoctrine()->getManager();
 
-	    $natures = $em->getRepository(Nature::class)->getNatureName();
-	    $arg['natures'] = $natures;
+        $natures = $em->getRepository(Nature::class)->getNatureName();
+        $arg['natures'] = $natures;
 
-	    if ($nature !== 'Tous' && $nature !== null) {
-		    $works = $em->getRepository('WeCreaBundle:Work')->getWorkByNature($nature);
-		    foreach ($works as $work){
-		    	$nb = 0;
-		    	foreach ($work->getCaracts() as $caract){
-		    		$nb += $caract->getQuantity();
-			    }
-			    $work->quantity = $nb;
-		    }
-		    $arg['works'] = $works;
-	    }
+        if ($nature !== 'Tous' && $nature !== null) {
+            $works = $em->getRepository('WeCreaBundle:Work')->getWorkByNature($nature);
+            foreach ($works as $work){
+                $nb = 0;
+                foreach ($work->getCaracts() as $caract){
+                    $nb += $caract->getQuantity();
+                }
+                $work->quantity = $nb;
+            }
+            $arg['works'] = $works;
+        }
 
         $favs = $session->get('favs');
 
@@ -117,10 +117,10 @@ class UserController extends Controller
         return $this->render('WeCreaBundle:User:works.html.twig', $arg);
     }
 
-	/**
-	 * @param $id
-	 * @return Response
-	 */
+    /**
+     * @param $id
+     * @return Response
+     */
     public function workShowAction($id) {
         $em = $this->getDoctrine()->getManager();
 
@@ -133,7 +133,7 @@ class UserController extends Controller
 
         $quant = 0;
         foreach ($caracts as $caract){
-        	$quant += $caract->getQuantity();
+            $quant += $caract->getQuantity();
         }
 
         $bCount = $this->get('app.basket')->countBasket($session);
@@ -146,14 +146,14 @@ class UserController extends Controller
             'fCount' => $fCount,
             'caracts' => $caracts,
             'returnWorkText' => $returnWorkText,
-	        'quant' => $quant
+            'quant' => $quant
         ));
     }
 
-	/**
-	 * Method for displaying all the artists registered
-	 * @return Response
-	 */
+    /**
+     * Method for displaying all the artists registered
+     * @return Response
+     */
     public function artistsShowAction(){
         $em = $this->getDoctrine()->getManager();
 
@@ -165,7 +165,7 @@ class UserController extends Controller
         $artists = $em->getRepository('WeCreaBundle:Artist')->findBy(array(),
             array(
                 'name' => 'ASC'
-        ));
+            ));
 
         return $this->render('WeCreaBundle:User:artists.html.twig', array(
             'bCount' => $bCount,
@@ -174,11 +174,11 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Method for displaying a specific artist
-	 * @param $id
-	 * @return Response
-	 */
+    /**
+     * Method for displaying a specific artist
+     * @param $id
+     * @return Response
+     */
     public function artistShowAction($id){
         $em = $this->getDoctrine()->getManager();
 
@@ -196,11 +196,11 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Method for add a product in basket
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Method for add a product in basket
+     * @param Request $request
+     * @return Response
+     */
     public function addBasketAction(Request $request) {
         $session = $this->get('session');
         $req = $request->query;
@@ -216,11 +216,11 @@ class UserController extends Controller
         return new Response('ok');
     }
 
-	/**
-	 * Method for delete an article from basket
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Method for delete an article from basket
+     * @param Request $request
+     * @return Response
+     */
     public function deleteBasketAction(Request $request) {
         $session = $this->get('session');
         $basket = $session->get('basket');
@@ -237,11 +237,11 @@ class UserController extends Controller
         return $response;
     }
 
-	/**
-	 * Show basket
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Show basket
+     * @param Request $request
+     * @return Response
+     */
     public function showBasketAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
@@ -298,14 +298,20 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Recap infos user
-	 * @param Request $request
-	 * @return JsonResponse|Response
-	 */
+    /**
+     * Recap infos user
+     * @param Request $request
+     * @return JsonResponse|Response
+     */
     public function basketAddressAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $session = $this->get('session');
+
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
+
 
         $formUser = $this->createForm(ProfilFormType::class, $user);
 
@@ -337,19 +343,24 @@ class UserController extends Controller
 
         return $this->render('@WeCrea/User/basket/addressConfirm.html.twig', array(
             'user' => $user,
-            'formUser' => $formUser->createView()
+            'formUser' => $formUser->createView(),
+            'bCount' => $bCount,
         ));
     }
 
-	/**
-	 * Create New Command + show total price + quanitty + formPayement
-	 * @return Response
-	 */
+    /**
+     * Create New Command + show total price + quanitty + formPayement
+     * @return Response
+     */
     public function commandAction() {
         $em = $this->getDoctrine()->getManager();
         $cgv = $em->getRepository(Legal::class)->getCGV();
 
         $session = $this->get('session');
+
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
 
         $basket = $session->get('basket');
 
@@ -372,6 +383,7 @@ class UserController extends Controller
         $command->setCountrydel($user->getCountry2());
         $command->setPhone($user->getUsername());
         $command->setIduser($user->getId());
+        $command->setStatus($status);
 
         $date = new \DateTime();
         $id_trans = intval(str_pad(rand(1,899999),6, "0", STR_PAD_LEFT));
@@ -399,7 +411,7 @@ class UserController extends Controller
             $workPurchased->setQuant($quant);
             $workPurchased->setPrice($wCaract->getPrice());
             $workPurchased->setArtist($work->getArtist()->getName());
-			$workPurchased->setTimeLimit($work->getTimeLimit());
+            $workPurchased->setTimeLimit($work->getTimeLimit());
 
             $em->persist($workPurchased);
 
@@ -429,16 +441,16 @@ class UserController extends Controller
 
         $dateAPI = new \DateTime('now', new \DateTimeZone('GMT'));
         $signature = utf8_encode(
-        	'INTERACTIVE+'.
-	        $totalForm.
-	        '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
-	        $this->getParameter('merchant_site_id') .
-	        '+'.
-	        $dateAPI->format('YmdHis').
-	        '+'.
-	        $id_trans.
-	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
-	        $this->getParameter('certif_test'));
+            'INTERACTIVE+'.
+            $totalForm.
+            '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
+            $this->getParameter('merchant_site_id') .
+            '+'.
+            $dateAPI->format('YmdHis').
+            '+'.
+            $id_trans.
+            '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+            $this->getParameter('certif_test'));
 
         $signature = sha1($signature);
 
@@ -451,28 +463,29 @@ class UserController extends Controller
             'ttc' => $ttc,
             'totalForm' => $totalForm,
 //            'Tva' => $Tva[0]->getTva(),
-	        'cgv' => $cgv,
-	        'dateTrans' => $dateAPI
+            'cgv' => $cgv,
+            'dateTrans' => $dateAPI,
+            'bCount' => $bCount,
         ));
     }
 
-	/**
-	 * Delete comm
-	 * @param Command $command
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
-	 */
+    /**
+     * Delete comm
+     * @param Command $command
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteCommandAction(Command $command){
-		$em = $this->getDoctrine()->getManager();
-		$em->remove($command);
-		$em->flush();
-		return $this->redirectToRoute('we_crea_user_profil');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($command);
+        $em->flush();
+        return $this->redirectToRoute('we_crea_user_profil');
     }
 
-	/**
-	 * Command payement for existing command
-	 * @param $id
-	 * @return Response
-	 */
+    /**
+     * Command payement for existing command
+     * @param $id
+     * @return Response
+     */
     public function payementAction($id) {
         $em = $this->getDoctrine()->getManager();
 
@@ -482,7 +495,7 @@ class UserController extends Controller
         $comand->setNb($id_trans);
         $comand->setDate($date);
 //        $Tva = $em->getRepository('WeCreaBundle:Legal')->findAll();
-	    $cgv = $em->getRepository(Legal::class)->getCGV();
+        $cgv = $em->getRepository(Legal::class)->getCGV();
 
         $works = $comand->getWorks();
         $total=0;
@@ -495,17 +508,17 @@ class UserController extends Controller
         $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $total)));
         $totalForm = floatval(preg_replace('/[^\d.]/', '', $ttc)) * 100;
 
-	    $dateAPI = new \DateTime('now', new \DateTimeZone('GMT'));
-	    $signature = utf8_encode(
-        	'INTERACTIVE+'.
-	        $totalForm.
-	        '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
-	        $this->getParameter('merchant_site_id') .
-	        '+'.
-	        $dateAPI->format('YmdHis').
-	        '+'.$id_trans.
-	        '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
-	        $this->getParameter('certif_test')
+        $dateAPI = new \DateTime('now', new \DateTimeZone('GMT'));
+        $signature = utf8_encode(
+            'INTERACTIVE+'.
+            $totalForm.
+            '+PRODUCTION+978+PAYMENT+SINGLE+10+10+POST+'.
+            $this->getParameter('merchant_site_id') .
+            '+'.
+            $dateAPI->format('YmdHis').
+            '+'.$id_trans.
+            '+https://www.lesartistesdabord.fr/basket+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+https://www.lesartistesdabord.fr/pay+V2+'.
+            $this->getParameter('certif_test')
         );
 
         $signature = sha1($signature);
@@ -519,16 +532,16 @@ class UserController extends Controller
             'ttc' => $ttc,
 //            'Tva' => $Tva[0]->getTva(),
             'totalForm' => $totalForm,
-	        'cgv' => $cgv,
-	        'dateTrans' => $dateAPI
+            'cgv' => $cgv,
+            'dateTrans' => $dateAPI
         ));
     }
 
-	/**
-	 * Traitement de la API response
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Traitement de la API response
+     * @param Request $request
+     * @return Response
+     */
     public function apiResponseAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
@@ -589,12 +602,12 @@ class UserController extends Controller
                     $price += $work->getPrice() * $work->getQuant();
                 }
 
-	            $legal = $em->getRepository('WeCreaBundle:Legal')->getMention();
+                $legal = $em->getRepository('WeCreaBundle:Legal')->getMention();
 //                $tva = number_format($price * $Tva[0]->getTva() / 100, 2);
 
-	            $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price)));
+                $ttc = number_format(floatval(preg_replace('/[^\d.]/', '', $price)));
 
-	            /* Let's send a command confirmation to the customer */
+                /* Let's send a command confirmation to the customer */
                 $message = new \Swift_Message();
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
                 $message->setFrom($this->getParameter('mailer_user'));
@@ -605,7 +618,7 @@ class UserController extends Controller
                             'command' => $command,
                             'ttc' => $ttc,
                             'legal' => $legal
-                    ))
+                        ))
                     , 'text/html'
                 );
                 $this->get('mailer')->send($message);
@@ -631,11 +644,11 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * Add Favs
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Add Favs
+     * @param Request $request
+     * @return Response
+     */
     public function addFavAction(Request $request) {
         $session = $this->get('session');
         $favs = $session->get('favs');
@@ -646,25 +659,25 @@ class UserController extends Controller
 
         if (!isset($favs[$idWork])){
             $favs[$idWork] = $workName;
-	        $session->set('favs', $favs);
-	        $fCount = $this->container->get('favs')->countFavs($session);
+            $session->set('favs', $favs);
+            $fCount = $this->container->get('favs')->countFavs($session);
 
-	        $content = array(
-		        'fCount' => $fCount,
-		        'name' => $workName,
-		        'status' => 'true'
-	        );
+            $content = array(
+                'fCount' => $fCount,
+                'name' => $workName,
+                'status' => 'true'
+            );
 
         }
-	    else{
-		    $fCount = $this->container->get('favs')->countFavs($session);
+        else{
+            $fCount = $this->container->get('favs')->countFavs($session);
 
-		    $content = array(
-			    'fCount' => $fCount,
-			    'name' => $workName,
-			    'status' => false
-		    );
-	    }
+            $content = array(
+                'fCount' => $fCount,
+                'name' => $workName,
+                'status' => false
+            );
+        }
 
         $response = new Response(json_encode($content));
         $response->headers->set('Content-Type', 'application/json');
@@ -672,11 +685,11 @@ class UserController extends Controller
         return $response;
     }
 
-	/**
-	 * delete favs
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * delete favs
+     * @param Request $request
+     * @return Response
+     */
     public function deleteFavAction(Request $request) {
         $session = $this->get('session');
 
@@ -696,7 +709,7 @@ class UserController extends Controller
         $content = array(
             'fCount' => $fCount,
             'name' => $workName,
-	        'id' => $idFav
+            'id' => $idFav
         );
 
         $response = new Response(json_encode($content));
@@ -705,10 +718,10 @@ class UserController extends Controller
         return $response;
     }
 
-	/**
-	 * show favs
-	 * @return Response
-	 */
+    /**
+     * show favs
+     * @return Response
+     */
     public function showFavsAction() {
         $session = $this->get('session');
         $works = $this->getDoctrine()->getManager()->getRepository('WeCreaBundle:Work');
@@ -734,11 +747,11 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * show user profil
-	 * @param Request $request
-	 * @return JsonResponse|Response
-	 */
+    /**
+     * show user profil
+     * @param Request $request
+     * @return JsonResponse|Response
+     */
     public function showProfilAction(Request $request) {
         $user = $this->getUser();
         $comands = $user->getCommands();
@@ -767,11 +780,11 @@ class UserController extends Controller
         ));
     }
 
-	/**
-	 * search bar
-	 * @param Request $request
-	 * @return JsonResponse|Response
-	 */
+    /**
+     * search bar
+     * @param Request $request
+     * @return JsonResponse|Response
+     */
     public function searchAction(Request $request){
         $em = $this->getDoctrine()->getManager();
 
@@ -790,9 +803,9 @@ class UserController extends Controller
             /* If the array contains at least 2 keys */
             count($expExploded) > 1 ?
                 [$expArtist = $expExploded,
-                 $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameAndFirstName($expArtist)] :
+                    $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameAndFirstName($expArtist)] :
                 [$expArtist = $exp,
-                 $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameOrFirstname($expArtist)];
+                    $artists = $em->getRepository('WeCreaBundle:Artist')->myFindProfilByNameOrFirstname($expArtist)];
 
             if (!empty($resultsWorks || !empty($resultsArtists)) || !empty($artists)) {
 
@@ -858,26 +871,32 @@ class UserController extends Controller
         }
     }
 
-	/**
-	 * Show actu page
-	 * @return Response
-	 */
+    /**
+     * Show actu page
+     * @return Response
+     */
     public function actuAction(){
         $em = $this->getDoctrine()->getManager();
+        $session = $this->get('session');
+
+        $container = $this->container;
+
+        $bCount = $container->get('app.basket')->countBasket($session);
         $actu = $em->getRepository('WeCreaBundle:Actu')->findBy([], array(
             'date' => 'DESC'
-    ));
+        ));
 
         return $this->render('WeCreaBundle:User:actu.html.twig', array(
-            'actus' => $actu
+            'actus' => $actu,
+            'bCount' => $bCount,
         ));
     }
 
-	/**
-	 * Suscribe newsletter
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
-	 */
+    /**
+     * Suscribe newsletter
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function NewsletterAction(Request $request){
         if($request->isMethod('post')){
 
@@ -908,11 +927,11 @@ class UserController extends Controller
         }
     }
 
-	/**
-	 * Unsuscribe newsletter
-	 * @param $token
-	 * @return Response
-	 */
+    /**
+     * Unsuscribe newsletter
+     * @param $token
+     * @return Response
+     */
     public function unsubscribeAction($token){
         $em = $this->getDoctrine()->getManager();
 
@@ -931,11 +950,11 @@ class UserController extends Controller
         ]);
     }
 
-	/**
-	 * Show contact page
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-	 */
+    /**
+     * Show contact page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function contactAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $contact = new Contact();
@@ -951,21 +970,21 @@ class UserController extends Controller
             $em->flush();
 
             $phone = $contact->getPhonenumber() != NULL ?
-                     $contact->getPhonenumber() : "Non renseigné";
+                $contact->getPhonenumber() : "Non renseigné";
 
             $message = new \Swift_Message();
             $message
-                    ->setSubject('Nouveau message de '. $contact->getFirstName() . ' ' . $contact->getName())
-                    ->setFrom($this->getParameter('mailer_user'))
-                    ->setTo($this->getParameter('mailer_user'))
-                    ->setBody(
-                        '<p><b> Coordonnées du contact : </b><br /><br />
+                ->setSubject('Nouveau message de '. $contact->getFirstName() . ' ' . $contact->getName())
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($this->getParameter('mailer_user'))
+                ->setBody(
+                    '<p><b> Coordonnées du contact : </b><br /><br />
                             <b>Email : </b> '. $contact->getEmail() . '<br />
                             <b>Téléphone : </b> ' . $phone .
-                            '</p>
+                    '</p>
                             <p><b> Message : </b><br /><br />' . nl2br($contact->getContent()) . '</p>'
-                        ,'text/html'
-                    );
+                    ,'text/html'
+                );
             $this->get('mailer')->send($message);
 
             $request->getSession()->getFlashBag()->add("Notice", "Votre message a bien été envoyé.");
@@ -973,15 +992,15 @@ class UserController extends Controller
         }
 
         return $this->render('@WeCrea/User/contact.html.twig', [
-           'form' => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
-	/**
-	 * Generated pdf command
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Generated pdf command
+     * @param Request $request
+     * @return Response
+     */
     public function commandPdfAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $id = $request->query->get('id');
@@ -1019,11 +1038,11 @@ class UserController extends Controller
         return new Response($pdfName);
     }
 
-	/**
-	 * check if work quant is > command quant
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * check if work quant is > command quant
+     * @param Request $request
+     * @return Response
+     */
     public function checkAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
@@ -1065,11 +1084,11 @@ class UserController extends Controller
 
     }
 
-	/**
-	 * Get api notification
-	 * @param Request $request
-	 * @return Response
-	 */
+    /**
+     * Get api notification
+     * @param Request $request
+     * @return Response
+     */
     public function apiNotifAction(Request $request) {
         $response = $request;
 
