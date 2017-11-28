@@ -337,6 +337,7 @@ textarea{
 .moreLink {
     color: black!important;
     cursor: pointer;
+    font-size: 16px;
 }
 
 #moreLink {
