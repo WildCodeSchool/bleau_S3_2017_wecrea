@@ -48,7 +48,7 @@
                                 <i class="material-icons">person</i>
                             </a>
                             <a href="{{ path('we_crea_basket') }}">
-                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
+                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">{% if bCount is defined and bCount > 0 %}<span class="basket_badge">{{ bCount }}</span>{% endif %}
                             </a>
                             <a href="{{ path('we_crea_favs') }}">
                                 <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="">
