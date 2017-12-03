@@ -3,10 +3,12 @@
 {% block body %}
     <div class="container container-custom-artists">
         <h4 style="background: deeppink; color: #fff; padding: 10px;">Liste des commandes reçues</h4>
+
         <table style="font-size: .8em;">
             <thead>
                 <td><b>Numéro de commande</b></td>
                 <td><b>Destinataire</b></td>
+                <td><b>Liste articles de la commande</b></td>
                 <td><b>Adresse de livraison</b></td>
                 <td><b>Adresse de facturation</b></td>
                 <td><b>Téléphone</b></td>
@@ -23,6 +25,11 @@
                             <tr style="border-bottom: 1px solid #c8c8c8;">
                                 <td>{{ command.nb }}</td>
                                 <td>{{ command.name }}</td>
+                                <td>
+                                {% for work in command.works %}
+                                    {{ work.title }} / {{ work.caract }} / {{ work.quant }} / {{ work.price }} / {{ work.caract }} / {{ work.artist }}
+                                {% endfor %}
+                                </td>
                                 <td>
                                     {{ command.addressdel }} <br />
                                     {{ command.zipCodedel }}
