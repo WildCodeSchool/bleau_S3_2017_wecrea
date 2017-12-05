@@ -612,6 +612,7 @@ class UserController extends Controller
                 $message->setSubject('Votre commande WeCrea - n°' . $command->getNb() . '');
                 $message->setFrom($this->getParameter('mailer_user'));
                 $message->setTo($command->getMail());
+                $message->setBcc($this->getParameter('mailer_user'));
                 $message->setBody(
                     $this->renderView('@WeCrea/User/basket/command_confirmation.html.twig',
                         array(
