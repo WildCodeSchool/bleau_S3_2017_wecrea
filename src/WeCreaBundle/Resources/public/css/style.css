@@ -715,6 +715,11 @@ footer {
 
 /* Artist list pages */
 
+.container-custom-artists {
+    margin-left: 200px;
+    margin-right: 50px;
+}
+
 .container-custom-artists,
 .container-custom-search{
     margin-top: 75px;
