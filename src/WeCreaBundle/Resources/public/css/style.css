@@ -345,6 +345,15 @@ textarea{
     cursor: pointer;
 }
 
+.phone {
+    margin-left: 5px;
+}
+
+.phoneicn {
+    width: 7%;
+    vertical-align: sub;
+}
+
 .logo_container{
     height: 100%!important;
     display: flex!important;
