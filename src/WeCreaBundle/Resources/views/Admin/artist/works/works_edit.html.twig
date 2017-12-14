@@ -123,6 +123,11 @@
 
         {{ form_start(image_form, {'attr' : {'id' : 'add-image-form'}} ) }}
             <div class="row">
+                <div class="input-field">
+                    {{ form_label(image_form.alt, "légende image et/ou mots clés") }}
+                    {{ form_widget(image_form.alt) }}
+                    {{ form_errors(image_form.alt) }}
+                </div>
                 <div class="file-field file-field-custom input-field col s12">
                     <div class="btn">
                         <span>Choisissez un fichier</span>
