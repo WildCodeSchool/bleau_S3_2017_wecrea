@@ -34,6 +34,11 @@
                         {{ form_widget(formCarrousel.rout) }}
                         {{ form_errors(formCarrousel.rout) }}
                     </div>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.images.alt, "légende image et/ou mots clés") }}
+                        {{ form_widget(formCarrousel.images.alt) }}
+                        {{ form_errors(formCarrousel.images.alt) }}
+                    </div>
                     {{ form_label(formCarrousel.images.url, "Image") }}
                     <div class="file-field input-field col s12">
                         <div class="btn btn-file">
@@ -46,6 +51,7 @@
                         {{ form_errors(formCarrousel.images.url) }}
                     </div>
                     <div id="check-image"></div>
+
                     <button class="btn waves-effect waves-light right black" type="submit" name="action">
                         Ajouter la vignette
                         <i class="material-icons left">add</i>

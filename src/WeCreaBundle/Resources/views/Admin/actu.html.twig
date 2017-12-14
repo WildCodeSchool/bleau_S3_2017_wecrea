@@ -20,7 +20,11 @@
                     {{ form_widget(formActu.content, {'attr' : {'class': 'materialize-textarea'}} ) }}
                     {{ form_errors(formActu.content) }}
                 </div>
-
+                <div class="input-field">
+                    {{ form_label(formActu.images.alt, "légende image et/ou mots clés") }}
+                    {{ form_widget(formActu.images.alt) }}
+                    {{ form_errors(formActu.images.alt) }}
+                </div>
                 {{ form_label(formActu.images.url, "Image") }}
                 <div class="file-field input-field col s12">
                     <div class="btn btn-file">

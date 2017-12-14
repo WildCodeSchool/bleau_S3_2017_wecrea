@@ -30,6 +30,11 @@
                     {{ form_widget(formCarrousel.rout) }}
                     {{ form_errors(formCarrousel.rout) }}
                 </div>
+                <div class="input-field">
+                    {{ form_label(formCarrousel.images.alt, "légende image et/ou mots clés") }}
+                    {{ form_widget(formCarrousel.images.alt) }}
+                    {{ form_errors(formCarrousel.images.alt) }}
+                </div>
                 {{ form_label(formCarrousel.images.url, "Image") }}
                 <div class="file-field input-field col s12">
                     <div class="btn btn-file">
