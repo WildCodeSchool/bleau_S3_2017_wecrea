@@ -10,24 +10,17 @@
                         <input type="email" name="email" placeholder="Saisissez votre email" required style="width: 60%; height: 30px; background: #fff; text-indent: 5px;">
                         <input type="submit" value="Envoyer" style="background: black; height: 30px; width: 100px; border: none; color: #fff;">
                     </div>
+                    <div>
+                        <a class="moreLink2" href="http://www.lesjeuxdedames.com/" target="_blank">Jeux de dames</a>
+                    </div>
                 </form>
             </div>
             <div class="col l3 m6 s12">
                 <ul>
                     <li><a href="{{ path('we_crea_contact') }}">E-mail</a></li>
-                    <li><img class="phoneicn" src="{{ asset('bundles/wecrea/pics/phone.png') }}"><span class="phone">03.62.02.11.70</span></li>
-                    {#{% if (footer.facebook != null) %}#}
-                    {#<li><a href="{{ footer.facebook }}" target="_blank">Facebook</a></li>#}
-                    {#{% endif %}#}
-                    {#{% if (footer.twitter != null) %}#}
-                    {#<li><a href="{{ footer.twitter }}" target="_blank">Twitter</a></li>#}
-                    {#{% endif %}#}
-                    {#{% if (footer.instagram != null) %}#}
-                    {#<li><a href="{{ footer.instagram }}" target="_blank">Instagram</a></li>#}
-                    {#{% endif %}#}
-                    {#{% if (footer.youtube != null) %}#}
-                    {#<li><a href="{{ footer.youtube }}" target="_blank">Youtube</a></li>#}
-                    {#{% endif %}#}
+                    {% if (footer.phone != null) %}
+                    <li><img class="phoneicn" src="{{ asset('bundles/wecrea/pics/phone.png') }}"><span class="phone">{{ footer.phone }}</span></li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="col l3 m6 s12">
