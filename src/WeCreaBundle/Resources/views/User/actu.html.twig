@@ -12,9 +12,13 @@
                         <img src="{{ asset('images/'~actu.images.url) }}" class="image-no-zoom"/>
                     </figure>
                     <div class="content">
+
                     {% autoescape %}
-                        {{ actu.content|raw }}
+
+                        {{ actu.content|nl2br }}
+
                     {% endautoescape %}
+
                     </div>
                     <i>Publié le {{ actu.date|date('d/m/Y') }}</i>
                 </div>

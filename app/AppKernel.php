@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 	        new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+//            new WeCreaBundle\Service\Basket(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

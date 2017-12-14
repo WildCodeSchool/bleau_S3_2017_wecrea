@@ -17,7 +17,7 @@ class LegalRepository extends \Doctrine\ORM\EntityRepository
 	public function getFooter()
 	{
 		return $this->createQueryBuilder('l')
-			->select('l.defiscalisation', 'l.cgu', 'l.mention', 'l.facebook', 'l.instagram', 'l.tva', 'l.twitter', 'l.youtube')
+			->select('l.defiscalisation', 'l.cgu', 'l.mention', 'l.facebook', 'l.instagram', 'l.tva', 'l.twitter', 'l.youtube', 'l.phone')
 			->getQuery()
 			->getSingleResult();
 	}

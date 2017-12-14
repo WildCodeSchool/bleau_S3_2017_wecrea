@@ -44,6 +44,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+#    globals:
+#        bCount: '@WeCreaBundle\Service\Basket'
 
 # Doctrine Configuration
 doctrine:

@@ -1,102 +1,97 @@
 {% extends '@WeCrea/layout/base_client.html.twig' %}
 
 {% block body %}
-<main>
+    <main>
 
-    <div class="container">
-        <h2>PAIEMENT</h2>
-        <div class="row row_top">
-            <div class="col l5 m12 row">
-                <div class="col m12">
-                    <span class="title_list_profil">Adresse de facturation</span><br>
-                    {{ commands.name }}<br>
-                    {{ commands.addressfact }}<br>
-                    {{ commands.zipCodefact }}
-                    {{ commands.townfact }}
+        <div class="container">
+            <h2>PAIEMENT</h2>
+            <div class="row row_top">
+                <div class="col l5 m12 row">
+                    <div class="col m12">
+                        <span class="title_list_profil">Adresse de facturation</span><br>
+                        {{ commands.name }}<br>
+                        {{ commands.addressfact }}<br>
+                        {{ commands.zipCodefact }}
+                        {{ commands.townfact }}
+                    </div>
+                    <div style="margin-top: 40px" class="col s12">
+                        <span class="title_list_profil">Adresse de livraison</span><br>
+                        {{ commands.name }}<br>
+                        {{ commands.addressdel }}<br>
+                        {{ commands.zipCodedel }}
+                        {{ commands.towndel }}
+                    </div>
                 </div>
-                <div style="margin-top: 40px" class="col s12">
-                    <span class="title_list_profil">Adresse de livraison</span><br>
-                    {{ commands.name }}<br>
-                    {{ commands.addressdel }}<br>
-                    {{ commands.zipCodedel }}
-                    {{ commands.towndel }}
-                </div>
-            </div>
-            <div class="col l6 offset-l1 m12">
-                <p class="title_list_profil" style="margin-top: 0">Récapitulatif de la commande :</p>
-                <div class="prods row">
-                    {% for prod in commands.works %}
-                        <div class="prod col s12 row">
-                            <div class="col s12 row">
-                                <div class="prod_title col s6">
-                                    <p style="margin-top: 0; margin-bottom: 10px">{{ prod.title }}</p>
-                                </div>
-                                <div class="prod_quant col s6">
-                                    <p class="right-align" style="margin-top: 10px">
-                                        Quantité : {{ prod.quant }}
-                                    </p>
-                                </div>
-                                <div class="prod_caract col s12">
-                                    <p style="margin: 0;">Informations : {{ prod.caract }}</p>
-                                    <p style="margin: 0;" class=" right-align">Prix : <span class="price">{{ prod.quant * prod.price }}</span>€</p>
+                <div class="col l6 offset-l1 m12">
+                    <p class="title_list_profil" style="margin-top: 0">Récapitulatif de la commande :</p>
+                    <div class="prods row">
+                        {% for prod in commands.works %}
+                            <div class="prod col s12 row">
+                                <div class="col s12 row">
+                                    <div class="prod_title col s6">
+                                        <p style="margin-top: 0; margin-bottom: 10px">{{ prod.title }}</p>
+                                    </div>
+                                    <div class="prod_quant col s6">
+                                        <p class="right-align" style="margin-top: 10px">
+                                            Quantité : {{ prod.quant }}
+                                        </p>
+                                    </div>
+                                    <div class="prod_caract col s12">
+                                        <p style="margin: 0;">Informations : {{ prod.caract }}</p>
+                                        <p style="margin: 0;" class=" right-align">Prix : <span class="price">{{ prod.quant * prod.price }}</span>€</p>
+                                    </div>
                                 </div>
                             </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col m12 row">
+                            <p style="margin-top: 9px;" class="col s8"><b>Total T.T.C : {{ ttc }} €</b></p>
                         </div>
-                    {% endfor %}
-                </div>
-                <div class="row">
-                    <div class="col m12 row">
-                        <p style="margin-top: 9px;" class="col s8">
-                            <b>Total T.T.C : {{ ttc }} €</b><br>
-                            <i>Port inclus</i>
-                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <form action="#">
-            <a class="moreLink" href="#cgv">Conditions générales de vente</a>
-            <p>
+            <form action="#">
+                <a class="moreLink" href="#cgv">Conditions générales de vente</a>
+                <p>
+                <p id="cgvred" class="hide">Merci de bien vouloir accepter les conditions générales de vente afin de pouvoir continuer la commande</p>
+
                 <input type="checkbox" id="cgv"/>
                 <label for="cgv">J'ai lu et accepté les conditions générales de vente</label>
-            </p>
-        </form>
-        <div class="col row center-align">
-            <a href="{{ path('we_crea_basket') }}" class="btn black">Modifier mon panier</a>
-            <button class="pay btn black" id="{{ commands.id }}">PAYER</button>
+                </p>
+            </form>
+            <div class="col row center-align">
+                <a href="{{ path('we_crea_basket') }}" class="btn black">Modifier mon panier</a>
+                <button class="pay btn black" id="{{ commands.id }}">PAYER</button>
+            </div>
+            {% include '@WeCrea/User/basket/formPayzen.html.twig' %}
         </div>
-        {% include '@WeCrea/User/basket/formPayzen.html.twig' %}
-    </div>
 
-    <!-- Modal Structure -->
-    <div id="cgv" class="modal">
-        <div class="modal-content">
-            <h4 style="color: black !important;">Conditions générales de vente</h4>
-            {% autoescape %}
-                {{ cgv | raw }}
-            {% endautoescape %}
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
-        </div>
-    </div>
-
-    <!-- Modal Structure -->
-    <div id="acceptCgv" class="modal">
-        <div class="modal-content">
-            <h5 style="color: black !important;">Veuillez lire et accepter les conditions générales de vente</h5>
-            <p>
+        <!-- Modal Structure -->
+        <div id="cgv" class="modal">
+            <div class="modal-content">
+                <h4 style="color: black !important;">Conditions générales de vente</h4>
                 {% autoescape %}
                     {{ cgv | raw }}
                 {% endautoescape %}
-            </p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
-        </div>
-    </div>
 
-</main>
+        <!-- Modal Structure -->
+        <div id="acceptCgv" class="modal">
+            <div class="modal-content">
+                <h5 style="color: red; font-size: 25px; !important;" class="center">Merci de bien vouloir accepter les conditions générales de vente afin de pouvoir continuer la commande</h5>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+            </div>
+        </div>
+
+    </main>
 {% endblock %}
 
 {% block javascripts %}
@@ -120,10 +115,13 @@
                                 alert(response);
                             }
                         }
-                    })
+                    });
                 }
                 else{
-                    $('#acceptCgv').modal('open');
+                    $('#cgvred').removeClass("hide");
+                    $('#acceptCgv').modal("open")
+
+
                 }
 
             })

@@ -25,14 +25,14 @@
                                     <i class="material-icons right">search</i>
                                 </button>
                             </form>
-                          <li id="profil_icon">
+                        <li id="profil_icon">
                             <a href="{{ path('we_crea_user_profil') }}">
                                 <i class="material-icons">person</i>
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('we_crea_basket') }}" class="valign-wrapper">
-                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
+                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">{% if bCount is defined and bCount > 0 %}<span class="basket_badge">{{ bCount }}</span>{% endif %}
                             </a>
                         </li>
                         <li>
@@ -48,13 +48,13 @@
                                 <i class="material-icons">person</i>
                             </a>
                             <a href="{{ path('we_crea_basket') }}">
-                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">
+                                <img class="bask_icon" src="{{ asset('bundles/wecrea/pics/Panier.png') }}" alt="">{% if bCount is defined and bCount > 0 %}<span class="basket_badge">{{ bCount }}</span>{% endif %}
                             </a>
                             <a href="{{ path('we_crea_favs') }}">
                                 <img class="fav_icon" src="{{ asset('bundles/wecrea/pics/Coup-de-coeur.png') }}" alt="">
                             </a>
                         </li>
-						<li>
+                        <li>
                             <form name="search" method="post" action="{{ path('we_crea_search') }}">
                                 <input type="search" name="search" class="search" placeholder="Recherche"/>
                                 <input type="submit" value="OK" id="validation-search"/>
@@ -95,172 +95,172 @@
 {% block javascripts %}
     <script type="text/javascript">
         {% if app.request.get('_route') == 'we_crea_homepage' or
-              app.request.get('_route') == 'we_crea_actu'
+        app.request.get('_route') == 'we_crea_actu'
         %}
-            var $footer = $('footer');
+        var $footer = $('footer');
 
-            $footer.css({
-                'position' : 'absolute',
-                'bottom' : '0',
-                'left' : '0',
-                'width' : '100vw'
-            });
+        $footer.css({
+            'position' : 'absolute',
+            'bottom' : '0',
+            'left' : '0',
+            'width' : '100vw'
+        });
         {% endif %}
 
         /************ SUGGESTIONS MOTEUR DE RECHERCHE ***************/
 
-       'use strict';
+        'use strict';
 
-       if(window.innerWidth >= 1024) {
-           var searchBar = document.getElementsByClassName('search');
+        if(window.innerWidth >= 1024) {
+            var searchBar = document.getElementsByClassName('search');
 
-           var suggestElt, liElt, timer, search, formSearch;
-           var t = [];
+            var suggestElt, liElt, timer, search, formSearch;
+            var t = [];
 
-           function cleanUp() {
-               while (suggestElt.firstChild) {
-                   suggestElt.firstChild.removeEventListener('mouseover', blueBackground);
-                   suggestElt.firstChild.removeEventListener('mouseleave', whiteBackground);
-                   suggestElt.firstChild.removeEventListener('click', searchBarValue);
-                   suggestElt.removeChild(suggestElt.firstChild);
-               }
-           }
+            function cleanUp() {
+                while (suggestElt.firstChild) {
+                    suggestElt.firstChild.removeEventListener('mouseover', blueBackground);
+                    suggestElt.firstChild.removeEventListener('mouseleave', whiteBackground);
+                    suggestElt.firstChild.removeEventListener('click', searchBarValue);
+                    suggestElt.removeChild(suggestElt.firstChild);
+                }
+            }
 
-           function ajaxGetResults(url, search, callback) {
-               var req;
-               if (window.XMLHttpRequest) {
-                   req = new XMLHttpRequest();
-               }
-               else {
-                   req = new ActiveXObject("Microsoft.XMLHTTP");
-               }
-               req.open('post', url, true);
-               req.addEventListener('load', function () {
-                   if (req.status >= 200 && req.status < 400) {
-                       callback(req.responseText);
-                   }
-               });
-               req.addEventListener('error', function () {
-                   console.log('error');
-               });
-               req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-               req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-               req.send("search=" + search);
-           }
+            function ajaxGetResults(url, search, callback) {
+                var req;
+                if (window.XMLHttpRequest) {
+                    req = new XMLHttpRequest();
+                }
+                else {
+                    req = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                req.open('post', url, true);
+                req.addEventListener('load', function () {
+                    if (req.status >= 200 && req.status < 400) {
+                        callback(req.responseText);
+                    }
+                });
+                req.addEventListener('error', function () {
+                    console.log('error');
+                });
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                req.send("search=" + search);
+            }
 
-           function blueBackground() {
-               this.style.cursor = 'pointer';
-               this.style.backgroundColor = '#1E90FF';
-               this.style.color = '#fff';
-           }
+            function blueBackground() {
+                this.style.cursor = 'pointer';
+                this.style.backgroundColor = '#1E90FF';
+                this.style.color = '#fff';
+            }
 
-           function whiteBackground() {
-               this.style.backgroundColor = '#fff';
-               this.style.color = 'black';
-           }
+            function whiteBackground() {
+                this.style.backgroundColor = '#fff';
+                this.style.color = 'black';
+            }
 
-           function searchBarValue() {
-               searchBar.value = this.textContent;
-               cleanUp();
-           }
+            function searchBarValue() {
+                searchBar.value = this.textContent;
+                cleanUp();
+            }
 
-           function styleSuggestions() {
-               for (var i = 0; i < suggestElt.childNodes.length; ++i) {
-                   suggestElt.childNodes[i].addEventListener('mouseover', blueBackground);
-                   suggestElt.childNodes[i].addEventListener('mouseleave', whiteBackground);
-                   suggestElt.childNodes[i].addEventListener('click', searchBarValue);
-               }
-           }
+            function styleSuggestions() {
+                for (var i = 0; i < suggestElt.childNodes.length; ++i) {
+                    suggestElt.childNodes[i].addEventListener('mouseover', blueBackground);
+                    suggestElt.childNodes[i].addEventListener('mouseleave', whiteBackground);
+                    suggestElt.childNodes[i].addEventListener('click', searchBarValue);
+                }
+            }
 
-           function getResults(e) {
+            function getResults(e) {
 
-               searchBar = this;
-               formSearch = this.parentNode;
-               suggestElt = this.nextElementSibling;
+                searchBar = this;
+                formSearch = this.parentNode;
+                suggestElt = this.nextElementSibling;
 
-               function showSuggestions(results) {
-                   results = JSON.parse(results);
-                   console.log(results);
-                   var resultsLength;
+                function showSuggestions(results) {
+                    results = JSON.parse(results);
+                    console.log(results);
+                    var resultsLength;
 
-                   if (results != 'Aucune suggestion') {
+                    if (results != 'Aucune suggestion') {
 
-                       cleanUp();
+                        cleanUp();
 
-                       results[0].length > 8 ? resultsLength = 8 : resultsLength = results[0].length;
+                        results[0].length > 8 ? resultsLength = 8 : resultsLength = results[0].length;
 
-                       for (var i = 0; i < resultsLength ; ++i)
-                       {
-                           liElt = document.createElement('li');
-                           liElt.style.width = "100%";
-                           liElt.style.position = "relative";
-                           liElt.style.textIndent = "10px";
-                           liElt.style.textAlign = "left";
-                           liElt.style.color = "black";
-                           liElt.style.backgroundColor = "#fff";
-                           liElt.style.fontSize = ".9em";
-                           liElt.textContent = results[0][i].title;
-                           suggestElt.appendChild(liElt);
-                       }
+                        for (var i = 0; i < resultsLength ; ++i)
+                        {
+                            liElt = document.createElement('li');
+                            liElt.style.width = "100%";
+                            liElt.style.position = "relative";
+                            liElt.style.textIndent = "10px";
+                            liElt.style.textAlign = "left";
+                            liElt.style.color = "black";
+                            liElt.style.backgroundColor = "#fff";
+                            liElt.style.fontSize = ".9em";
+                            liElt.textContent = results[0][i].title;
+                            suggestElt.appendChild(liElt);
+                        }
 
-                       for(var i = 0; i <results[1].length; ++i)
-                       {
-                           liElt = document.createElement('li');
-                           liElt.style.width = "100%";
-                           liElt.style.position = "relative";
-                           liElt.style.textIndent = "10px";
-                           liElt.style.textAlign = "left";
-                           liElt.style.color = "black";
-                           liElt.style.backgroundColor = "#fff";
-                           liElt.style.fontSize = ".9em";
-                           liElt.textContent = results[1][i].name + " " + results[1][i].firstname + " " + "(Artiste)";
+                        for(var i = 0; i <results[1].length; ++i)
+                        {
+                            liElt = document.createElement('li');
+                            liElt.style.width = "100%";
+                            liElt.style.position = "relative";
+                            liElt.style.textIndent = "10px";
+                            liElt.style.textAlign = "left";
+                            liElt.style.color = "black";
+                            liElt.style.backgroundColor = "#fff";
+                            liElt.style.fontSize = ".9em";
+                            liElt.textContent = results[1][i].name + " " + results[1][i].firstname + " " + "(Artiste)";
 
-                           suggestElt.appendChild(liElt);
-                       }
-                       styleSuggestions();
-                   }
-                   else {
+                            suggestElt.appendChild(liElt);
+                        }
+                        styleSuggestions();
+                    }
+                    else {
 
-                       cleanUp();
+                        cleanUp();
 
-                       liElt = document.createElement('li');
-                       liElt.style.width = "100%";
-                       liElt.style.textIndent = "10px";
-                       liElt.style.color = "black";
-                       liElt.style.backgroundColor = '#fff';
-                       liElt.textContent = results;
-                       suggestElt.appendChild(liElt);
-                   }
-               }
+                        liElt = document.createElement('li');
+                        liElt.style.width = "100%";
+                        liElt.style.textIndent = "10px";
+                        liElt.style.color = "black";
+                        liElt.style.backgroundColor = '#fff';
+                        liElt.textContent = results;
+                        suggestElt.appendChild(liElt);
+                    }
+                }
 
-               function request() {
-                   var search = searchBar.value;
-                   if (search.trim().length > 0) {
-                       ajaxGetResults("{{ path('we_crea_search') }}", search, showSuggestions);
-                   }
-                   if (search.length === 0) {
-                       setTimeout(function () {
-                           cleanUp();
-                       }, 300);
-                   }
-               }
+                function request() {
+                    var search = searchBar.value;
+                    if (search.trim().length > 0) {
+                        ajaxGetResults("{{ path('we_crea_search') }}", search, showSuggestions);
+                    }
+                    if (search.length === 0) {
+                        setTimeout(function () {
+                            cleanUp();
+                        }, 300);
+                    }
+                }
 
-               t.push(new Date().getTime());
+                t.push(new Date().getTime());
 
-               if (t.length > 1) {
-                   if (t[1] < t[0] + 349) {
-                       window.clearTimeout(timer);
-                   }
-                   timer = setTimeout(function () {
-                       request();
-                   }, 350);
-                   t = [t[1]];
-               }
-           }
+                if (t.length > 1) {
+                    if (t[1] < t[0] + 349) {
+                        window.clearTimeout(timer);
+                    }
+                    timer = setTimeout(function () {
+                        request();
+                    }, 350);
+                    t = [t[1]];
+                }
+            }
 
-           for (var i = 0, c = searchBar.length; i < c; ++i) {
-               searchBar[i].addEventListener('input', getResults);
-           }
-       }
+            for (var i = 0, c = searchBar.length; i < c; ++i) {
+                searchBar[i].addEventListener('input', getResults);
+            }
+        }
     </script>
 {% endblock %}
