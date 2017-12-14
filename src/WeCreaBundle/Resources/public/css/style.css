@@ -327,7 +327,11 @@ textarea{
 }
 
 .container_footer a {
-    color: black!important;
+    color: black;
+}
+
+.container_footer a:hover {
+    color: #47579E !important;
 }
 
 .footer-copyright {
@@ -338,6 +342,12 @@ textarea{
     color: black!important;
     cursor: pointer;
     font-size: 16px;
+}
+
+.moreLink2 {
+    color: #1FBCD3!important;
+    cursor: pointer;
+    font-size: 19px;
 }
 
 #moreLink {
