@@ -93,6 +93,11 @@
                 <div class="row">
                     <h4 class="center-align">Ajout des images de l'oeuvre</h4>
                     {{ form_label(formImage.url, "Photo de l'oeuvre") }}
+                    <div class="input-field">
+                        {{ form_label(formImage.alt, "légende image et/ou mots clés") }}
+                        {{ form_widget(formImage.alt) }}
+                        {{ form_errors(formImage.alt) }}
+                    </div>
                     <div class="file-field input-field col s12">
                         <div class="btn btn-file">
                             <span>Choisissez un fichier</span>

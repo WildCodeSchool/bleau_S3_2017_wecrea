@@ -22,7 +22,7 @@ class NatureController extends Controller
 
 		foreach ($natures as $key => $nature)
 		{
-			$name = str_replace(str_split(" 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ"), '_', strtolower($nature->getName()));
+			$name = str_replace(str_split(" 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ."), '_', strtolower($nature->getName()));
 			$natures[$name] = $nature;
 			unset($natures[$key]);
 

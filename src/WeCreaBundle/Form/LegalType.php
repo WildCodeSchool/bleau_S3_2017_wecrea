@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -58,10 +59,17 @@ class LegalType extends AbstractType
 	        ->add('youtube', TextType::class, array(
 	        	'required' => false
 	        ))
+            ->add('phone', TelType::class, array(
+                'label' => 'Téléphone',
+                'required' => false,
+                'attr' => array(
+                    'pattern' => "^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
+            )))
             ->add('submit', SubmitType::class, array(
                 'attr' => array(
                     'class' => 'btn black center'
-                )
+                ),
+                'label' => 'Envoyer'
             ))
         ;
     }

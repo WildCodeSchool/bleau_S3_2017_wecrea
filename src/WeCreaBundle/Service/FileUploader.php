@@ -27,7 +27,7 @@ class FileUploader
         }
 
         $object->getImages()->setUrl($fileName);
-		$object->getImages()->setAlt(str_replace('.' . $file->guessExtension(), '', $file->getClientOriginalName()));
+		//$object->getImages()->setAlt(str_replace('.' . $file->guessExtension(), '', $file->getClientOriginalName()));
 
         $file->move($this->targetDir, $fileName);
 
@@ -38,7 +38,7 @@ class FileUploader
         $fileName = uniqid().'.'.$file->guessExtension();
 
         $image->setUrl($fileName);
-		$image->setAlt(str_replace($file->guessExtension(), '', $file->getClientOriginalName()));
+		//$image->setAlt(str_replace($file->guessExtension(), '', $file->getClientOriginalName()));
 
         $file->move($this->targetDir, $fileName);
     }

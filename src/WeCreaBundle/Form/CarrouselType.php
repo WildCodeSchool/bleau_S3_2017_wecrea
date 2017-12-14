@@ -26,7 +26,8 @@ class CarrouselType extends AbstractType
 	        ->add('fontColor', TextType::class, array(
 	        	'label' => 'Couleur de texte',
 		        'attr' => array(
-			        'class' => 'colorpicker'
+			        'class' => 'colorpicker',
+                    'style' => 'background-color: rgb(255, 255, 255);'
 		        )
 	        ))
         ;

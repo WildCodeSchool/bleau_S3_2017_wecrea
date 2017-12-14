@@ -1,12 +1,15 @@
 {% extends "WeCreaBundle:layout:base_admin.html.twig"%}
 
 {% block body %}
-    <div class="container container-custom-artists">
+    <div class="container-fluid container-custom-artists">
         <h4 style="background: deeppink; color: #fff; padding: 10px;">Liste des commandes reçues</h4>
+
         <table style="font-size: .8em;">
             <thead>
                 <td><b>Numéro de commande</b></td>
                 <td><b>Destinataire</b></td>
+                <td><b>Oeuvre commandée</b></td>
+                <td><b>Prix</b></td>
                 <td><b>Adresse de livraison</b></td>
                 <td><b>Adresse de facturation</b></td>
                 <td><b>Téléphone</b></td>
@@ -23,6 +26,23 @@
                             <tr style="border-bottom: 1px solid #c8c8c8;">
                                 <td>{{ command.nb }}</td>
                                 <td>{{ command.name }}</td>
+                                <td>
+                                    <ul>
+                                    {% for work in command.works %}
+                                        <li>
+                                            - <b>{{ work.title }}</b> de {{ work.artist }}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        {% for work in command.works %}
+                                       <li>- {{ work.price }} € </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </td>
                                 <td>
                                     {{ command.addressdel }} <br />
                                     {{ command.zipCodedel }}
