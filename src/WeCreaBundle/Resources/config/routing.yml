@@ -5,3 +5,9 @@ we_crea_homepage:
 we_crea_admin:
     resource: "@WeCreaBundle/Resources/config/routing/admin.yml"
     prefix:   /admin
+
+
+# -------- Sitemap    ----
+we_crea_sitemap:
+    path: /sitemap.xml
+    defaults: {_controller: "WeCreaBundle:Admin:sitemap"}

@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use WeCreaBundle\Entity\Artist;
+use WeCreaBundle\Entity\Nature;
 use WeCreaBundle\Entity\Command;
 use WeCreaBundle\Entity\Images;
 use WeCreaBundle\Entity\SentMessage;
@@ -524,5 +525,57 @@ class AdminController extends Controller
 
             return new Response("La mise à jour a bien été effectuée");
         }
+    }
+
+    public function sitemapAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // urls
+        $urls = [];
+        // hostname du website
+        $hostname = $request->getHost();
+
+        /* Tous les artistes liste globale */
+        $urls[] = ['loc' => $this->get('router')->generate('we_crea_artists_list'), 'changefreq' => 'weekly', 'priority' => '1.0'];
+        /* Tous les artistes un par un */
+        $artistes = $em->getRepository('WeCreaBundle:Artist')->findAll();
+        foreach ($artistes as $artiste) {
+            $urls[] = ['loc' => $this->get('router')->generate('we_crea_artist', array('id' => $artiste->getId()/*,'slug' => $artiste->getSlug()*/)), 'changefreq' => 'weekly', 'priority' => '1.0'];
+        }
+
+        /* Toutes les oeuvres toutes les nature*/
+        $urls[] = ['loc' => $this->get('router')->generate('we_crea_works', array('nature' => null)), 'changefreq' => 'weekly', 'priority' => '1.0'];
+
+        /* Toutes les oeuvres par nature */
+        $natures = $em->getRepository(Nature::class)->getNatureName();
+        foreach ($natures as $nature) {
+            if ($nature !== 'Tous' && $nature !== null) {
+                $works = $em->getRepository('WeCreaBundle:Work')->getWorkByNature($nature['name']);
+                foreach ($works as $work) {
+                    /* Toutes les oeuvres par nature */
+                    $urls[] = ['loc' => $this->get('router')->generate('we_crea_works', array('nature' => $nature['name'])), 'changefreq' => 'weekly', 'priority' => '1.0'];
+                    /* Toutes les oeuvres d'une nature spécifique */
+                    $urls[] = ['loc' => $this->get('router')->generate('we_crea_work', array('id' => $work->getId())), 'changefreq' => 'weekly', 'priority' => '1.0'];
+                }
+            }
+        }
+
+
+        /* Page actu */
+        //$urls[] = ['loc' => $this->get('router')->generate('we_crea_actu'), 'changefreq' => 'weekly', 'priority' => '1.0'];
+        /* Page concept */
+        $urls[] = ['loc' => $this->get('router')->generate('we_crea_concept'), 'changefreq' => 'weekly', 'priority' => '1.0'];
+        /* Home page */
+        $urls[] = ['loc' => $this->get('router')->generate('we_crea_homepage'), 'changefreq' => 'weekly', 'priority' => '1.0'];
+
+
+        // Once our array is filled, we define the controller response
+        $response = new Response();
+        $response->headers->set('Content-Type', 'xml');
+
+        return $this->render('@WeCrea/Admin/sitemap.xml.twig', [
+            'urls' => $urls,
+            'hostname' => $hostname
+        ]);
     }
 }
