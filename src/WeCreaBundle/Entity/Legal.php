@@ -7,8 +7,9 @@ namespace WeCreaBundle\Entity;
  */
 class Legal
 {
+
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -18,15 +19,60 @@ class Legal
     private $mention;
 
     /**
-     * @var int
+     * @var float
      */
     private $tva;
+
+    /**
+     * @var string
+     */
+    private $defiscalisation;
+
+    /**
+     * @var string
+     */
+    private $cgv;
+
+    /**
+     * @var string
+     */
+    private $cgu;
+
+    /**
+     * @var string
+     */
+    private $facebook;
+
+    /**
+     * @var string
+     */
+    private $twitter;
+
+    /**
+     * @var string
+     */
+    private $instagram;
+
+    /**
+     * @var string
+     */
+    private $youtube;
+
+    /**
+     * @var string
+     */
+    private $phone;
+
+    /**
+     * @var string
+     */
+    private $returnWorkText;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -60,7 +106,7 @@ class Legal
     /**
      * Set tva
      *
-     * @param integer $tva
+     * @param float $tva
      *
      * @return Legal
      */
@@ -74,17 +120,12 @@ class Legal
     /**
      * Get tva
      *
-     * @return int
+     * @return float
      */
     public function getTva()
     {
         return $this->tva;
     }
-    /**
-     * @var string
-     */
-    private $defiscalisation;
-
 
     /**
      * Set defiscalisation
@@ -109,16 +150,6 @@ class Legal
     {
         return $this->defiscalisation;
     }
-    /**
-     * @var string
-     */
-    private $cgv;
-
-    /**
-     * @var string
-     */
-    private $cgu;
-
 
     /**
      * Set cgv
@@ -167,26 +198,6 @@ class Legal
     {
         return $this->cgu;
     }
-    /**
-     * @var string
-     */
-    private $facebook;
-
-    /**
-     * @var string
-     */
-    private $twitter;
-
-    /**
-     * @var string
-     */
-    private $instagram;
-
-    /**
-     * @var string
-     */
-    private $youtube;
-
 
     /**
      * Set facebook
@@ -285,10 +296,28 @@ class Legal
     }
 
     /**
-     * @var string
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return Legal
      */
-    private $returnWorkText;
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
 
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
 
     /**
      * Set returnWorkText

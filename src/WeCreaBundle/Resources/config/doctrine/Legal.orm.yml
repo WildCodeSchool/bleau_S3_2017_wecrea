@@ -35,6 +35,10 @@ WeCreaBundle\Entity\Legal:
             type: string
             length: 255
             nullable: true
+        phone:
+            type: string
+            length: 14
+            nullable: true
         returnWorkText:
             type: text
             nullable: false

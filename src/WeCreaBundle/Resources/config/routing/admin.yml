@@ -165,3 +165,4 @@ we_crea_admin_edit_isotop:
 we_crea_admin_legal:
     path: /legal
     defaults: {_controller: "WeCreaBundle:Admin:legal"}
+

@@ -34,6 +34,11 @@
                         {{ form_widget(formCarrousel.rout) }}
                         {{ form_errors(formCarrousel.rout) }}
                     </div>
+                    <div class="input-field">
+                        {{ form_label(formCarrousel.images.alt, "légende image et/ou mots clés") }}
+                        {{ form_widget(formCarrousel.images.alt) }}
+                        {{ form_errors(formCarrousel.images.alt) }}
+                    </div>
                     {{ form_label(formCarrousel.images.url, "Image") }}
                     <div class="file-field input-field col s12">
                         <div class="btn btn-file">
@@ -46,6 +51,7 @@
                         {{ form_errors(formCarrousel.images.url) }}
                     </div>
                     <div id="check-image"></div>
+
                     <button class="btn waves-effect waves-light right black" type="submit" name="action">
                         Ajouter la vignette
                         <i class="material-icons left">add</i>
@@ -58,8 +64,8 @@
             <div id="show_carrousel">
                 {% for carrousel in carrousels %}
                     <div class="card" style="background: url('{{ asset('images/') }}{{ carrousel.images.url }}') center / cover">
-                        <h2 style="color: {{ carrousel.fontColor }}">{{ carrousel.title }}</h2>
-                        <p style="color: {{ carrousel.fontColor }}">{{ carrousel.content }}</p>
+                        <h2 style="color: {% if carrousel.fontColor is not null %}{{ carrousel.fontColor }}{% endif %}">{{ carrousel.title }}</h2>
+                        <p style="color: {% if carrousel.fontColor is not null %}{{ carrousel.fontColor }}{% endif %}">{{ carrousel.content }}</p>
                         <a href="{{ path('we_crea_admin_edit_work_carrousel', { 'id': carrousel.id }) }}" class="waves-effect waves-light btn black edit_btn">Editer</a>
                         <a class="waves-effect waves-light btn black delete_btn right" id="{{ carrousel.id }}">Supprimer</a>
                     </div>
@@ -80,7 +86,7 @@
             });
 
             $('.colorpicker').colorpicker({
-                format: 'rgb',
+                format: 'hex',
                 color: $('.colorpicker').css('background-color')
             }).on('changeColor', function(ev) {
                 $(this).css('background-color',ev.color.toHex());
